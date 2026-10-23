@@ -64,3 +64,25 @@ def test_fit_recovers_known_parameters_on_synthetic_data():
     assert np.allclose(fitted_attack, attack, atol=0.1)
     assert np.allclose(fitted_defence, defence, atol=0.1)
     assert abs(fitted.home_advantage - home_adv) < 0.1
+
+
+def test_xg_variant_rescales_goal_level_to_actual_goals():
+    """When xG systematically overstates goals, predictions must track actual goals."""
+    rng = np.random.default_rng(7)
+    teams = ["A", "B", "C", "D"]
+    attack = np.array([0.22, 0.08, -0.10, -0.20])
+    defence = np.array([0.15, 0.25, 0.32, 0.18])
+    rows = []
+    for i in range(2000):
+        home, away = rng.choice(4, 2, replace=False)
+        lam = np.exp(0.24 + attack[home] + defence[away])
+        mu = np.exp(attack[away] + defence[home])
+        rows.append({"date": pd.Timestamp("2024-01-01") + pd.Timedelta(i, unit="h"),
+                     "home_team": teams[home], "away_team": teams[away],
+                     "home_goals": rng.poisson(lam), "away_goals": rng.poisson(mu),
+                     "home_xg": lam * 1.15, "away_xg": mu * 1.15})
+    data = pd.DataFrame(rows)
+    fitted = fit_dixon_coles(data, pd.Timestamp("2025-01-01"), xi=0, variant="xg")
+    predicted = sum(sum(fitted.expected_goals(h, a)) for h, a in zip(data.home_team, data.away_team))
+    actual = (data.home_goals + data.away_goals).sum()
+    assert abs(predicted / actual - 1) < 0.01

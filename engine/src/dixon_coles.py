@@ -197,6 +197,17 @@ def fit_dixon_coles(
         raise RuntimeError(f"Dixon Coles fit failed: {fitted.message}")
     attack, defence, home_adv, rho = _unpack(fitted.x, n, with_rho)
 
+    # Recalibrate the overall goal level to actual goals. xG measures chance quality,
+    # but bets settle on goals, and the league-wide goals/xG ratio drifts (from 2024/25
+    # Premier League sides scored ~0.3 goals per match fewer than their xG). Team
+    # strengths stay as fitted; only the home and away levels are rescaled.
+    lam = np.exp(home_adv + attack[home] + defence[away])
+    mu = np.exp(attack[away] + defence[home])
+    log_scale_home = np.log(np.sum(weights * actual_home) / np.sum(weights * lam))
+    log_scale_away = np.log(np.sum(weights * actual_away) / np.sum(weights * mu))
+    defence = defence + log_scale_away
+    home_adv = home_adv + log_scale_home - log_scale_away
+
     if not with_rho:
         lam = np.exp(home_adv + attack[home] + defence[away])
         mu = np.exp(attack[away] + defence[home])

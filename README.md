@@ -19,6 +19,7 @@ python -m src.fetch_results
 python -m src.fetch_understat
 python -m src.build_dataset
 python -m src.baselines
+python -m src.backtest
 pytest
 ```
 
@@ -34,3 +35,11 @@ Team names are canonicalized through one strict mapping in `src/team_names.py`. 
 
 No paid service or API key is required.
 
+## Stage 2
+
+`python -m src.backtest` tunes Dixon Coles goals, xG, and blended variants on
+2021/22 through 2023/24 only. It then evaluates the selected settings on 2024/25
+through the completed part of 2026/27. Predictions are written to
+`data/processed/predictions_dc.parquet` and the evaluation is written to
+`reports/stage2_report.md`. Opening and closing odds are evaluation fields only
+and are never passed into the model.

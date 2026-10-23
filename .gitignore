@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+*.mp4
+engine/data/raw/*
+!engine/data/raw/.gitkeep

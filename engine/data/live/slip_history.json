@@ -196,7 +196,7 @@
   {
     "round": "2026-10-25",
     "tier": "safe",
-    "generated_at": "2026-10-24T16:32:32.952981Z",
+    "generated_at": "2026-10-24T17:47:14.833867Z",
     "total_odds": 2.53,
     "win_probability": 0.4019,
     "odds_source": "betpawa",
@@ -241,17 +241,17 @@
   {
     "round": "2026-10-25",
     "tier": "medium",
-    "generated_at": "2026-10-24T16:32:32.952981Z",
+    "generated_at": "2026-10-24T17:47:14.833867Z",
     "total_odds": 3.51,
-    "win_probability": 0.2873,
+    "win_probability": 0.2879,
     "odds_source": "betpawa",
-    "expected_value": 0.0072,
-    "kelly": 0.0029,
+    "expected_value": 0.0092,
+    "kelly": 0.0037,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.7351
+        "probability": 0.7356
       }
     ],
     "legs": [
@@ -278,10 +278,10 @@
         "away": "Bournemouth",
         "market": "home_1up",
         "label": "Home 1Up",
-        "probability": 0.626,
+        "probability": 0.6272,
         "estimated_odds": 1.5,
         "betpawa_odds": 1.57,
-        "fair_odds": 1.6,
+        "fair_odds": 1.59,
         "price_warning": false,
         "won": null
       },
@@ -306,12 +306,12 @@
   {
     "round": "2026-10-25",
     "tier": "big",
-    "generated_at": "2026-10-24T16:32:32.952981Z",
-    "total_odds": 8.02,
+    "generated_at": "2026-10-24T17:47:14.833867Z",
+    "total_odds": 8.07,
     "win_probability": 0.1279,
     "odds_source": "betpawa",
-    "expected_value": 0.0257,
-    "kelly": 0.0037,
+    "expected_value": 0.0325,
+    "kelly": 0.0046,
     "price_warning": false,
     "flexi": [
       {
@@ -347,9 +347,9 @@
         "away": "Brentford",
         "market": "under_3.5",
         "label": "Under 3.5 goals",
-        "probability": 0.665,
+        "probability": 0.6649,
         "estimated_odds": 1.44,
-        "betpawa_odds": 1.5,
+        "betpawa_odds": 1.51,
         "fair_odds": 1.5,
         "price_warning": false,
         "won": null

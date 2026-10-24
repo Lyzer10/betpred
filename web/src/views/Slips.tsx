@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { BOOKMAKERS, type Bookmaker, type Ledger, type PlacedBet, newId, summarise } from "../ledger";
+import { BOOKMAKERS, type Bookmaker, type Ledger, type PlacedBet, type StakingSettings, newId, summarise } from "../ledger";
 import { STAKING, VALUE_EDGE, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
 import type { ArchiveSnapshot, DayBets, Predictions, Slip, TierName } from "../types";
 import { Flag } from "../badges";
-import { PREMIER_LEAGUE } from "../types";
+import { explainPick } from "../explain";
+import { type Fixture, PREMIER_LEAGUE } from "../types";
 import { Card, Crest, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
 const named = (leg: { label: string; home: string; away: string }) =>
@@ -15,12 +16,13 @@ const DEFAULT_BOOKMAKER: Record<TierName, Bookmaker> = { safe: "betpawa", medium
 
 // ---- Record a placed bet -------------------------------------------------------
 
-function PlaceForm({ tier, slip, day, total, balances, stakeFactor, onPlace, onCancel }: {
+function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onPlace, onCancel }: {
   tier: TierName; slip: Slip; day: string; total: number; balances: Record<Bookmaker, number>; stakeFactor: number;
+  staking?: StakingSettings;
   onPlace: (bet: PlacedBet) => void; onCancel: () => void;
 }) {
   const [bookmaker, setBookmaker] = useState<Bookmaker>(DEFAULT_BOOKMAKER[tier]);
-  const suggested = Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning })
+  const suggested = Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning, staking })
     * stakeFactor / STAKING.roundTo) * STAKING.roundTo;
   const [stakeText, setStakeText] = useState("");
   const [oddsText, setOddsText] = useState("");
@@ -82,17 +84,19 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, onPlace, onC
 
 // ---- Accumulator card ------------------------------------------------------------
 
-function SlipCard({ tier, slip, day, balances, placed, stakeFactor, onPlace }: {
+function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fixtures, onPlace }: {
   tier: TierName; slip: Slip; day: string; balances: Record<Bookmaker, number>; placed: boolean; stakeFactor: number;
+  staking?: StakingSettings; fixtures: Fixture[];
   onPlace: (bet: PlacedBet) => void;
 }) {
   const [entered, setEntered] = useState<Record<number, string>>({});
   const [placing, setPlacing] = useState(false);
+  const [open, setOpen] = useState<Record<number, boolean>>({});
   const prices = slip.legs.map((leg, i) => leg.betpawa_odds ?? parseOdds(entered[i] ?? ""));
   const complete = prices.every((p) => p != null);
   const total = complete ? prices.reduce<number>((a, b) => a * (b as number), 1) : 0;
   const bookmaker = DEFAULT_BOOKMAKER[tier];
-  const stake = complete ? Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning })
+  const stake = complete ? Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning, staking })
     * stakeFactor / STAKING.roundTo) * STAKING.roundTo : 0;
   const hasValue = complete && edge(slip.win_probability, total) >= VALUE_EDGE;
   return (
@@ -114,21 +118,38 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, onPlace }: {
         </div>
       </div>
       <ul>
-        {slip.legs.map((leg, i) => (
-          <li key={i} className="flex items-center gap-3 border-t border-border/60 px-5 py-3.5 first:border-t-0">
-            <Crest team={leg.home} size="sm" />
-            <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-semibold">{named(leg)}</div>
-              <div className="flex items-center gap-1.5 truncate text-xs text-ink-3">
-                <Flag country={(leg.league ?? PREMIER_LEAGUE).country} width={15} />
-                <span className="truncate">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)}</span>
+        {slip.legs.map((leg, i) => {
+          const fixture = fixtures.find((f) => f.home === leg.home && f.away === leg.away);
+          const why = fixture ? explainPick(leg.market, fixture) : [];
+          return (
+            <li key={i} className="border-t border-border/60 first:border-t-0">
+              <div className="flex items-center gap-3 px-5 py-3.5">
+                <button className="flex min-w-0 flex-1 items-center gap-3 text-left" disabled={!why.length}
+                  onClick={() => setOpen({ ...open, [i]: !open[i] })} aria-expanded={!!open[i]} aria-label={`Why ${named(leg)}`}>
+                  <Crest team={leg.home} size="sm" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 text-sm font-semibold">
+                      <span className="truncate">{named(leg)}</span>
+                      {why.length > 0 && <span className="shrink-0 text-[10px] font-semibold text-accent">{open[i] ? "▴ why" : "▾ why"}</span>}
+                    </div>
+                    <div className="flex items-center gap-1.5 truncate text-xs text-ink-3">
+                      <Flag country={(leg.league ?? PREMIER_LEAGUE).country} width={15} />
+                      <span className="truncate">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)}</span>
+                    </div>
+                  </div>
+                </button>
+                {slip.locked && leg.won != null ? <StatusPill status={leg.won ? "won" : "lost"} />
+                  : leg.betpawa_odds != null ? <span className="text-base font-bold">{odds(leg.betpawa_odds)}</span>
+                  : <OddsInput label={`Odds for ${named(leg)}`} placeholder="Odds" value={entered[i] ?? ""} onChange={(v) => setEntered({ ...entered, [i]: v })} />}
               </div>
-            </div>
-            {slip.locked && leg.won != null ? <StatusPill status={leg.won ? "won" : "lost"} />
-              : leg.betpawa_odds != null ? <span className="text-base font-bold">{odds(leg.betpawa_odds)}</span>
-              : <OddsInput label={`Odds for ${named(leg)}`} placeholder="Odds" value={entered[i] ?? ""} onChange={(v) => setEntered({ ...entered, [i]: v })} />}
-          </li>
-        ))}
+              {open[i] && (
+                <ul className="mx-5 mb-3.5 space-y-1 rounded-xl bg-surface-2 px-3.5 py-2.5 text-xs leading-relaxed text-ink-2">
+                  {why.map((line) => <li key={line}>• {line}</li>)}
+                </ul>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       {(slip.flexi?.length ?? 0) > 0 && (
@@ -173,7 +194,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, onPlace }: {
         </button>
       )}
       {placing && (
-        <PlaceForm tier={tier} slip={slip} day={day} total={total} balances={balances} stakeFactor={stakeFactor}
+        <PlaceForm tier={tier} slip={slip} day={day} total={total} balances={balances} stakeFactor={stakeFactor} staking={staking}
           onCancel={() => setPlacing(false)} onPlace={(bet) => { onPlace(bet); setPlacing(false); }} />
       )}
     </Card>
@@ -196,7 +217,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
     <div className="space-y-3">
       <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
-        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} onPlace={onPlace} />
+        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={ledger.staking} fixtures={data.fixtures} onPlace={onPlace} />
       {record && (
         <p className="px-2 text-xs leading-relaxed text-ink-3">
           Track record of {TIERS[tier].title} slips: won <b className="text-ink-2">{pct(record.win_rate, 1)}</b> of {record.slips} past days
@@ -205,7 +226,9 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
         </p>
       )}
       <p className="px-2 text-xs text-ink-3">
-        Stakes: a quarter of the Kelly amount, at most {pct(STAKING.maxTier[tier])} of your {BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance for {TIERS[tier].title}.
+        Stakes: {ledger.staking?.mode === "fixed" ? `a fixed ${tsh(ledger.staking.fixed)} per slip`
+          : ledger.staking?.mode === "percent" ? `${ledger.staking.percent}% of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance per slip`
+          : `a quarter of the Kelly amount, at most ${pct(STAKING.maxTier[tier])} of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance for ${TIERS[tier].title}`} (change in Money).
         Nothing when the odds are below fair.
       </p>
     </div>

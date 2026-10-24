@@ -33,9 +33,15 @@ export interface Transfer {
 
 export type Entry = PlacedBet | Transfer;
 
+/** How stakes are sized. "smart" = quarter Kelly with tier caps (the default). */
+export type StakingMode = "smart" | "percent" | "fixed";
+export interface StakingSettings { mode: StakingMode; percent: number; fixed: number }
+export const DEFAULT_STAKING: StakingSettings = { mode: "smart", percent: 10, fixed: 2500 };
+
 export interface Ledger {
   start: Record<Bookmaker, number>;   // balance when you started tracking
   entries: Entry[];
+  staking?: StakingSettings;
 }
 
 const LEDGER_KEY = "pl-predictor:ledger";

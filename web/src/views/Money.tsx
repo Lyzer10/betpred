@@ -1,8 +1,63 @@
 import { useState } from "react";
-import { BOOKMAKERS, type Bookmaker, type Ledger, betStatus, isBet, isTransfer, newId, payout, summarise } from "../ledger";
-import { odds, pct, tsh } from "../lib";
+import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type StakingMode, betStatus, isBet, isTransfer, newId, payout, summarise } from "../ledger";
+import { STAKING, losingStreakChance, odds, pct, tsh } from "../lib";
 import type { Result } from "../types";
-import { Card, Empty, SectionTitle, Stat, StatusPill, TIERS } from "../ui";
+import { Card, Empty, SectionTitle, Segmented, Stat, StatusPill, TIERS } from "../ui";
+
+/** Safe-slip win rate from the backtest (about 37%), used for the risk estimate. */
+const SAFE_WIN_RATE = 0.37;
+const BETS_PER_MONTH = 30;
+
+function StakingCard({ ledger, balance, onChange }: { ledger: Ledger; balance: number; onChange: (ledger: Ledger) => void }) {
+  const staking = ledger.staking ?? DEFAULT_STAKING;
+  const [text, setText] = useState(String(staking.mode === "fixed" ? staking.fixed : staking.percent));
+  const setMode = (mode: StakingMode) => {
+    onChange({ ...ledger, staking: { ...staking, mode } });
+    setText(String(mode === "fixed" ? staking.fixed : staking.percent));
+  };
+  const save = (value: string) => {
+    setText(value);
+    const number = Number(value.replace(/[^\d.]/g, ""));
+    if (!(number > 0)) return;
+    if (staking.mode === "fixed") onChange({ ...ledger, staking: { ...staking, fixed: Math.round(number) } });
+    if (staking.mode === "percent") onChange({ ...ledger, staking: { ...staking, percent: Math.min(number, 50) } });
+  };
+  const example = staking.mode === "fixed" ? Math.min(staking.fixed, balance)
+    : staking.mode === "percent" ? Math.floor((balance * staking.percent) / 100 / STAKING.roundTo) * STAKING.roundTo
+    : 0;
+  const lossesToHalve = example > 0 ? Math.ceil((balance * 0.5) / example) : 0;
+  const risk = lossesToHalve ? losingStreakChance(1 - SAFE_WIN_RATE, lossesToHalve, BETS_PER_MONTH) : 0;
+  return (
+    <Card className="px-5 py-4">
+      <div className="text-sm font-semibold">Stake per slip</div>
+      <div className="mt-3">
+        <Segmented options={[{ id: "smart", label: "Smart" }, { id: "percent", label: "% of balance" }, { id: "fixed", label: "Fixed TSh" }]}
+          value={staking.mode} onChange={(m) => setMode(m as StakingMode)} />
+      </div>
+      {staking.mode === "smart" ? (
+        <p className="mt-3 text-xs leading-relaxed text-ink-2">
+          Sized by how much value the slip has (a quarter of the Kelly amount), at most {pct(STAKING.maxTier.safe)} of your balance on Safe.
+          Safest for small balances, but stakes can be small.
+        </p>
+      ) : (
+        <>
+          <label className="mt-3 flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2.5">
+            <span className="text-xs text-ink-3">{staking.mode === "fixed" ? "TSh" : "%"}</span>
+            <input inputMode="numeric" aria-label={staking.mode === "fixed" ? "Fixed stake in TSh" : "Percent of balance"}
+              className="w-full bg-transparent text-base font-bold outline-none" value={text} onChange={(e) => save(e.target.value)} />
+          </label>
+          {balance > 0 && example > 0 && (
+            <p className={`mt-3 text-xs leading-relaxed ${risk > 0.5 ? "text-critical-ink" : risk > 0.2 ? "text-warning-ink" : "text-ink-2"}`}>
+              {tsh(example)} is {pct(example / balance)} of your Betpawa balance. Losing half of it takes {lossesToHalve} Safe slips lost in a row;
+              over a month of {BETS_PER_MONTH} Safe slips that happens at least once about <b>{pct(risk)}</b> of the time.
+            </p>
+          )}
+        </>
+      )}
+      <p className="mt-2 text-[11px] text-ink-3">Any mode: slips without value still say skip, and stakes are halved on price or model warnings.</p>
+    </Card>
+  );
+}
 
 const signed = (amount: number) => `${amount >= 0 ? "+" : "−"}${tsh(Math.abs(amount))}`;
 
@@ -85,6 +140,9 @@ export function Money({ ledger, results, onChange }: { ledger: Ledger; results: 
   return (
     <div>
       <div className="space-y-3">{accounts.map((b) => <AccountCard key={b} bookmaker={b} ledger={ledger} results={results} onChange={onChange} />)}</div>
+
+      <SectionTitle>Staking</SectionTitle>
+      <StakingCard ledger={ledger} balance={totals[0].balance} onChange={onChange} />
 
       <SectionTitle>Overall</SectionTitle>
       <Card className="grid grid-cols-3 gap-3 px-5 py-4">

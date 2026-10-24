@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { StakingSettings } from "./ledger";
 import type { ArchiveSnapshot, MarketKey, Predictions, Result, SavedPick } from "./types";
 
 export function usePredictions() {
@@ -82,13 +83,39 @@ export function kellyFraction(probability: number, odds: number) {
 
 /** Recommended stake in TSh (0 = skip). */
 export function recommendedStake(bankroll: number, probability: number, odds: number,
-  opts: { tier?: "safe" | "medium" | "big"; warning?: boolean } = {}) {
-  if (!(bankroll > 0) || edge(probability, odds) < VALUE_EDGE) return 0;
-  const cap = opts.tier ? STAKING.maxTier[opts.tier] : STAKING.maxSingle;
-  let fraction = Math.min(kellyFraction(probability, odds) * STAKING.kellyFraction, cap);
-  if (opts.warning) fraction *= STAKING.warningFactor;
-  const stake = Math.floor((bankroll * fraction) / STAKING.roundTo) * STAKING.roundTo;
+  opts: { tier?: "safe" | "medium" | "big"; warning?: boolean; staking?: StakingSettings } = {}) {
+  if (!(bankroll > 0) || edge(probability, odds) < VALUE_EDGE) return 0;   // no value: always skip
+  const staking = opts.staking;
+  let amount: number;
+  if (staking?.mode === "fixed") amount = Math.min(staking.fixed, bankroll);
+  else if (staking?.mode === "percent") amount = (bankroll * staking.percent) / 100;
+  else {
+    const cap = opts.tier ? STAKING.maxTier[opts.tier] : STAKING.maxSingle;
+    amount = bankroll * Math.min(kellyFraction(probability, odds) * STAKING.kellyFraction, cap);
+  }
+  if (opts.warning) amount *= STAKING.warningFactor;
+  const stake = Math.floor(amount / STAKING.roundTo) * STAKING.roundTo;
   return stake >= STAKING.minStake ? stake : 0;
+}
+
+/** Chance of at least one run of `streak` straight losses in `bets` bets (each lost with probability q). */
+export function losingStreakChance(q: number, streak: number, bets: number) {
+  if (streak <= 0) return 1;
+  if (streak > bets) return 0;
+  // state[k] = probability the current run of losses has length k, with no full streak yet.
+  let state = new Array(streak).fill(0);
+  state[0] = 1;
+  let hit = 0;
+  for (let i = 0; i < bets; i++) {
+    const next = new Array(streak).fill(0);
+    for (let k = 0; k < streak; k++) {
+      next[0] += state[k] * (1 - q);
+      if (k + 1 === streak) hit += state[k] * q;
+      else next[k + 1] += state[k] * q;
+    }
+    state = next;
+  }
+  return hit;
 }
 
 /** Scale a round's stakes down proportionally so their total stays within maxRound. */

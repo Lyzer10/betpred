@@ -30,6 +30,22 @@ for (const scheme of ["light", "dark"]) {
   }
   check(await balanceOf("Betpawa") === 50000 && await balanceOf("SportyBet") === 20000, `[${scheme}] balances set`);
 
+  // Staking: fixed TSh 2,500 per slip, with an honest risk line.
+  await page.getByRole("tab", { name: "Fixed TSh" }).click();
+  await page.getByLabel("Fixed stake in TSh").fill("2500");
+  check(await page.getByText(/Losing half of it takes \d+ Safe slips lost in a row/).count() === 1, `[${scheme}] staking risk line shown`);
+  await page.getByRole("button", { name: "Bets", exact: true }).click();
+  await page.getByRole("tab", { name: "Safe" }).waitFor();
+  // TSh 2,500, or TSh 1,200 when a price warning halves it; "skip" when the slip has no value.
+  const fixedShown = await page.getByText(/^TSh (2,500|1,200)$/).count();
+  const skipShown = await page.getByText(/skip it/).count();
+  check(fixedShown === 1 || skipShown === 1, `[${scheme}] fixed stake used on the Safe slip (${fixedShown ? "stake shown" : "skip"})`);
+  // Why this bet: tap the first pick.
+  await page.getByRole("button", { name: /^Why / }).first().click();
+  check(await page.getByText(/expected/).count() >= 1, `[${scheme}] why-this-bet explanation opens`);
+  await page.getByRole("button", { name: "Money", exact: true }).click();
+  await page.getByRole("tab", { name: "Smart" }).click();
+
   // Bets: accumulators only, no odds boxes, stake from the Betpawa balance; record the Safe slip.
   await page.getByRole("button", { name: "Bets", exact: true }).click();
   await page.getByRole("tab", { name: "Safe" }).waitFor();

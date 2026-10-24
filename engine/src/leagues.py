@@ -60,6 +60,8 @@ class LeaguePaths:
     @property
     def predictions_goal_timing(self) -> Path: return self.processed_dir / "predictions_goal_timing.parquet"
     @property
+    def predictions_goal_timing_validation(self) -> Path: return self.processed_dir / "predictions_goal_timing_validation.parquet"
+    @property
     def calibration_methods(self) -> Path: return self.processed_dir / "calibration_methods.json"
     @property
     def accumulator_legs(self) -> Path: return self.processed_dir / "accumulator_legs.parquet"

@@ -25,6 +25,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 from scipy.optimize import least_squares
+from sklearn.linear_model import LogisticRegression
 
 from .calibration import ENGINE_DIR, MATCHES_PATH, OUTPUT_PATH, TEST_SEASONS
 from .dixon_coles import market_probabilities, score_matrix
@@ -123,21 +124,9 @@ def betting_round(dates: pd.Series) -> pd.Series:
     return shifted.year.astype(str) + "-W" + shifted.week.astype(str).str.zfill(2) + "-" + label
 
 
-def build_leg_table(league="EPL") -> pd.DataFrame:
-    """One row per (match, market): calibrated probability, estimated odds, outcome."""
-    league_paths = paths(get_league(league))
-    timing = pd.read_parquet(league_paths.predictions_goal_timing)
-    timing = timing[timing.season.isin(TEST_SEASONS)]
-    calibrated = pd.read_parquet(league_paths.predictions_calibrated)
-    calibrated = calibrated[calibrated.variant == "blend"]
-    cal_columns = ["cal_home", "cal_draw", "cal_away", "cal_over05", "cal_over15",
-                   "cal_over25", "cal_over35", "cal_btts", "rho"]
-    frame = timing.merge(calibrated[["match_id", *cal_columns]], on="match_id", validate="one_to_one")
+def _rows_to_legs(frame: pd.DataFrame) -> pd.DataFrame:
+    """Convert one row per match with calibrated fields into market leg rows."""
     # Use market-average prices, the same kind the live fixtures file provides.
-    missing_odds = [column for column in AVERAGE_ODDS if column not in frame]
-    if missing_odds:
-        average = pd.read_parquet(league_paths.matches)[["match_id", *missing_odds]]
-        frame = frame.merge(average, on="match_id", validate="one_to_one")
     frame["cal_under25"] = 1 - frame.cal_over25
     frame["cal_under35"] = 1 - frame.cal_over35
     frame["cal_btts_no"] = 1 - frame.cal_btts
@@ -164,11 +153,104 @@ def build_leg_table(league="EPL") -> pd.DataFrame:
                 "odds": 1 / (fair[market] * (1 + RETAIL_MARGIN)),
                 "won": int(getattr(match, actual_column)),
             })
-    legs = pd.DataFrame(rows)
+    return pd.DataFrame(rows)
+
+
+def _prepare_leg_frame(timing: pd.DataFrame, matches: pd.DataFrame,
+                       calibrated: pd.DataFrame | None = None) -> pd.DataFrame:
+    if calibrated is not None:
+        cal_columns = ["cal_home", "cal_draw", "cal_away", "cal_over05", "cal_over15",
+                       "cal_over25", "cal_over35", "cal_btts", "rho"]
+        timing = timing.merge(calibrated[["match_id", *cal_columns]], on="match_id", validate="one_to_one")
+    missing_odds = [column for column in AVERAGE_ODDS if column not in timing]
+    if missing_odds:
+        timing = timing.merge(matches[["match_id", *missing_odds]], on="match_id", validate="one_to_one")
+    valid = (timing[AVERAGE_ODDS].notna() & timing[AVERAGE_ODDS].gt(0)).all(axis=1) & timing.rho.notna()
+    return timing[valid].copy()
+
+
+def build_validation_leg_table(league="EPL") -> pd.DataFrame:
+    league_paths = paths(get_league(league))
+    from .goal_timing import build_validation_timing_predictions
+    if not league_paths.predictions_goal_timing_validation.exists():
+        build_validation_timing_predictions(league)
+    timing = pd.read_parquet(league_paths.predictions_goal_timing_validation)
+    matches = pd.read_parquet(league_paths.matches)
+    legs = _rows_to_legs(_prepare_leg_frame(timing, matches))
+    legs = legs[legs.odds >= 1.05].reset_index(drop=True)
+    legs = legs.rename(columns={"probability": "model_probability"})
+    return legs
+
+
+def _platt_market(history: pd.DataFrame, probability: pd.Series, regularization: float = 1.0) -> np.ndarray:
+    if history.empty or history.won.nunique() < 2:
+        return probability.to_numpy(float)
+    model = LogisticRegression(C=regularization, solver="lbfgs", max_iter=1000)
+    model.fit(_logit(history.bookmaker_probability).to_numpy().reshape(-1, 1), history.won)
+    return model.predict_proba(_logit(probability).to_numpy().reshape(-1, 1))[:, 1]
+
+
+def _select_market_regularization(validation: pd.DataFrame) -> float:
+    """Choose Platt regularisation on date-forward validation predictions only."""
+    candidates = (0.1, 1.0, 10.0, 1e6)
+    scores = []
+    for candidate in candidates:
+        probabilities, outcomes = [], []
+        dates = sorted(validation.date.unique())
+        for prediction_date in dates:
+            history = validation[validation.date < prediction_date]
+            fold = validation[validation.date == prediction_date]
+            if history.empty:
+                continue
+            probabilities.extend(_platt_market(history, fold.bookmaker_probability, candidate))
+            outcomes.extend(fold.won)
+        probabilities, outcomes = np.asarray(probabilities), np.asarray(outcomes)
+        if len(np.unique(outcomes)) < 2:
+            scores.append((0.0, _log_loss(probabilities, outcomes)))
+            continue
+        calibration = LogisticRegression(C=1e6, solver="lbfgs", max_iter=1000)
+        calibration.fit(_logit(probabilities).reshape(-1, 1), outcomes)
+        slope = float(calibration.coef_[0, 0])
+        scores.append((abs(slope - 1), _log_loss(probabilities, outcomes)))
+    return float(candidates[min(range(len(candidates)), key=lambda index: scores[index])])
+
+
+def calibrate_market_probabilities(validation: pd.DataFrame, test: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Platt calibrate bookmaker consensus with earlier seasons only."""
+    validation, test = validation.copy(), test.copy()
+    validation["market_probability"] = np.nan
+    test["market_probability"] = np.nan
+    for market in validation.market.unique():
+        market_validation = validation[validation.market == market]
+        regularization = _select_market_regularization(market_validation)
+        for prediction_date in sorted(market_validation.date.unique()):
+            current = (validation.market == market) & (validation.date == prediction_date)
+            history = market_validation[market_validation.date < prediction_date]
+            validation.loc[current, "market_probability"] = _platt_market(history, validation.loc[current, "bookmaker_probability"], regularization)
+        market_test = test[test.market == market]
+        for prediction_date in sorted(market_test.date.unique()):
+            current = (test.market == market) & (test.date == prediction_date)
+            history = pd.concat([validation[validation.market == market],
+                                 market_test[market_test.date < prediction_date]], ignore_index=True)
+            test.loc[current, "market_probability"] = _platt_market(history, test.loc[current, "bookmaker_probability"], regularization)
+    return validation, test
+
+
+def build_leg_table(league="EPL") -> pd.DataFrame:
+    """One row per test match and market with final blended probability."""
+    league_paths = paths(get_league(league))
+    timing = pd.read_parquet(league_paths.predictions_goal_timing)
+    timing = timing[timing.season.isin(TEST_SEASONS)]
+    calibrated = pd.read_parquet(league_paths.predictions_calibrated)
+    calibrated = calibrated[calibrated.variant == "blend"]
+    matches = pd.read_parquet(league_paths.matches)
+    legs = _rows_to_legs(_prepare_leg_frame(timing, matches, calibrated))
+    validation = build_validation_leg_table(league)
+    validation, legs = calibrate_market_probabilities(validation, legs)
     # Legs paying under 1.05 add risk without meaningfully moving the slip odds.
     legs = legs[legs.odds >= 1.05].reset_index(drop=True)
     legs = legs.rename(columns={"probability": "model_probability"})
-    legs["probability"], weights = blend_with_market(legs)
+    legs["probability"], weights = blend_with_market(legs, validation)
     legs["edge"] = legs.probability * legs.odds - 1
     legs.attrs["model_weights"] = weights
     return legs
@@ -192,12 +274,14 @@ def blend(model_probability, market_probability, model_weight: float):
 def fit_model_weight(history: pd.DataFrame) -> float:
     """Model weight in [0, 1] (0.05 steps) minimising log loss on settled legs."""
     grid = np.linspace(0, 1, 21)
-    losses = [_log_loss(blend(history.model_probability, history.bookmaker_probability, w), history.won)
+    market_column = "market_probability" if "market_probability" in history else "bookmaker_probability"
+    losses = [_log_loss(blend(history.model_probability, history[market_column], w), history.won)
               for w in grid]
     return float(grid[int(np.argmin(losses))])
 
 
-def blend_with_market(legs: pd.DataFrame, default_weight: float = 0.5) -> tuple[np.ndarray, dict]:
+def blend_with_market(legs: pd.DataFrame, validation_legs: pd.DataFrame | None = None,
+                      default_weight: float = 0.5) -> tuple[np.ndarray, dict]:
     """Logit-blend model and bookmaker probabilities, weight learned walk-forward.
 
     On its own the model loses to the sharp market on most markets, and picking
@@ -209,9 +293,12 @@ def blend_with_market(legs: pd.DataFrame, default_weight: float = 0.5) -> tuple[
     weights = {}
     for season in sorted(legs.season.unique()):
         history = legs[legs.season < season]
+        if validation_legs is not None:
+            history = pd.concat([validation_legs, history], ignore_index=True)
         weight = default_weight if history.empty else fit_model_weight(history)
         current = (legs.season == season).to_numpy()
-        blended[current] = blend(legs.model_probability[current], legs.bookmaker_probability[current], weight)
+        market_column = "market_probability" if "market_probability" in legs else "bookmaker_probability"
+        blended[current] = blend(legs.model_probability[current], legs.loc[current, market_column], weight)
         weights[season] = weight
     return blended, weights
 
@@ -316,8 +403,8 @@ def write_report(legs: pd.DataFrame, slips: pd.DataFrame, report_path=REPORT_PAT
              "Leg probability = logit blend of calibrated model and bookmaker-implied probability. "
              "Model weight per season, learned on earlier seasons only: "
              + ", ".join(f"{s}: {w:.2f}" for s, w in legs.attrs.get("model_weights", {}).items()) + ".", "",
-             "Modes: `accuracy` picks the most likely slip in the odds range using blended probabilities; "
-             "`market_only` and `model_only` do the same with one source alone (baselines); "
+             "Modes: `blended` picks the most likely slip using the learned model and market blend; "
+             "`market` uses the calibrated bookmaker consensus; `model_only` is a diagnostic; "
              "`value` only uses legs where blended probability x estimated odds >= 1.03. "
              "Predicted win uses each mode's own probabilities.", "",
              "## Slip results", "",
@@ -330,13 +417,13 @@ def write_report(legs: pd.DataFrame, slips: pd.DataFrame, report_path=REPORT_PAT
                      f"{group.predicted_win.mean():.1%} | {group.won.mean():.1%} | {low:.0%}-{high:.0%} | "
                      f"{group.bookmaker_win.mean():.1%} | {roi:+.1%} |")
 
-    lines += ["", "## By season (accuracy mode)", "", "| Tier | Season | Slips | Predicted win | Actual win |",
+    lines += ["", "## By season (blended mode)", "", "| Tier | Season | Slips | Predicted win | Actual win |",
               "|---|---|---:|---:|---:|"]
-    accuracy = slips[slips["mode"] == "accuracy"]
+    accuracy = slips[slips["mode"] == "blended"]
     for (tier, season), group in accuracy.groupby(["tier", "season"], sort=False):
         lines.append(f"| {tier} | {season} | {len(group)} | {group.predicted_win.mean():.1%} | {group.won.mean():.1%} |")
 
-    lines += ["", "## Markets used in slips (accuracy mode)", "", "| Tier | Market | Legs | Leg hit rate |",
+    lines += ["", "## Markets used in slips (blended mode)", "", "| Tier | Market | Legs | Leg hit rate |",
               "|---|---|---:|---:|"]
     for tier in TIERS:
         tier_slips = accuracy[accuracy.tier == tier.name]
@@ -382,8 +469,8 @@ def main() -> None:
     legs = build_leg_table(args.league)
     legs.to_parquet(league_paths.accumulator_legs, index=False)
     slips = backtest_slips(legs, {
-        "accuracy": ("probability", None),               # blended model + market
-        "market_only": ("bookmaker_probability", None),  # baseline: no model at all
+        "blended": ("probability", None),
+        "market": ("market_probability", None),
         "model_only": ("model_probability", None),       # shows the winner's curse
         "value": ("probability", 0.03),
     })

@@ -13,7 +13,7 @@ from .dixon_coles import score_matrix
 from .leagues import get_league, paths
 from .calibration import (
     ENGINE_DIR, MATCHES_PATH, DC_PATH, OUTPUT_PATH, TEST_SEASONS, add_actuals,
-    binary_metrics, choose_methods, walk_forward_calibration,
+    binary_metrics, choose_methods, fit_calibrator, walk_forward_calibration,
 )
 
 GOALS_PATH = ENGINE_DIR / "data" / "processed" / "goals.parquet"
@@ -30,6 +30,67 @@ TIMING_MARKETS = {
     "home_1up": ("sim_home_1up", "actual_home_1up"),
     "away_1up": ("sim_away_1up", "actual_away_1up"),
 }
+
+
+def _expanding_platt(frame: pd.DataFrame, markets: dict[str, tuple[str, str]], seasons: list[str]) -> pd.DataFrame:
+    """Calibrate each season from earlier supplied seasons, using identity for the first."""
+    parts = []
+    for index, season in enumerate(seasons):
+        fold = frame[frame.season == season].copy()
+        history = frame[frame.season.isin(seasons[:index])]
+        for market, (raw, actual) in markets.items():
+            fold[f"cal_{market}"] = (fold[raw].to_numpy(float) if history.empty else
+                                      fit_calibrator(history[raw], history[actual], "platt").predict(fold[raw]))
+        parts.append(fold)
+    return pd.concat(parts, ignore_index=True)
+
+
+def build_validation_timing_predictions(league="EPL") -> pd.DataFrame:
+    """Build leakage safe validation probabilities used only to learn market blend weights."""
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    goals = pd.read_parquet(league_paths.goals)
+    dc = pd.read_parquet(league_paths.predictions_dc)
+    dc = dc[(dc.variant == "blend") & (dc.split == "validation")].copy()
+    source = add_actuals(dc.merge(matches, on=["match_id", "date"], validate="one_to_one"))
+    rows = []
+    for season in VALIDATION_SEASONS:
+        fold = source[source.season == season].sort_values("date")
+        first_date = fold.date.min()
+        historical_matches = matches[matches.date < first_date]
+        historical_goals = goals[goals.match_id.isin(set(historical_matches.match_id))]
+        _, profile = estimate_time_profile(historical_goals)
+        training_predictions = dc[dc.date < first_date]
+        training_matches = matches[matches.match_id.isin(training_predictions.match_id)]
+        training_goals = goals[goals.match_id.isin(set(training_matches.match_id))]
+        multipliers = fit_state_multipliers(training_matches, training_goals, training_predictions, profile)
+        for match in fold.itertuples(index=False):
+            seed = int(match.match_id) if str(match.match_id).isdigit() else abs(hash(match.match_id)) % (2**32)
+            matrix = score_matrix(match.lambda_home, match.lambda_away, match.rho)
+            timing = simulate_match(match.lambda_home, match.lambda_away, profile, multipliers, seed=seed, matrix=matrix)
+            rows.append({"match_id": match.match_id, "date": match.date, "season": season,
+                         "lambda_home": match.lambda_home, "lambda_away": match.lambda_away,
+                         "prob_home": match.prob_home, "prob_draw": match.prob_draw,
+                         "prob_away": match.prob_away, "prob_over05": match.prob_over05,
+                         "prob_over15": match.prob_over15, "prob_over25": match.prob_over25,
+                         "prob_over35": match.prob_over35, "prob_btts": match.prob_btts,
+                         "rho": match.rho, **timing})
+        print(f"Simulated validation {season}: {len(fold)} matches")
+    validation = add_actuals(pd.DataFrame(rows).merge(matches, on=["match_id", "date", "season"], validate="one_to_one"))
+    validation = _expanding_platt(validation, TIMING_MARKETS, VALIDATION_SEASONS)
+    base_markets = {
+        "home": ("prob_home", "actual_home"), "draw": ("prob_draw", "actual_draw"),
+        "away": ("prob_away", "actual_away"), "over05": ("prob_over05", "actual_over05"),
+        "over15": ("prob_over15", "actual_over15"), "over25": ("prob_over25", "actual_over25"),
+        "over35": ("prob_over35", "actual_over35"), "btts": ("prob_btts", "actual_btts"),
+    }
+    validation = _expanding_platt(validation, base_markets, VALIDATION_SEASONS)
+    result_columns = ["cal_home", "cal_draw", "cal_away"]
+    validation[result_columns] = validation[result_columns].to_numpy() / validation[result_columns].sum(axis=1).to_numpy()[:, None]
+    over_columns = ["cal_over05", "cal_over15", "cal_over25", "cal_over35"]
+    validation[over_columns] = np.minimum.accumulate(validation[over_columns].to_numpy(float), axis=1)
+    validation.to_parquet(league_paths.predictions_goal_timing_validation, index=False)
+    return validation
 
 
 def minute_bucket(minute: int) -> int:

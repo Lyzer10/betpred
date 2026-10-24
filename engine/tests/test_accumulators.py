@@ -6,8 +6,10 @@ import pytest
 
 from src.accumulators import (
     Tier, best_slip, betting_round, blend_with_market, bookmaker_fair_probabilities,
+    calibrate_market_probabilities,
 )
 from src.dixon_coles import market_probabilities, score_matrix
+from src.phase1_evaluation import calibration_diagnostic
 
 
 def _random_legs(seed: int, matches: int = 6, markets: int = 4) -> pd.DataFrame:
@@ -89,3 +91,42 @@ def test_blend_weight_uses_only_earlier_seasons():
     # Changing the later season's outcomes must not change the earlier weight.
     legs.loc[legs.season == "2025/26", "won"] = 1 - legs.loc[legs.season == "2025/26", "won"]
     assert blend_with_market(legs)[1]["2024/25"] == 0.5
+
+
+def test_first_test_weight_is_learned_from_validation_only():
+    rng = np.random.default_rng(12)
+    validation = pd.DataFrame({
+        "season": np.repeat(["2021/22", "2022/23", "2023/24"], 1000),
+        "model_probability": np.full(3000, 0.8),
+        "market_probability": np.full(3000, 0.5),
+        "bookmaker_probability": np.full(3000, 0.5),
+        "won": (rng.uniform(size=3000) < 0.5).astype(int),
+    })
+    test = validation.iloc[:100].copy()
+    test["season"] = "2024/25"
+    _, weights = blend_with_market(test, validation)
+    assert weights["2024/25"] == 0.0
+
+
+def test_market_calibration_uses_only_prior_seasons():
+    rows = []
+    for year, (season, won) in enumerate((("2021/22", 0), ("2022/23", 1), ("2023/24", 1)), start=2021):
+        rows.extend({"season": season, "date": pd.Timestamp(f"{year}-08-01") + pd.to_timedelta(index, unit="D"),
+                     "market": "home_win", "bookmaker_probability": 0.6,
+                     "won": won, "model_probability": 0.6} for index in range(20))
+    validation = pd.DataFrame(rows)
+    test = pd.DataFrame({"season": ["2024/25"], "date": [pd.Timestamp("2024-08-01")], "market": ["home_win"],
+                         "bookmaker_probability": [0.6], "won": [1], "model_probability": [0.6]})
+    calibrated_validation, calibrated_test = calibrate_market_probabilities(validation, test)
+    assert calibrated_validation.loc[calibrated_validation.season == "2021/22", "market_probability"].iloc[0] == 0.6
+    assert calibrated_test.market_probability.notna().all()
+
+
+def test_equal_count_calibration_diagnostic_checks_z_and_slope():
+    probability = np.tile(np.linspace(0.1, 0.9, 10), 200)
+    rng = np.random.default_rng(44)
+    legs = pd.DataFrame({"market": "home_win", "probability": probability,
+                         "won": (rng.uniform(size=len(probability)) < probability).astype(int)})
+    result = calibration_diagnostic(legs, "home_win", "probability")
+    assert result["max_z"] <= 3
+    assert 0.8 <= result["slope"] <= 1.2

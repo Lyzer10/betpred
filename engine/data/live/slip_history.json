@@ -2,12 +2,12 @@
   {
     "round": "2026-10-24",
     "tier": "safe",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
-    "total_odds": 2.57,
-    "win_probability": 0.4379,
+    "generated_at": "2026-10-24T09:46:23.143702Z",
+    "total_odds": 2.65,
+    "win_probability": 0.4378,
     "odds_source": "betpawa",
-    "expected_value": 0.1264,
-    "kelly": 0.0804,
+    "expected_value": 0.1584,
+    "kelly": 0.0962,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -21,7 +21,7 @@
         "label": "Under 3.5 goals",
         "probability": 0.6084,
         "estimated_odds": 1.57,
-        "betpawa_odds": 1.75,
+        "betpawa_odds": 1.8,
         "fair_odds": 1.64,
         "price_warning": false,
         "won": null
@@ -34,7 +34,7 @@
         "away": "Tottenham",
         "market": "home_1up",
         "label": "Home 1Up",
-        "probability": 0.7196,
+        "probability": 0.7195,
         "estimated_odds": 1.32,
         "betpawa_odds": 1.47,
         "fair_odds": 1.39,
@@ -47,12 +47,12 @@
   {
     "round": "2026-10-24",
     "tier": "medium",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
-    "total_odds": 3.71,
+    "generated_at": "2026-10-24T09:46:23.143702Z",
+    "total_odds": 3.8,
     "win_probability": 0.3167,
     "odds_source": "betpawa",
-    "expected_value": 0.1755,
-    "kelly": 0.0647,
+    "expected_value": 0.2031,
+    "kelly": 0.0726,
     "price_warning": true,
     "flexi": [
       {
@@ -71,7 +71,7 @@
         "label": "Under 3.5 goals",
         "probability": 0.6084,
         "estimated_odds": 1.57,
-        "betpawa_odds": 1.75,
+        "betpawa_odds": 1.8,
         "fair_odds": 1.64,
         "price_warning": false,
         "won": null
@@ -101,7 +101,7 @@
         "label": "Home win",
         "probability": 0.5582,
         "estimated_odds": 1.68,
-        "betpawa_odds": 2.02,
+        "betpawa_odds": 2.01,
         "fair_odds": 1.79,
         "price_warning": true,
         "won": null
@@ -112,21 +112,21 @@
   {
     "round": "2026-10-24",
     "tier": "big",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
-    "total_odds": 8.25,
-    "win_probability": 0.1434,
+    "generated_at": "2026-10-24T09:46:23.143702Z",
+    "total_odds": 8.17,
+    "win_probability": 0.1481,
     "odds_source": "betpawa",
-    "expected_value": 0.1829,
-    "kelly": 0.0252,
+    "expected_value": 0.2093,
+    "kelly": 0.0292,
     "price_warning": true,
     "flexi": [
       {
         "min_correct": 3,
-        "probability": 0.5053
+        "probability": 0.5627
       },
       {
         "min_correct": 2,
-        "probability": 0.8424
+        "probability": 0.9017
       }
     ],
     "legs": [
@@ -136,13 +136,13 @@
         "kickoff_utc": "2026-10-24T11:30:00Z",
         "home": "Aston Villa",
         "away": "Manchester City",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6084,
-        "estimated_odds": 1.57,
-        "betpawa_odds": 1.75,
-        "fair_odds": 1.64,
-        "price_warning": false,
+        "market": "under_2.5",
+        "label": "Under 2.5 goals",
+        "probability": 0.3855,
+        "estimated_odds": 2.49,
+        "betpawa_odds": 2.9,
+        "fair_odds": 2.59,
+        "price_warning": true,
         "won": null
       },
       {
@@ -151,12 +151,12 @@
         "kickoff_utc": "2026-10-24T14:00:00Z",
         "home": "Arsenal",
         "away": "Everton",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.7047,
-        "estimated_odds": 1.33,
-        "betpawa_odds": 1.44,
-        "fair_odds": 1.42,
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.8777,
+        "estimated_odds": 1.07,
+        "betpawa_odds": 1.13,
+        "fair_odds": 1.14,
         "price_warning": false,
         "won": null
       },
@@ -166,12 +166,12 @@
         "kickoff_utc": "2026-10-24T14:00:00Z",
         "home": "Coventry",
         "away": "Fulham",
-        "market": "double_1x",
-        "label": "Home or draw",
-        "probability": 0.5993,
-        "estimated_odds": 1.61,
-        "betpawa_odds": 1.62,
-        "fair_odds": 1.67,
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.7839,
+        "estimated_odds": 1.18,
+        "betpawa_odds": 1.24,
+        "fair_odds": 1.28,
         "price_warning": false,
         "won": null
       },
@@ -185,7 +185,7 @@
         "label": "Home win",
         "probability": 0.5582,
         "estimated_odds": 1.68,
-        "betpawa_odds": 2.02,
+        "betpawa_odds": 2.01,
         "fair_odds": 1.79,
         "price_warning": true,
         "won": null
@@ -196,7 +196,7 @@
   {
     "round": "2026-10-25",
     "tier": "safe",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
+    "generated_at": "2026-10-24T09:46:23.143702Z",
     "total_odds": 2.51,
     "win_probability": 0.4019,
     "odds_source": "betpawa",
@@ -241,17 +241,17 @@
   {
     "round": "2026-10-25",
     "tier": "medium",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
+    "generated_at": "2026-10-24T09:46:23.143702Z",
     "total_odds": 3.51,
-    "win_probability": 0.2878,
+    "win_probability": 0.288,
     "odds_source": "betpawa",
-    "expected_value": 0.0088,
-    "kelly": 0.0035,
+    "expected_value": 0.0096,
+    "kelly": 0.0038,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.7355
+        "probability": 0.7357
       }
     ],
     "legs": [
@@ -278,10 +278,10 @@
         "away": "Bournemouth",
         "market": "home_1up",
         "label": "Home 1Up",
-        "probability": 0.627,
+        "probability": 0.6274,
         "estimated_odds": 1.5,
         "betpawa_odds": 1.57,
-        "fair_odds": 1.6,
+        "fair_odds": 1.59,
         "price_warning": false,
         "won": null
       },
@@ -306,11 +306,11 @@
   {
     "round": "2026-10-25",
     "tier": "big",
-    "generated_at": "2026-10-24T09:05:32.650244Z",
+    "generated_at": "2026-10-24T09:46:23.143702Z",
     "total_odds": 8.37,
     "win_probability": 0.1276,
     "odds_source": "betpawa",
-    "expected_value": 0.0678,
+    "expected_value": 0.0679,
     "kelly": 0.0092,
     "price_warning": false,
     "flexi": [

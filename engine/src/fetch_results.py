@@ -4,9 +4,11 @@ from __future__ import annotations
 from datetime import date
 from io import BytesIO
 from pathlib import Path
+import argparse
 
 import pandas as pd
 import requests
+from .leagues import get_league, paths
 
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw" / "football_data"
 START_SEASON = 2014
@@ -57,12 +59,14 @@ def parse_match_dates(values: pd.Series) -> pd.Series:
     return parsed
 
 
-def download_season(year: int, session: requests.Session | None = None, refresh: bool = False) -> Path:
+def download_season(year: int, session: requests.Session | None = None, refresh: bool = False,
+                    league="EPL") -> Path:
+    selected = get_league(league)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    target = RAW_DIR / f"E0_{season_code(year)}.csv"
+    target = paths(selected).football_csv(season_code(year))
     if target.exists() and not refresh:
         return target
-    url = f"https://www.football-data.co.uk/mmz4281/{season_code(year)}/E0.csv"
+    url = f"https://www.football-data.co.uk/mmz4281/{season_code(year)}/{selected.football_data_code}.csv"
     response = (session or requests).get(url, timeout=30)
     response.raise_for_status()
     # Validate before caching an HTML error page.
@@ -71,8 +75,9 @@ def download_season(year: int, session: requests.Session | None = None, refresh:
     return target
 
 
-def load_season(year: int, session: requests.Session | None = None, refresh: bool = False) -> pd.DataFrame:
-    raw = pd.read_csv(download_season(year, session, refresh))
+def load_season(year: int, session: requests.Session | None = None, refresh: bool = False,
+                league="EPL") -> pd.DataFrame:
+    raw = pd.read_csv(download_season(year, session, refresh, league))
     # Only columns this season actually has; fetch_all adds the missing ones afterwards,
     # so concatenation never sees all-empty columns.
     selected = pd.DataFrame({destination: raw[source] for source, destination in SOURCE_COLUMNS.items() if source in raw},
@@ -84,18 +89,22 @@ def load_season(year: int, session: requests.Session | None = None, refresh: boo
     return selected
 
 
-def fetch_all(start: int = START_SEASON, end: int | None = None, refresh_current: bool = False) -> pd.DataFrame:
+def fetch_all(start: int = START_SEASON, end: int | None = None, refresh_current: bool = False,
+              league="EPL") -> pd.DataFrame:
     """Load all seasons; refresh_current re-downloads the in-progress season."""
     current = current_season_start()
     end = current if end is None else end
     with requests.Session() as session:
-        frame = pd.concat([load_season(year, session, refresh_current and year == current)
+        frame = pd.concat([load_season(year, session, refresh_current and year == current, league)
                            for year in range(start, end + 1)], ignore_index=True)
     return frame.reindex(columns=["date", "season", *[c for c in SOURCE_COLUMNS.values() if c != "date"]])
 
 
 def main() -> None:
-    frame = fetch_all()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    frame = fetch_all(league=args.league)
     print(f"Downloaded or loaded {len(frame):,} football-data matches.")
 
 

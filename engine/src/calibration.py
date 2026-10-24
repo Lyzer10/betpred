@@ -10,6 +10,7 @@ import pandas as pd
 from scipy.special import expit, logit, xlogy
 from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import LogisticRegression
+from .leagues import get_league, paths
 
 ENGINE_DIR = Path(__file__).resolve().parents[1]
 MATCHES_PATH = ENGINE_DIR / "data" / "processed" / "matches.parquet"
@@ -142,9 +143,10 @@ def choose_methods(calibrated: pd.DataFrame, markets: dict[str, tuple[str, str]]
     return chosen, scores
 
 
-def build_calibrated_predictions() -> tuple[pd.DataFrame, dict, dict]:
-    matches = pd.read_parquet(MATCHES_PATH)
-    predictions = pd.read_parquet(DC_PATH)
+def build_calibrated_predictions(league="EPL") -> tuple[pd.DataFrame, dict, dict]:
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    predictions = pd.read_parquet(league_paths.predictions_dc)
     predictions = predictions[predictions.variant.isin(["blend", "xg"])]
     source = add_actuals(predictions.merge(matches, on=["match_id", "date"], validate="many_to_one"))
     calibrated_parts, all_audits, all_methods, all_scores = [], {}, {}, {}
@@ -156,14 +158,20 @@ def build_calibrated_predictions() -> tuple[pd.DataFrame, dict, dict]:
         all_audits[variant], all_methods[variant], all_scores[variant] = audit, methods, scores
     output = pd.concat(calibrated_parts, ignore_index=True)
     keep = [column for column in output.columns if column in predictions.columns or column.startswith(("platt_", "isotonic_", "cal_"))]
-    output[keep].to_parquet(OUTPUT_PATH, index=False)
-    METHODS_PATH.write_text(json.dumps({"methods": all_methods, "scores": all_scores, "audit": all_audits}, indent=2), encoding="utf-8")
+    league_paths.predictions_calibrated.parent.mkdir(parents=True, exist_ok=True)
+    output[keep].to_parquet(league_paths.predictions_calibrated, index=False)
+    league_paths.calibration_methods.write_text(json.dumps({"methods": all_methods, "scores": all_scores, "audit": all_audits}, indent=2), encoding="utf-8")
     return output, all_methods, all_scores
 
 
 def main() -> None:
-    output, methods, _ = build_calibrated_predictions()
-    print(f"Wrote {len(output):,} calibrated rows to {OUTPUT_PATH}")
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    league_paths = paths(get_league(args.league))
+    output, methods, _ = build_calibrated_predictions(args.league)
+    print(f"Wrote {len(output):,} calibrated rows to {league_paths.predictions_calibrated}")
     print("Chosen methods:", methods)
 
 

@@ -129,6 +129,10 @@ def fit_dixon_coles(
     """Fit one weighted model using only the supplied historical matches."""
     if variant not in {"goals", "xg", "blend"}:
         raise ValueError(f"Unknown variant: {variant}")
+    required = ["home_goals", "away_goals"]
+    if variant in {"xg", "blend"}:
+        required += ["home_xg", "away_xg"]
+    matches = matches.dropna(subset=required)
     if matches.empty:
         raise ValueError("At least one training match is required")
     teams = sorted(set(matches.home_team) | set(matches.away_team) | set(prediction_teams or []))
@@ -197,8 +201,11 @@ def fit_dixon_coles(
     if with_rho:
         bounds[-1] = (-0.2, 0.2)
     fitted = minimize(objective, x0, method="L-BFGS-B", jac=True, bounds=bounds,
-                      options={"maxiter": 300, "ftol": 1e-9, "gtol": 1e-6})
-    if not fitted.success:
+                      options={"maxiter": 300, "maxls": 50, "ftol": 1e-9, "gtol": 1e-6})
+    # L-BFGS-B can report an abnormal line-search termination on an otherwise
+    # finite warm-start solution when consecutive match days are nearly
+    # identical. Keep that valid iterate; reject only unusable fits.
+    if not fitted.success and (not np.isfinite(fitted.fun) or not np.isfinite(fitted.x).all()):
         raise RuntimeError(f"Dixon Coles fit failed: {fitted.message}")
     attack, defence, home_adv, rho = _unpack(fitted.x, n, with_rho)
 
@@ -230,4 +237,3 @@ def training_window(matches: pd.DataFrame, prediction_date: pd.Timestamp) -> pd.
     date = pd.Timestamp(prediction_date)
     start = date - timedelta(days=1096)
     return matches[(matches.date < date) & (matches.date >= start)].copy()
-

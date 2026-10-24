@@ -7,6 +7,7 @@ import pandas as pd
 from scipy.special import xlogy
 
 from .elo import outcome_probabilities
+from .leagues import get_league, paths
 
 ENGINE_DIR = Path(__file__).resolve().parents[1]
 
@@ -21,8 +22,10 @@ def metrics(probabilities: np.ndarray, actual: np.ndarray) -> tuple[float, float
     return accuracy, log_loss, brier
 
 
-def generate_report(matches_path: Path | None = None) -> Path:
-    matches_path = matches_path or ENGINE_DIR / "data" / "processed" / "matches.parquet"
+def generate_report(matches_path: Path | None = None, league="EPL") -> Path:
+    selected = get_league(league)
+    league_paths = paths(selected)
+    matches_path = matches_path or league_paths.matches
     data = pd.read_parquet(matches_path).sort_values("date")
     complete = data[data["home_goals"].notna() & data["away_goals"].notna()].copy()
     seasons = complete["season"].drop_duplicates().tolist()[-3:]
@@ -58,7 +61,7 @@ def generate_report(matches_path: Path | None = None) -> Path:
              f"* Away 1Up rate: {pct(float(test.away_led_at_any_point.mean()))}",
              f"* First scorer wins rate: {pct(float(first_won[first_scored].mean()))}", "",
              "Bookmaker probabilities are normalized inverse decimal odds. The Over 2.5 pick is the lower odds side after comparing Over and Under.", ""]
-    report = ENGINE_DIR / "reports" / "baseline_report.md"
+    report = league_paths.baseline_report
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text("\n".join(lines), encoding="utf-8")
     print(f"Wrote {report}")
@@ -66,4 +69,7 @@ def generate_report(matches_path: Path | None = None) -> Path:
 
 
 if __name__ == "__main__":
-    generate_report()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    generate_report(league=parser.parse_args().league)

@@ -5,14 +5,18 @@ import json
 import random
 import time
 from pathlib import Path
+import argparse
 
 import pandas as pd
+import requests
 from understatapi import UnderstatClient
 
 from .fetch_results import START_SEASON, current_season_start, season_label
 from .team_names import canonical_team
+from .leagues import get_league, paths
 
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw" / "understat"
+UNDERSTAT_HEADERS = {"X-Requested-With": "XMLHttpRequest"}
 
 
 def _write_json(path: Path, value: object) -> None:
@@ -20,21 +24,29 @@ def _write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False), encoding="utf-8")
 
 
-def fetch_season(year: int, refresh: bool = False) -> tuple[list[dict], dict[str, dict]]:
+def _league_results(understat_name: str, year: int) -> list[dict]:
+    response = requests.get(f"https://understat.com/getLeagueData/{understat_name}/{year}",
+                            headers=UNDERSTAT_HEADERS, timeout=30)
+    response.raise_for_status()
+    return response.json()["dates"]
+
+
+def fetch_season(year: int, refresh: bool = False, league="EPL") -> tuple[list[dict], dict[str, dict]]:
     """Return league results and shots by match id, using per season caches.
 
     refresh re-downloads the results list; shots are only fetched for new matches.
     """
-    results_path = RAW_DIR / f"epl_{year}_results.json"
-    shots_path = RAW_DIR / f"epl_{year}_shots.json"
-    if results_path.exists() and shots_path.exists() and not refresh:
+    selected = get_league(league)
+    results_path = paths(selected).understat_file(year, "results")
+    shots_path = paths(selected).understat_file(year, "shots")
+    # Preserve the legacy EPL cache semantics and its byte-for-byte rebuild.
+    if selected.code == "EPL" and results_path.exists() and shots_path.exists() and not refresh:
         return json.loads(results_path.read_text(encoding="utf-8")), json.loads(shots_path.read_text(encoding="utf-8"))
-
     with UnderstatClient() as client:
         if results_path.exists() and not refresh:
             results = json.loads(results_path.read_text(encoding="utf-8"))
         else:
-            results = client.league(league="EPL").get_match_data(season=str(year))
+            results = _league_results(selected.understat_name, year)
             _write_json(results_path, results)
             time.sleep(random.uniform(1, 2))
 
@@ -62,14 +74,14 @@ def _side_name(value: object) -> str:
     return str(value)
 
 
-def normalize_season(year: int, results: list[dict], shots: dict[str, dict]) -> tuple[pd.DataFrame, pd.DataFrame]:
+def normalize_season(year: int, results: list[dict], shots: dict[str, dict], league="EPL") -> tuple[pd.DataFrame, pd.DataFrame]:
     matches, goals = [], []
     for match in results:
         if not match.get("isResult", False):
             continue
         match_id = str(match["id"])
-        home = canonical_team(_side_name(match["h"]))
-        away = canonical_team(_side_name(match["a"]))
+        home = canonical_team(_side_name(match["h"]), league)
+        away = canonical_team(_side_name(match["a"]), league)
         xg = match.get("xG", {})
         matches.append({"understat_id": match_id, "date": pd.to_datetime(match["datetime"]),
                         "season": season_label(year), "home_team": home, "away_team": away,
@@ -87,19 +99,23 @@ def normalize_season(year: int, results: list[dict], shots: dict[str, dict]) -> 
 
 
 def fetch_all(start: int = START_SEASON, end: int | None = None,
-              refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
+              refresh_current: bool = False, league="EPL") -> tuple[pd.DataFrame, pd.DataFrame]:
     current = current_season_start()
     end = current if end is None else end
     matches, goals = [], []
     for year in range(start, end + 1):
-        season_matches, season_goals = normalize_season(year, *fetch_season(year, refresh_current and year == current))
+        results, shots = fetch_season(year, refresh_current and year == current, league)
+        season_matches, season_goals = normalize_season(year, results, shots, league)
         matches.append(season_matches)
         goals.append(season_goals)
     return pd.concat(matches, ignore_index=True), pd.concat(goals, ignore_index=True)
 
 
 def main() -> None:
-    matches, goals = fetch_all()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    matches, goals = fetch_all(league=args.league)
     print(f"Loaded {len(matches):,} Understat matches and {len(goals):,} goals.")
 
 

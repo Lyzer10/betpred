@@ -9,7 +9,7 @@ def expected_home(home_rating: float, away_rating: float, home_advantage: float 
     return 1 / (1 + 10 ** ((away_rating - home_rating - home_advantage) / 400))
 
 
-def add_elo_features(matches: pd.DataFrame, k: float = 20, home_advantage: float = 60) -> pd.DataFrame:
+def add_elo_features(matches: pd.DataFrame, k: float = 20, home_advantage: float = 60, league="EPL") -> pd.DataFrame:
     """Attach ratings recorded before each game, then update from its result."""
     result = matches.copy()
     result["_order"] = range(len(result))
@@ -40,4 +40,3 @@ def outcome_probabilities(home_rating: float, away_rating: float, home_advantage
     # Draws peak for evenly matched sides and diminish with a rating gap.
     draw = 0.28 * math.exp(-abs((home_rating + home_advantage) - away_rating) / 400)
     return decisive_home * (1 - draw), draw, (1 - decisive_home) * (1 - draw)
-

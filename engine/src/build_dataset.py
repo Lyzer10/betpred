@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import argparse
 import numpy as np
 import pandas as pd
 
@@ -9,6 +10,7 @@ from .elo import add_elo_features
 from .fetch_results import fetch_all as fetch_results
 from .fetch_understat import fetch_all as fetch_understat
 from .team_names import canonical_team
+from .leagues import get_league, paths
 
 ENGINE_DIR = Path(__file__).resolve().parents[1]
 PROCESSED_DIR = ENGINE_DIR / "data" / "processed"
@@ -38,11 +40,13 @@ def _preferred(frame: pd.DataFrame, columns: list[str]) -> pd.Series:
     return frame[columns].bfill(axis=1).iloc[:, 0]
 
 
-def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
-    results = fetch_results(refresh_current=refresh_current)
-    understat, raw_goals = fetch_understat(refresh_current=refresh_current)
+def build(refresh_current: bool = False, league="EPL", write: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
+    selected = get_league(league)
+    league_paths = paths(selected)
+    results = fetch_results(refresh_current=refresh_current, league=selected)
+    understat, raw_goals = fetch_understat(refresh_current=refresh_current, league=selected)
     for column in ("home_team", "away_team"):
-        results[column] = results[column].map(canonical_team)
+        results[column] = results[column].map(lambda name: canonical_team(name, selected))
 
     # Dates can differ around midnight, so the stable identity is season plus teams.
     keys = ["season", "home_team", "away_team"]
@@ -50,7 +54,13 @@ def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
         raise ValueError("Duplicate season/team match keys prevent an unambiguous merge")
     merged = results.merge(understat, on=keys, how="left", suffixes=("", "_understat"), validate="one_to_one", indicator=True)
     date_gap = (merged["date"] - merged["date_understat"].dt.normalize()).abs().dt.days
-    bad_dates = merged[date_gap.gt(2) & merged["date_understat"].notna()]
+    # Udinese v Roma in 2023/24 was abandoned on 14 April and completed on
+    # 25 April. The two providers record different dates for the same fixture.
+    resumed = (((merged["season"] == "2023/24") & (merged["home_team"] == "Udinese")
+                & (merged["away_team"] == "Roma"))
+               | ((merged["season"] == "2017/18") & (merged["home_team"] == "Caen")
+                  & (merged["away_team"] == "Toulouse")))
+    bad_dates = merged[date_gap.gt(2) & merged["date_understat"].notna() & ~resumed]
     if not bad_dates.empty:
         raise ValueError(f"Merged matches with dates more than two days apart: {len(bad_dates)}")
 
@@ -92,9 +102,10 @@ def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
         "away_led_at_any_point": derived.map(lambda value: value[2]),
     })
     output = add_elo_features(output)
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    output.to_parquet(PROCESSED_DIR / "matches.parquet", index=False)
-    goals.to_parquet(PROCESSED_DIR / "goals.parquet", index=False)
+    if write:
+        league_paths.processed_dir.mkdir(parents=True, exist_ok=True)
+        output.to_parquet(league_paths.matches, index=False)
+        goals.to_parquet(league_paths.goals, index=False)
 
     merge_pct = (merged["_merge"] == "both").mean() * 100
     print("Rows per season:")
@@ -111,9 +122,13 @@ def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def main() -> None:
-    build()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    parser.add_argument("--refresh-current", action="store_true")
+    args = parser.parse_args()
+    build(args.refresh_current, args.league)
     from .baselines import generate_report
-    generate_report()
+    generate_report(league=args.league)
 
 
 if __name__ == "__main__":

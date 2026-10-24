@@ -10,9 +10,10 @@ import pandas as pd
 import statsmodels.api as sm
 
 from .dixon_coles import score_matrix
+from .leagues import get_league, paths
 from .calibration import (
     ENGINE_DIR, MATCHES_PATH, DC_PATH, OUTPUT_PATH, TEST_SEASONS, add_actuals,
-    binary_metrics, choose_methods, walk_forward_calibration,
+    binary_metrics, choose_methods, fit_calibrator, walk_forward_calibration,
 )
 
 GOALS_PATH = ENGINE_DIR / "data" / "processed" / "goals.parquet"
@@ -29,6 +30,67 @@ TIMING_MARKETS = {
     "home_1up": ("sim_home_1up", "actual_home_1up"),
     "away_1up": ("sim_away_1up", "actual_away_1up"),
 }
+
+
+def _expanding_platt(frame: pd.DataFrame, markets: dict[str, tuple[str, str]], seasons: list[str]) -> pd.DataFrame:
+    """Calibrate each season from earlier supplied seasons, using identity for the first."""
+    parts = []
+    for index, season in enumerate(seasons):
+        fold = frame[frame.season == season].copy()
+        history = frame[frame.season.isin(seasons[:index])]
+        for market, (raw, actual) in markets.items():
+            fold[f"cal_{market}"] = (fold[raw].to_numpy(float) if history.empty else
+                                      fit_calibrator(history[raw], history[actual], "platt").predict(fold[raw]))
+        parts.append(fold)
+    return pd.concat(parts, ignore_index=True)
+
+
+def build_validation_timing_predictions(league="EPL") -> pd.DataFrame:
+    """Build leakage safe validation probabilities used only to learn market blend weights."""
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    goals = pd.read_parquet(league_paths.goals)
+    dc = pd.read_parquet(league_paths.predictions_dc)
+    dc = dc[(dc.variant == "blend") & (dc.split == "validation")].copy()
+    source = add_actuals(dc.merge(matches, on=["match_id", "date"], validate="one_to_one"))
+    rows = []
+    for season in VALIDATION_SEASONS:
+        fold = source[source.season == season].sort_values("date")
+        first_date = fold.date.min()
+        historical_matches = matches[matches.date < first_date]
+        historical_goals = goals[goals.match_id.isin(set(historical_matches.match_id))]
+        _, profile = estimate_time_profile(historical_goals)
+        training_predictions = dc[dc.date < first_date]
+        training_matches = matches[matches.match_id.isin(training_predictions.match_id)]
+        training_goals = goals[goals.match_id.isin(set(training_matches.match_id))]
+        multipliers = fit_state_multipliers(training_matches, training_goals, training_predictions, profile)
+        for match in fold.itertuples(index=False):
+            seed = int(match.match_id) if str(match.match_id).isdigit() else abs(hash(match.match_id)) % (2**32)
+            matrix = score_matrix(match.lambda_home, match.lambda_away, match.rho)
+            timing = simulate_match(match.lambda_home, match.lambda_away, profile, multipliers, seed=seed, matrix=matrix)
+            rows.append({"match_id": match.match_id, "date": match.date, "season": season,
+                         "lambda_home": match.lambda_home, "lambda_away": match.lambda_away,
+                         "prob_home": match.prob_home, "prob_draw": match.prob_draw,
+                         "prob_away": match.prob_away, "prob_over05": match.prob_over05,
+                         "prob_over15": match.prob_over15, "prob_over25": match.prob_over25,
+                         "prob_over35": match.prob_over35, "prob_btts": match.prob_btts,
+                         "rho": match.rho, **timing})
+        print(f"Simulated validation {season}: {len(fold)} matches")
+    validation = add_actuals(pd.DataFrame(rows).merge(matches, on=["match_id", "date", "season"], validate="one_to_one"))
+    validation = _expanding_platt(validation, TIMING_MARKETS, VALIDATION_SEASONS)
+    base_markets = {
+        "home": ("prob_home", "actual_home"), "draw": ("prob_draw", "actual_draw"),
+        "away": ("prob_away", "actual_away"), "over05": ("prob_over05", "actual_over05"),
+        "over15": ("prob_over15", "actual_over15"), "over25": ("prob_over25", "actual_over25"),
+        "over35": ("prob_over35", "actual_over35"), "btts": ("prob_btts", "actual_btts"),
+    }
+    validation = _expanding_platt(validation, base_markets, VALIDATION_SEASONS)
+    result_columns = ["cal_home", "cal_draw", "cal_away"]
+    validation[result_columns] = validation[result_columns].to_numpy() / validation[result_columns].sum(axis=1).to_numpy()[:, None]
+    over_columns = ["cal_over05", "cal_over15", "cal_over25", "cal_over35"]
+    validation[over_columns] = np.minimum.accumulate(validation[over_columns].to_numpy(float), axis=1)
+    validation.to_parquet(league_paths.predictions_goal_timing_validation, index=False)
+    return validation
 
 
 def minute_bucket(minute: int) -> int:
@@ -223,10 +285,11 @@ def simulate_match(lam: float, mu: float, profile: np.ndarray, multipliers: np.n
     return result
 
 
-def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
-    matches = pd.read_parquet(MATCHES_PATH)
-    goals = pd.read_parquet(GOALS_PATH)
-    dc = pd.read_parquet(DC_PATH)
+def build_timing_predictions(league="EPL") -> tuple[pd.DataFrame, dict, dict, dict]:
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    goals = pd.read_parquet(league_paths.goals)
+    dc = pd.read_parquet(league_paths.predictions_dc)
     dc = dc[(dc.variant == "blend") & dc.split.isin(["validation", "test"])].copy()
     source = add_actuals(dc.merge(matches, on=["match_id", "date"], validate="one_to_one"))
     rows, fold_models = [], {}
@@ -257,7 +320,7 @@ def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
     timing = add_actuals(pd.DataFrame(rows).merge(matches, on=["match_id", "date", "season"], validate="one_to_one"))
     calibrated, audit = walk_forward_calibration(timing, TIMING_MARKETS)
     methods, scores = choose_methods(calibrated, TIMING_MARKETS)
-    calibrated.to_parquet(TIMING_PATH, index=False)
+    calibrated.to_parquet(league_paths.predictions_goal_timing, index=False)
     return calibrated, methods, scores, {"folds": fold_models, "audit": audit}
 
 
@@ -297,9 +360,10 @@ def _value_rows(frame: pd.DataFrame) -> list[str]:
     return rows
 
 
-def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_scores: dict, model_audit: dict) -> Path:
-    matches = pd.read_parquet(MATCHES_PATH)
-    calibrated = pd.read_parquet(OUTPUT_PATH)
+def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_scores: dict, model_audit: dict, league="EPL") -> Path:
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    calibrated = pd.read_parquet(league_paths.predictions_calibrated)
     base = calibrated[(calibrated.variant == "blend")].merge(matches, on=["match_id", "date"], validate="one_to_one")
     base = add_actuals(base)
     timing_test = timing[timing.season.isin(TEST_SEASONS)].copy()
@@ -377,18 +441,23 @@ def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_score
     lines += [f"| {label} | {value:.3f} |" for label, value in zip(STATE_LABELS, final_model["multipliers"])]
     lines += ["", "## Calibrated value test", "", "| Bet | Bets | Hit rate | ROI | Positive closing line value | Sample |",
               "|---|---:|---:|---:|---:|---|", *_value_rows(combined.reset_index()), ""]
-    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
-    return REPORT_PATH
+    league_paths.stage3_report.write_text("\n".join(lines), encoding="utf-8")
+    return league_paths.stage3_report
 
 
 def main() -> None:
-    if not OUTPUT_PATH.exists():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    league_paths = paths(get_league(args.league))
+    if not league_paths.predictions_calibrated.exists():
         from .calibration import build_calibrated_predictions
-        build_calibrated_predictions()
+        build_calibrated_predictions(args.league)
     started = time.perf_counter()
-    timing, methods, scores, audit = build_timing_predictions()
-    report = write_stage3_report(timing, methods, scores, audit)
-    print(f"Wrote {len(timing):,} timing predictions to {TIMING_PATH}")
+    timing, methods, scores, audit = build_timing_predictions(args.league)
+    report = write_stage3_report(timing, methods, scores, audit, args.league)
+    print(f"Wrote {len(timing):,} timing predictions to {league_paths.predictions_goal_timing}")
     print(f"Wrote {report} in {time.perf_counter() - started:.1f} seconds")
     print("Chosen timing methods:", methods)
 

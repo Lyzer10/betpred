@@ -178,9 +178,9 @@ export function Matches({ fixtures, archive, selected, onSelect }: {
 }) {
   const today = todayIso();
   const upcomingDays = [...new Set(fixtures.map((f) => f.day))];
-  const pastDays = archive.map((a) => a.date).filter((d) => d < today && !upcomingDays.includes(d));
+  const pastDays = archive.map((a) => a.date).filter((d) => d <= today && !upcomingDays.includes(d));
   const dates = [...new Set([...pastDays, ...upcomingDays])].sort();
-  const [day, setDay] = useState<string | undefined>(upcomingDays.includes(today) ? today : upcomingDays[0] ?? dates[dates.length - 1]);
+  const [day, setDay] = useState<string | undefined>(dates.includes(today) ? today : upcomingDays[0] ?? dates[dates.length - 1]);
   const fixture = fixtures.find((f) => f.id === selected);
   if (fixture) return <MatchDetail fixture={fixture} onBack={() => onSelect(null)} />;
   return (

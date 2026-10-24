@@ -288,9 +288,11 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
 }) {
   const today = todayIso();
   const upcoming = new Map(data.days.map((d) => [d.date, d]));
-  const past = (data.archive ?? []).map((a) => a.date).filter((d) => d < today && !upcoming.has(d));
+  // Archived days up to and including today: once today's last match has kicked off it has no
+  // upcoming fixtures, but its locked slips must stay visible.
+  const past = (data.archive ?? []).map((a) => a.date).filter((d) => d <= today && !upcoming.has(d));
   const dates = [...new Set([...past, ...upcoming.keys()])].sort();
-  const initial = upcoming.has(today) ? today : [...upcoming.keys()].find((d) => d >= today) ?? dates[dates.length - 1];
+  const initial = dates.includes(today) ? today : [...upcoming.keys()].find((d) => d >= today) ?? dates[dates.length - 1];
   const [selected, setSelected] = useState<string | undefined>(initial);
   const needsBalance = !ledger.start.betpawa && !ledger.start.sportybet;
   const health = data.health;
@@ -309,7 +311,7 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
       )}
       <div className="mb-4"><DateStrip dates={dates} selected={selected} onSelect={setSelected} /></div>
 
-      {needsBalance && selected && upcoming.has(selected) && (
+      {needsBalance && (
         <button onClick={onOpenMoney} className="mb-4 block w-full text-left">
           <Card className="px-5 py-4">
             <div className="text-sm font-semibold">Set your Betpawa and SportyBet balances</div>
@@ -326,7 +328,7 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
       )}
       {selected && !upcoming.has(selected) && (
         <>
-          <SectionTitle>Slips that day</SectionTitle>
+          <SectionTitle aside={selected === today ? "results update after the games" : undefined}>{selected === today ? "Today's slips" : "Slips that day"}</SectionTitle>
           <ArchivedDay key={selected} date={selected} />
         </>
       )}

@@ -15,6 +15,12 @@ for (const scheme of ["light", "dark"]) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+  // Today may only have locked slips (all its matches started): then open the last day in the strip.
+  const openUpcomingDay = async () => {
+    await page.waitForTimeout(300);
+    if (!(await page.getByRole("tab", { name: "Safe" }).count())) await page.getByRole("tab").filter({ hasText: /\d/ }).last().click();
+    await page.getByRole("tab", { name: "Safe" }).waitFor();
+  };
   const noOverflow = async (screen) => check(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] ${screen}: no horizontal overflow`);
   const snap = async (name) => shots && page.screenshot({ path: `${shots}/${scheme}-${name}.png`, fullPage: true });
@@ -35,7 +41,7 @@ for (const scheme of ["light", "dark"]) {
   await page.getByLabel("Fixed stake in TSh").fill("2500");
   check(await page.getByText(/Losing half of it takes \d+ Safe slips lost in a row/).count() === 1, `[${scheme}] staking risk line shown`);
   await page.getByRole("button", { name: "Bets", exact: true }).click();
-  await page.getByRole("tab", { name: "Safe" }).waitFor();
+  await openUpcomingDay();
   // TSh 2,500, or TSh 1,200 when a price warning halves it; "skip" when the slip has no value.
   const fixedShown = await page.getByText(/^TSh (2,500|1,200)$/).count();
   const skipShown = await page.getByText(/skip it/).count();
@@ -48,12 +54,14 @@ for (const scheme of ["light", "dark"]) {
 
   // Bets: accumulators only, no odds boxes, stake from the Betpawa balance; record the Safe slip.
   await page.getByRole("button", { name: "Bets", exact: true }).click();
-  await page.getByRole("tab", { name: "Safe" }).waitFor();
+  await openUpcomingDay();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] no odds boxes on slips`);
   check(await page.getByText(VERDICT).count() === 1, `[${scheme}] slip verdict shown`);
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
   await noOverflow("bets"); await snap("bets");
   await page.getByRole("button", { name: "I placed this bet" }).click();
+  // Type the stake: a slip without value has no recommended stake, but you can still record a bet.
+  await page.getByLabel("Stake in TSh").fill("900");
   check(await page.getByText(/after this bet/).count() === 1, `[${scheme}] form shows balance after the bet`);
   await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
   check(await page.getByRole("button", { name: "✓ Recorded in Money" }).count() === 1, `[${scheme}] safe slip recorded (stake shown: ${stakeShown > 0})`);
@@ -103,6 +111,7 @@ for (const scheme of ["light", "dark"]) {
 
   // Matches: information only, Betpawa odds and verdicts, double chance tab.
   await page.getByRole("button", { name: "Matches", exact: true }).click();
+  await page.getByRole("tab").filter({ hasText: /\d/ }).last().click();   // an upcoming day: its matches open
   await page.locator("section button").first().click();
   await page.getByText("Likeliest scores").waitFor();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no inputs`);

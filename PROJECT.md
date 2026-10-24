@@ -185,6 +185,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - 2026-10-25: pre-registered league x market gates run (`engine/src/market_gates.py`); the 8 FAIL
   pairs are excluded from slip legs (`predict.failed_gates`, `build_slips(blocked=...)`), still shown
   on match pages. Tests added.
+- 2026-10-25: match lists and details now show current table position and last-five form for display only.
 - 2026-10-24: fixtures now carry `context` (current-season table position, played, points, goal
   difference, last-5 form per team) for display only; the table is not a model input (rejected study).
 - 2026-10-23..24: data pipeline, Dixon-Coles + backtest, calibration + goal timing, accumulators,

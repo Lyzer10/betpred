@@ -19,6 +19,22 @@ export interface League { code: string; name: string; country: string }
 
 export const PREMIER_LEAGUE: League = { code: "EPL", name: "Premier League", country: "England" };
 
+export type FormResult = "W" | "D" | "L";
+
+export interface TeamContext {
+  position: number;
+  teams: number;
+  played: number;
+  points: number;
+  gd: number;
+  form: FormResult[];
+}
+
+export interface MatchContext {
+  home: TeamContext | null;
+  away: TeamContext | null;
+}
+
 export interface Fixture {
   id: number;
   league?: League;
@@ -33,6 +49,7 @@ export interface Fixture {
   top_scorelines: { score: string; probability: number }[];
   has_market_odds: boolean;
   markets: MarketPrediction[];
+  context: MatchContext;
 }
 
 export interface SlipLeg {

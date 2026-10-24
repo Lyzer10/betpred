@@ -118,10 +118,14 @@ for (const scheme of ["light", "dark"]) {
 
   // Matches: information only, Betpawa odds and verdicts, double chance tab.
   await page.getByRole("button", { name: "Matches", exact: true }).click();
+  await noOverflow("matches list");
   await page.getByRole("tab").filter({ hasText: /\d/ }).last().click();   // an upcoming day: its matches open
   await page.locator("section button").first().click();
   await page.getByText("Likeliest scores").waitFor();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no inputs`);
+  check(await page.getByRole("heading", { name: "Form & table" }).count() === 1, `[${scheme}] match shows form and table context`);
+  const recentForm = page.getByLabel(/recent form, oldest to latest/).first();
+  check(await recentForm.locator("[data-form-result]").count() === 5, `[${scheme}] match shows five form chips`);
   await page.getByRole("tab", { name: "Double" }).click();
   check(await page.getByText(/or draw/).count() >= 1, `[${scheme}] double chance markets shown`);
   await noOverflow("match detail"); await snap("detail");

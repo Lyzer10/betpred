@@ -24,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90      # first five-league run downloads the new leagues once
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -36,7 +36,7 @@ jobs:
 
       # Past seasons are committed; the in-progress season's raw downloads are cached
       # between runs so only new matches are fetched.
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: engine/data/raw
           key: raw-${{ github.run_id }}

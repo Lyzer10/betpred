@@ -227,6 +227,15 @@ def _not_started(entry: dict, now: pd.Timestamp) -> bool:
     return all(pd.Timestamp(leg["kickoff_utc"]).tz_localize(None) > now for leg in entry["legs"])
 
 
+def recent_results(matches: pd.DataFrame, now: pd.Timestamp, days: int = 120) -> list[dict]:
+    """Settled outcomes of every leg market for recent matches (the app settles saved picks)."""
+    recent = add_actuals(matches[matches.date >= now - pd.Timedelta(days=days)])
+    return [{"date": row.date.date().isoformat(), "home": row.home_team, "away": row.away_team,
+             "score": [int(row.home_goals), int(row.away_goals)],
+             "outcomes": {market: outcome(row, market) for market in LEG_MARKETS}}
+            for _, row in recent.sort_values("date", ascending=False).iterrows()]
+
+
 def backtest_summary() -> dict:
     slips = pd.read_parquet(SLIPS_PATH)
     accuracy = slips[slips["mode"] == "accuracy"]
@@ -283,6 +292,7 @@ def main() -> None:
         ],
         "slips": slips,
         "history": history,
+        "results": recent_results(matches, now),
     }
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")

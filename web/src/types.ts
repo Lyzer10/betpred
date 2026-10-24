@@ -134,7 +134,21 @@ export interface Predictions {
   archive: ArchiveDay[];
   live_record: LiveRecord;
   health?: Health;
+  clv?: ClvReport;
+  realised?: Record<TierName, RealisedTier>;
 }
+
+export interface ClvSummary { legs: number; mean_clv: number; beat_close: number; moved_against: number }
+/** Price tracking: published Betpawa price vs the last price before kick-off. */
+export type ClvReport = { legs: 0 } | (ClvSummary & {
+  league: Record<string, ClvSummary>; market: Record<string, ClvSummary>; tier: Record<string, ClvSummary>;
+});
+
+export interface RealisedTier { settled: number; won: number; predicted: number; profit: number; roi: number | null }
+
+export type PairStatus = "ok" | "watch" | "paused" | "insufficient";
+/** One league x bet type: our published chances vs what happened. */
+export interface PairCheck { league: string; market: MarketKey; n: number; predicted: number; actual: number; z: number; status: PairStatus }
 
 export type HealthStatus = "ok" | "watch" | "warning" | "insufficient";
 
@@ -142,6 +156,8 @@ export interface Health {
   status: HealthStatus;
   stake_factor: number;          // multiply every recommended stake by this
   checks: { name: string; status: HealthStatus; detail: string }[];
+  pairs?: PairCheck[];            // every published prediction; "paused" pairs are kept out of slips
+  slip_legs?: PairCheck[];        // only the legs put in slips (shown, no action)
 }
 
 export interface ArchiveDay { date: string; fixtures: number; settled: number }

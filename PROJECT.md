@@ -175,11 +175,14 @@ Claude (hard, affects predictions):
    - Reported, not gating: log loss vs bookmaker with bootstrap CI (non-inferiority vs superiority).
    - A league x market failing any of C1-C4 is removed from slip legs (still shown on match pages);
      the league stays live. Re-checked monthly.
-2. **Closing-line value tracking** (logging and CLV report live 2026-10-25; to do: show it on the
-   Record page with realised ROI per league/market/tier, then judge after >= 200 final legs). Also
-   test whether fresh Betpawa prices should feed the probabilities (Bet365 closing beat the early
-   average by 0.0020 log loss; Betpawa must show the same on our logged data before any change).
-3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).
+2. **Closing-line value tracking** (DONE 2026-10-25: price log, CLV report, Record page "Are we
+   beating Betpawa's prices?"; judge after >= 200 final legs). Still to test: whether fresh Betpawa
+   prices should feed the probabilities (Bet365 closing beat the early average by 0.0020 log loss;
+   Betpawa must show the same on our logged data before any change).
+3. **Per-league and per-market monitoring** (DONE 2026-10-25, `health.pair_monitor`): every settled
+   published prediction per league x slip market, z = (wins - sum p)/sqrt(sum p(1-p)) from 30
+   predictions, one-sided; z < -3 pauses the pair (kept out of slips, `engine/data/live/paused_pairs.json`)
+   until z >= -2; -3..-2 = watch. Slip legs reported separately (shown only). Record page lists them.
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
 5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; independent tiers KEPT,
@@ -258,6 +261,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: per league x bet type monitoring with automatic pause (`health.pair_monitor`), slip-leg
+  monitor, realised slip results; Record page: price tracking, bet-type checks, real results. Past-day
+  slips use #001339 (owner's choice). Tests added.
 - 2026-10-25: colours from the logo (navy #000f30, electric blue #0dd9fe, gold #f6c956), real-black
   dark mode without purple; past slips on logo-blue glass; Money placed bets as month summary + day
   strip + compact table, deposits/withdrawals in their own collapsed section.

@@ -111,3 +111,23 @@ def test_understat_results_settle_scores_and_1up(monkeypatch):
     row = rows.iloc[0]
     assert (row.home_goals, row.away_goals, row.first_scorer) == (0, 2, "away")
     assert row.away_led_at_any_point and not row.home_led_at_any_point
+
+
+def test_paused_pairs_are_kept_out_of_slips(tmp_path, monkeypatch):
+    monkeypatch.setattr(predict, "PAUSED_PATH", tmp_path / "paused.json")
+    predict.save_paused({("SERIEA", "home_1up")})
+    assert predict.load_paused() == {("SERIEA", "home_1up")}
+    legs = pd.DataFrame({"league": ["SERIEA", "SERIEA"], "market": ["home_1up", "home_win"],
+                         "odds": [1.6, 1.7], "probability": [0.7, 0.65]})
+    seen = []
+    monkeypatch.setattr(predict, "best_slip", lambda pool, tier: seen.append(set(zip(pool.league, pool.market))) or None)
+    predict.build_slips(legs, predict.load_paused())
+    assert seen and all(("SERIEA", "home_1up") not in s for s in seen)
+
+
+def test_realised_slips_profit_at_published_odds():
+    history = [{"tier": "safe", "status": "won", "total_odds": 2.5, "win_probability": 0.4},
+               {"tier": "safe", "status": "lost", "total_odds": 2.6, "win_probability": 0.38},
+               {"tier": "safe", "status": "pending", "total_odds": 2.7, "win_probability": 0.37}]
+    safe = predict.realised_slips(history)["safe"]
+    assert safe == {"settled": 2, "won": 1, "predicted": 0.78, "profit": 0.5, "roi": 0.25}

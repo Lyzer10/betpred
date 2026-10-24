@@ -46,3 +46,31 @@ def test_slips_losing_far_more_than_predicted_is_flagged():
     slips = [{"status": "lost", "win_probability": 0.4} for _ in range(30)]
     result = health_check([], slips, SLIP_MARKETS)
     assert next(c for c in result["checks"] if c["name"] == "slips")["status"] == "warning"
+
+
+def _pair_fixtures(league, market, probability, wins, n):
+    return [{"league": {"code": league}, "markets": [{"market": market, "probability": probability}],
+             "result": {"outcomes": {market: i < wins}}} for i in range(n)]
+
+
+def test_pair_monitor_pauses_only_over_confidence_and_recovers():
+    from src.health import pair_monitor, pair_status
+    # Said 70%, won 20 of 50 (40%): z far below -3, paused.
+    rows = pair_monitor(_pair_fixtures("SERIEA", "home_1up", 0.7, 20, 50), ("home_1up",), set())
+    assert rows[0]["status"] == "paused" and rows[0]["z"] < -3
+    # Said 50%, won 45 of 50: wins MORE than predicted, never flagged.
+    rows = pair_monitor(_pair_fixtures("EPL", "over_1.5", 0.5, 45, 50), ("over_1.5",), set())
+    assert rows[0]["status"] == "ok"
+    # Recovery band: z = -2.5 stays paused if it was paused, is only "watch" if it was not.
+    assert pair_status(50, -2.5, was_paused=True) == "paused"
+    assert pair_status(50, -2.5, was_paused=False) == "watch"
+    assert pair_status(50, -1.9, was_paused=True) == "ok"
+    assert pair_status(29, -5.0, was_paused=True) == "insufficient"
+
+
+def test_slip_leg_monitor_counts_only_settled_legs():
+    from src.health import slip_leg_monitor
+    legs = [{"league": {"code": "EPL"}, "market": "home_win", "probability": 0.6, "won": i < 18} for i in range(30)]
+    legs.append({"league": {"code": "EPL"}, "market": "home_win", "probability": 0.6, "won": None})
+    rows = slip_leg_monitor([{"legs": legs}])
+    assert rows[0]["n"] == 30 and rows[0]["actual"] == 0.6 and rows[0]["status"] == "ok"

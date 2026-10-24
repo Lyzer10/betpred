@@ -140,8 +140,7 @@ for (const scheme of ["light", "dark"]) {
   const pastSlips = page.locator("[data-past-slip]");
   await pastSlips.first().waitFor();
   const pastBlue = await page.locator("[data-past-slip-header]").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-  const [, , pastB] = (pastBlue.match(/[\d.]+/g) ?? []).map(Number);
-  check(pastB >= 150, `[${scheme}] past slip card is logo blue, not the dark hero (${pastBlue})`);
+  check(pastBlue === "rgb(0, 19, 57)", `[${scheme}] past slip card uses the owner's #001339 (${pastBlue})`);
   check(await pastSlips.first().getByText(/Won|Lost/, { exact: true }).count() === 1, `[${scheme}] past slip shows its final status`);
   await pastSlips.first().getByRole("button").click();
   check(await pastSlips.first().getByRole("button").getAttribute("aria-expanded") === "true", `[${scheme}] past slip expands`);
@@ -225,7 +224,19 @@ for (const scheme of ["light", "dark"]) {
     await page.locator(`main[data-page='${id}']`).waitFor();
     await noOverflow(screen.toLowerCase());
     await menuClearsPageEnd(screen);
-    if (id === "record") await snap("record");
+    if (id === "record") {
+      check(await page.getByText("Are we beating Betpawa's prices?").count() === 1, `[${scheme}] record shows price tracking`);
+      const clvLegs = await page.evaluate(async () => (await (await fetch("/data/predictions.json")).json()).clv?.legs ?? 0);
+      if (clvLegs > 0) {
+        check(await page.locator("[data-clv]").getByText(/Betpawa's price dropped after we picked it in/).count() === 1, `[${scheme}] price tracking headline`);
+        check(await page.locator("[data-clv-early]").count() === (clvLegs < 200 ? 1 : 0), `[${scheme}] "too early" shown only under 200 bets`);
+      }
+      check(await page.locator("[data-bet-types]").count() === 1, `[${scheme}] record shows the bet-type checks`);
+      await page.locator("[data-bet-types] button").last().click();       // show all, including those still collecting
+      check(await page.locator("[data-bet-type]").count() >= 1, `[${scheme}] bet-type rows render`);
+      check(await page.locator("[data-realised]").count() === 1, `[${scheme}] record shows real slip results`);
+      await snap("record");
+    }
   }
   // Theme switch cycles Auto -> Light -> Dark -> Auto and is remembered.
   const themeButton = page.getByRole("button", { name: /^Theme:/ });

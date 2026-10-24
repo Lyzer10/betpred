@@ -7,6 +7,11 @@ statistical evidence (not one unlucky weekend):
   calibration  hits vs expected for confident slip-market picks    (z < -2.5: warning)
   slips        published slips won vs their predicted chances      (z < -2.5: warning)
 "warning" halves every recommended stake in the app; "watch" only shows a notice.
+
+Per league x bet type (`pair_monitor`), over every settled published prediction of the slip markets:
+  z = (wins - sum p) / sqrt(sum p(1-p)), from 30 predictions. One-sided: winning MORE than predicted
+  is never flagged. z < -3: paused (kept out of slips) until z >= -2 again; -3 <= z < -2: watch.
+`slip_leg_monitor` reports the same z for the legs actually put in slips (shown only, no action).
 """
 from __future__ import annotations
 
@@ -70,6 +75,65 @@ def _slips(slips: list[dict]) -> dict:
     status = "warning" if z < -2.5 else "watch" if z < -1.5 else "ok"
     return {"name": "slips", "status": status, "slips": len(settled),
             "detail": f"{observed:.0f} won vs {expected:.1f} expected (z={z:.1f})"}
+
+
+PAIR_MIN = 30
+PAUSE_Z, RESUME_Z = -3.0, -2.0
+
+
+def _league_code(item: dict) -> str:
+    league = item.get("league")
+    return league.get("code", "EPL") if isinstance(league, dict) else (league or "EPL")
+
+
+def _pair_rows(groups: dict[tuple[str, str], tuple[list[float], list[bool]]]) -> list[dict]:
+    rows = []
+    for (league, market), (probabilities, outcomes) in sorted(groups.items()):
+        observed, expected, z = _hits_z(probabilities, outcomes)
+        rows.append({"league": league, "market": market, "n": len(probabilities),
+                     "predicted": round(expected / len(probabilities), 4), "actual": round(observed / len(probabilities), 4),
+                     "z": round(z, 2)})
+    return rows
+
+
+def pair_status(n: int, z: float, was_paused: bool) -> str:
+    """ok / watch / paused / insufficient for one league x bet type (one-sided, with a recovery band)."""
+    if n < PAIR_MIN:
+        return "insufficient"
+    if z < PAUSE_Z or (was_paused and z < RESUME_Z):
+        return "paused"
+    return "watch" if z < RESUME_Z else "ok"
+
+
+def pair_monitor(fixtures: list[dict], slip_markets: tuple[str, ...], paused_before: set[tuple[str, str]]) -> list[dict]:
+    """Every settled published prediction, per league x slip market."""
+    groups: dict[tuple[str, str], tuple[list[float], list[bool]]] = {}
+    for fixture in fixtures:
+        for m in fixture["markets"]:
+            if m["market"] in slip_markets and m["market"] in fixture["result"]["outcomes"]:
+                p, o = groups.setdefault((_league_code(fixture), m["market"]), ([], []))
+                p.append(m["probability"])
+                o.append(bool(fixture["result"]["outcomes"][m["market"]]))
+    rows = _pair_rows(groups)
+    for row in rows:
+        row["status"] = pair_status(row["n"], row["z"], (row["league"], row["market"]) in paused_before)
+    return rows
+
+
+def slip_leg_monitor(slips: list[dict]) -> list[dict]:
+    """Settled legs that were put in slips, per league x market (selected legs: winner's curse check)."""
+    groups: dict[tuple[str, str], tuple[list[float], list[bool]]] = {}
+    for slip in slips:
+        for leg in slip["legs"]:
+            if leg.get("won") is None:
+                continue
+            p, o = groups.setdefault((_league_code(leg), leg["market"]), ([], []))
+            p.append(leg["probability"])
+            o.append(bool(leg["won"]))
+    rows = _pair_rows(groups)
+    for row in rows:
+        row["status"] = "insufficient" if row["n"] < PAIR_MIN else "watch" if row["z"] < RESUME_Z else "ok"
+    return rows
 
 
 def health_check(fixtures: list[dict], slips: list[dict], slip_markets: tuple[str, ...]) -> dict:

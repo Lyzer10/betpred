@@ -1,6 +1,7 @@
 import { odds, pct } from "../lib";
 import type { HistoryEntry, Predictions, TierName } from "../types";
 import { Card, Empty, SectionTitle, Stat, StatusPill, TIERS } from "../ui";
+import { BetTypeChecks, PriceTracking, RealResults } from "../components/RecordChecks";
 
 function HistoryRow({ entry }: { entry: HistoryEntry }) {
   return (
@@ -44,6 +45,10 @@ export function Record({ data }: { data: Predictions }) {
           </Card>
         </>
       )}
+      <PriceTracking clv={data.clv} />
+      <BetTypeChecks pairs={health?.pairs} />
+      <RealResults realised={data.realised} />
+
       <SectionTitle aside={live.matches ? `${live.matches} matches` : undefined}>Live predictions</SectionTitle>
       {live.matches ? (
         <Card className="grid grid-cols-3 gap-3 px-5 py-4">

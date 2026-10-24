@@ -27,7 +27,7 @@ from .accumulators import (
 )
 from .backtest import _promoted_initialization
 from .betpawa import fetch_competition_odds
-from .health import health_check
+from .health import health_check, pair_monitor, slip_leg_monitor
 from .build_dataset import build, understat_results
 from .calibration import (
     DC_PATH, ENGINE_DIR, MARKETS, MATCHES_PATH, add_actuals, enforce_probability_constraints, fit_calibrator,
@@ -47,6 +47,7 @@ FIXTURES_URL = "https://football-data.co.uk/fixtures.csv"
 TUNING_PATH = ENGINE_DIR / "reports" / "stage2_tuning.csv"
 LIVE_DIR = ENGINE_DIR / "data" / "live"
 HISTORY_PATH = LIVE_DIR / "slip_history.json"
+PAUSED_PATH = LIVE_DIR / "paused_pairs.json"     # league x bet types the monitor keeps out of slips
 WEB_DATA_PATH = ENGINE_DIR.parent / "web" / "public" / "data" / "predictions.json"
 ARCHIVE_DIR = WEB_DATA_PATH.parent / "archive"
 SIMULATIONS = 20_000
@@ -497,6 +498,28 @@ def settled_predictions() -> list[dict]:
     return sorted((f for f in latest.values() if "result" in f), key=lambda f: f["kickoff_utc"])
 
 
+def load_paused() -> set[tuple[str, str]]:
+    return {tuple(pair) for pair in json.loads(PAUSED_PATH.read_text(encoding="utf-8"))} if PAUSED_PATH.exists() else set()
+
+
+def save_paused(paused: set[tuple[str, str]]) -> None:
+    LIVE_DIR.mkdir(parents=True, exist_ok=True)
+    PAUSED_PATH.write_text(json.dumps(sorted(paused)), encoding="utf-8")
+
+
+def realised_slips(history: list[dict]) -> dict:
+    """Settled published slips per tier at their published odds, 1 unit each."""
+    report = {}
+    for tier in ("safe", "medium", "big"):
+        settled = [e for e in history if e["tier"] == tier and e.get("status") in ("won", "lost")]
+        won = [e for e in settled if e["status"] == "won"]
+        profit = sum(e["total_odds"] for e in won) - len(settled)
+        report[tier] = {"settled": len(settled), "won": len(won),
+                        "predicted": round(sum(e["win_probability"] for e in settled), 2),
+                        "profit": round(profit, 2), "roi": round(profit / len(settled), 4) if settled else None}
+    return report
+
+
 def live_record() -> dict:
     """Accuracy of published predictions: last pre-kickoff prediction per settled match."""
     settled = settled_predictions()
@@ -613,9 +636,15 @@ def main() -> None:
     legs["day"] = local_day(legs.kickoff_utc)
     today = local_day(pd.Series([now])).iloc[0]
     log_prices(legs, now)
+    # Settle first, so the per bet type monitor sees the newest results before slips are built.
+    settle_archive(all_matches)
+    pairs = pair_monitor(settled_predictions(), SLIP_MARKETS, load_paused())
+    paused = {(row["league"], row["market"]) for row in pairs if row["status"] == "paused"}
+    save_paused(paused)
+    blocked = failed_gates() | paused
     days = []
     for day, day_legs in legs.groupby("day", sort=True):
-        slips = build_slips(day_legs)
+        slips = build_slips(day_legs, blocked)
         history = update_history(day, slips, all_matches, now, final=args.final and day == today)
         shown = displayed_slips(day, slips, history, now)
         days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
@@ -665,7 +694,9 @@ def main() -> None:
     output["archive"] = settle_archive(all_matches)
     output["live_record"] = live_record()
     output["clv"] = clv_report(history)
-    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS)
+    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS) | {
+        "pairs": pairs, "slip_legs": slip_leg_monitor(history)}
+    output["realised"] = realised_slips(history)
     print(f"Model health: {output['health']['status']}")
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")

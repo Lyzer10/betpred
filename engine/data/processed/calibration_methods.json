@@ -1,0 +1,400 @@
+{
+  "methods": {
+    "blend": {
+      "home": "platt",
+      "draw": "platt",
+      "away": "platt",
+      "over05": "platt",
+      "over15": "platt",
+      "over25": "platt",
+      "over35": "platt",
+      "btts": "platt",
+      "home_clean_sheet": "platt",
+      "away_clean_sheet": "platt"
+    },
+    "xg": {
+      "home": "platt",
+      "draw": "platt",
+      "away": "platt",
+      "over05": "platt",
+      "over15": "platt",
+      "over25": "platt",
+      "over35": "platt",
+      "btts": "platt",
+      "home_clean_sheet": "platt",
+      "away_clean_sheet": "platt"
+    }
+  },
+  "scores": {
+    "blend": {
+      "home": {
+        "platt_log_loss": 0.6127008365506822,
+        "platt_brier": 0.21321550573950465,
+        "isotonic_log_loss": 0.6144845651406293,
+        "isotonic_brier": 0.2142754605529173
+      },
+      "draw": {
+        "platt_log_loss": 0.5718056636762862,
+        "platt_brier": 0.19232048954510597,
+        "isotonic_log_loss": 0.5732201090458607,
+        "isotonic_brier": 0.19280890426207448
+      },
+      "away": {
+        "platt_log_loss": 0.5637355392686088,
+        "platt_brier": 0.19072940032922484,
+        "isotonic_log_loss": 0.5673168748711551,
+        "isotonic_brier": 0.19185796365373284
+      },
+      "over05": {
+        "platt_log_loss": 0.22185291115779374,
+        "platt_brier": 0.054596214241561275,
+        "isotonic_log_loss": 0.22180218299336835,
+        "isotonic_brier": 0.054713212610288456
+      },
+      "over15": {
+        "platt_log_loss": 0.5027385503118775,
+        "platt_brier": 0.1611304180158307,
+        "isotonic_log_loss": 0.5636289207997625,
+        "isotonic_brier": 0.16189195615575236
+      },
+      "over25": {
+        "platt_log_loss": 0.6890660498098757,
+        "platt_brier": 0.24787521480148253,
+        "isotonic_log_loss": 0.7252873231617579,
+        "isotonic_brier": 0.2507750474699015
+      },
+      "over35": {
+        "platt_log_loss": 0.630615455565084,
+        "platt_brier": 0.21950716113137111,
+        "isotonic_log_loss": 0.6655783303602412,
+        "isotonic_brier": 0.22200064628891006
+      },
+      "btts": {
+        "platt_log_loss": 0.6854828362979631,
+        "platt_brier": 0.2460837266977481,
+        "isotonic_log_loss": 0.7201031418448105,
+        "isotonic_brier": 0.24791236248427195
+      },
+      "home_clean_sheet": {
+        "platt_log_loss": 0.5496618716481263,
+        "platt_brier": 0.1834091854632291,
+        "isotonic_log_loss": 0.6134576962277261,
+        "isotonic_brier": 0.18490226521575054
+      },
+      "away_clean_sheet": {
+        "platt_log_loss": 0.5182838793749783,
+        "platt_brier": 0.1708761033908439,
+        "isotonic_log_loss": 0.5194273919351728,
+        "isotonic_brier": 0.17174885270380263
+      }
+    },
+    "xg": {
+      "home": {
+        "platt_log_loss": 0.6118961410234338,
+        "platt_brier": 0.213032783002012,
+        "isotonic_log_loss": 0.6150254012443205,
+        "isotonic_brier": 0.21437678521042725
+      },
+      "draw": {
+        "platt_log_loss": 0.57334322609808,
+        "platt_brier": 0.19291577803114685,
+        "isotonic_log_loss": 0.5744711000267136,
+        "isotonic_brier": 0.19332365895373135
+      },
+      "away": {
+        "platt_log_loss": 0.5640200084304878,
+        "platt_brier": 0.19081782811902653,
+        "isotonic_log_loss": 0.5956528843633709,
+        "isotonic_brier": 0.19208053675984663
+      },
+      "over05": {
+        "platt_log_loss": 0.2221010739129842,
+        "platt_brier": 0.05461068339431269,
+        "isotonic_log_loss": 0.22430798805867794,
+        "isotonic_brier": 0.054935315687915376
+      },
+      "over15": {
+        "platt_log_loss": 0.5026270463923023,
+        "platt_brier": 0.16112402233823508,
+        "isotonic_log_loss": 0.5033371061404565,
+        "isotonic_brier": 0.16128362424959033
+      },
+      "over25": {
+        "platt_log_loss": 0.6880731544949445,
+        "platt_brier": 0.24745684092593095,
+        "isotonic_log_loss": 0.6952187142761075,
+        "isotonic_brier": 0.2504988469561615
+      },
+      "over35": {
+        "platt_log_loss": 0.6279381306461004,
+        "platt_brier": 0.21835374141332575,
+        "isotonic_log_loss": 0.6311604973143776,
+        "isotonic_brier": 0.21995620197234717
+      },
+      "btts": {
+        "platt_log_loss": 0.6857533581265423,
+        "platt_brier": 0.2462370432198742,
+        "isotonic_log_loss": 0.7263139651451277,
+        "isotonic_brier": 0.25051058474166477
+      },
+      "home_clean_sheet": {
+        "platt_log_loss": 0.549664547282314,
+        "platt_brier": 0.18342236892004837,
+        "isotonic_log_loss": 0.5843423199047557,
+        "isotonic_brier": 0.18498688125130333
+      },
+      "away_clean_sheet": {
+        "platt_log_loss": 0.5182764379233318,
+        "platt_brier": 0.1709513104673044,
+        "isotonic_log_loss": 0.5190247631972916,
+        "isotonic_brier": 0.1712323871889756
+      }
+    }
+  },
+  "audit": {
+    "blend": {
+      "2024/25:home": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:draw": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:away": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over05": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over15": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over25": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over35": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:btts": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:home_clean_sheet": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:away_clean_sheet": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2025/26:home": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:draw": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:away": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over05": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over15": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over25": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over35": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:btts": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:home_clean_sheet": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:away_clean_sheet": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2026/27:home": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:draw": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:away": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over05": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over15": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over25": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over35": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:btts": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:home_clean_sheet": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:away_clean_sheet": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      }
+    },
+    "xg": {
+      "2024/25:home": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:draw": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:away": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over05": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over15": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over25": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:over35": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:btts": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:home_clean_sheet": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2024/25:away_clean_sheet": {
+        "training_max_date": "2024-05-19T15:00:00",
+        "first_prediction_date": "2024-08-16T19:00:00"
+      },
+      "2025/26:home": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:draw": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:away": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over05": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over15": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over25": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:over35": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:btts": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:home_clean_sheet": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2025/26:away_clean_sheet": {
+        "training_max_date": "2025-05-25T15:00:00",
+        "first_prediction_date": "2025-08-15T19:00:00"
+      },
+      "2026/27:home": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:draw": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:away": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over05": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over15": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over25": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:over35": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:btts": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:home_clean_sheet": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      },
+      "2026/27:away_clean_sheet": {
+        "training_max_date": "2026-05-24T15:00:00",
+        "first_prediction_date": "2026-08-21T19:00:00"
+      }
+    }
+  }
+}

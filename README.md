@@ -43,3 +43,12 @@ through the completed part of 2026/27. Predictions are written to
 `data/processed/predictions_dc.parquet` and the evaluation is written to
 `reports/stage2_report.md`. Opening and closing odds are evaluation fields only
 and are never passed into the model.
+
+## Stage 3
+
+`python -m src.calibration` compares seasonal walk forward Platt and isotonic
+calibration and writes `data/processed/predictions_calibrated.parquet`.
+`python -m src.goal_timing` fits the historical goal time profile and score state
+effects, runs 20,000 vectorized simulations per match, and writes
+`data/processed/predictions_goal_timing.parquet` plus
+`reports/stage3_report.md`.

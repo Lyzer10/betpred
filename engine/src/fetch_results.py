@@ -73,9 +73,10 @@ def download_season(year: int, session: requests.Session | None = None, refresh:
 
 def load_season(year: int, session: requests.Session | None = None, refresh: bool = False) -> pd.DataFrame:
     raw = pd.read_csv(download_season(year, session, refresh))
-    selected = pd.DataFrame(index=raw.index)
-    for source, destination in SOURCE_COLUMNS.items():
-        selected[destination] = raw[source] if source in raw else pd.NA
+    # Only columns this season actually has; fetch_all adds the missing ones afterwards,
+    # so concatenation never sees all-empty columns.
+    selected = pd.DataFrame({destination: raw[source] for source, destination in SOURCE_COLUMNS.items() if source in raw},
+                            index=raw.index)
     selected = selected[selected["home_team"].notna() & selected["away_team"].notna()].copy()
     selected = selected[selected["fthg"].notna() & selected["ftag"].notna()].copy()
     selected["date"] = parse_match_dates(selected["date"])
@@ -88,8 +89,9 @@ def fetch_all(start: int = START_SEASON, end: int | None = None, refresh_current
     current = current_season_start()
     end = current if end is None else end
     with requests.Session() as session:
-        return pd.concat([load_season(year, session, refresh_current and year == current)
-                          for year in range(start, end + 1)], ignore_index=True)
+        frame = pd.concat([load_season(year, session, refresh_current and year == current)
+                           for year in range(start, end + 1)], ignore_index=True)
+    return frame.reindex(columns=["date", "season", *[c for c in SOURCE_COLUMNS.values() if c != "date"]])
 
 
 def main() -> None:

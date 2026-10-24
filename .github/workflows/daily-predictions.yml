@@ -1,9 +1,11 @@
 name: Daily predictions
 
+# The daily run happens on the owner's PC (scripts/daily.sh via Task Scheduler):
+# it is free and fetches Betpawa Tanzania from a Tanzanian connection. This
+# workflow is a manual backup; to make it the scheduler, add back e.g.
+#   schedule:
+#     - cron: "0 4 * * *"
 on:
-  schedule:
-    - cron: "0 5 * * *"        # every day 05:00 UTC
-    - cron: "0 9 * * 5,6,0"    # extra run Fri-Sun morning for late odds and team news
   workflow_dispatch:           # "Run workflow" button in the Actions tab
 
 permissions:

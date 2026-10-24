@@ -123,11 +123,13 @@ nothing without a 3% edge.
 
 ## Deploying for free
 
-1. Push this repository to a **private** GitHub repository. Past seasons' raw
-   data is committed; the current season is ignored and re-downloaded.
-2. GitHub Actions (`.github/workflows/daily-predictions.yml`) runs the tests and
-   `src.predict` every morning (plus Fri-Sun refreshes) and commits the new
-   predictions. Trigger it manually from the Actions tab with "Run workflow".
-3. On vercel.com, import the repository with **Root Directory = `web`** (Vite is
-   detected automatically). Every predictions commit redeploys the app.
+1. Code lives in a private GitHub repository. Completed seasons' raw data is
+   committed; the current season is re-downloaded.
+2. Daily run on this PC: `scripts/daily.sh` refreshes data, predicts with live
+   Betpawa odds and pushes the new predictions. Install the schedule once by
+   running `scripts/install_schedule.ps1` in PowerShell (07:00, 13:00, 18:00;
+   catches up after the PC was off). Log: `engine/data/live/daily.log`.
+   `.github/workflows/daily-predictions.yml` is a manual backup.
+3. Vercel: import the repository as a single project with **Root Directory =
+   `web`** (not "Services"); every push redeploys the app.
 4. On the phone, open the Vercel URL and choose **Add to Home Screen**.

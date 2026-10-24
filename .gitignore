@@ -6,3 +6,6 @@ __pycache__/
 *.mp4
 engine/data/raw/*
 !engine/data/raw/.gitkeep
+
+# Local daily run log
+engine/data/live/daily.log

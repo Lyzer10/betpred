@@ -303,7 +303,7 @@ def _not_started(entry: dict, now: pd.Timestamp) -> bool:
 
 def recent_results(matches: pd.DataFrame, now: pd.Timestamp, days: int = 120) -> list[dict]:
     """Settled outcomes of every leg market for recent matches (the app settles saved picks)."""
-    recent = add_actuals(matches[matches.date >= now - pd.Timedelta(days=days)])
+    recent = add_actuals(matches[matches.date >= now - pd.to_timedelta(days, unit="D")])
     return [{"date": row.date.date().isoformat(), "home": row.home_team, "away": row.away_team,
              "score": [int(row.home_goals), int(row.away_goals)],
              "outcomes": {market: outcome(row, market) for market in LEG_MARKETS}}

@@ -366,7 +366,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
                 {minimum != null && (
                   <div className="border-t border-border/60 bg-surface-2 px-5 py-3 text-xs text-ink-2">
                     <span className="font-semibold text-ink">SportyBet Flexi:</span>{" "}
-                    {won} of {slip.legs.length} won · {flexiPaid == null ? "Pending" : flexiPaid ? "Would have paid" : "Would not have paid"}
+                    {won} of {slip.legs.length} won · Flexi {minimum} of {slip.legs.length}: {flexiPaid == null ? "pending" : flexiPaid ? "would have paid" : "would not have paid"}
                   </div>
                 )}
               </div>

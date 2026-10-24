@@ -153,7 +153,7 @@ for (const scheme of ["light", "dark"]) {
   await noOverflow("past Bets"); await snap("bets-past");
   const pastBigSlip = pastSlips.filter({ hasText: "Big slip" });
   await pastBigSlip.getByRole("button").click();
-  check(await pastBigSlip.getByText(/SportyBet Flexi: \d+ of \d+ won · Would have paid/).count() === 1,
+  check(await pastBigSlip.getByText(/SportyBet Flexi: \d+ of \d+ won · Flexi \d+ of \d+: would (not )?have paid/).count() === 1,
     `[${scheme}] settled Big slip shows its Flexi result`);
 
   // Money: balances follow the bets; deposits and withdrawals never count as profit.

@@ -180,6 +180,30 @@ Claude (hard, affects predictions):
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
 5. **Tier diversification** (same leg in several slips correlates them): quantify the trade-off.
+   PRE-REGISTERED RULES, committed before any result was computed; do not change them after seeing results:
+   - Data: test seasons 2024/25 onwards. Combine all five leagues' `paths(code).accumulator_legs`
+     tables because the live app pools all leagues. Use `probability` for EPL and
+     `market_probability` for La Liga, Serie A, Bundesliga and Ligue 1. Keep only `SLIP_MARKETS`,
+     exclude league x market pairs marked FAIL in `engine/data/processed/market_gates.json`, use the
+     legs' `odds` column, identify matches by league plus `match_id`, and group days by the `date`
+     column's calendar day exactly as `backtest_slips` does.
+   - Variant A (current): choose each tier independently with `best_slip`.
+   - Variant B (no shared matches): choose Safe, remove its matches, choose Medium, remove its
+     matches, then choose Big.
+   - Variant C (at most one shared match): use the same tier order, but a later tier may reuse at
+     most one match already used by an earlier tier. Implement this exactly by trying every allowed
+     single reuse and keeping the best, not approximately.
+   - Primary metric: bankroll growth. Each day stake a fixed fraction of current bankroll on every
+     offered tier: Safe 3%, Medium 2%, Big 1%. Daily growth is
+     `log(1 + sum(stake_i * (won_i * odds_i - 1)))`. Report mean daily log growth for each variant,
+     and B-A and C-A differences with 95% bootstrap CIs from 2,000 whole-day resamples using seed
+     20261025.
+   - Secondary metrics, reported but not deciding: share of days where every offered slip lost;
+     per-tier win rate with predicted versus actual and Wilson CIs; maximum simulated-bankroll
+     drawdown; and number of days each tier was offered.
+   - Decision: adopt B or C, whichever has the higher mean daily log growth, only if the CI of its
+     difference versus A includes zero or is above zero, and its every-slip-lost share is below A's.
+     If both pass, take the higher log growth. If neither passes, keep A.
 6. Champions League (needs a free results source), monthly automatic re-check job.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 

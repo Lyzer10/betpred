@@ -11,6 +11,7 @@ from scipy.special import xlogy
 from .baselines import metrics
 from .dixon_coles import fit_dixon_coles, promoted_team_values, training_window
 from .elo import outcome_probabilities
+from .leagues import get_league, paths
 
 ENGINE_DIR = Path(__file__).resolve().parents[1]
 MATCHES_PATH = ENGINE_DIR / "data" / "processed" / "matches.parquet"
@@ -146,7 +147,7 @@ def _value_rows(frame: pd.DataFrame, probability_columns: list[str], odds_column
     return rows
 
 
-def write_report(data: pd.DataFrame, predictions: pd.DataFrame, chosen: dict[str, dict[str, float]]) -> Path:
+def write_report(data: pd.DataFrame, predictions: pd.DataFrame, chosen: dict[str, dict[str, float]], report_path=REPORT_PATH) -> Path:
     test_matches = data[data.season.isin(TEST_SEASONS)].copy()
     actual_1x2 = _actual_outcomes(test_matches)
     result_rows = []
@@ -224,13 +225,18 @@ def write_report(data: pd.DataFrame, predictions: pd.DataFrame, chosen: dict[str
                               ["close_odds_over25", "close_odds_under25"], [total > 2.5, total < 2.5], "Goals")
     lines += ["", "## Value test", "", "One unit is staked when model probability multiplied by opening odds exceeds 1.05.", "",
               "| Bet | Bets | Hit rate | ROI | Positive closing line value |", "|---|---:|---:|---:|---:|", *value_rows, ""]
-    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
-    return REPORT_PATH
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text("\n".join(lines), encoding="utf-8")
+    return report_path
 
 
 def main() -> None:
-    data = pd.read_parquet(MATCHES_PATH).sort_values(["date", "match_id"]).reset_index(drop=True)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    selected = get_league(parser.parse_args().league)
+    league_paths = paths(selected)
+    data = pd.read_parquet(league_paths.matches).sort_values(["date", "match_id"]).reset_index(drop=True)
     evaluation = VALIDATION_SEASONS + TEST_SEASONS
     if set(evaluation) - set(data.season):
         raise ValueError("Required validation or test seasons are missing")
@@ -244,11 +250,11 @@ def main() -> None:
     output["prob_under25"] = 1 - output["prob_over25"]
     if not (output.training_max_date < output.prediction_date).all():
         raise AssertionError("Walk forward leakage detected")
-    PREDICTIONS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    output.to_parquet(PREDICTIONS_PATH, index=False)
-    report = write_report(data, output, chosen)
-    tuning_results.to_csv(ENGINE_DIR / "reports" / "stage2_tuning.csv", index=False)
-    print(f"Wrote {len(output):,} predictions to {PREDICTIONS_PATH}")
+    league_paths.predictions_dc.parent.mkdir(parents=True, exist_ok=True)
+    output.to_parquet(league_paths.predictions_dc, index=False)
+    report = write_report(data, output, chosen, league_paths.stage2_report)
+    tuning_results.to_csv(league_paths.reports_dir / "stage2_tuning.csv", index=False)
+    print(f"Wrote {len(output):,} predictions to {league_paths.predictions_dc}")
     print(f"Wrote {report}")
 
 

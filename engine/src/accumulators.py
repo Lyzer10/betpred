@@ -29,6 +29,7 @@ from scipy.optimize import least_squares
 from .calibration import ENGINE_DIR, MATCHES_PATH, OUTPUT_PATH, TEST_SEASONS
 from .dixon_coles import market_probabilities, score_matrix
 from .goal_timing import PRIORS, TIMING_PATH
+from .leagues import get_league, paths
 
 LEGS_PATH = ENGINE_DIR / "data" / "processed" / "accumulator_legs.parquet"
 SLIPS_PATH = ENGINE_DIR / "data" / "processed" / "accumulator_slips.parquet"
@@ -122,17 +123,18 @@ def betting_round(dates: pd.Series) -> pd.Series:
     return shifted.year.astype(str) + "-W" + shifted.week.astype(str).str.zfill(2) + "-" + label
 
 
-def build_leg_table() -> pd.DataFrame:
+def build_leg_table(league="EPL") -> pd.DataFrame:
     """One row per (match, market): calibrated probability, estimated odds, outcome."""
-    timing = pd.read_parquet(TIMING_PATH)
+    league_paths = paths(get_league(league))
+    timing = pd.read_parquet(league_paths.predictions_goal_timing)
     timing = timing[timing.season.isin(TEST_SEASONS)]
-    calibrated = pd.read_parquet(OUTPUT_PATH)
+    calibrated = pd.read_parquet(league_paths.predictions_calibrated)
     calibrated = calibrated[calibrated.variant == "blend"]
     cal_columns = ["cal_home", "cal_draw", "cal_away", "cal_over05", "cal_over15",
                    "cal_over25", "cal_over35", "cal_btts", "rho"]
     frame = timing.merge(calibrated[["match_id", *cal_columns]], on="match_id", validate="one_to_one")
     # Use market-average prices, the same kind the live fixtures file provides.
-    average = pd.read_parquet(MATCHES_PATH)[["match_id", *AVERAGE_ODDS]]
+    average = pd.read_parquet(league_paths.matches)[["match_id", *AVERAGE_ODDS]]
     frame = frame.merge(average, on="match_id", validate="one_to_one")
     frame["cal_under25"] = 1 - frame.cal_over25
     frame["cal_under35"] = 1 - frame.cal_over35
@@ -302,7 +304,7 @@ def _wilson(successes: int, total: int, z: float = 1.96) -> tuple[float, float]:
     return centre - half, centre + half
 
 
-def write_report(legs: pd.DataFrame, slips: pd.DataFrame) -> None:
+def write_report(legs: pd.DataFrame, slips: pd.DataFrame, report_path=REPORT_PATH) -> None:
     lines = ["# Stage 4 report: accumulator tiers", "",
              f"Test seasons: {', '.join(TEST_SEASONS)}; {legs.match_id.nunique()} matches, "
              f"{legs['round'].nunique()} betting rounds (weekend Fri-Mon / midweek Tue-Thu).", "",
@@ -353,7 +355,7 @@ def write_report(legs: pd.DataFrame, slips: pd.DataFrame) -> None:
     for market, group in legs.groupby("market", sort=False):
         lines.append(f"| {market} | {group.bookmaker_probability.mean():.1%} | {group.probability.mean():.1%} | "
                      f"{group.won.mean():.1%} | {group.odds.median():.2f} |")
-    REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def _chosen_legs(legs: pd.DataFrame, slips: pd.DataFrame) -> pd.DataFrame:
@@ -369,19 +371,24 @@ def _chosen_legs(legs: pd.DataFrame, slips: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    league_paths = paths(get_league(args.league))
     started = time.perf_counter()
-    legs = build_leg_table()
-    legs.to_parquet(LEGS_PATH, index=False)
+    legs = build_leg_table(args.league)
+    legs.to_parquet(league_paths.accumulator_legs, index=False)
     slips = backtest_slips(legs, {
         "accuracy": ("probability", None),               # blended model + market
         "market_only": ("bookmaker_probability", None),  # baseline: no model at all
         "model_only": ("model_probability", None),       # shows the winner's curse
         "value": ("probability", 0.03),
     })
-    slips.to_parquet(SLIPS_PATH, index=False)
-    write_report(legs, slips)
+    slips.to_parquet(league_paths.accumulator_slips, index=False)
+    write_report(legs, slips, league_paths.stage4_report)
     print(f"{len(legs):,} legs, {len(slips):,} slips in {time.perf_counter() - started:.1f}s")
-    print(f"Wrote {REPORT_PATH}")
+    print(f"Wrote {league_paths.stage4_report}")
 
 
 if __name__ == "__main__":

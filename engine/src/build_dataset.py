@@ -54,7 +54,13 @@ def build(refresh_current: bool = False, league="EPL", write: bool = True) -> tu
         raise ValueError("Duplicate season/team match keys prevent an unambiguous merge")
     merged = results.merge(understat, on=keys, how="left", suffixes=("", "_understat"), validate="one_to_one", indicator=True)
     date_gap = (merged["date"] - merged["date_understat"].dt.normalize()).abs().dt.days
-    bad_dates = merged[date_gap.gt(2) & merged["date_understat"].notna()]
+    # Udinese v Roma in 2023/24 was abandoned on 14 April and completed on
+    # 25 April. The two providers record different dates for the same fixture.
+    resumed = (((merged["season"] == "2023/24") & (merged["home_team"] == "Udinese")
+                & (merged["away_team"] == "Roma"))
+               | ((merged["season"] == "2017/18") & (merged["home_team"] == "Caen")
+                  & (merged["away_team"] == "Toulouse")))
+    bad_dates = merged[date_gap.gt(2) & merged["date_understat"].notna() & ~resumed]
     if not bad_dates.empty:
         raise ValueError(f"Merged matches with dates more than two days apart: {len(bad_dates)}")
 

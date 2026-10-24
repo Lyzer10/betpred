@@ -8,6 +8,7 @@ from pathlib import Path
 import argparse
 
 import pandas as pd
+import requests
 from understatapi import UnderstatClient
 
 from .fetch_results import START_SEASON, current_season_start, season_label
@@ -15,11 +16,19 @@ from .team_names import canonical_team
 from .leagues import get_league, paths
 
 RAW_DIR = Path(__file__).resolve().parents[1] / "data" / "raw" / "understat"
+UNDERSTAT_HEADERS = {"X-Requested-With": "XMLHttpRequest"}
 
 
 def _write_json(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False), encoding="utf-8")
+
+
+def _league_results(understat_name: str, year: int) -> list[dict]:
+    response = requests.get(f"https://understat.com/getLeagueData/{understat_name}/{year}",
+                            headers=UNDERSTAT_HEADERS, timeout=30)
+    response.raise_for_status()
+    return response.json()["dates"]
 
 
 def fetch_season(year: int, refresh: bool = False, league="EPL") -> tuple[list[dict], dict[str, dict]]:
@@ -37,7 +46,7 @@ def fetch_season(year: int, refresh: bool = False, league="EPL") -> tuple[list[d
         if results_path.exists() and not refresh:
             results = json.loads(results_path.read_text(encoding="utf-8"))
         else:
-            results = client.league(league=selected.understat_name).get_match_data(season=str(year))
+            results = _league_results(selected.understat_name, year)
             _write_json(results_path, results)
             time.sleep(random.uniform(1, 2))
 

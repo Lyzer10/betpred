@@ -10,6 +10,7 @@ import pandas as pd
 import statsmodels.api as sm
 
 from .dixon_coles import score_matrix
+from .leagues import get_league, paths
 from .calibration import (
     ENGINE_DIR, MATCHES_PATH, DC_PATH, OUTPUT_PATH, TEST_SEASONS, add_actuals,
     binary_metrics, choose_methods, walk_forward_calibration,
@@ -223,10 +224,11 @@ def simulate_match(lam: float, mu: float, profile: np.ndarray, multipliers: np.n
     return result
 
 
-def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
-    matches = pd.read_parquet(MATCHES_PATH)
-    goals = pd.read_parquet(GOALS_PATH)
-    dc = pd.read_parquet(DC_PATH)
+def build_timing_predictions(league="EPL") -> tuple[pd.DataFrame, dict, dict, dict]:
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    goals = pd.read_parquet(league_paths.goals)
+    dc = pd.read_parquet(league_paths.predictions_dc)
     dc = dc[(dc.variant == "blend") & dc.split.isin(["validation", "test"])].copy()
     source = add_actuals(dc.merge(matches, on=["match_id", "date"], validate="one_to_one"))
     rows, fold_models = [], {}
@@ -257,7 +259,7 @@ def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
     timing = add_actuals(pd.DataFrame(rows).merge(matches, on=["match_id", "date", "season"], validate="one_to_one"))
     calibrated, audit = walk_forward_calibration(timing, TIMING_MARKETS)
     methods, scores = choose_methods(calibrated, TIMING_MARKETS)
-    calibrated.to_parquet(TIMING_PATH, index=False)
+    calibrated.to_parquet(league_paths.predictions_goal_timing, index=False)
     return calibrated, methods, scores, {"folds": fold_models, "audit": audit}
 
 
@@ -297,9 +299,10 @@ def _value_rows(frame: pd.DataFrame) -> list[str]:
     return rows
 
 
-def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_scores: dict, model_audit: dict) -> Path:
-    matches = pd.read_parquet(MATCHES_PATH)
-    calibrated = pd.read_parquet(OUTPUT_PATH)
+def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_scores: dict, model_audit: dict, league="EPL") -> Path:
+    league_paths = paths(get_league(league))
+    matches = pd.read_parquet(league_paths.matches)
+    calibrated = pd.read_parquet(league_paths.predictions_calibrated)
     base = calibrated[(calibrated.variant == "blend")].merge(matches, on=["match_id", "date"], validate="one_to_one")
     base = add_actuals(base)
     timing_test = timing[timing.season.isin(TEST_SEASONS)].copy()
@@ -377,18 +380,23 @@ def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_score
     lines += [f"| {label} | {value:.3f} |" for label, value in zip(STATE_LABELS, final_model["multipliers"])]
     lines += ["", "## Calibrated value test", "", "| Bet | Bets | Hit rate | ROI | Positive closing line value | Sample |",
               "|---|---:|---:|---:|---:|---|", *_value_rows(combined.reset_index()), ""]
-    REPORT_PATH.write_text("\n".join(lines), encoding="utf-8")
-    return REPORT_PATH
+    league_paths.stage3_report.write_text("\n".join(lines), encoding="utf-8")
+    return league_paths.stage3_report
 
 
 def main() -> None:
-    if not OUTPUT_PATH.exists():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--league", default="EPL")
+    args = parser.parse_args()
+    league_paths = paths(get_league(args.league))
+    if not league_paths.predictions_calibrated.exists():
         from .calibration import build_calibrated_predictions
-        build_calibrated_predictions()
+        build_calibrated_predictions(args.league)
     started = time.perf_counter()
-    timing, methods, scores, audit = build_timing_predictions()
-    report = write_stage3_report(timing, methods, scores, audit)
-    print(f"Wrote {len(timing):,} timing predictions to {TIMING_PATH}")
+    timing, methods, scores, audit = build_timing_predictions(args.league)
+    report = write_stage3_report(timing, methods, scores, audit, args.league)
+    print(f"Wrote {len(timing):,} timing predictions to {league_paths.predictions_goal_timing}")
     print(f"Wrote {report} in {time.perf_counter() - started:.1f} seconds")
     print("Chosen timing methods:", methods)
 

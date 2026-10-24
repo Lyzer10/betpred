@@ -175,6 +175,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: GitHub Actions now use the latest Node 24 action majors for checkout, Python setup and caching.
 - 2026-10-24: fixtures now carry `context` (current-season table position, played, points, goal
   difference, last-5 form per team) for display only; the table is not a model input (rejected study).
 - 2026-10-23..24: data pipeline, Dixon-Coles + backtest, calibration + goal timing, accumulators,

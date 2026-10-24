@@ -261,6 +261,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: announced line-ups from ESPN's public data (`src/lineups.py`, every non-skip run,
+  `web/public/data/lineups.json`), shown on match pages; display only, not a model input until a study
+  shows a gain over the odds. ESPN team names added to `team_names.py` (all five leagues map).
 - 2026-10-25: per league x bet type monitoring with automatic pause (`health.pair_monitor`), slip-leg
   monitor, realised slip results; Record page: price tracking, bet-type checks, real results. Past-day
   slips use #001339 (owner's choice). Tests added.

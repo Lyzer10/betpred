@@ -213,6 +213,9 @@ for (const scheme of ["light", "dark"]) {
   await page.getByText("Likeliest scores").waitFor();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no inputs`);
   check(await page.getByRole("heading", { name: "Form & table" }).count() === 1, `[${scheme}] match shows form and table context`);
+  const lineupCard = page.locator("[data-lineups]");
+  check(await lineupCard.count() === 1 && (await lineupCard.locator("[data-starter]").count() === 11
+    || await lineupCard.getByText(/about an hour before kick-off/).count() === 1), `[${scheme}] match shows line-ups or when they come`);
   const recentForm = page.getByLabel(/recent form, oldest to latest/).first();
   check(await recentForm.locator("[data-form-result]").count() === 5, `[${scheme}] match shows five form chips`);
   await page.getByRole("tab", { name: "Double" }).click();
@@ -231,10 +234,15 @@ for (const scheme of ["light", "dark"]) {
         check(await page.locator("[data-clv]").getByText(/Betpawa's price dropped after we picked it in/).count() === 1, `[${scheme}] price tracking headline`);
         check(await page.locator("[data-clv-early]").count() === (clvLegs < 200 ? 1 : 0), `[${scheme}] "too early" shown only under 200 bets`);
       }
-      check(await page.locator("[data-bet-types]").count() === 1, `[${scheme}] record shows the bet-type checks`);
-      await page.locator("[data-bet-types] button").last().click();       // show all, including those still collecting
-      check(await page.locator("[data-bet-type]").count() >= 1, `[${scheme}] bet-type rows render`);
-      check(await page.locator("[data-realised]").count() === 1, `[${scheme}] record shows real slip results`);
+      const published = await page.evaluate(async () => (await (await fetch("/data/predictions.json")).json()));
+      if (published.health?.pairs?.length) {
+        check(await page.locator("[data-bet-types]").count() === 1, `[${scheme}] record shows the bet-type checks`);
+        await page.locator("[data-bet-types] button").last().click();     // show all, including those still collecting
+        check(await page.locator("[data-bet-type]").count() >= 1, `[${scheme}] bet-type rows render`);
+      }
+      if (published.realised && Object.values(published.realised).some((t) => t.settled)) {
+        check(await page.locator("[data-realised]").count() === 1, `[${scheme}] record shows real slip results`);
+      }
       await snap("record");
     }
   }

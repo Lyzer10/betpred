@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Flag, TeamBadge } from "../badges";
-import { kickoffLabel, odds, pct, timeLabel, useArchive } from "../lib";
+import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
 import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
@@ -76,6 +76,40 @@ function FormAndTable({ fixture }: { fixture: Fixture }) {
   );
 }
 
+/** Announced starting elevens (ESPN), shown once clubs publish them about an hour before kick-off. */
+function Lineups({ fixture }: { fixture: Fixture }) {
+  const lineup = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
+  const [side, setSide] = useState<"home" | "away">("home");
+  const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"];
+  return (
+    <Card className="overflow-hidden" data-lineups>
+      <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Line-ups</h2>
+      {!lineup || !team ? (
+        <p className="px-4 pb-4 text-xs text-ink-3">Line-ups appear here about an hour before kick-off, once the clubs announce them.</p>
+      ) : (
+        <>
+          <div className="px-4 pb-2">
+            <Segmented options={[{ id: "home", label: fixture.home }, { id: "away", label: fixture.away }]} value={side} onChange={setSide} />
+          </div>
+          {team.formation && <div className="px-4 pb-1 text-[11px] text-ink-3">Formation {team.formation}</div>}
+          <ol className="divide-y divide-border/60">
+            {team.starters.map((p) => (
+              <li key={`${p.number}-${p.name}`} data-starter className="flex items-center gap-3 px-4 py-2 text-sm">
+                <span className="w-6 text-right text-xs font-semibold text-ink-3">{p.number ?? ""}</span>
+                <span className="min-w-0 flex-1 truncate font-medium">{p.name}</span>
+                <span className="text-[11px] text-ink-3">{p.position ?? ""}</span>
+              </li>
+            ))}
+          </ol>
+          {team.subs.length > 0 && (
+            <p className="px-4 py-3 text-[11px] leading-relaxed text-ink-3">Bench: {team.subs.map((p) => p.name).join(", ")}</p>
+          )}
+        </>
+      )}
+    </Card>
+  );
+}
+
 function MarketRow({ fixture, market }: { fixture: Fixture; market: MarketPrediction }) {
   const label = named(fixture, market.label);
   return (
@@ -133,6 +167,7 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
       </Card>
 
       <FormAndTable fixture={fixture} />
+      <Lineups fixture={fixture} />
 
       <Segmented options={GROUPS.map((g) => ({ id: g.id, label: g.label }))} value={group} onChange={setGroup} />
       <div className="px-1"><Legend /></div>

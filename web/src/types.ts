@@ -138,6 +138,11 @@ export interface Predictions {
   realised?: Record<TierName, RealisedTier>;
 }
 
+export interface LineupPlayer { name: string; number: string | null; position: string | null }
+export interface TeamLineup { formation: string | null; starters: LineupPlayer[]; subs: LineupPlayer[] }
+/** Announced line-ups (ESPN), about an hour before kick-off. Display only. */
+export interface MatchLineup { league: string; home: string; away: string; kickoff_utc: string; home_lineup: TeamLineup; away_lineup: TeamLineup }
+
 export interface ClvSummary { legs: number; mean_clv: number; beat_close: number; moved_against: number }
 /** Price tracking: published Betpawa price vs the last price before kick-off. */
 export type ClvReport = { legs: 0 } | (ClvSummary & {

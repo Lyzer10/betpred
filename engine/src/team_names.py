@@ -115,6 +115,10 @@ CANONICAL_TEAM_NAMES = {
     "Paris Saint-Germain": "Paris SG", "Racing Club De Lens": "Lens",
     "Stade Brest 29": "Brest", "Stade Rennais FC": "Rennes",
     "Strasbourg Alsace": "Strasbourg", "Toulouse FC": "Toulouse",
+    # ESPN (line-ups).
+    "Alavés": "Alaves", "Atlético Madrid": "Ath Madrid", "Deportivo": "La Coruna", "Málaga": "Malaga",
+    "Internazionale": "Inter", "1. FC Union Berlin": "Union Berlin", "Borussia Mönchengladbach": "M'gladbach",
+    "Hamburg SV": "Hamburg", "SV Elversberg": "Elversberg", "Stade Rennais": "Rennes",
 }
 
 

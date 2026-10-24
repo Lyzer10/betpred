@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 import type { StakingSettings } from "./ledger";
-import type { ArchiveSnapshot, MarketKey, Predictions, Result, SavedPick, SlipLeg } from "./types";
+import type { ArchiveSnapshot, MarketKey, MatchLineup, Predictions, Result, SavedPick, SlipLeg } from "./types";
+
+/** Announced line-ups; missing file or network error simply means none yet. */
+export function useLineups() {
+  const [lineups, setLineups] = useState<MatchLineup[]>([]);
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}data/lineups.json`, { cache: "no-cache" })
+      .then((response) => (response.ok ? response.json() : { matches: [] }))
+      .then((file) => setLineups(file.matches ?? []))
+      .catch(() => setLineups([]));
+  }, []);
+  return lineups;
+}
 
 export function usePredictions() {
   const [data, setData] = useState<Predictions | null>(null);

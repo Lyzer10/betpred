@@ -183,8 +183,16 @@ Claude (hard, affects predictions):
    published prediction per league x slip market, z = (wins - sum p)/sqrt(sum p(1-p)) from 30
    predictions, one-sided; z < -3 pauses the pair (kept out of slips, `engine/data/live/paused_pairs.json`)
    until z >= -2; -3..-2 = watch. Slip legs reported separately (shown only). Record page lists them.
-4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
-   ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
+4. **EPL model weight** (in progress). PRE-REGISTERED RULES, committed 2026-10-25 before any result:
+   - Procedures: V (current live) fits the weight with `fit_model_weight` on earlier TEST-era legs only
+     (2024/25 onwards); A fits it on validation legs (2021/22-2023/24, `build_validation_leg_table`)
+     plus earlier test-era legs. Both walk-forward: the weight for season S uses only seasons before S.
+   - Evaluation: every EPL leg of the 12 slip markets in 2025/26 and 2026/27 (the seasons where V has
+     history), not only legs chosen for slips, so no procedure can win by betting less. Metric: mean
+     log loss; paired difference V - A per leg; 95% CI by bootstrap of whole days (2,000, seed 20261025).
+   - Decision: switch the live weight to procedure A only if the CI of V - A is entirely above 0
+     (A clearly more accurate). Otherwise keep V. Reported, not deciding: the weights each procedure
+     picks, and the task-1 gates (C1-C4) for each procedure on the same legs.
 5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; independent tiers KEPT,
    see the review after the result).
    PRE-REGISTERED RULES, committed before any result was computed; do not change them after seeing results:

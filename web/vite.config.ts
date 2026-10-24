@@ -9,19 +9,19 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["icons/icon.svg"],
+      includeAssets: ["icons/favicon.png", "icons/apple-touch-icon.png"],
       manifest: {
-        name: "PL Predictor",
-        short_name: "PL Predictor",
+        name: "BetPredz",
+        short_name: "BetPredz",
         description: "Premier League probabilities, accumulator slips and value checks",
-        theme_color: "#0f1a2e",
-        background_color: "#0f1a2e",
+        theme_color: "#000e2d",
+        background_color: "#000e2d",
         display: "standalone",
         start_url: "/",
         icons: [
           { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
           { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },
-          { src: "icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+          { src: "icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
         ],
       },
       workbox: {

@@ -47,7 +47,7 @@ export default function App() {
     <div className="mx-auto min-h-screen max-w-lg px-4 pb-28">
       <header className="sticky top-0 z-10 -mx-4 mb-4 bg-bg/90 px-4 pb-3 pt-5 backdrop-blur-lg">
         <div className="flex items-center gap-3">
-          <img src={`${import.meta.env.BASE_URL}icons/icon.svg`} alt="" className="h-8 w-8 rounded-lg" />
+          <img src={`${import.meta.env.BASE_URL}icons/icon-192.png`} alt="BetPredz" className="h-9 w-9 rounded-xl" />
           <div className="min-w-0 flex-1">
             <div className="text-xl font-black italic leading-none tracking-tight">
               BET<span className="text-accent">PREDZ</span>

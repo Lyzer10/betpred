@@ -51,4 +51,8 @@ calibration and writes `data/processed/predictions_calibrated.parquet`.
 `python -m src.goal_timing` fits the historical goal time profile and score state
 effects, runs 20,000 vectorized simulations per match, and writes
 `data/processed/predictions_goal_timing.parquet` plus
-`reports/stage3_report.md`.
+`reports/stage3_report.md`. First scorer and 1Up probabilities combine the DC
+final-score matrix with simulated path behaviour per scoreline, so they always
+agree with the DC result and goal markets. Run order after any model change:
+`src.backtest` -> `src.calibration` -> `src.goal_timing` (the full timing backtest
+takes about 25 minutes; a single matchday takes seconds).

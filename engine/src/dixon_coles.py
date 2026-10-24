@@ -23,6 +23,17 @@ def tau_values(home_goals, away_goals, lam, mu, rho):
     return tau.item() if tau.ndim == 0 else tau
 
 
+def score_matrix(lam: float, mu: float, rho: float) -> np.ndarray:
+    """11x11 probability matrix of home (rows) by away (columns) goals, 0..10."""
+    goals = np.arange(11)
+    matrix = np.outer(poisson.pmf(goals, lam), poisson.pmf(goals, mu))
+    matrix[:2, :2] *= np.array([
+        [tau_values(0, 0, lam, mu, rho), tau_values(0, 1, lam, mu, rho)],
+        [tau_values(1, 0, lam, mu, rho), tau_values(1, 1, lam, mu, rho)],
+    ])
+    return matrix / matrix.sum()
+
+
 def market_probabilities(matrix: np.ndarray) -> dict[str, float]:
     """Derive result and goal market probabilities from a score matrix."""
     home_idx, away_idx = np.indices(matrix.shape)
@@ -78,15 +89,9 @@ class DixonColesModel:
 
     def predict(self, home_team: str, away_team: str) -> tuple[np.ndarray, dict[str, object]]:
         lam, mu = self.expected_goals(home_team, away_team)
-        goals = np.arange(11)
-        matrix = np.outer(poisson.pmf(goals, lam), poisson.pmf(goals, mu))
-        matrix[:2, :2] *= np.array([
-            [tau_values(0, 0, lam, mu, self.rho), tau_values(0, 1, lam, mu, self.rho)],
-            [tau_values(1, 0, lam, mu, self.rho), tau_values(1, 1, lam, mu, self.rho)],
-        ])
-        matrix /= matrix.sum()
+        matrix = score_matrix(lam, mu, self.rho)
         output: dict[str, object] = market_probabilities(matrix)
-        output.update({"lambda_home": lam, "lambda_away": mu})
+        output.update({"lambda_home": lam, "lambda_away": mu, "rho": self.rho})
         order = np.argsort(matrix.ravel())[-3:][::-1]
         output["top_scorelines"] = json.dumps([
             {"score": f"{i // 11}-{i % 11}", "probability": float(matrix.ravel()[i])} for i in order

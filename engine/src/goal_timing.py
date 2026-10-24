@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
+from .dixon_coles import score_matrix
 from .calibration import (
     ENGINE_DIR, MATCHES_PATH, DC_PATH, OUTPUT_PATH, TEST_SEASONS, add_actuals,
     binary_metrics, choose_methods, walk_forward_calibration,
@@ -132,31 +133,94 @@ def _simulate_once(lam: float, mu: float, profile: np.ndarray, multipliers: np.n
     return home_score, away_score, first, home_led, away_led
 
 
+MAX_GOALS = 10
+SHRINK_PSEUDO_COUNT = 20.0
+
+
+def exchangeable_priors() -> dict[str, np.ndarray]:
+    """Path probabilities given a final score h-a when goal order is uniformly random.
+
+    First scorer: h / (h + a). Ever leading (ballot theorem): certain if h > a,
+    otherwise h / (a + 1). Used to smooth sparsely simulated scorelines.
+    """
+    h, a = np.meshgrid(np.arange(MAX_GOALS + 1), np.arange(MAX_GOALS + 1), indexing="ij")
+    total = np.maximum(h + a, 1)
+    return {
+        "home_first": np.where(h + a > 0, h / total, 0.0),
+        "away_first": np.where(h + a > 0, a / total, 0.0),
+        "home_1up": np.where(h > a, 1.0, h / (a + 1)),
+        "away_1up": np.where(a > h, 1.0, a / (h + 1)),
+    }
+
+
+PRIORS = exchangeable_priors()
+
+
+def path_market_probabilities(home_score, away_score, events: dict[str, np.ndarray],
+                              matrix: np.ndarray) -> dict[str, float]:
+    """Combine DC final-score probabilities with simulated path behaviour per score.
+
+    P(event) = sum over scores of P_DC(score) * P_sim(event | score). The DC matrix
+    stays the authority on final scores (including its low-score correction); the
+    simulation only contributes how matches tend to unfold on the way to each score.
+    """
+    cell = np.minimum(home_score, MAX_GOALS) * (MAX_GOALS + 1) + np.minimum(away_score, MAX_GOALS)
+    counts = np.bincount(cell, minlength=(MAX_GOALS + 1) ** 2).reshape(MAX_GOALS + 1, -1)
+    output = {}
+    for name, happened in events.items():
+        hits = np.bincount(cell, weights=happened.astype(float),
+                           minlength=(MAX_GOALS + 1) ** 2).reshape(MAX_GOALS + 1, -1)
+        prior = PRIORS[name]
+        conditional = (hits + SHRINK_PSEUDO_COUNT * prior) / (counts + SHRINK_PSEUDO_COUNT)
+        # Structurally certain cells (e.g. 2-0 means home scored first) stay exact.
+        certain = (prior == 0) | (prior == 1)
+        conditional = np.where(certain, prior, conditional)
+        output[name] = float(np.sum(matrix * conditional))
+    return output
+
+
 def simulate_match(lam: float, mu: float, profile: np.ndarray, multipliers: np.ndarray,
-                   simulations: int = 20_000, seed: int = 0) -> dict[str, float]:
-    """Simulate one match, with vectorized paths and DC mean goal anchoring."""
+                   simulations: int = 20_000, seed: int = 0,
+                   matrix: np.ndarray | None = None) -> dict[str, float]:
+    """Simulate one match minute by minute.
+
+    With a DC score matrix, timing markets are re-weighted onto the DC final-score
+    distribution (see path_market_probabilities). Raw simulation values are kept
+    under raw_* for diagnostics.
+    """
     profile = np.asarray(profile, float) / np.sum(profile)
     multipliers = np.asarray(multipliers, float)
     scale_home = scale_away = 1.0
     if not np.allclose(multipliers, 1):
-        for iteration in range(3):
-            scores = _simulate_once(lam, mu, profile, multipliers, 8_000, seed + 100 + iteration,
+        # Same seed and size as the final run (common random numbers), so the scale
+        # converges on the final sample rather than chasing independent noise.
+        for _ in range(4):
+            scores = _simulate_once(lam, mu, profile, multipliers, simulations, seed,
                                     scale_home, scale_away)
             scale_home *= lam / max(scores[0].mean(), 1e-6)
             scale_away *= mu / max(scores[1].mean(), 1e-6)
     home_score, away_score, first, home_led, away_led = _simulate_once(
         lam, mu, profile, multipliers, simulations, seed, scale_home, scale_away)
-    return {
-        "sim_home_first": float(np.mean(first == 1)), "sim_away_first": float(np.mean(first == 2)),
-        "sim_no_goal": float(np.mean(first == 0)), "sim_home_1up": float(home_led.mean()),
-        "sim_away_1up": float(away_led.mean()), "sim_home_win": float(np.mean(home_score > away_score)),
-        "sim_draw": float(np.mean(home_score == away_score)), "sim_over25": float(np.mean(home_score + away_score > 2)),
-        # The rescaled DC means are the population means. Keep finite sample means
-        # separately so Monte Carlo noise does not masquerade as model drift.
-        "sim_mean_home_goals": float(lam), "sim_mean_away_goals": float(mu),
-        "sim_sample_mean_home_goals": float(home_score.mean()),
-        "sim_sample_mean_away_goals": float(away_score.mean()),
+    result = {
+        "raw_home_first": float(np.mean(first == 1)), "raw_away_first": float(np.mean(first == 2)),
+        "raw_no_goal": float(np.mean(first == 0)), "raw_home_1up": float(home_led.mean()),
+        "raw_away_1up": float(away_led.mean()), "raw_home_win": float(np.mean(home_score > away_score)),
+        "raw_draw": float(np.mean(home_score == away_score)),
+        "raw_over25": float(np.mean(home_score + away_score > 2)),
+        "raw_mean_home_goals": float(home_score.mean()), "raw_mean_away_goals": float(away_score.mean()),
     }
+    if matrix is None:
+        timing = {name: result[f"raw_{name}"] for name in ("home_first", "away_first", "home_1up", "away_1up")}
+        no_goal = result["raw_no_goal"]
+    else:
+        timing = path_market_probabilities(home_score, away_score, {
+            "home_first": first == 1, "away_first": first == 2,
+            "home_1up": home_led, "away_1up": away_led,
+        }, matrix)
+        no_goal = float(matrix[0, 0])
+    result.update({f"sim_{name}": value for name, value in timing.items()})
+    result["sim_no_goal"] = no_goal
+    return result
 
 
 def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
@@ -182,15 +246,9 @@ def build_timing_predictions() -> tuple[pd.DataFrame, dict, dict, dict]:
                                "multipliers": multipliers.tolist()}
         for match in fold.itertuples(index=False):
             seed = int(match.match_id) if str(match.match_id).isdigit() else abs(hash(match.match_id)) % (2**32)
-            timing = simulate_match(match.lambda_home, match.lambda_away, profile, multipliers, seed=seed)
-            # Dynamic paths drive timing markets. Terminal checks are halfway anchored
-            # to the DC matrix, which contains the low score tau correction that an
-            # independent minute Poisson simulation otherwise cannot reproduce.
-            for simulated, dc_value in (("sim_home_win", match.prob_home),
-                                        ("sim_draw", match.prob_draw),
-                                        ("sim_over25", match.prob_over25)):
-                timing[f"{simulated}_unanchored"] = timing[simulated]
-                timing[simulated] = 0.5 * (timing[simulated] + dc_value)
+            matrix = score_matrix(match.lambda_home, match.lambda_away, match.rho)
+            timing = simulate_match(match.lambda_home, match.lambda_away, profile, multipliers,
+                                    seed=seed, matrix=matrix)
             rows.append({"match_id": match.match_id, "date": match.date, "season": season,
                          "split": match.split, "lambda_home": match.lambda_home, "lambda_away": match.lambda_away,
                          "prob_home": match.prob_home, "prob_draw": match.prob_draw,
@@ -298,11 +356,14 @@ def write_stage3_report(timing: pd.DataFrame, timing_methods: dict, timing_score
                          else f"| {label} | {threshold:.2f} | NA | 0 |")
 
     lines += ["", "## Simulation checks", "",
-              "Terminal consistency probabilities use a halfway anchor to the DC matrix so its low score correction remains authoritative. Unanchored simulation values remain in the prediction file.", "",
-              "| Check | Mean absolute difference |", "|---|---:|",
-              f"| Home win versus DC matrix | {np.mean(np.abs(timing_test.sim_home_win - timing_test.prob_home)):.4f} |",
-              f"| Draw versus DC matrix | {np.mean(np.abs(timing_test.sim_draw - timing_test.prob_draw)):.4f} |",
-              f"| Over 2.5 versus DC matrix | {np.mean(np.abs(timing_test.sim_over25 - timing_test.prob_over25)):.4f} |", "",
+              "Timing markets are P(event) = sum over final scores of P_DC(score) x P_sim(event | score), "
+              "so final-score markets come from the DC matrix exactly. The raw (unweighted) simulation is "
+              "shown below as a diagnostic of how well the minute-level process reproduces DC on its own.", "",
+              "| Raw simulation check | Mean absolute difference |", "|---|---:|",
+              f"| Home win versus DC matrix | {np.mean(np.abs(timing_test.raw_home_win - timing_test.prob_home)):.4f} |",
+              f"| Draw versus DC matrix | {np.mean(np.abs(timing_test.raw_draw - timing_test.prob_draw)):.4f} |",
+              f"| Over 2.5 versus DC matrix | {np.mean(np.abs(timing_test.raw_over25 - timing_test.prob_over25)):.4f} |",
+              f"| Mean goals versus DC lambda (relative) | {np.mean(np.abs(np.r_[timing_test.raw_mean_home_goals / timing_test.lambda_home, timing_test.raw_mean_away_goals / timing_test.lambda_away] - 1)):.4f} |", "",
               "| Outcome | Simulated rate | Actual rate |", "|---|---:|---:|",
               f"| Home first scorer | {timing_test.sim_home_first.mean():.2%} | {timing_test.actual_home_first.mean():.2%} |",
               f"| Away first scorer | {timing_test.sim_away_first.mean():.2%} | {timing_test.actual_away_first.mean():.2%} |",

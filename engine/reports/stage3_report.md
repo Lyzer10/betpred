@@ -36,21 +36,21 @@ Test seasons: 2024/25, 2025/26, 2026/27 (830 matches).
 | away_clean_sheet | raw | 0.5156 | 0.1699 |
 | away_clean_sheet | Platt | 0.5183 | 0.1709 |
 | away_clean_sheet | isotonic | 0.5194 | 0.1717 |
-| home_first | raw | 0.6541 | 0.2303 |
-| home_first | Platt | 0.6561 | 0.2313 |
-| home_first | isotonic | 0.6602 | 0.2329 |
-| away_first | raw | 0.6467 | 0.2267 |
-| away_first | Platt | 0.6486 | 0.2277 |
-| away_first | isotonic | 0.6494 | 0.2279 |
-| no_goal | raw | 0.2230 | 0.0548 |
-| no_goal | Platt | 0.2224 | 0.0546 |
-| no_goal | isotonic | 0.2781 | 0.0548 |
-| home_1up | raw | 0.6081 | 0.2101 |
-| home_1up | Platt | 0.6070 | 0.2098 |
-| home_1up | isotonic | 0.6168 | 0.2129 |
-| away_1up | raw | 0.6460 | 0.2270 |
-| away_1up | Platt | 0.6475 | 0.2277 |
-| away_1up | isotonic | 0.6551 | 0.2291 |
+| home_first | raw | 0.6542 | 0.2303 |
+| home_first | Platt | 0.6559 | 0.2312 |
+| home_first | isotonic | 0.6906 | 0.2332 |
+| away_first | raw | 0.6469 | 0.2268 |
+| away_first | Platt | 0.6490 | 0.2279 |
+| away_first | isotonic | 0.6804 | 0.2283 |
+| no_goal | raw | 0.2237 | 0.0550 |
+| no_goal | Platt | 0.2219 | 0.0546 |
+| no_goal | isotonic | 0.2218 | 0.0547 |
+| home_1up | raw | 0.6084 | 0.2101 |
+| home_1up | Platt | 0.6065 | 0.2095 |
+| home_1up | isotonic | 0.6080 | 0.2105 |
+| away_1up | raw | 0.6466 | 0.2272 |
+| away_1up | Platt | 0.6481 | 0.2279 |
+| away_1up | isotonic | 0.6790 | 0.2284 |
 
 ## Calibration tables
 
@@ -179,89 +179,89 @@ Test seasons: 2024/25, 2025/26, 2026/27 (830 matches).
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
 | 0.0 to 0.1 | NA | NA | 0 |
-| 0.1 to 0.2 | 0.185 | 0.167 | 6 |
-| 0.2 to 0.3 | 0.263 | 0.294 | 34 |
-| 0.3 to 0.4 | 0.355 | 0.260 | 131 |
-| 0.4 to 0.5 | 0.454 | 0.478 | 232 |
-| 0.5 to 0.6 | 0.547 | 0.576 | 236 |
-| 0.6 to 0.7 | 0.647 | 0.697 | 142 |
-| 0.7 to 0.8 | 0.731 | 0.700 | 40 |
-| 0.8 to 0.9 | 0.819 | 0.625 | 8 |
-| 0.9 to 1.0 | 0.945 | 0.000 | 1 |
+| 0.1 to 0.2 | 0.179 | 0.200 | 5 |
+| 0.2 to 0.3 | 0.261 | 0.316 | 38 |
+| 0.3 to 0.4 | 0.355 | 0.277 | 137 |
+| 0.4 to 0.5 | 0.454 | 0.477 | 241 |
+| 0.5 to 0.6 | 0.547 | 0.578 | 232 |
+| 0.6 to 0.7 | 0.649 | 0.696 | 135 |
+| 0.7 to 0.8 | 0.737 | 0.765 | 34 |
+| 0.8 to 0.9 | 0.819 | 0.571 | 7 |
+| 0.9 to 1.0 | 0.948 | 0.000 | 1 |
 
 ### Home first scorer, calibrated
 
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
 | 0.0 to 0.1 | NA | NA | 0 |
-| 0.1 to 0.2 | 0.199 | 1.000 | 1 |
-| 0.2 to 0.3 | 0.261 | 0.158 | 19 |
-| 0.3 to 0.4 | 0.359 | 0.259 | 108 |
-| 0.4 to 0.5 | 0.456 | 0.429 | 231 |
-| 0.5 to 0.6 | 0.548 | 0.571 | 268 |
-| 0.6 to 0.7 | 0.646 | 0.697 | 155 |
-| 0.7 to 0.8 | 0.731 | 0.707 | 41 |
-| 0.8 to 0.9 | 0.814 | 0.500 | 6 |
-| 0.9 to 1.0 | 0.936 | 0.000 | 1 |
+| 0.1 to 0.2 | 0.194 | 1.000 | 1 |
+| 0.2 to 0.3 | 0.259 | 0.158 | 19 |
+| 0.3 to 0.4 | 0.357 | 0.264 | 110 |
+| 0.4 to 0.5 | 0.455 | 0.437 | 238 |
+| 0.5 to 0.6 | 0.549 | 0.571 | 280 |
+| 0.6 to 0.7 | 0.648 | 0.691 | 139 |
+| 0.7 to 0.8 | 0.732 | 0.778 | 36 |
+| 0.8 to 0.9 | 0.812 | 0.500 | 6 |
+| 0.9 to 1.0 | 0.937 | 0.000 | 1 |
 
 ### Home 1Up, raw
 
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
 | 0.0 to 0.1 | NA | NA | 0 |
-| 0.1 to 0.2 | 0.181 | 0.500 | 2 |
-| 0.2 to 0.3 | 0.259 | 0.235 | 17 |
-| 0.3 to 0.4 | 0.362 | 0.303 | 76 |
-| 0.4 to 0.5 | 0.455 | 0.449 | 127 |
-| 0.5 to 0.6 | 0.551 | 0.564 | 211 |
-| 0.6 to 0.7 | 0.649 | 0.697 | 211 |
-| 0.7 to 0.8 | 0.750 | 0.832 | 131 |
-| 0.8 to 0.9 | 0.836 | 0.812 | 48 |
-| 0.9 to 1.0 | 0.930 | 1.000 | 7 |
+| 0.1 to 0.2 | 0.178 | 0.500 | 2 |
+| 0.2 to 0.3 | 0.256 | 0.235 | 17 |
+| 0.3 to 0.4 | 0.359 | 0.291 | 79 |
+| 0.4 to 0.5 | 0.456 | 0.449 | 136 |
+| 0.5 to 0.6 | 0.553 | 0.580 | 219 |
+| 0.6 to 0.7 | 0.651 | 0.713 | 202 |
+| 0.7 to 0.8 | 0.749 | 0.831 | 124 |
+| 0.8 to 0.9 | 0.837 | 0.818 | 44 |
+| 0.9 to 1.0 | 0.931 | 1.000 | 7 |
 
 ### Home 1Up, calibrated
 
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
 | 0.0 to 0.1 | NA | NA | 0 |
-| 0.1 to 0.2 | 0.180 | 1.000 | 1 |
-| 0.2 to 0.3 | 0.253 | 0.100 | 10 |
-| 0.3 to 0.4 | 0.354 | 0.333 | 42 |
-| 0.4 to 0.5 | 0.451 | 0.369 | 111 |
-| 0.5 to 0.6 | 0.555 | 0.543 | 184 |
-| 0.6 to 0.7 | 0.649 | 0.610 | 210 |
-| 0.7 to 0.8 | 0.743 | 0.790 | 167 |
-| 0.8 to 0.9 | 0.835 | 0.839 | 93 |
-| 0.9 to 1.0 | 0.930 | 0.917 | 12 |
+| 0.1 to 0.2 | 0.173 | 1.000 | 1 |
+| 0.2 to 0.3 | 0.261 | 0.077 | 13 |
+| 0.3 to 0.4 | 0.360 | 0.364 | 44 |
+| 0.4 to 0.5 | 0.453 | 0.388 | 116 |
+| 0.5 to 0.6 | 0.555 | 0.538 | 186 |
+| 0.6 to 0.7 | 0.649 | 0.613 | 212 |
+| 0.7 to 0.8 | 0.743 | 0.816 | 163 |
+| 0.8 to 0.9 | 0.834 | 0.833 | 84 |
+| 0.9 to 1.0 | 0.931 | 0.909 | 11 |
 
 ### Away 1Up, raw
 
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
-| 0.0 to 0.1 | 0.040 | 1.000 | 1 |
-| 0.1 to 0.2 | 0.175 | 0.250 | 8 |
-| 0.2 to 0.3 | 0.264 | 0.174 | 46 |
-| 0.3 to 0.4 | 0.351 | 0.410 | 134 |
-| 0.4 to 0.5 | 0.451 | 0.397 | 209 |
-| 0.5 to 0.6 | 0.547 | 0.548 | 199 |
-| 0.6 to 0.7 | 0.648 | 0.624 | 157 |
-| 0.7 to 0.8 | 0.741 | 0.870 | 54 |
-| 0.8 to 0.9 | 0.838 | 0.864 | 22 |
+| 0.0 to 0.1 | 0.037 | 1.000 | 1 |
+| 0.1 to 0.2 | 0.176 | 0.333 | 9 |
+| 0.2 to 0.3 | 0.262 | 0.152 | 46 |
+| 0.3 to 0.4 | 0.351 | 0.411 | 141 |
+| 0.4 to 0.5 | 0.450 | 0.410 | 205 |
+| 0.5 to 0.6 | 0.544 | 0.548 | 208 |
+| 0.6 to 0.7 | 0.647 | 0.625 | 144 |
+| 0.7 to 0.8 | 0.739 | 0.857 | 56 |
+| 0.8 to 0.9 | 0.839 | 0.850 | 20 |
 | 0.9 to 1.0 | NA | NA | 0 |
 
 ### Away 1Up, calibrated
 
 | Bin | Mean predicted | Actual rate | Count |
 |---|---:|---:|---:|
-| 0.0 to 0.1 | 0.053 | 1.000 | 1 |
-| 0.1 to 0.2 | 0.189 | 0.333 | 3 |
-| 0.2 to 0.3 | 0.264 | 0.147 | 34 |
-| 0.3 to 0.4 | 0.358 | 0.386 | 127 |
-| 0.4 to 0.5 | 0.454 | 0.410 | 210 |
-| 0.5 to 0.6 | 0.547 | 0.529 | 221 |
-| 0.6 to 0.7 | 0.646 | 0.622 | 164 |
-| 0.7 to 0.8 | 0.739 | 0.885 | 52 |
-| 0.8 to 0.9 | 0.829 | 0.833 | 18 |
+| 0.0 to 0.1 | 0.051 | 1.000 | 1 |
+| 0.1 to 0.2 | 0.189 | 0.667 | 3 |
+| 0.2 to 0.3 | 0.262 | 0.171 | 35 |
+| 0.3 to 0.4 | 0.356 | 0.360 | 125 |
+| 0.4 to 0.5 | 0.451 | 0.419 | 217 |
+| 0.5 to 0.6 | 0.545 | 0.542 | 227 |
+| 0.6 to 0.7 | 0.644 | 0.619 | 155 |
+| 0.7 to 0.8 | 0.736 | 0.882 | 51 |
+| 0.8 to 0.9 | 0.827 | 0.812 | 16 |
 | 0.9 to 1.0 | NA | NA | 0 |
 
 ## Confidence buckets
@@ -310,45 +310,46 @@ Test seasons: 2024/25, 2025/26, 2026/27 (830 matches).
 | BTTS yes | 0.80 | NA | 0 |
 | BTTS yes | 0.85 | NA | 0 |
 | BTTS yes | 0.90 | NA | 0 |
-| Home first scorer | 0.60 | 68.97% | 203 |
-| Home first scorer | 0.65 | 65.83% | 120 |
-| Home first scorer | 0.70 | 66.67% | 48 |
+| Home first scorer | 0.60 | 69.78% | 182 |
+| Home first scorer | 0.65 | 69.52% | 105 |
+| Home first scorer | 0.70 | 72.09% | 43 |
 | Home first scorer | 0.75 | 68.75% | 16 |
 | Home first scorer | 0.80 | 42.86% | 7 |
 | Home first scorer | 0.85 | 0.00% | 1 |
 | Home first scorer | 0.90 | 0.00% | 1 |
-| Home 1Up | 0.60 | 72.41% | 482 |
-| Home 1Up | 0.65 | 75.27% | 376 |
-| Home 1Up | 0.70 | 81.25% | 272 |
-| Home 1Up | 0.75 | 83.24% | 173 |
-| Home 1Up | 0.80 | 84.76% | 105 |
-| Home 1Up | 0.85 | 91.18% | 34 |
-| Home 1Up | 0.90 | 91.67% | 12 |
-| Away 1Up | 0.60 | 69.66% | 234 |
-| Away 1Up | 0.65 | 76.03% | 146 |
-| Away 1Up | 0.70 | 87.14% | 70 |
-| Away 1Up | 0.75 | 90.91% | 33 |
-| Away 1Up | 0.80 | 83.33% | 18 |
+| Home 1Up | 0.60 | 72.98% | 470 |
+| Home 1Up | 0.65 | 77.46% | 355 |
+| Home 1Up | 0.70 | 82.56% | 258 |
+| Home 1Up | 0.75 | 83.97% | 156 |
+| Home 1Up | 0.80 | 84.21% | 95 |
+| Home 1Up | 0.85 | 90.91% | 33 |
+| Home 1Up | 0.90 | 90.91% | 11 |
+| Away 1Up | 0.60 | 69.37% | 222 |
+| Away 1Up | 0.65 | 77.69% | 130 |
+| Away 1Up | 0.70 | 86.57% | 67 |
+| Away 1Up | 0.75 | 90.00% | 30 |
+| Away 1Up | 0.80 | 81.25% | 16 |
 | Away 1Up | 0.85 | 75.00% | 4 |
 | Away 1Up | 0.90 | NA | 0 |
 
 ## Simulation checks
 
-Terminal consistency probabilities use a halfway anchor to the DC matrix so its low score correction remains authoritative. Unanchored simulation values remain in the prediction file.
+Timing markets are P(event) = sum over final scores of P_DC(score) x P_sim(event | score), so final-score markets come from the DC matrix exactly. The raw (unweighted) simulation is shown below as a diagnostic of how well the minute-level process reproduces DC on its own.
 
-| Check | Mean absolute difference |
+| Raw simulation check | Mean absolute difference |
 |---|---:|
-| Home win versus DC matrix | 0.0037 |
-| Draw versus DC matrix | 0.0062 |
-| Over 2.5 versus DC matrix | 0.0022 |
+| Home win versus DC matrix | 0.0067 |
+| Draw versus DC matrix | 0.0123 |
+| Over 2.5 versus DC matrix | 0.0019 |
+| Mean goals versus DC lambda (relative) | 0.0010 |
 
 | Outcome | Simulated rate | Actual rate |
 |---|---:|---:|
-| Home first scorer | 50.53% | 51.08% |
-| Away first scorer | 43.79% | 43.13% |
-| No goal | 5.67% | 5.78% |
-| Home 1Up | 58.80% | 60.96% |
-| Away 1Up | 51.08% | 50.84% |
+| Home first scorer | 50.04% | 51.08% |
+| Away first scorer | 43.31% | 43.13% |
+| No goal | 6.65% | 5.78% |
+| Home 1Up | 58.30% | 60.96% |
+| Away 1Up | 50.59% | 50.84% |
 
 ## Final fold time profile
 

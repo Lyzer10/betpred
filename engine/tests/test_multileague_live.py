@@ -1,0 +1,63 @@
+import json
+
+import numpy as np
+import pandas as pd
+
+from src import predict
+from src.market_live import calibrate
+
+
+def _csv():
+    return pd.DataFrame({
+        "Div": ["E0", "I1", "I1", "SP1"],
+        "Date": ["25/10/2026"] * 4, "Time": ["15:00", "14:00", "17:00", "20:00"],
+        "HomeTeam": ["Arsenal", "Inter", "Juventus", "Barcelona"],
+        "AwayTeam": ["Everton", "Milan", "Roma", "Sevilla"],
+        "AvgH": [1.5, 2.1, 1.9, np.nan], "AvgD": [4.5, 3.4, 3.4, np.nan], "AvgA": [7.0, 3.5, 4.2, np.nan],
+        "Avg>2.5": [1.7, 1.9, 2.1, np.nan], "Avg<2.5": [2.2, 1.95, 1.8, np.nan],
+    })
+
+
+def test_load_fixtures_filters_one_league(monkeypatch):
+    monkeypatch.setattr(predict, "_FIXTURES_CSV", _csv())
+    empty = pd.DataFrame(columns=["season", "home_team", "away_team"])
+    serie_a = predict.load_fixtures(pd.Timestamp("2026-10-24 12:00"), empty, "SERIEA")
+    assert serie_a.home_team.tolist() == ["Inter", "Juventus"]
+    assert set(serie_a.league) == {"SERIEA"}
+    assert predict.load_fixtures(pd.Timestamp("2026-10-24 12:00"), empty, "EPL").home_team.tolist() == ["Arsenal"]
+
+
+def test_market_mode_follows_the_bookmaker_and_skips_unpriced(monkeypatch):
+    monkeypatch.setattr(predict, "_FIXTURES_CSV", _csv())
+    monkeypatch.setattr(predict, "load_calibrators", lambda league: {})        # identity calibration
+    monkeypatch.setattr(predict, "league_rho", lambda league: -0.05)
+    empty = pd.DataFrame(columns=["season", "home_team", "away_team"])
+    fixtures = predict.load_fixtures(pd.Timestamp("2026-10-24 12:00"), empty, "LALIGA")   # no odds
+    assert predict.predict_market_fixtures(fixtures, "LALIGA").empty
+    fixtures = predict.load_fixtures(pd.Timestamp("2026-10-24 12:00"), empty, "SERIEA")
+    legs = predict.predict_market_fixtures(fixtures, "SERIEA").set_index(["home_team", "market"])
+    inter = legs.loc["Inter"]
+    implied = 1 / np.array([2.1, 3.4, 3.5])
+    implied /= implied.sum()
+    assert np.allclose(inter.loc[["home_win", "draw", "away_win"], "probability"], implied)
+    assert inter.loc["home_1up", "probability"] >= inter.loc["home_win", "probability"]
+    assert inter.loc["over_1.5", "probability"] >= inter.loc["over_2.5", "probability"]
+    assert len(json.loads(inter.loc["home_win", "top_scorelines"])) == 3
+
+
+def test_calibrate_applies_logistic_map():
+    assert calibrate(0.6, None) == 0.6
+    identity = {"coef": 1.0, "intercept": 0.0}
+    assert abs(calibrate(0.6, identity) - 0.6) < 1e-12
+    shrink = {"coef": 0.5, "intercept": 0.0}
+    assert 0.5 < calibrate(0.8, shrink) < 0.8
+
+
+def test_degenerate_calibrators_are_never_used():
+    from src.market_live import usable
+    good = {"coef": 1.1, "intercept": 0.1, "legs": 1500, "minority": 400}
+    assert usable(good)
+    assert not usable({**good, "legs": 36})            # Ligue 1 over 0.5: far too little evidence
+    assert not usable({**good, "coef": -1.57})         # La Liga over 0.5: backwards slope
+    assert not usable({**good, "minority": 3})         # almost no losses to learn from
+    assert not usable(None)

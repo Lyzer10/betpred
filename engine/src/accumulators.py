@@ -86,6 +86,11 @@ SLIP_MARKETS = ("home_1up", "away_1up", "over_0.5", "over_1.5", "over_2.5", "und
 
 def bookmaker_fair_probabilities(odds_home, odds_draw, odds_away, odds_over, odds_under, rho):
     """Market probabilities implied by the bookmaker's 1X2 and O/U 2.5 prices."""
+    return bookmaker_implied(odds_home, odds_draw, odds_away, odds_over, odds_under, rho)[0]
+
+
+def bookmaker_implied(odds_home, odds_draw, odds_away, odds_over, odds_under, rho):
+    """(fair market probabilities, (lambda_home, lambda_away), score matrix) implied by the prices."""
     inverse = 1 / np.array([odds_home, odds_draw, odds_away])
     target_1x2 = inverse / inverse.sum()
     ou = 1 / np.array([odds_over, odds_under])
@@ -97,7 +102,8 @@ def bookmaker_fair_probabilities(odds_home, odds_draw, odds_away, odds_over, odd
                 markets["prob_away"] - target_1x2[2], markets["prob_over25"] - target_over]
 
     fit = least_squares(residuals, np.log([1.5, 1.2]), bounds=(np.log(0.05), np.log(6.0)))
-    matrix = score_matrix(*np.exp(fit.x), rho)
+    lambdas = tuple(float(x) for x in np.exp(fit.x))
+    matrix = score_matrix(*lambdas, rho)
     markets = market_probabilities(matrix)
     return {
         # Directly priced markets keep the bookmaker's own fair probabilities.
@@ -112,7 +118,7 @@ def bookmaker_fair_probabilities(odds_home, odds_draw, odds_away, odds_over, odd
         "double_1x": target_1x2[0] + target_1x2[1], "double_x2": target_1x2[1] + target_1x2[2],
         "double_12": target_1x2[0] + target_1x2[2],
         "away_first": float(np.sum(matrix * PRIORS["away_first"])),
-    }
+    }, lambdas, matrix
 
 
 def betting_round(dates: pd.Series) -> pd.Series:

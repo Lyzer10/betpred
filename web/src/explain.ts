@@ -5,7 +5,7 @@ import type { Fixture, MarketKey } from "./types";
 export function explainPick(market: MarketKey, fixture: Fixture): string[] {
   const m = Object.fromEntries(fixture.markets.map((x) => [x.market, x]));
   const p = (k: MarketKey) => m[k]?.probability ?? 0;
-  const [xh, xa] = fixture.expected_goals;
+  const [xh, xa] = fixture.expected_goals;   // market mode: the goals the bookmakers' prices imply
   const total = (xh + xa).toFixed(1);
   const scores = fixture.top_scorelines.slice(0, 2).map((s) => s.score).join(", ");
   const home = fixture.home, away = fixture.away;
@@ -58,7 +58,9 @@ export function explainPick(market: MarketKey, fixture: Fixture): string[] {
   }
 
   const pick = m[market];
-  if (pick?.market_probability != null) {
+  if (fixture.mode === "market") {
+    lines.push(`Bookmakers' consensus, adjusted with this league's past results: our model has no edge over the market in ${fixture.league?.name ?? "this league"}.`);
+  } else if (pick?.market_probability != null) {
     const gap = pick.model_probability - pick.market_probability;
     lines.push(Math.abs(gap) < 0.03
       ? `Bookmakers agree: they make it ${pct(pick.market_probability)}.`

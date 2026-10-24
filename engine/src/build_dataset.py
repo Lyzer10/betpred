@@ -40,11 +40,15 @@ def _preferred(frame: pd.DataFrame, columns: list[str]) -> pd.Series:
     return frame[columns].bfill(axis=1).iloc[:, 0]
 
 
-def build(refresh_current: bool = False, league="EPL", write: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
+def build(refresh_current: bool = False, league="EPL", write: bool = True,
+          start: int | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Build the match and goal tables. `start` limits the seasons fetched (the live run
+    only needs the current season of market-mode leagues, to settle their bets)."""
     selected = get_league(league)
     league_paths = paths(selected)
-    results = fetch_results(refresh_current=refresh_current, league=selected)
-    understat, raw_goals = fetch_understat(refresh_current=refresh_current, league=selected)
+    since = {} if start is None else {"start": start}
+    results = fetch_results(refresh_current=refresh_current, league=selected, **since)
+    understat, raw_goals = fetch_understat(refresh_current=refresh_current, league=selected, **since)
     for column in ("home_team", "away_team"):
         results[column] = results[column].map(lambda name: canonical_team(name, selected))
 

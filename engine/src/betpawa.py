@@ -20,6 +20,7 @@ import time
 import pandas as pd
 import requests
 
+from .leagues import get_league
 from .team_names import canonical_team
 
 BASE_URL = "https://www.betpawa.co.tz/api/sportsbook/v4"
@@ -75,10 +76,14 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
 
 
 def fetch_premier_league_odds(session: requests.Session | None = None) -> pd.DataFrame:
+    return fetch_competition_odds("EPL", session)
+
+
+def fetch_competition_odds(league="EPL", session: requests.Session | None = None) -> pd.DataFrame:
     """One row per (match, market) with Betpawa's current decimal odds."""
     session = session or requests.Session()
     query = {"queries": [{"query": {"eventType": "UPCOMING", "categories": ["2"],
-                                    "zones": {"competitions": [PREMIER_LEAGUE_ID]}}, "take": 50}]}
+                                    "zones": {"competitions": [str(get_league(league).betpawa_competition_id)]}}, "take": 50}]}
     response = session.get(f"{BASE_URL}/events/lists/by-queries", params={"q": json.dumps(query)},
                            headers=HEADERS, timeout=30)
     response.raise_for_status()
@@ -90,7 +95,7 @@ def fetch_premier_league_odds(session: requests.Session | None = None) -> pd.Dat
         if not detail.ok:
             continue
         participants = sorted(event["participants"], key=lambda p: p["position"])
-        home, away = (canonical_team(p["name"]) for p in participants[:2])
+        home, away = (canonical_team(p["name"], league) for p in participants[:2])
         kickoff = pd.Timestamp(event["startTime"]).tz_convert("UTC").tz_localize(None)
         for market, price in parse_markets(detail.json().get("markets", [])).items():
             rows.append({"home_team": home, "away_team": away, "kickoff_utc": kickoff,

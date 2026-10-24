@@ -22,6 +22,7 @@ export const PREMIER_LEAGUE: League = { code: "EPL", name: "Premier League", cou
 export interface Fixture {
   id: number;
   league?: League;
+  mode?: "blended" | "market";   // market: calibrated bookmaker consensus (no model edge in that league)
   date: string;
   time: string;
   kickoff_utc: string;

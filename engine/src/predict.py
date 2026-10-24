@@ -21,11 +21,12 @@ import pandas as pd
 import requests
 
 from .accumulators import (
+    bookmaker_implied,
     LEG_MARKETS, LEGS_PATH, RETAIL_MARGIN, SLIP_MARKETS, SLIPS_PATH, TIERS, best_slip, betting_round, blend,
     bookmaker_fair_probabilities, fit_model_weight,
 )
 from .backtest import _promoted_initialization
-from .betpawa import fetch_premier_league_odds
+from .betpawa import fetch_competition_odds
 from .health import health_check
 from .build_dataset import build
 from .calibration import (
@@ -36,6 +37,8 @@ from .fetch_results import current_season_start, parse_match_dates, season_label
 from .goal_timing import (
     GOALS_PATH, TIMING_MARKETS, TIMING_PATH, estimate_time_profile, fit_state_multipliers, simulate_match,
 )
+from .leagues import get_league
+from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
 from .team_names import canonical_team
 
 FIXTURES_URL = "https://football-data.co.uk/fixtures.csv"
@@ -66,17 +69,29 @@ MARKET_LABELS = {
 }
 
 
-def load_fixtures(today: pd.Timestamp, played: pd.DataFrame) -> pd.DataFrame:
-    """Upcoming Premier League fixtures with average bookmaker odds."""
-    response = requests.get(FIXTURES_URL, timeout=30)
-    response.raise_for_status()
-    raw = pd.read_csv(StringIO(response.content.decode("utf-8-sig")))
-    raw = raw[raw.Div == "E0"].copy()
+_FIXTURES_CSV: pd.DataFrame | None = None
+
+
+def _fixtures_csv() -> pd.DataFrame:
+    """football-data.co.uk upcoming fixtures for every league, downloaded once per run."""
+    global _FIXTURES_CSV
+    if _FIXTURES_CSV is None:
+        response = requests.get(FIXTURES_URL, timeout=30)
+        response.raise_for_status()
+        _FIXTURES_CSV = pd.read_csv(StringIO(response.content.decode("utf-8-sig")))
+    return _FIXTURES_CSV
+
+
+def load_fixtures(today: pd.Timestamp, played: pd.DataFrame, league="EPL") -> pd.DataFrame:
+    """Upcoming fixtures of one league with average bookmaker odds."""
+    selected = get_league(league)
+    raw = _fixtures_csv()
+    raw = raw[raw.Div == selected.football_data_code].copy()
     fixtures = pd.DataFrame({
         "date": parse_match_dates(raw.Date),
         "time": raw.Time.astype(str),
-        "home_team": raw.HomeTeam.map(canonical_team),
-        "away_team": raw.AwayTeam.map(canonical_team),
+        "home_team": raw.HomeTeam.map(lambda name: canonical_team(name, selected)),
+        "away_team": raw.AwayTeam.map(lambda name: canonical_team(name, selected)),
         # Average market odds; fixtures.csv carries no Pinnacle columns.
         "odds_home": raw.get("AvgH", raw.get("B365H")), "odds_draw": raw.get("AvgD", raw.get("B365D")),
         "odds_away": raw.get("AvgA", raw.get("B365A")),
@@ -93,6 +108,7 @@ def load_fixtures(today: pd.Timestamp, played: pd.DataFrame) -> pd.DataFrame:
     done = set(zip(played.loc[played.season == season, "home_team"], played.loc[played.season == season, "away_team"]))
     fixtures = fixtures[[(h, a) not in done for h, a in zip(fixtures.home_team, fixtures.away_team)]]
     fixtures["season"] = season
+    fixtures["league"] = selected.code
     return fixtures.sort_values(["date", "time"]).reset_index(drop=True)
 
 
@@ -176,6 +192,41 @@ def predict_fixtures(fixtures, model, matches, goals, calibrators, model_weight)
     return legs
 
 
+def predict_market_fixtures(fixtures: pd.DataFrame, league) -> pd.DataFrame:
+    """Market mode: calibrated bookmaker consensus for every market (see market_live.py).
+
+    Expected goals and likeliest scores come from the score matrix the prices imply.
+    Fixtures without bookmaker odds are skipped: market mode has nothing to go on.
+    """
+    calibrators, rho, rows = load_calibrators(league), league_rho(league), []
+    odds_columns = ["odds_home", "odds_draw", "odds_away", "odds_over25", "odds_under25"]
+    for index, fixture in fixtures.iterrows():
+        if fixture[odds_columns].isna().any():
+            continue
+        fair, (lam, mu), matrix = bookmaker_implied(*fixture[odds_columns].astype(float), rho)
+        order = np.argsort(matrix.ravel())[-3:][::-1]
+        top = json.dumps([{"score": f"{i // 11}-{i % 11}", "probability": float(matrix.ravel()[i])} for i in order])
+        for market in LEG_MARKETS:
+            probability = calibrate(fair[market], calibrators.get(market))
+            rows.append({
+                "fixture": index, "date": fixture.date, "time": fixture.time, "season": fixture.season,
+                "kickoff_utc": fixture.kickoff_utc, "home_team": fixture.home_team, "away_team": fixture.away_team,
+                "market": market, "model_probability": probability, "bookmaker_probability": fair[market],
+                "probability": probability, "odds": 1 / (fair[market] * (1 + RETAIL_MARGIN)),
+                "lambda_home": lam, "lambda_away": mu, "top_scorelines": top,
+            })
+    legs = pd.DataFrame(rows)
+    if not legs.empty:
+        legs["round"] = betting_round(legs.date)
+        legs["match_id"] = legs.fixture
+    return legs
+
+
+def league_json(code: str) -> dict:
+    league = get_league(code)
+    return {"code": league.code, "name": league.name, "country": league.country}
+
+
 def attach_betpawa(legs: pd.DataFrame, betpawa: pd.DataFrame) -> pd.DataFrame:
     """Add real Betpawa odds per leg; slips then use real prices where available."""
     legs = legs.copy()
@@ -255,6 +306,7 @@ def build_slips(legs: pd.DataFrame) -> dict:
 
 def _leg_json(row) -> dict:
     return {"date": row.date.date().isoformat(), "time": row.time, "kickoff_utc": row.kickoff_utc.isoformat() + "Z",
+            "league": league_json(getattr(row, "league", "EPL")),
             "home": row.home_team, "away": row.away_team,
             "market": row.market, "label": MARKET_LABELS[row.market],
             "probability": round(float(row.probability), 4),
@@ -337,7 +389,7 @@ def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timest
     current = {_fixture_key(f): f for f in previous["fixtures"]}
     for fixture in fixtures:
         current[_fixture_key(fixture)] = {
-            key: fixture[key] for key in ("date", "time", "kickoff_utc", "home", "away", "expected_goals", "top_scorelines")
+            key: fixture[key] for key in ("league", "mode", "date", "time", "kickoff_utc", "home", "away", "expected_goals", "top_scorelines") if key in fixture
         } | {"markets": [{k: m.get(k) for k in ("market", "label", "probability", "market_probability", "betpawa_odds")}
                          for m in fixture["markets"]]}
     snapshot = {"date": day, "generated_at": now.isoformat() + "Z",
@@ -448,39 +500,72 @@ def main() -> None:
         matches, goals = pd.read_parquet(MATCHES_PATH), pd.read_parquet(GOALS_PATH)
     else:
         matches, goals = build(refresh_current=True)
-    fixtures = load_fixtures(now, matches)
-    if fixtures.empty:
-        raise SystemExit("No upcoming Premier League fixtures in fixtures.csv")
 
-    model, model_info = fit_live_model(matches, fixtures, now)
-    model_weight = fit_model_weight(pd.read_parquet(LEGS_PATH))
-    legs = predict_fixtures(fixtures, model, matches, goals, fit_calibrators(matches), model_weight)
-    try:
-        betpawa = fetch_premier_league_odds()
-        print(f"Betpawa: {betpawa.home_team.nunique()} home teams, {len(betpawa)} prices")
-    except Exception as error:  # Betpawa down or changed: predictions still publish.
-        print(f"Betpawa odds unavailable ({error}); using estimated odds")
-        betpawa = pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"])
+    # Premier League: our blended model, exactly as validated.
+    parts, model_info, model_weight = [], {}, None
+    fixtures = load_fixtures(now, matches, "EPL")
+    if not fixtures.empty:
+        model, model_info = fit_live_model(matches, fixtures, now)
+        model_weight = fit_model_weight(pd.read_parquet(LEGS_PATH))
+        epl = predict_fixtures(fixtures, model, matches, goals, fit_calibrators(matches), model_weight)
+        parts.append(epl.assign(league="EPL", mode="blended"))
+    next_fixture_id = len(fixtures)
+
+    # Market-mode leagues: calibrated bookmaker consensus. Only the current season is fetched,
+    # to know which matches are played and to settle bets. A failing league is skipped.
+    season_start = current_season_start(now.date())
+    settle_matches = [matches]
+    for code, mode in LIVE_LEAGUES.items():
+        if mode != "market":
+            continue
+        try:
+            current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
+            settle_matches.append(current)
+            league_fixtures = load_fixtures(now, current, code)
+            league_fixtures.index = league_fixtures.index + next_fixture_id
+            next_fixture_id += len(league_fixtures)
+            league_legs = predict_market_fixtures(league_fixtures, code)
+            if not league_legs.empty:
+                parts.append(league_legs.assign(league=code, mode="market"))
+            print(f"{get_league(code).name}: {league_legs.fixture.nunique() if not league_legs.empty else 0} fixtures")
+        except Exception as error:
+            print(f"{get_league(code).name} skipped this run: {error}")
+    if not parts:
+        raise SystemExit("No upcoming fixtures in any live league")
+    legs = pd.concat(parts, ignore_index=True)
+    all_matches = pd.concat(settle_matches, ignore_index=True)
+
+    betpawa_parts = []
+    for code in legs.league.unique():
+        try:
+            betpawa_parts.append(fetch_competition_odds(code))
+        except Exception as error:  # Betpawa down or changed: predictions still publish.
+            print(f"Betpawa odds unavailable for {get_league(code).name} ({error}); using estimated odds")
+    betpawa = (pd.concat(betpawa_parts, ignore_index=True) if betpawa_parts
+               else pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]))
+    print(f"Betpawa: {len(betpawa)} prices across {len(betpawa_parts)} leagues")
     legs = attach_betpawa(legs, betpawa)
     legs["day"] = local_day(legs.kickoff_utc)
     days = []
     for day, day_legs in legs.groupby("day", sort=True):
         slips = build_slips(day_legs)
-        history = update_history(day, slips, matches, now)
+        history = update_history(day, slips, all_matches, now)
         days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
                      "value_picks": value_picks(day_legs),
                      "slips": displayed_slips(day, slips, history, now)})
     if not days:
-        history = update_history(None, {}, matches, now)
+        history = update_history(None, {}, all_matches, now)
 
     output = {
         "generated_at": now.isoformat() + "Z",
-        "model": {**model_info, "market_blend_model_weight": model_weight, "retail_margin": RETAIL_MARGIN},
+        "model": {**model_info, "market_blend_model_weight": model_weight, "retail_margin": RETAIL_MARGIN,
+                  "league_modes": LIVE_LEAGUES},
         "backtest": backtest_summary(),
         "time_zone": LOCAL_TZ,
         "fixtures": [
             {
-                "id": int(fixture_id), "date": group.date.iloc[0].date().isoformat(), "time": group.time.iloc[0],
+                "id": int(fixture_id), "league": league_json(group.league.iloc[0]), "mode": group["mode"].iloc[0],
+                "date": group.date.iloc[0].date().isoformat(), "time": group.time.iloc[0],
                 "kickoff_utc": group.kickoff_utc.iloc[0].isoformat() + "Z",
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
                 "day": group["day"].iloc[0],
@@ -502,11 +587,11 @@ def main() -> None:
         "days": days,
         "value_rules": {"min_edge": VALUE_EDGE, "min_probability": VALUE_MIN_PROBABILITY},
         "history": history,
-        "results": recent_results(matches, now),
+        "results": recent_results(all_matches, now),
     }
     for day in days:
         archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
-    output["archive"] = settle_archive(matches)
+    output["archive"] = settle_archive(all_matches)
     output["live_record"] = live_record()
     output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS)
     print(f"Model health: {output['health']['status']}")

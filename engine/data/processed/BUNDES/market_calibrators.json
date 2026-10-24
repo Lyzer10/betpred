@@ -1,0 +1,104 @@
+{
+ "away_1up": {
+  "coef": 1.0928081113097792,
+  "intercept": -0.028721004882765955,
+  "regularization": 1000000.0,
+  "legs": 1576
+ },
+ "away_first": {
+  "coef": 1.1662082279163457,
+  "intercept": -0.013219624318560257,
+  "regularization": 1000000.0,
+  "legs": 1584
+ },
+ "away_win": {
+  "coef": 1.0481155710766763,
+  "intercept": -0.0220031688612497,
+  "regularization": 1000000.0,
+  "legs": 1584
+ },
+ "btts_no": {
+  "coef": 1.3615064875120806,
+  "intercept": 0.06072516467290519,
+  "regularization": 1.0,
+  "legs": 1584
+ },
+ "btts_yes": {
+  "coef": 1.3615064875120808,
+  "intercept": -0.06072516467290525,
+  "regularization": 1.0,
+  "legs": 1584
+ },
+ "double_12": {
+  "coef": 0.8456993654740476,
+  "intercept": 0.09084070226395809,
+  "regularization": 1.0,
+  "legs": 1538
+ },
+ "double_1x": {
+  "coef": 1.0430002433209302,
+  "intercept": 0.021169434805372655,
+  "regularization": 1000000.0,
+  "legs": 1457
+ },
+ "double_x2": {
+  "coef": 1.098413040888644,
+  "intercept": 0.009054613041506244,
+  "regularization": 1.0,
+  "legs": 1550
+ },
+ "draw": {
+  "coef": 0.6864102522646016,
+  "intercept": -0.2870162311136196,
+  "regularization": 0.1,
+  "legs": 1584
+ },
+ "home_1up": {
+  "coef": 1.137355877521339,
+  "intercept": -0.02941667549909225,
+  "regularization": 1000000.0,
+  "legs": 1538
+ },
+ "home_first": {
+  "coef": 1.157207432868604,
+  "intercept": 0.009904472208584082,
+  "regularization": 10.0,
+  "legs": 1584
+ },
+ "home_win": {
+  "coef": 1.066215273438161,
+  "intercept": -0.011358154989906565,
+  "regularization": 1.0,
+  "legs": 1578
+ },
+ "over_1.5": {
+  "coef": 0.9096165044051008,
+  "intercept": 0.22049574744211117,
+  "regularization": 1.0,
+  "legs": 1428
+ },
+ "over_2.5": {
+  "coef": 0.9885512965376348,
+  "intercept": 0.0905436420735817,
+  "regularization": 0.1,
+  "legs": 1584
+ },
+ "over_3.5": {
+  "coef": 1.0033084532485337,
+  "intercept": 0.1511445517698636,
+  "regularization": 0.1,
+  "legs": 1584
+ },
+ "under_2.5": {
+  "coef": 0.9885512965376347,
+  "intercept": -0.09054364207358168,
+  "regularization": 0.1,
+  "legs": 1584
+ },
+ "under_3.5": {
+  "coef": 1.0033084532485335,
+  "intercept": -0.15114455176986352,
+  "regularization": 0.1,
+  "legs": 1584
+ }
+}

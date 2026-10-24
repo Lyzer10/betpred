@@ -16,9 +16,15 @@ for (const scheme of ["light", "dark"]) {
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   // Today may only have locked slips (all its matches started): then open the last day in the strip.
+  // Prefer a day offering all three tiers (a day with few matches may only have a Safe slip).
   const openUpcomingDay = async () => {
     await page.waitForTimeout(300);
-    if (!(await page.getByRole("tab", { name: "Safe" }).count())) await page.getByRole("tab").filter({ hasText: /\d/ }).last().click();
+    const days = page.getByRole("tab").filter({ hasText: /\d/ });
+    for (let i = 0; i < await days.count(); i++) {
+      await days.nth(i).click();
+      await page.waitForTimeout(200);
+      if (await page.getByRole("tab", { name: "Big" }).count()) return;
+    }
     await page.getByRole("tab", { name: "Safe" }).waitFor();
   };
   const noOverflow = async (screen) => check(
@@ -48,7 +54,7 @@ for (const scheme of ["light", "dark"]) {
   check(fixedShown === 1 || skipShown === 1, `[${scheme}] fixed stake used on the Safe slip (${fixedShown ? "stake shown" : "skip"})`);
   // Why this bet: tap the first pick.
   await page.getByRole("button", { name: /^Why / }).first().click();
-  check(await page.getByText(/expected/).count() >= 1, `[${scheme}] why-this-bet explanation opens`);
+  check(await page.getByText(/expected/i).count() >= 1, `[${scheme}] why-this-bet explanation opens`);
   await page.getByRole("button", { name: "Money", exact: true }).click();
   await page.getByRole("tab", { name: "Smart" }).click();
 

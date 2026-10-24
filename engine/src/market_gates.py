@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from .accumulators import SLIP_MARKETS
+from .accumulators import SLIP_MARKETS, blend_with_market
 from .calibration import ENGINE_DIR
 from .leagues import get_league, paths
 from .market_live import LIVE_LEAGUES
@@ -96,13 +96,26 @@ def evaluate(league: str, market: str, legs: pd.DataFrame, column: str, rng) -> 
     }
 
 
+def gate_column(legs: pd.DataFrame, mode: str) -> str:
+    """Column holding the probability the live slips use (adds it to `legs` for the blended league).
+
+    The live EPL weight is fitted on test-era legs only (PROJECT.md task 4: kept), so the gate recomputes
+    that walk-forward blend instead of trusting the stored column, which a rebuild of the legs table
+    fills with the validation-inclusive weight.
+    """
+    if mode != "blended":
+        return "market_probability"
+    legs["live_probability"], _ = blend_with_market(legs, None)
+    return "live_probability"
+
+
 def main() -> None:
     rng = np.random.default_rng(SEED)
     rows = []
     for code, mode in LIVE_LEAGUES.items():
         legs = pd.read_parquet(paths(code).accumulator_legs)
         legs["date"] = pd.to_datetime(legs.date)
-        column = "probability" if mode == "blended" else "market_probability"
+        column = gate_column(legs, mode)
         for market in SLIP_MARKETS:
             rows.append(evaluate(code, market, legs, column, rng))
             print(code, market, rows[-1]["status"], flush=True)

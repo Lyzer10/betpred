@@ -183,7 +183,7 @@ Claude (hard, affects predictions):
    published prediction per league x slip market, z = (wins - sum p)/sqrt(sum p(1-p)) from 30
    predictions, one-sided; z < -3 pauses the pair (kept out of slips, `engine/data/live/paused_pairs.json`)
    until z >= -2; -3..-2 = watch. Slip legs reported separately (shown only). Record page lists them.
-4. **EPL model weight** (in progress). PRE-REGISTERED RULES, committed 2026-10-25 before any result:
+4. **EPL model weight** (DONE 2026-10-25, `python -m src.weight_study`: KEEP V, the live 0.25). PRE-REGISTERED RULES, committed 2026-10-25 before any result:
    - Procedures: V (current live) fits the weight with `fit_model_weight` on earlier TEST-era legs only
      (2024/25 onwards); A fits it on validation legs (2021/22-2023/24, `build_validation_leg_table`)
      plus earlier test-era legs. Both walk-forward: the weight for season S uses only seasons before S.
@@ -193,6 +193,12 @@ Claude (hard, affects predictions):
    - Decision: switch the live weight to procedure A only if the CI of V - A is entirely above 0
      (A clearly more accurate). Otherwise keep V. Reported, not deciding: the weights each procedure
      picks, and the task-1 gates (C1-C4) for each procedure on the same legs.
+   - Result (4,919 legs, 137 days): log loss V 0.61285, A 0.61252; V - A +0.00033 (95% CI -0.00166 to
+     +0.00231): no clear difference, so V is kept. Weights V 0.35 (2025/26), 0.20 (2026/27); A 0.05, 0.05.
+   - Found while checking: the stored EPL legs `probability` equals V, but rebuilding the legs table now
+     fills it with A (`build_leg_table` passes validation legs). `market_gates.gate_column` therefore
+     recomputes the live V blend, so a rebuild cannot make the gates judge numbers the app does not use
+     (gate results unchanged today).
 5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; independent tiers KEPT,
    see the review after the result).
    PRE-REGISTERED RULES, committed before any result was computed; do not change them after seeing results:
@@ -243,6 +249,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Shots+corners "pressure" (Wheatcroft 2020, LSE paper owner sent) | no reliable gain for over/under or 1Up; paper loses at average odds | rejected (`src/pressure_study.py`, `src/pressure_1up_study.py`) |
 | Per-market model weights (EPL) | worse than one global weight (0.60164 vs 0.60147) | rejected (`src/market_weight_study.py`) |
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
+| EPL weight from all seasons (A) vs test-era only (V, live) | log loss difference +0.00033, 95% CI -0.00166 to +0.00231 | V kept (`src/weight_study.py`) |
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
@@ -269,6 +276,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: EPL model weight study (pre-registered): live weighting kept; gates now recompute the live
+  EPL blend (`gate_column`) so rebuilt legs tables cannot change what they judge.
 - 2026-10-25: notifications from the app itself (Web Push): Money -> Notifications subscribes the
   phone and shows a code; the code goes into secret PUSH_SUBSCRIPTION; the final run signs with secret
   VAPID_PRIVATE_KEY (public key in `web/src/push.ts`, handler `web/public/push-sw.js`). ntfy kept as

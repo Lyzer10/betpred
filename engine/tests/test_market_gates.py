@@ -28,3 +28,15 @@ def test_under_confident_market_is_kept():
 def test_too_few_legs_is_insufficient():
     r = evaluate("X", "over_1.5", _legs(0.70, 0.70, n=120), "p_col", np.random.default_rng(0))
     assert r["status"] == "INSUFFICIENT"
+
+
+def test_epl_gates_use_the_live_walk_forward_blend_not_the_stored_column():
+    from src.accumulators import blend_with_market
+    from src.market_gates import gate_column
+    legs = pd.DataFrame({"season": ["2024/25"] * 4 + ["2025/26"] * 4, "model_probability": [0.7, 0.4, 0.6, 0.3] * 2,
+                         "bookmaker_probability": [0.6, 0.5, 0.5, 0.4] * 2, "won": [1, 0, 1, 0] * 2,
+                         "probability": 0.99})                      # stale stored column must be ignored
+    column = gate_column(legs, "blended")
+    expected, _ = blend_with_market(legs.drop(columns="live_probability"), None)
+    assert column == "live_probability" and np.allclose(legs[column], expected)
+    assert gate_column(legs, "market") == "market_probability"

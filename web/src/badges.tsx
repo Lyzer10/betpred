@@ -1,4 +1,5 @@
 import { useState } from "react";
+import badgeUrls from "./badgeUrls.json";
 import { shortName } from "./lib";
 
 // Premier League's public badge CDN, by club id (checked image by image).
@@ -9,8 +10,14 @@ const PL_BADGE_IDS: Record<string, number> = {
   Tottenham: 6, "West Ham": 21, Wolves: 39, Burnley: 90, Leicester: 13, Southampton: 20,
 };
 
-const badgeUrl = (team: string) =>
-  PL_BADGE_IDS[team] ? `https://resources.premierleague.com/premierleague/badges/50/t${PL_BADGE_IDS[team]}.png` : null;
+const OTHER_BADGE_URLS: Record<string, string> = badgeUrls;
+
+const badgeUrl = (team: string) => {
+  const premierLeagueId = PL_BADGE_IDS[team];
+  return premierLeagueId
+    ? `https://resources.premierleague.com/premierleague/badges/50/t${premierLeagueId}.png`
+    : OTHER_BADGE_URLS[team] ?? null;
+};
 
 /** Club badge; falls back to the team's initials when there is no image or it fails to load. */
 export function TeamBadge({ team, size = 28 }: { team: string; size?: number }) {

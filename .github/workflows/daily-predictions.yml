@@ -57,5 +57,8 @@ jobs:
           git add web/public/data/predictions.json web/public/data/archive engine/data/live/slip_history.json
           git diff --cached --quiet && exit 0
           git commit -m "Daily predictions $(date -u +%F)"
+          # The run also rebuilds tracked research files (e.g. matches.parquet) that are not
+          # published; drop them so the pull below can rebase onto newer commits.
+          git reset --hard HEAD
           git pull --rebase origin main
           git push

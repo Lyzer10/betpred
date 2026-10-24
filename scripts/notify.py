@@ -1,8 +1,9 @@
-"""Phone notification after the final run: today's final slips (standard library only).
+"""Phone notification after the final run: today's final slips.
 
-Sent through ntfy (https://ntfy.sh, free, no account): install the ntfy app and subscribe to the
-topic stored in the repository secret NTFY_TOPIC. Without the secret nothing is sent.
-A failed notification never fails the run.
+Two channels, each used when its secrets exist (a failed notification never fails the run):
+  - app: Web Push to the BetPredz app itself. Secrets VAPID_PRIVATE_KEY (pairs with the public key in
+    web/src/push.ts) and PUSH_SUBSCRIPTION (the code the app shows under Money -> Notifications).
+  - ntfy (https://ntfy.sh): the ntfy app subscribed to the topic in secret NTFY_TOPIC.
 """
 from __future__ import annotations
 
@@ -31,16 +32,32 @@ def message(published: dict, now: datetime) -> tuple[str, str] | None:
     return title, "\n".join(lines)
 
 
+def send_push(title: str, body: str) -> None:
+    subscription, key = os.environ.get("PUSH_SUBSCRIPTION", "").strip(), os.environ.get("VAPID_PRIVATE_KEY", "").strip()
+    if not (subscription and key):
+        print("App notification not set up (PUSH_SUBSCRIPTION / VAPID_PRIVATE_KEY)")
+        return
+    try:
+        from pywebpush import webpush
+        from py_vapid import Vapid
+        webpush(json.loads(subscription), json.dumps({"title": title, "body": body, "url": APP_URL, "tag": "final"}),
+                vapid_private_key=Vapid.from_pem(key.encode()), vapid_claims={"sub": "https://betpredz.vercel.app"}, ttl=3600)
+        print("App notification sent")
+    except Exception as error:
+        print(f"App notification failed ({error}); the slips are published anyway")
+
+
 def main() -> None:
-    topic = os.environ.get("NTFY_TOPIC", "").strip()
     built = message(json.loads(PREDICTIONS.read_text(encoding="utf-8")), datetime.now(timezone.utc))
     if not built:
         print("No final slips today: nothing to notify")
         return
-    if not topic:
-        print("NTFY_TOPIC not set: notification skipped")
-        return
     title, body = built
+    send_push(title, body)
+    topic = os.environ.get("NTFY_TOPIC", "").strip()
+    if not topic:
+        print("NTFY_TOPIC not set: ntfy skipped")
+        return
     request = urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode("utf-8"), method="POST",
                                      headers={"Title": title.encode("utf-8"), "Click": APP_URL, "Tags": "soccer"})
     try:

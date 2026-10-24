@@ -261,6 +261,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: notifications from the app itself (Web Push): Money -> Notifications subscribes the
+  phone and shows a code; the code goes into secret PUSH_SUBSCRIPTION; the final run signs with secret
+  VAPID_PRIVATE_KEY (public key in `web/src/push.ts`, handler `web/public/push-sw.js`). ntfy kept as
+  an optional second channel.
 - 2026-10-25: announced line-ups from ESPN's public data (`src/lineups.py`, every non-skip run,
   `web/public/data/lineups.json`), shown on match pages; display only, not a model input until a study
   shows a gain over the odds. ESPN team names added to `team_names.py` (all five leagues map).

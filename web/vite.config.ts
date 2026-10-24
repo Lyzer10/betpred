@@ -25,6 +25,7 @@ export default defineConfig({
         ],
       },
       workbox: {
+        importScripts: ["push-sw.js"],      // push notifications (public/push-sw.js)
         // Predictions change daily: always try the network first, fall back offline.
         runtimeCaching: [{
           urlPattern: /\/data\/predictions\.json$/,

@@ -203,6 +203,8 @@ for (const scheme of ["light", "dark"]) {
   await page.locator("[data-transfers] > button").click();
   check(await page.locator("[data-transfers] [data-transfer-row]").count() === 2, `[${scheme}] deposits and withdrawals listed separately`);
   check(await balanceOf("Betpawa") === betpawaAfter + 5000 - 1000 + 2500, `[${scheme}] winnings added to balance`);
+  check(await page.locator("[data-notifications]").getByRole("button", { name: /Turn on notifications|Copy code/ }).count() === 1,
+    `[${scheme}] Money offers phone notifications`);
   await noOverflow("money"); await snap("money");
 
   // Matches: information only, Betpawa odds and verdicts, double chance tab.

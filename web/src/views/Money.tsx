@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { currentPushCode, enablePush, pushSupported } from "../push";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingMode, type Transfer, betStatus, isBet, isTransfer, newId, payout, settledSlips, summarise } from "../ledger";
 import { STAKING, losingStreakChance, odds, pct, tsh } from "../lib";
 import type { Result } from "../types";
@@ -268,6 +269,42 @@ function Transfers({ transfers, onDelete }: { transfers: Transfer[]; onDelete: (
   );
 }
 
+/** Turn on phone notifications ("today's bets are final"); the code links this phone to the daily run. */
+function NotificationsCard() {
+  const [code, setCode] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  useEffect(() => { currentPushCode().then(setCode).catch(() => setCode(null)); }, []);
+  const turnOn = async () => {
+    setError(null);
+    const result = await enablePush().catch((reason) => ({ error: String(reason), code: undefined }));
+    if (result.code) setCode(result.code); else setError(result.error ?? "Could not turn on notifications.");
+  };
+  const copy = async () => {
+    if (!code) return;
+    await navigator.clipboard.writeText(code).then(() => setCopied(true)).catch(() => setCopied(false));
+  };
+  return (
+    <Card className="px-5 py-4" data-notifications>
+      <div className="text-sm font-semibold">Notifications</div>
+      {code ? (
+        <>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">✓ On for this phone. One last step, only once: copy this code and send it to Claude, so the daily run knows where to notify you.</p>
+          <textarea readOnly value={code} aria-label="Notification code" className="mt-2 h-16 w-full resize-none rounded-xl bg-surface-2 px-3 py-2 text-[10px] text-ink-2 outline-none" />
+          <button onClick={copy} className="mt-2 w-full rounded-xl bg-accent py-2.5 text-sm font-semibold text-white">{copied ? "Copied ✓" : "Copy code"}</button>
+        </>
+      ) : (
+        <>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">Get a message when today's slips are final, about 45 minutes before the first match.
+            {pushSupported() ? "" : " On iPhone, add BetPredz to the Home Screen first."}</p>
+          <button onClick={turnOn} className="mt-3 w-full rounded-xl bg-accent py-2.5 text-sm font-semibold text-white">Turn on notifications</button>
+        </>
+      )}
+      {error && <p className="mt-2 text-xs text-critical-ink">{error}</p>}
+    </Card>
+  );
+}
+
 export function Money({ ledger, results, onChange }: { ledger: Ledger; results: Result[]; onChange: (ledger: Ledger) => void }) {
   const accounts = Object.keys(BOOKMAKERS) as Bookmaker[];
   const totals = accounts.map((b) => summarise(ledger, b, results));
@@ -309,6 +346,8 @@ export function Money({ ledger, results, onChange }: { ledger: Ledger; results: 
         <Empty>When you place a slip, tap <b>I placed this bet</b> on it. It appears here and settles automatically.</Empty>
       )}
       {transfers.length > 0 && <Transfers transfers={transfers} onDelete={remove} />}
+      <SectionTitle>Notifications</SectionTitle>
+      <NotificationsCard />
       <p className="mt-3 px-2 text-xs text-ink-3">Saved on this device only.</p>
     </div>
   );

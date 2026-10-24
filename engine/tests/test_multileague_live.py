@@ -73,3 +73,25 @@ def test_league_context_table_and_form():
     assert ctx["B"]["form"] == ["L", "D"] and ctx["B"]["points"] == 1   # last season's match ignored
     # B and C both have 1 point; C's goal difference (-1) beats B's (-2).
     assert ctx["C"]["position"] == 2 and ctx["B"]["position"] == 3
+
+
+def test_failed_gates_never_enter_slips(monkeypatch):
+    legs = pd.DataFrame({
+        "league": ["SERIEA", "SERIEA", "EPL"], "market": ["home_1up", "home_win", "home_1up"],
+        "odds": [1.6, 1.7, 1.5], "probability": [0.7, 0.65, 0.72],
+    })
+    blocked = {("SERIEA", "home_1up")}
+    seen = []
+    monkeypatch.setattr(predict, "best_slip", lambda pool, tier: seen.append(set(zip(pool.league, pool.market))) or None)
+    assert predict.build_slips(legs, blocked) == {}
+    assert seen and all(("SERIEA", "home_1up") not in s for s in seen)
+    assert ("SERIEA", "home_win") in seen[0] and ("EPL", "home_1up") in seen[0]
+
+
+def test_failed_gates_reads_only_fail_status(tmp_path, monkeypatch):
+    path = tmp_path / "gates.json"
+    path.write_text(json.dumps({"gates": {"EPL": {"over_2.5": "FAIL", "over_0.5": "INSUFFICIENT", "home_1up": "PASS"}}}))
+    monkeypatch.setattr(predict, "GATES_PATH", path)
+    assert predict.failed_gates() == {("EPL", "over_2.5")}
+    monkeypatch.setattr(predict, "GATES_PATH", tmp_path / "missing.json")
+    assert predict.failed_gates() == set()

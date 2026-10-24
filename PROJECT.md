@@ -88,7 +88,8 @@ Evidence for the choice (test seasons 2024/25-2026/27, lower log loss = better):
 ### Daily pipeline (`engine/src/predict.py`)
 Refresh data -> EPL blended predictions -> each market-mode league (current season only, a failing
 league is skipped, not fatal) -> Betpawa odds for every league -> legs per market with value edge and
-stale-price warning (Betpawa > market average by 8%: halve stake) -> per-day Safe/Medium/Big slips
+stale-price warning (Betpawa > market average by 8%: halve stake) -> drop league x market pairs that
+FAILED the gates (`data/processed/market_gates.json`, `predict.failed_gates`) -> per-day Safe/Medium/Big slips
 (exact DP search, `accumulators.best_slip`) with Flexi chances -> slip history frozen at first
 kickoff -> per-day archive `web/public/data/archive/<day>.json` settled from results -> live record
 and **health check** (`engine/src/health.py`: accuracy vs bookmaker, calibration, slips; "warning"
@@ -119,7 +120,7 @@ cd ..\web; npm run dev                                     # http://localhost:51
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-10-24)
+## 5. Current status (2026-10-25)
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches).
 - Profitability: **not proven**. Backtest ROI used estimated odds (indicative only). Real Betpawa
@@ -128,10 +129,16 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 - Verified out-of-sample: Serie A calibration lifts on away favourites are real (lifted legs:
   bookmaker 57.5%, calibrated 63.7%, actual 66.9%, n=160). La Liga away-win lifts look too high
   (calibrated 72.3% vs actual 62.0%, n=50, not yet significant).
+- League x market gates (task 1, run 2026-10-25, `engine/reports/market_gates.md`): 47 PASS,
+  8 FAIL, 5 INSUFFICIENT (over 0.5, too few priced legs). FAIL, removed from slips: EPL over 2.5
+  (C4 winner's curse) and under 3.5 (C2, C3); La Liga over 1.5 (C2, under-confident); Serie A home
+  1Up; Bundesliga home 1Up and home-or-draw; Ligue 1 away 1Up and away-or-draw (all C2: won 3.4 to
+  5.2 points less often than predicted). Note: 55 pairs x 4 checks means a few FAILs can be chance;
+  the monthly re-check (same rules, more data) is how a pair comes back, never a manual override.
 
 ## 6. Open tasks (in priority order)
 Claude (hard, affects predictions):
-1. **Per league x market gates** (in progress). PRE-REGISTERED RULES, committed 2026-10-24 before
+1. **Per league x market gates** (DONE 2026-10-25, `python -m src.market_gates`; rerun monthly). PRE-REGISTERED RULES, committed 2026-10-24 before
    any result was computed; do not change them after seeing results:
    - Data: test seasons (2024/25 onwards), each league's legs table, the exact probability the slips
      use (EPL: blended `probability`; market leagues: walk-forward `market_probability`), the 12 slip
@@ -175,6 +182,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: pre-registered league x market gates run (`engine/src/market_gates.py`); the 8 FAIL
+  pairs are excluded from slip legs (`predict.failed_gates`, `build_slips(blocked=...)`), still shown
+  on match pages. Tests added.
 - 2026-10-24: fixtures now carry `context` (current-season table position, played, points, goal
   difference, last-5 form per team) for display only; the table is not a model input (rejected study).
 - 2026-10-23..24: data pipeline, Dixon-Coles + backtest, calibration + goal timing, accumulators,

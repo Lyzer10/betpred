@@ -38,6 +38,7 @@ from .goal_timing import (
     GOALS_PATH, TIMING_MARKETS, TIMING_PATH, estimate_time_profile, fit_state_multipliers, simulate_match,
 )
 from .leagues import get_league
+from .market_gates import GATES_PATH
 from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
 from .team_names import canonical_team
 
@@ -300,9 +301,24 @@ def flexi_options(probabilities) -> list[dict]:
             for k in range(n - 1, max(n - 3, 1), -1)] if n >= 3 else []
 
 
-def build_slips(legs: pd.DataFrame) -> dict:
-    """Tier slips from one day's matches, using only the user's slip markets with a price."""
-    pool = legs[legs.market.isin(SLIP_MARKETS) & legs.odds.notna() & (legs.odds >= 1.05)]
+def failed_gates() -> set[tuple[str, str]]:
+    """League x market pairs that failed the pre-registered gates (PROJECT.md task 1): never slip legs."""
+    if not GATES_PATH.exists():
+        return set()
+    gates = json.loads(GATES_PATH.read_text(encoding="utf-8"))["gates"]
+    return {(league, market) for league, markets in gates.items() for market, status in markets.items()
+            if status == "FAIL"}
+
+
+def build_slips(legs: pd.DataFrame, blocked: set[tuple[str, str]] | None = None) -> dict:
+    """Tier slips from one day's matches, using only the user's slip markets with a price.
+
+    League x market pairs in `blocked` (default: the failed gates) stay on match pages but never enter a slip.
+    """
+    blocked = failed_gates() if blocked is None else blocked
+    league = legs["league"] if "league" in legs else pd.Series("EPL", index=legs.index)
+    allowed = pd.Series([(lg, m) not in blocked for lg, m in zip(league, legs.market)], index=legs.index, dtype=bool)
+    pool = legs[legs.market.isin(SLIP_MARKETS) & allowed & legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
     for tier in TIERS:
         picks = best_slip(pool, tier) if not pool.empty else None

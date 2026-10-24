@@ -54,7 +54,8 @@ for (const scheme of ["light", "dark"]) {
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
   await noOverflow("bets"); await snap("bets");
   await page.getByRole("button", { name: "I placed this bet" }).click();
-  await page.getByRole("button", { name: /^Save: I placed/ }).click();
+  check(await page.getByText(/after this bet/).count() === 1, `[${scheme}] form shows balance after the bet`);
+  await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
   check(await page.getByRole("button", { name: "✓ Recorded in Money" }).count() === 1, `[${scheme}] safe slip recorded (stake shown: ${stakeShown > 0})`);
 
   // Big slip on SportyBet with Flexi.
@@ -68,7 +69,7 @@ for (const scheme of ["light", "dark"]) {
   await page.getByLabel("Flexi To Win amount").fill("800");
   check(await page.getByText(/Chance at least \d of \d win/).count() === 1, `[${scheme}] Flexi chance and value check shown`);
   await noOverflow("place form"); await snap("place");
-  await page.getByRole("button", { name: /^Save: I placed/ }).click();
+  await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
 
   // Money: balances follow the bets; deposits and withdrawals never count as profit.
   await page.getByRole("button", { name: "Money", exact: true }).click();

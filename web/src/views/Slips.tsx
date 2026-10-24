@@ -37,12 +37,15 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onP
   return (
     <div className="space-y-3 border-t border-border/60 bg-surface px-5 py-4">
       <div className="text-sm font-semibold">Record this bet</div>
+      <div className="text-xs font-medium text-ink-2">Where did you place it?</div>
       <Segmented options={(Object.keys(BOOKMAKERS) as Bookmaker[]).map((b) => ({ id: b, label: BOOKMAKERS[b] }))}
-        value={bookmaker} onChange={(b) => { setBookmaker(b); setFlexiK(null); }} />
+        value={bookmaker} onChange={(b) => { setBookmaker(b); setFlexiK(null); setStakeText(""); }} />
+      <div className="text-xs font-medium text-ink-2">How much did you stake?</div>
       <div className="grid grid-cols-2 gap-2">
         <label className="rounded-xl bg-surface-2 px-3 py-2 text-[11px] text-ink-3">Stake (TSh)
           <input inputMode="numeric" aria-label="Stake in TSh" placeholder={String(suggested || 0)}
             className="block w-full bg-transparent text-base font-bold text-ink outline-none" value={stakeText} onChange={(e) => setStakeText(e.target.value)} />
+          {suggested > 0 && !stakeText && <span className="block text-[10px] text-ink-3">recommended</span>}
         </label>
         <label className="rounded-xl bg-surface-2 px-3 py-2 text-[11px] text-ink-3">Total odds on {BOOKMAKERS[bookmaker]}
           <input inputMode="decimal" aria-label="Total odds as placed" placeholder={odds(total)}
@@ -68,6 +71,16 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onP
           )}
         </div>
       )}
+      {balances[bookmaker] > 0 ? (
+        stake > 0 && (
+          <p className="text-xs text-ink-2">
+            {BOOKMAKERS[bookmaker]} balance: {tsh(balances[bookmaker])} → <b className="text-ink">{tsh(balances[bookmaker] - stake)}</b> after this bet
+            {" "}(wins return {tsh(flexi ? toWin : stake * placedOdds)}).
+          </p>
+        )
+      ) : (
+        <p className="text-xs text-warning-ink">Your {BOOKMAKERS[bookmaker]} balance isn't set yet: set it in Money so this bet is counted there.</p>
+      )}
       <div className="flex gap-2">
         <button onClick={onCancel} className="flex-1 rounded-xl bg-surface-2 py-2.5 text-sm font-semibold text-ink-2">Cancel</button>
         <button disabled={!ready} className="flex-[2] rounded-xl bg-accent py-2.5 text-sm font-semibold text-white disabled:opacity-40"
@@ -76,7 +89,7 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onP
             odds: placedOdds, winProbability: slip.win_probability,
             flexi: flexi ? { minCorrect: flexi.min_correct, toWin } : undefined,
             legs: slip.legs.map((l) => ({ home: l.home, away: l.away, date: l.date, market: l.market, label: named(l), probability: l.probability })),
-          })}>Save: I placed {stake > 0 ? tsh(stake) : "it"}</button>
+          })}>Save: {stake > 0 ? tsh(stake) : "?"} on {BOOKMAKERS[bookmaker]}</button>
       </div>
     </div>
   );

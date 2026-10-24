@@ -2,7 +2,9 @@ import { useState } from "react";
 import { BOOKMAKERS, type Bookmaker, type Ledger, type PlacedBet, newId, summarise } from "../ledger";
 import { STAKING, VALUE_EDGE, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
 import type { ArchiveSnapshot, DayBets, Predictions, Slip, TierName } from "../types";
-import { Card, Crest, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
+import { Flag } from "../badges";
+import { PREMIER_LEAGUE } from "../types";
+import { Card, Crest, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
 const named = (leg: { label: string; home: string; away: string }) =>
   leg.label.replace("Home", leg.home).replace("Away", leg.away);
@@ -10,17 +12,6 @@ const named = (leg: { label: string; home: string; away: string }) =>
 /** Where each tier is usually placed; changeable when recording the bet. */
 const DEFAULT_BOOKMAKER: Record<TierName, Bookmaker> = { safe: "betpawa", medium: "betpawa", big: "sportybet" };
 
-const isoDay = (date: Date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-
-function dayName(day: string) {
-  const today = new Date();
-  const offset = (n: number) => isoDay(new Date(today.getFullYear(), today.getMonth(), today.getDate() + n));
-  if (day === offset(0)) return "Today";
-  if (day === offset(-1)) return "Yesterday";
-  if (day === offset(1)) return "Tomorrow";
-  return new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
-}
 
 // ---- Record a placed bet -------------------------------------------------------
 
@@ -128,7 +119,10 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, onPlace }: {
             <Crest team={leg.home} size="sm" />
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-semibold">{named(leg)}</div>
-              <div className="truncate text-xs text-ink-3">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)}</div>
+              <div className="flex items-center gap-1.5 truncate text-xs text-ink-3">
+                <Flag country={(leg.league ?? PREMIER_LEAGUE).country} width={15} />
+                <span className="truncate">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)}</span>
+              </div>
             </div>
             {slip.locked && leg.won != null ? <StatusPill status={leg.won ? "won" : "lost"} />
               : leg.betpawa_odds != null ? <span className="text-base font-bold">{odds(leg.betpawa_odds)}</span>
@@ -256,7 +250,7 @@ function ArchivedDay({ date }: { date: string }) {
 export function Slips({ data, ledger, onPlace, onOpenMoney }: {
   data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void; onOpenMoney: () => void;
 }) {
-  const today = isoDay(new Date());
+  const today = todayIso();
   const upcoming = new Map(data.days.map((d) => [d.date, d]));
   const past = (data.archive ?? []).map((a) => a.date).filter((d) => d < today && !upcoming.has(d));
   const dates = [...new Set([...past, ...upcoming.keys()])].sort();
@@ -277,19 +271,7 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
           </div>
         </Card>
       )}
-      <div className="no-scrollbar -mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
-        {dates.map((d) => {
-          const active = d === selected;
-          const slips = upcoming.get(d) ? Object.keys(upcoming.get(d)!.slips).length : null;
-          return (
-            <button key={d} onClick={() => setSelected(d)} aria-pressed={active}
-              className={`shrink-0 rounded-2xl px-4 py-2.5 text-left transition ${active ? "bg-hero text-hero-ink" : "bg-surface text-ink shadow-card"}`}>
-              <div className="text-sm font-bold">{dayName(d)}</div>
-              <div className="text-[11px] opacity-70">{slips != null ? `${slips} ${slips === 1 ? "slip" : "slips"}` : "results"}</div>
-            </button>
-          );
-        })}
-      </div>
+      <div className="mb-4"><DateStrip dates={dates} selected={selected} onSelect={setSelected} /></div>
 
       {needsBalance && selected && upcoming.has(selected) && (
         <button onClick={onOpenMoney} className="mb-4 block w-full text-left">

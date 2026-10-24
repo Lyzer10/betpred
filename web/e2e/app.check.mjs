@@ -98,6 +98,20 @@ for (const scheme of ["light", "dark"]) {
     await page.waitForTimeout(300);
     await noOverflow(screen.toLowerCase());
   }
+  // Theme switch cycles Auto -> Light -> Dark -> Auto and is remembered.
+  const themeButton = page.getByRole("button", { name: /^Theme:/ });
+  await themeButton.click();
+  check(await page.evaluate(() => document.documentElement.dataset.theme) === "light", `[${scheme}] theme switch to light`);
+  await themeButton.click();
+  check(await page.evaluate(() => document.documentElement.dataset.theme) === "dark", `[${scheme}] theme switch to dark`);
+  await page.reload();
+  check(await page.evaluate(() => document.documentElement.dataset.theme) === "dark", `[${scheme}] theme remembered after reload`);
+  await page.getByRole("button", { name: /^Theme:/ }).click();
+  check(await page.evaluate(() => document.documentElement.dataset.theme) === undefined, `[${scheme}] back to auto`);
+  await page.getByRole("button", { name: "Matches", exact: true }).click();
+  await page.locator("img[src*='premierleague.com']").first().waitFor();
+  check(await page.locator("img[src*='premierleague.com']").count() > 0, `[${scheme}] team badges load`);
+
   check(errors.length === 0, `[${scheme}] no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
   await page.close();
 }

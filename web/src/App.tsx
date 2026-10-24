@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { type Ledger, loadLedger, storeLedger } from "./ledger";
 import { usePredictions } from "./lib";
+import { NEXT_THEME, type Theme, applyTheme, loadTheme } from "./theme";
 import { Empty } from "./ui";
 import { History } from "./views/History";
 import { Matches } from "./views/Matches";
@@ -38,21 +39,33 @@ export default function App() {
   const { tab, fixtureId } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
   const [ledger, setLedger] = useState<Ledger>(loadLedger);
+  const [theme, setTheme] = useState<Theme>(loadTheme);
+  const cycleTheme = () => { const next = NEXT_THEME[theme]; setTheme(next); applyTheme(next); };
   const updateLedger = (next: Ledger) => { setLedger(next); storeLedger(next); };
 
   return (
     <div className="mx-auto min-h-screen max-w-lg px-4 pb-28">
-      <header className="pb-5 pt-7">
-        <div className="flex items-center gap-2 text-xs font-semibold text-ink-3">
-          <img src={`${import.meta.env.BASE_URL}icons/icon.svg`} alt="" className="h-5 w-5 rounded-md" />
-          PL Predictor
-          {data && (
-            <span className="ml-auto font-medium">
-              Updated {new Date(data.generated_at).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
-            </span>
-          )}
+      <header className="sticky top-0 z-10 -mx-4 mb-4 bg-bg/90 px-4 pb-3 pt-5 backdrop-blur-lg">
+        <div className="flex items-center gap-3">
+          <img src={`${import.meta.env.BASE_URL}icons/icon.svg`} alt="" className="h-8 w-8 rounded-lg" />
+          <div className="min-w-0 flex-1">
+            <div className="text-xl font-black italic leading-none tracking-tight">
+              BET<span className="text-accent">PREDZ</span>
+            </div>
+            <div className="mt-1 truncate text-[11px] font-medium text-ink-3">
+              {TITLES[tab]}{data && ` · updated ${new Date(data.generated_at).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`}
+            </div>
+          </div>
+          <button onClick={cycleTheme} aria-label={`Theme: ${theme}. Tap to change.`} title={`Theme: ${theme}`}
+            className="flex h-10 items-center gap-1.5 rounded-full bg-surface px-3 text-xs font-semibold text-ink-2 shadow-card">
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              {theme === "dark" ? <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+                : theme === "light" ? <><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>
+                : <><circle cx="12" cy="12" r="9" /><path d="M12 3v18a9 9 0 0 0 0-18Z" fill="currentColor" /></>}
+            </svg>
+            {theme === "auto" ? "Auto" : theme === "light" ? "Light" : "Dark"}
+          </button>
         </div>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight">{TITLES[tab]}</h1>
       </header>
 
       {error && <Empty><span className="text-critical-ink">Could not load predictions ({error}).</span></Empty>}
@@ -61,7 +74,7 @@ export default function App() {
         <Slips data={data} ledger={ledger} onOpenMoney={() => go("money")}
           onPlace={(bet) => updateLedger({ ...ledger, entries: [...ledger.entries, bet] })} />
       )}
-      {data && tab === "matches" && <Matches fixtures={data.fixtures} selected={fixtureId}
+      {data && tab === "matches" && <Matches fixtures={data.fixtures} archive={data.archive ?? []} selected={fixtureId}
         onSelect={(id) => go(id === null ? "matches" : `matches/${id}`)} />}
       {data && tab === "history" && <History archive={data.archive ?? []} />}
       {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}

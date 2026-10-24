@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import { type Verdict, edge, odds as fmtOdds, pct, shortName, verdict } from "./lib";
+import { TeamBadge } from "./badges";
+import { type Verdict, edge, odds as fmtOdds, pct, verdict } from "./lib";
 import type { TierName } from "./types";
 
 export const TIERS: Record<TierName, { title: string; range: string; blurb: string }> = {
@@ -37,12 +38,7 @@ export function Segmented<T extends string>({ options, value, onChange }: {
 }
 
 export function Crest({ team, size = "md" }: { team: string; size?: "sm" | "md" }) {
-  const box = size === "sm" ? "h-7 w-7 text-[9px]" : "h-10 w-10 text-[11px]";
-  return (
-    <span className={`inline-flex shrink-0 items-center justify-center rounded-full bg-surface-2 font-bold tracking-wide text-ink-2 ${box}`} aria-hidden>
-      {shortName(team)}
-    </span>
-  );
+  return <TeamBadge team={team} size={size === "sm" ? 26 : 40} />;
 }
 
 /** Blended probability bar with the bookmaker's probability as a tick. */
@@ -132,3 +128,31 @@ export const parseOdds = (text: string) => {
 };
 
 export { fmtOdds };
+
+const isoDay = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+export const todayIso = () => isoDay(new Date());
+
+/** Compact date strip: weekday over date, TODAY highlighted, selected day underlined. */
+export function DateStrip({ dates, selected, onSelect }: { dates: string[]; selected?: string; onSelect: (date: string) => void }) {
+  const today = todayIso();
+  return (
+    <div className="no-scrollbar -mx-4 flex overflow-x-auto border-b border-border/70 px-2" role="tablist">
+      {dates.map((d) => {
+        const date = new Date(`${d}T12:00:00`);
+        const active = d === selected;
+        return (
+          <button key={d} role="tab" aria-selected={active} onClick={() => onSelect(d)}
+            className={`relative shrink-0 px-3 pb-2.5 pt-1 text-center ${active ? "text-accent" : "text-ink-3"}`}>
+            <div className="text-[11px] font-bold tracking-wide">
+              {d === today ? "TODAY" : date.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()}
+            </div>
+            <div className="text-[11px] font-medium">{date.toLocaleDateString(undefined, { day: "numeric", month: "short" }).toUpperCase()}</div>
+            {active && <span className="absolute inset-x-2 bottom-0 h-[3px] rounded-full bg-accent" />}
+          </button>
+        );
+      })}
+    </div>
+  );
+}

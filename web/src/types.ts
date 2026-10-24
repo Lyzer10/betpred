@@ -15,8 +15,13 @@ export interface MarketPrediction {
   betpawa_odds: number | null;
 }
 
+export interface League { code: string; name: string; country: string }
+
+export const PREMIER_LEAGUE: League = { code: "EPL", name: "Premier League", country: "England" };
+
 export interface Fixture {
   id: number;
+  league?: League;
   date: string;
   time: string;
   kickoff_utc: string;
@@ -30,6 +35,7 @@ export interface Fixture {
 }
 
 export interface SlipLeg {
+  league?: League;
   date: string;
   time: string;
   kickoff_utc: string;
@@ -132,6 +138,7 @@ export interface LiveRecord {
 }
 
 export interface ArchivedFixture {
+  league?: League;
   date: string;
   time: string;
   kickoff_utc: string;

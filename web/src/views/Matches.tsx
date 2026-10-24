@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { dayLabel, kickoffLabel, odds, pct, shortName, timeLabel } from "../lib";
-import type { Fixture, MarketKey, MarketPrediction } from "../types";
-import { Card, Crest, Legend, ProbBar, SectionTitle, Segmented, VerdictBadge } from "../ui";
+import { Flag, TeamBadge } from "../badges";
+import { kickoffLabel, odds, pct, timeLabel, useArchive } from "../lib";
+import { type ArchiveDay, type ArchivedFixture, type Fixture, type League, type MarketKey, type MarketPrediction, PREMIER_LEAGUE } from "../types";
+import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
 type Group = "result" | "lead" | "double" | "goals";
 
@@ -46,7 +47,7 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
           <div className="text-center text-xs opacity-70">{kickoffLabel(fixture.kickoff_utc)}</div>
           <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-start gap-2">
             <div className="flex flex-col items-center gap-2 text-center">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-xs font-bold">{shortName(fixture.home)}</span>
+              <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white p-1.5"><TeamBadge team={fixture.home} size={44} /></span>
               <span className="text-sm font-semibold leading-tight">{fixture.home}</span>
             </div>
             <div className="pt-2 text-center">
@@ -54,7 +55,7 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
               <div className="text-[11px] opacity-60">expected goals</div>
             </div>
             <div className="flex flex-col items-center gap-2 text-center">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-xs font-bold">{shortName(fixture.away)}</span>
+              <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white p-1.5"><TeamBadge team={fixture.away} size={44} /></span>
               <span className="text-sm font-semibold leading-tight">{fixture.away}</span>
             </div>
           </div>
@@ -90,49 +91,106 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
   );
 }
 
-function MatchRow({ fixture, onOpen }: { fixture: Fixture; onOpen: () => void }) {
-  const get = (k: MarketKey) => fixture.markets.find((m) => m.market === k)!;
+type ListFixture = Pick<Fixture, "home" | "away" | "kickoff_utc" | "league"> & {
+  markets: { market: MarketKey; probability: number }[];
+  result?: ArchivedFixture["result"];
+  id?: number;
+};
+
+function MatchRow({ fixture, onOpen }: { fixture: ListFixture; onOpen?: () => void }) {
+  const get = (k: MarketKey) => fixture.markets.find((m) => m.market === k);
   const result = [get("home_win"), get("draw"), get("away_win")];
-  const best = result.indexOf(result.reduce((a, b) => (b.probability > a.probability ? b : a)));
-  return (
-    <button onClick={onOpen} className="flex w-full items-center gap-3 border-t border-border/60 px-4 py-3.5 text-left first:border-t-0 active:bg-surface-2/60">
-      <div className="min-w-0 flex-1 space-y-1.5">
-        <div className="text-[11px] font-medium text-ink-3">{timeLabel(fixture.kickoff_utc)}</div>
-        <div className="flex items-center gap-2"><Crest team={fixture.home} size="sm" /><span className="truncate text-sm font-semibold">{fixture.home}</span></div>
-        <div className="flex items-center gap-2"><Crest team={fixture.away} size="sm" /><span className="truncate text-sm font-semibold">{fixture.away}</span></div>
+  const known = result.every(Boolean);
+  const best = known ? result.indexOf(result.reduce((a, b) => (b!.probability > a!.probability ? b : a))) : -1;
+  const outcome = fixture.result?.outcomes;
+  const actual = outcome ? (outcome.home_win ? 0 : outcome.draw ? 1 : 2) : -1;
+  const body = (
+    <>
+      <div className="w-11 shrink-0 text-center">
+        {fixture.result ? <div className="text-[11px] font-bold text-ink-3">FT</div>
+          : <div className="text-[11px] font-medium text-ink-3">{timeLabel(fixture.kickoff_utc)}</div>}
       </div>
-      <div className="flex gap-1">
-        {result.map((m, i) => (
-          <div key={m.market} className={`w-10 rounded-lg py-1.5 text-center ${i === best ? "bg-model/12" : "bg-surface-2"}`}>
-            <div className="text-[10px] font-medium text-ink-3">{["1", "X", "2"][i]}</div>
-            <div className={`text-xs font-bold ${i === best ? "text-accent" : "text-ink-2"}`}>{pct(m.probability)}</div>
+      <div className="min-w-0 flex-1 space-y-2">
+        {[fixture.home, fixture.away].map((team, i) => (
+          <div key={team} className="flex items-center gap-2.5">
+            <TeamBadge team={team} size={22} />
+            <span className={`flex-1 truncate text-sm ${fixture.result && fixture.result.score[i] > fixture.result.score[1 - i] ? "font-bold" : "font-medium"}`}>{team}</span>
+            {fixture.result && <span className="w-5 text-right text-sm font-bold">{fixture.result.score[i]}</span>}
           </div>
         ))}
       </div>
-    </button>
+      {known && (
+        <div className="flex gap-1">
+          {result.map((m, i) => (
+            <div key={m!.market} className={`w-10 rounded-lg py-1.5 text-center ${i === best ? "bg-model/12" : "bg-surface-2"}`}>
+              <div className="text-[10px] font-medium text-ink-3">{["1", "X", "2"][i]}{i === actual ? " ✓" : ""}</div>
+              <div className={`text-xs font-bold ${i === best ? "text-accent" : "text-ink-2"}`}>{pct(m!.probability)}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  );
+  return onOpen ? (
+    <button onClick={onOpen} className="flex w-full items-center gap-2 border-t border-border/60 px-3 py-3.5 text-left first:border-t-0 active:bg-surface-2/60">{body}</button>
+  ) : (
+    <div className="flex w-full items-center gap-2 border-t border-border/60 px-3 py-3.5 first:border-t-0">{body}</div>
   );
 }
 
-export function Matches({ fixtures, selected, onSelect }: {
-  fixtures: Fixture[]; selected: number | null; onSelect: (id: number | null) => void;
-}) {
-  const fixture = fixtures.find((f) => f.id === selected);
-  if (fixture) return <MatchDetail fixture={fixture} onBack={() => onSelect(null)} />;
-  const days = new Map<string, Fixture[]>();
-  for (const f of fixtures) {
-    const day = dayLabel(f.kickoff_utc);
-    days.set(day, [...(days.get(day) ?? []), f]);
+function LeagueGroups({ fixtures, onOpen }: { fixtures: ListFixture[]; onOpen?: (f: ListFixture) => void }) {
+  const leagues = new Map<string, { league: League; list: ListFixture[] }>();
+  for (const f of [...fixtures].sort((a, b) => a.kickoff_utc.localeCompare(b.kickoff_utc))) {
+    const league = f.league ?? PREMIER_LEAGUE;
+    const group = leagues.get(league.code) ?? { league, list: [] };
+    group.list.push(f);
+    leagues.set(league.code, group);
   }
   return (
-    <div>
-      {[...days].map(([day, list]) => (
-        <div key={day}>
-          <SectionTitle aside={`${list.length} ${list.length === 1 ? "match" : "matches"}`}>{day}</SectionTitle>
+    <div className="space-y-5">
+      {[...leagues.values()].map(({ league, list }) => (
+        <section key={league.code}>
+          <div className="mb-2 flex items-center gap-3 px-1">
+            <Flag country={league.country} width={30} />
+            <div>
+              <div className="text-sm font-bold leading-tight">{league.name}</div>
+              <div className="text-[11px] text-ink-3">{league.country}</div>
+            </div>
+            <span className="ml-auto text-[11px] text-ink-3">{list.length} {list.length === 1 ? "match" : "matches"}</span>
+          </div>
           <Card className="overflow-hidden">
-            {list.map((f) => <MatchRow key={f.id} fixture={f} onOpen={() => onSelect(f.id)} />)}
+            {list.map((f) => <MatchRow key={`${f.home}-${f.away}`} fixture={f} onOpen={onOpen ? () => onOpen(f) : undefined} />)}
           </Card>
-        </div>
+        </section>
       ))}
+    </div>
+  );
+}
+
+function PastMatches({ date }: { date: string }) {
+  const snapshot = useArchive(date);
+  if (!snapshot) return <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
+  return snapshot.fixtures.length ? <LeagueGroups fixtures={snapshot.fixtures} /> : <Empty>No matches this day.</Empty>;
+}
+
+export function Matches({ fixtures, archive, selected, onSelect }: {
+  fixtures: Fixture[]; archive: ArchiveDay[]; selected: number | null; onSelect: (id: number | null) => void;
+}) {
+  const today = todayIso();
+  const upcomingDays = [...new Set(fixtures.map((f) => f.day))];
+  const pastDays = archive.map((a) => a.date).filter((d) => d < today && !upcomingDays.includes(d));
+  const dates = [...new Set([...pastDays, ...upcomingDays])].sort();
+  const [day, setDay] = useState<string | undefined>(upcomingDays.includes(today) ? today : upcomingDays[0] ?? dates[dates.length - 1]);
+  const fixture = fixtures.find((f) => f.id === selected);
+  if (fixture) return <MatchDetail fixture={fixture} onBack={() => onSelect(null)} />;
+  return (
+    <div>
+      <div className="mb-4"><DateStrip dates={dates} selected={day} onSelect={setDay} /></div>
+      {day && upcomingDays.includes(day) && (
+        <LeagueGroups fixtures={fixtures.filter((f) => f.day === day)} onOpen={(f) => onSelect(f.id ?? null)} />
+      )}
+      {day && !upcomingDays.includes(day) && <PastMatches key={day} date={day} />}
+      {!day && <Empty>No matches scheduled yet.</Empty>}
     </div>
   );
 }

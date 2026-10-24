@@ -23,10 +23,13 @@
   --hero-ink: #f0efec;
   --accent: #2a78d6;
   --shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 4px 16px rgb(16 24 40 / 0.06);
+  color-scheme: light;
 }
 
+/* Dark palette: follows the phone setting unless the user picked light or dark in the app. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #111110;
     --surface: #1a1a19;
     --surface-2: #232321;
@@ -44,6 +47,26 @@
     --accent: #3987e5;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111110;
+  --surface: #1a1a19;
+  --surface-2: #232321;
+  --border: #2e2e2b;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --ink-3: #8f8e86;
+  --track: #2e2e2b;
+  --model: #3987e5;
+  --market: #d95926;
+  --good-ink: #4cc94c;
+  --warning-ink: #fab219;
+  --critical-ink: #ef7272;
+  --hero: #13213a;
+  --accent: #3987e5;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
 }
 
 @theme inline {

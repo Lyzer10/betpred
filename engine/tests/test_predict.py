@@ -1,5 +1,7 @@
 import json
 
+import numpy as np
+
 import pandas as pd
 
 from src import predict
@@ -114,3 +116,14 @@ def test_local_day_uses_tanzania_time():
     kickoffs = pd.Series(pd.to_datetime(["2026-10-24 20:00", "2026-10-24 21:30"]))
     # 20:00 UTC = 23:00 EAT (same day); 21:30 UTC = 00:30 EAT next day.
     assert predict.local_day(kickoffs).tolist() == ["2026-10-24", "2026-10-25"]
+
+
+def test_at_least_matches_brute_force_and_flexi_options():
+    import itertools
+    probabilities = [0.8, 0.7, 0.6, 0.9]
+    brute = sum(np.prod([p if hit else 1 - p for p, hit in zip(probabilities, outcome)])
+                for outcome in itertools.product([0, 1], repeat=4) if sum(outcome) >= 3)
+    assert abs(predict.at_least(probabilities, 3) - brute) < 1e-12
+    assert abs(predict.at_least(probabilities, 4) - np.prod(probabilities)) < 1e-12
+    assert [o["min_correct"] for o in predict.flexi_options(probabilities)] == [3, 2]
+    assert predict.flexi_options([0.8, 0.7]) == []

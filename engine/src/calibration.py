@@ -75,6 +75,9 @@ def add_actuals(frame: pd.DataFrame) -> pd.DataFrame:
     result["actual_home"] = (result.home_goals > result.away_goals).astype(int)
     result["actual_draw"] = (result.home_goals == result.away_goals).astype(int)
     result["actual_away"] = (result.home_goals < result.away_goals).astype(int)
+    result["actual_dc_1x"] = (result.home_goals >= result.away_goals).astype(int)
+    result["actual_dc_x2"] = (result.home_goals <= result.away_goals).astype(int)
+    result["actual_dc_12"] = (result.home_goals != result.away_goals).astype(int)
     for line, suffix in ((0.5, "05"), (1.5, "15"), (2.5, "25"), (3.5, "35")):
         result[f"actual_over{suffix}"] = (total > line).astype(int)
     result["actual_btts"] = ((result.home_goals > 0) & (result.away_goals > 0)).astype(int)

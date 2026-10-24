@@ -19,13 +19,15 @@ def test_parse_markets_maps_every_supported_market():
         _market("3795", [(None, [("Yes", 1.54), ("No", 2.48)])]),
         _market("5000", [(2, [("Over", 1.02), ("Under", 16.1)]), (10, [("Over", 1.47), ("Under", 2.77)]),
                          (14, [("Over", 2.15), ("Under", 1.74)]), (18, [("Over", 3.5), ("Under", 1.3)])]),
-        _market("4693", [(None, [("1X", 2.24)])]),  # double chance: not modelled, ignored
+        _market("4693", [(None, [("1X", 2.24), ("X2", 1.2), ("12", 1.22)])]),
+        _market("4706", [(None, [("1/1", 8.08)])]),  # HT/FT: not modelled, ignored
     ]
     odds = parse_markets(markets)
     assert odds == {
         "home_win": 4.89, "draw": 4.69, "away_win": 1.65, "home_1up": 2.27, "away_1up": 1.33,
         "home_first": 2.74, "away_first": 1.53, "btts_yes": 1.54, "btts_no": 2.48,
         "over_0.5": 1.02, "over_2.5": 1.47, "under_2.5": 2.77, "over_3.5": 2.15, "under_3.5": 1.74,
+        "double_1x": 2.24, "double_x2": 1.2, "double_12": 1.22,
     }
 
 

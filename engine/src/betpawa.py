@@ -10,6 +10,7 @@ Market ids and encodings were read from the site's own public API:
   28000224  Goal (row handicap 4 = goal 1)  1 / 2 = team to score first
   3795      Both Teams To Score - FT    Yes / No
   5000      Total Score Over/Under - FT row handicap = goal line x 4
+  4693      Double Chance - FT          1X / X2 / 12
 """
 from __future__ import annotations
 
@@ -53,6 +54,10 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                         take(key, prices[name])
             elif type_id == "28000224" and handicap is not None and float(handicap) == 4:
                 for name, key in (("1", "home_first"), ("2", "away_first")):
+                    if name in prices:
+                        take(key, prices[name])
+            elif type_id == "4693":
+                for name, key in (("1X", "double_1x"), ("X2", "double_x2"), ("12", "double_12")):
                     if name in prices:
                         take(key, prices[name])
             elif type_id == "3795":

@@ -21,7 +21,7 @@ import pandas as pd
 import requests
 
 from .accumulators import (
-    LEG_MARKETS, LEGS_PATH, RETAIL_MARGIN, SLIPS_PATH, TIERS, best_slip, betting_round, blend,
+    LEG_MARKETS, LEGS_PATH, RETAIL_MARGIN, SLIP_MARKETS, SLIPS_PATH, TIERS, best_slip, betting_round, blend,
     bookmaker_fair_probabilities, fit_model_weight,
 )
 from .backtest import _promoted_initialization
@@ -61,6 +61,7 @@ MARKET_LABELS = {
     "btts_yes": "Both teams score", "btts_no": "Both teams score: No",
     "home_1up": "Home 1Up", "away_1up": "Away 1Up",
     "home_first": "Home scores first", "away_first": "Away scores first",
+    "double_1x": "Home or draw", "double_x2": "Away or draw", "double_12": "Home or away",
 }
 
 
@@ -146,6 +147,8 @@ def predict_fixtures(fixtures, model, matches, goals, calibrators, model_weight)
             "over_0.5": cal.cal_over05, "over_1.5": cal.cal_over15, "over_2.5": cal.cal_over25,
             "over_3.5": cal.cal_over35, "under_2.5": 1 - cal.cal_over25, "under_3.5": 1 - cal.cal_over35,
             "btts_yes": cal.cal_btts, "btts_no": 1 - cal.cal_btts,
+            "double_1x": cal.cal_home + cal.cal_draw, "double_x2": cal.cal_draw + cal.cal_away,
+            "double_12": cal.cal_home + cal.cal_away,
             **{market: float(timing_cal[market].predict([timing[f"sim_{market}"]])[0])
                for market in ("home_1up", "away_1up", "home_first", "away_first")},
         }
@@ -211,9 +214,24 @@ def local_day(kickoff_utc: pd.Series) -> pd.Series:
     return kickoff_utc.dt.tz_localize("UTC").dt.tz_convert(LOCAL_TZ).dt.strftime("%Y-%m-%d")
 
 
+def at_least(probabilities, k: int) -> float:
+    """P(at least k of the independent legs win): Poisson-binomial tail."""
+    distribution = np.array([1.0])
+    for p in probabilities:
+        distribution = np.convolve(distribution, [1 - p, p])
+    return float(distribution[k:].sum())
+
+
+def flexi_options(probabilities) -> list[dict]:
+    """SportyBet Flexi: the ticket wins if at least k of n picks win (fixed, reduced payout)."""
+    n = len(probabilities)
+    return [{"min_correct": k, "probability": round(at_least(probabilities, k), 4)}
+            for k in range(n - 1, max(n - 3, 1), -1)] if n >= 3 else []
+
+
 def build_slips(legs: pd.DataFrame) -> dict:
-    """Tier slips from one day's matches; only legs with a price qualify."""
-    pool = legs[legs.odds.notna() & (legs.odds >= 1.05)]
+    """Tier slips from one day's matches, using only the user's slip markets with a price."""
+    pool = legs[legs.market.isin(SLIP_MARKETS) & legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
     for tier in TIERS:
         picks = best_slip(pool, tier) if not pool.empty else None
@@ -228,6 +246,7 @@ def build_slips(legs: pd.DataFrame) -> dict:
             "expected_value": round(win * total - 1, 4),
             "kelly": round(kelly_fraction(win, total), 4),
             "price_warning": bool(chosen.price_warning.any()),
+            "flexi": flexi_options(chosen.probability.tolist()),
             "legs": [_leg_json(row) for row in chosen.itertuples()],
         }
     return slips

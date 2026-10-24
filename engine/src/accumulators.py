@@ -47,10 +47,12 @@ class Tier:
     max_legs: int
 
 
+# The user's tiers. Legs per slip allow low-odds markets (1Up, overs, double
+# chance) to reach the odds range.
 TIERS = (
-    Tier("safe", 2.5, 3.5, 2, 3),
-    Tier("medium", 5.0, 8.0, 3, 5),
-    Tier("big", 10.0, 25.0, 4, 8),
+    Tier("safe", 2.5, 3.5, 2, 4),
+    Tier("medium", 3.5, 8.0, 3, 6),
+    Tier("big", 8.0, 12.0, 4, 8),
 )
 
 # market -> (calibrated probability column, actual outcome column)
@@ -70,7 +72,14 @@ LEG_MARKETS = {
     "away_1up": ("cal_away_1up", "actual_away_1up"),
     "home_first": ("cal_home_first", "actual_home_first"),
     "away_first": ("cal_away_first", "actual_away_first"),
+    "double_1x": ("cal_dc_1x", "actual_dc_1x"),
+    "double_x2": ("cal_dc_x2", "actual_dc_x2"),
+    "double_12": ("cal_dc_12", "actual_dc_12"),
 }
+
+# Markets the user bets in accumulators: 1Up, over/under goals, a team to win, double chance.
+SLIP_MARKETS = ("home_1up", "away_1up", "over_0.5", "over_1.5", "over_2.5", "under_2.5", "under_3.5",
+                "home_win", "away_win", "double_1x", "double_x2", "double_12")
 
 
 def bookmaker_fair_probabilities(odds_home, odds_draw, odds_away, odds_over, odds_under, rho):
@@ -98,6 +107,8 @@ def bookmaker_fair_probabilities(odds_home, odds_draw, odds_away, odds_over, odd
         "home_1up": float(np.sum(matrix * PRIORS["home_1up"])),
         "away_1up": float(np.sum(matrix * PRIORS["away_1up"])),
         "home_first": float(np.sum(matrix * PRIORS["home_first"])),
+        "double_1x": target_1x2[0] + target_1x2[1], "double_x2": target_1x2[1] + target_1x2[2],
+        "double_12": target_1x2[0] + target_1x2[2],
         "away_first": float(np.sum(matrix * PRIORS["away_first"])),
     }
 
@@ -126,6 +137,12 @@ def build_leg_table() -> pd.DataFrame:
     frame["cal_under25"] = 1 - frame.cal_over25
     frame["cal_under35"] = 1 - frame.cal_over35
     frame["cal_btts_no"] = 1 - frame.cal_btts
+    frame["cal_dc_1x"] = frame.cal_home + frame.cal_draw
+    frame["cal_dc_x2"] = frame.cal_draw + frame.cal_away
+    frame["cal_dc_12"] = frame.cal_home + frame.cal_away
+    frame["actual_dc_1x"] = (frame.home_goals >= frame.away_goals).astype(int)
+    frame["actual_dc_x2"] = (frame.home_goals <= frame.away_goals).astype(int)
+    frame["actual_dc_12"] = (frame.home_goals != frame.away_goals).astype(int)
     frame["actual_under25"] = 1 - frame.actual_over25
     frame["actual_under35"] = 1 - frame.actual_over35
     frame["actual_btts_no"] = 1 - frame.actual_btts
@@ -246,12 +263,14 @@ def _backtrack(history, legs: pd.DataFrame, n: int, b: int) -> list[int]:
 
 
 def backtest_slips(legs: pd.DataFrame, modes: dict[str, float | None]) -> pd.DataFrame:
-    """Build and settle one slip per tier, round and mode.
+    """Build and settle one slip per tier, match day and mode, from SLIP_MARKETS only.
 
+    Grouping by day mirrors the live app, which offers each day's own slips.
     modes maps a mode name to (probability column, minimum leg edge or None).
     """
     slips = []
-    for round_id, round_legs in legs.groupby("round", sort=True):
+    legs = legs[legs.market.isin(SLIP_MARKETS)]
+    for round_id, round_legs in legs.groupby(legs.date.dt.strftime("%Y-%m-%d"), sort=True):
         for mode, (probability_column, min_edge) in modes.items():
             pool = round_legs.assign(probability=round_legs[probability_column])
             if min_edge is not None:
@@ -344,7 +363,8 @@ def _chosen_legs(legs: pd.DataFrame, slips: pd.DataFrame) -> pd.DataFrame:
             fixture, rest = selection.split(": ")
             keys.add((slip.round, fixture, rest.split(" @ ")[0]))
     fixture = legs.home_team + " v " + legs.away_team
-    mask = [(r, f, m) in keys for r, f, m in zip(legs["round"], fixture, legs.market)]
+    day = legs.date.dt.strftime("%Y-%m-%d")  # slips are grouped by match day
+    mask = [(r, f, m) in keys for r, f, m in zip(day, fixture, legs.market)]
     return legs[mask]
 
 

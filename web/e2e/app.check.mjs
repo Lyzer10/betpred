@@ -48,8 +48,9 @@ for (const scheme of ["light", "dark"]) {
   check(await page.getByText(/Losing half of it takes \d+ Safe slips lost in a row/).count() === 1, `[${scheme}] staking risk line shown`);
   await page.getByRole("button", { name: "Bets", exact: true }).click();
   await openUpcomingDay();
-  // TSh 2,500, or TSh 1,200 when a price warning halves it; "skip" when the slip has no value.
-  const fixedShown = await page.getByText(/^TSh (2,500|1,200)$/).count();
+  // "skip" when the slip has no value. Pilot phase caps TSh 2,500 at 3% of the TSh 50,000 balance (TSh 1,500); a price warning halves it (TSh 700).
+  const fixedShown = await page.getByText(/^TSh (1,500|700)$/).count();
+  check(await page.getByText(/Pilot phase: max 3%/).count() === 1, `[${scheme}] pilot cap explained on the slip`);
   const skipShown = await page.getByText(/skip it/).count();
   check(fixedShown === 1 || skipShown === 1, `[${scheme}] fixed stake used on the Safe slip (${fixedShown ? "stake shown" : "skip"})`);
   // Why this bet: tap the first pick.

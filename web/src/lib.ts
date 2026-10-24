@@ -74,6 +74,10 @@ export const STAKING = {
   maxRound: 0.10,           // all stakes for a day together: max 10%
   warningFactor: 0.5,       // halve the stake when the price may be stale
   minStake: 100,            // TSh; stakes below this are skipped
+  // Pilot phase: the edge is not yet proven with the user's own bets, so until this many of
+  // their slips have settled no slip risks more than pilotCap of the balance, whatever the mode.
+  pilotSlips: 30,
+  pilotCap: 0.03,
   roundTo: 100,             // TSh
 };
 
@@ -93,6 +97,7 @@ export function recommendedStake(bankroll: number, probability: number, odds: nu
     const cap = opts.tier ? STAKING.maxTier[opts.tier] : STAKING.maxSingle;
     amount = bankroll * Math.min(kellyFraction(probability, odds) * STAKING.kellyFraction, cap);
   }
+  if (staking?.pilot) amount = Math.min(amount, bankroll * STAKING.pilotCap);
   if (opts.warning) amount *= STAKING.warningFactor;
   const stake = Math.floor(amount / STAKING.roundTo) * STAKING.roundTo;
   return stake >= STAKING.minStake ? stake : 0;

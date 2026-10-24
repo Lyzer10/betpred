@@ -35,7 +35,15 @@ export type Entry = PlacedBet | Transfer;
 
 /** How stakes are sized. "smart" = quarter Kelly with tier caps (the default). */
 export type StakingMode = "smart" | "percent" | "fixed";
-export interface StakingSettings { mode: StakingMode; percent: number; fixed: number }
+export interface StakingSettings {
+  mode: StakingMode; percent: number; fixed: number;
+  pilot?: boolean;   // runtime only: fewer than STAKING.pilotSlips settled slips, so stakes are capped
+}
+
+/** Number of the user's slips that have settled (won or lost). */
+export function settledSlips(ledger: Ledger, results: Result[]) {
+  return ledger.entries.filter((e): e is PlacedBet => e.type === "bet").filter((b) => betStatus(b, results).status !== "pending").length;
+}
 export const DEFAULT_STAKING: StakingSettings = { mode: "smart", percent: 10, fixed: 2500 };
 
 export interface Ledger {

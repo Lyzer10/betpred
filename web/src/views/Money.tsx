@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type StakingMode, betStatus, isBet, isTransfer, newId, payout, summarise } from "../ledger";
+import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type StakingMode, betStatus, isBet, isTransfer, newId, payout, settledSlips, summarise } from "../ledger";
 import { STAKING, losingStreakChance, odds, pct, tsh } from "../lib";
 import type { Result } from "../types";
 import { Card, Empty, SectionTitle, Segmented, Stat, StatusPill, TIERS } from "../ui";
@@ -8,7 +8,7 @@ import { Card, Empty, SectionTitle, Segmented, Stat, StatusPill, TIERS } from ".
 const SAFE_WIN_RATE = 0.37;
 const BETS_PER_MONTH = 30;
 
-function StakingCard({ ledger, balance, onChange }: { ledger: Ledger; balance: number; onChange: (ledger: Ledger) => void }) {
+function StakingCard({ ledger, balance, pilotSettled, onChange }: { ledger: Ledger; balance: number; pilotSettled: number; onChange: (ledger: Ledger) => void }) {
   const staking = ledger.staking ?? DEFAULT_STAKING;
   const [text, setText] = useState(String(staking.mode === "fixed" ? staking.fixed : staking.percent));
   const setMode = (mode: StakingMode) => {
@@ -55,6 +55,12 @@ function StakingCard({ ledger, balance, onChange }: { ledger: Ledger; balance: n
         </>
       )}
       <p className="mt-2 text-[11px] text-ink-3">Any mode: slips without value still say skip, and stakes are halved on price or model warnings.</p>
+      {pilotSettled < STAKING.pilotSlips && (
+        <p className="mt-2 rounded-xl bg-warning/15 px-3 py-2 text-[11px] leading-relaxed text-warning-ink">
+          Pilot phase: until {STAKING.pilotSlips} of your slips have settled ({pilotSettled}/{STAKING.pilotSlips} so far), no slip stakes more than {pct(STAKING.pilotCap)} of your balance,
+          whatever you choose above. The system's edge is not yet proven with your own bets.
+        </p>
+      )}
     </Card>
   );
 }
@@ -142,7 +148,7 @@ export function Money({ ledger, results, onChange }: { ledger: Ledger; results: 
       <div className="space-y-3">{accounts.map((b) => <AccountCard key={b} bookmaker={b} ledger={ledger} results={results} onChange={onChange} />)}</div>
 
       <SectionTitle>Staking</SectionTitle>
-      <StakingCard ledger={ledger} balance={totals[0].balance} onChange={onChange} />
+      <StakingCard ledger={ledger} balance={totals[0].balance} pilotSettled={settledSlips(ledger, results)} onChange={onChange} />
 
       <SectionTitle>Overall</SectionTitle>
       <Card className="grid grid-cols-3 gap-3 px-5 py-4">

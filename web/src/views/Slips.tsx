@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BOOKMAKERS, type Bookmaker, type Ledger, type PlacedBet, type StakingSettings, newId, summarise } from "../ledger";
+import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingSettings, newId, settledSlips, summarise } from "../ledger";
 import { STAKING, VALUE_EDGE, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
 import type { ArchiveSnapshot, DayBets, Predictions, Slip, TierName } from "../types";
 import { Flag } from "../badges";
@@ -222,6 +222,8 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
   const balances = Object.fromEntries((Object.keys(BOOKMAKERS) as Bookmaker[])
     .map((b) => [b, summarise(ledger, b, data.results).balance])) as Record<Bookmaker, number>;
   const placedKey = (t: TierName) => ledger.entries.some((e) => e.type === "bet" && e.day === day.date && e.tier === t);
+  const settled = settledSlips(ledger, data.results);
+  const staking = { ...(ledger.staking ?? DEFAULT_STAKING), pilot: settled < STAKING.pilotSlips };
   if (!tiers.length) {
     return <Empty>Not enough matches with prices on this day to build an accumulator.</Empty>;
   }
@@ -230,7 +232,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
     <div className="space-y-3">
       <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
-        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={ledger.staking} fixtures={data.fixtures} onPlace={onPlace} />
+        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={staking} fixtures={data.fixtures} onPlace={onPlace} />
       {record && (
         <p className="px-2 text-xs leading-relaxed text-ink-3">
           Track record of {TIERS[tier].title} slips: won <b className="text-ink-2">{pct(record.win_rate, 1)}</b> of {record.slips} past days
@@ -242,6 +244,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
         Stakes: {ledger.staking?.mode === "fixed" ? `a fixed ${tsh(ledger.staking.fixed)} per slip`
           : ledger.staking?.mode === "percent" ? `${ledger.staking.percent}% of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance per slip`
           : `a quarter of the Kelly amount, at most ${pct(STAKING.maxTier[tier])} of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance for ${TIERS[tier].title}`} (change in Money).
+        {staking.pilot && <> Pilot phase: max {pct(STAKING.pilotCap)} of your balance per slip until {STAKING.pilotSlips} of your slips have settled ({settled}/{STAKING.pilotSlips}).</>}
         Nothing when the odds are below fair.
       </p>
     </div>

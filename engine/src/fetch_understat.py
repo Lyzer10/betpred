@@ -20,15 +20,18 @@ def _write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False), encoding="utf-8")
 
 
-def fetch_season(year: int) -> tuple[list[dict], dict[str, dict]]:
-    """Return league results and shots by match id, using per season caches."""
+def fetch_season(year: int, refresh: bool = False) -> tuple[list[dict], dict[str, dict]]:
+    """Return league results and shots by match id, using per season caches.
+
+    refresh re-downloads the results list; shots are only fetched for new matches.
+    """
     results_path = RAW_DIR / f"epl_{year}_results.json"
     shots_path = RAW_DIR / f"epl_{year}_shots.json"
-    if results_path.exists() and shots_path.exists():
+    if results_path.exists() and shots_path.exists() and not refresh:
         return json.loads(results_path.read_text(encoding="utf-8")), json.loads(shots_path.read_text(encoding="utf-8"))
 
     with UnderstatClient() as client:
-        if results_path.exists():
+        if results_path.exists() and not refresh:
             results = json.loads(results_path.read_text(encoding="utf-8"))
         else:
             results = client.league(league="EPL").get_match_data(season=str(year))
@@ -83,11 +86,13 @@ def normalize_season(year: int, results: list[dict], shots: dict[str, dict]) -> 
     return pd.DataFrame(matches, columns=["understat_id", "date", "season", "home_team", "away_team", "home_xg", "away_xg"]), pd.DataFrame(goals, columns=["understat_id", "minute", "team"])
 
 
-def fetch_all(start: int = START_SEASON, end: int | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
-    end = current_season_start() if end is None else end
+def fetch_all(start: int = START_SEASON, end: int | None = None,
+              refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
+    current = current_season_start()
+    end = current if end is None else end
     matches, goals = [], []
     for year in range(start, end + 1):
-        season_matches, season_goals = normalize_season(year, *fetch_season(year))
+        season_matches, season_goals = normalize_season(year, *fetch_season(year, refresh_current and year == current))
         matches.append(season_matches)
         goals.append(season_goals)
     return pd.concat(matches, ignore_index=True), pd.concat(goals, ignore_index=True)

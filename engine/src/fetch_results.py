@@ -56,10 +56,10 @@ def parse_match_dates(values: pd.Series) -> pd.Series:
     return parsed
 
 
-def download_season(year: int, session: requests.Session | None = None) -> Path:
+def download_season(year: int, session: requests.Session | None = None, refresh: bool = False) -> Path:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     target = RAW_DIR / f"E0_{season_code(year)}.csv"
-    if target.exists():
+    if target.exists() and not refresh:
         return target
     url = f"https://www.football-data.co.uk/mmz4281/{season_code(year)}/E0.csv"
     response = (session or requests).get(url, timeout=30)
@@ -70,8 +70,8 @@ def download_season(year: int, session: requests.Session | None = None) -> Path:
     return target
 
 
-def load_season(year: int, session: requests.Session | None = None) -> pd.DataFrame:
-    raw = pd.read_csv(download_season(year, session))
+def load_season(year: int, session: requests.Session | None = None, refresh: bool = False) -> pd.DataFrame:
+    raw = pd.read_csv(download_season(year, session, refresh))
     selected = pd.DataFrame(index=raw.index)
     for source, destination in SOURCE_COLUMNS.items():
         selected[destination] = raw[source] if source in raw else pd.NA
@@ -82,10 +82,13 @@ def load_season(year: int, session: requests.Session | None = None) -> pd.DataFr
     return selected
 
 
-def fetch_all(start: int = START_SEASON, end: int | None = None) -> pd.DataFrame:
-    end = current_season_start() if end is None else end
+def fetch_all(start: int = START_SEASON, end: int | None = None, refresh_current: bool = False) -> pd.DataFrame:
+    """Load all seasons; refresh_current re-downloads the in-progress season."""
+    current = current_season_start()
+    end = current if end is None else end
     with requests.Session() as session:
-        return pd.concat([load_season(year, session) for year in range(start, end + 1)], ignore_index=True)
+        return pd.concat([load_season(year, session, refresh_current and year == current)
+                          for year in range(start, end + 1)], ignore_index=True)
 
 
 def main() -> None:

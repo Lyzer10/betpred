@@ -165,6 +165,14 @@ def blend(model_probability, market_probability, model_weight: float):
     return 1 / (1 + np.exp(-z))
 
 
+def fit_model_weight(history: pd.DataFrame) -> float:
+    """Model weight in [0, 1] (0.05 steps) minimising log loss on settled legs."""
+    grid = np.linspace(0, 1, 21)
+    losses = [_log_loss(blend(history.model_probability, history.bookmaker_probability, w), history.won)
+              for w in grid]
+    return float(grid[int(np.argmin(losses))])
+
+
 def blend_with_market(legs: pd.DataFrame, default_weight: float = 0.5) -> tuple[np.ndarray, dict]:
     """Logit-blend model and bookmaker probabilities, weight learned walk-forward.
 
@@ -175,15 +183,9 @@ def blend_with_market(legs: pd.DataFrame, default_weight: float = 0.5) -> tuple[
     """
     blended = np.empty(len(legs))
     weights = {}
-    grid = np.linspace(0, 1, 21)
     for season in sorted(legs.season.unique()):
         history = legs[legs.season < season]
-        if history.empty:
-            weight = default_weight
-        else:
-            losses = [_log_loss(blend(history.model_probability, history.bookmaker_probability, w), history.won)
-                      for w in grid]
-            weight = float(grid[int(np.argmin(losses))])
+        weight = default_weight if history.empty else fit_model_weight(history)
         current = (legs.season == season).to_numpy()
         blended[current] = blend(legs.model_probability[current], legs.bookmaker_probability[current], weight)
         weights[season] = weight

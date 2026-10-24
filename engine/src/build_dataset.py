@@ -38,9 +38,9 @@ def _preferred(frame: pd.DataFrame, columns: list[str]) -> pd.Series:
     return frame[columns].bfill(axis=1).iloc[:, 0]
 
 
-def build() -> tuple[pd.DataFrame, pd.DataFrame]:
-    results = fetch_results()
-    understat, raw_goals = fetch_understat()
+def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
+    results = fetch_results(refresh_current=refresh_current)
+    understat, raw_goals = fetch_understat(refresh_current=refresh_current)
     for column in ("home_team", "away_team"):
         results[column] = results[column].map(canonical_team)
 

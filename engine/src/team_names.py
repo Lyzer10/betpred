@@ -32,7 +32,7 @@ CANONICAL_TEAM_NAMES = {
 }
 
 
-def canonical_team(name: str) -> str:
+def canonical_team(name: str, league="EPL") -> str:
     """Return a canonical team name, raising for unexpected source values."""
     cleaned = str(name).strip()
     try:

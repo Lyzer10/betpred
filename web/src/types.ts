@@ -84,6 +84,7 @@ export interface Slip {
   price_warning?: boolean;
   flexi?: { min_correct: number; probability: number }[];   // SportyBet Flexi: P(at least k of n win)
   locked?: boolean;              // first match under way: frozen and tracked
+  final?: boolean;               // from the run shortly before the day's first match: never changes again
   status?: "won" | "lost" | "pending";
 }
 
@@ -116,6 +117,8 @@ export interface DayBets {
   fixtures: number[];
   value_picks: ValuePick[];
   slips: Partial<Record<TierName, Slip>>;
+  first_kickoff_utc?: string;
+  final?: boolean;               // today's slips are final (placed after the notification)
 }
 
 export interface Predictions {

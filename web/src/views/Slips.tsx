@@ -32,6 +32,20 @@ function LegBadge({ leg }: { leg: SlipLeg }) {
   );
 }
 
+/** Preview until the final run shortly before the day's first match; then final, ready to place. */
+function DayStatus({ day }: { day: DayBets }) {
+  if (!day.first_kickoff_utc || !Object.keys(day.slips).length) return null;
+  const first = timeLabel(day.first_kickoff_utc);
+  const finalAround = timeLabel(new Date(Date.parse(day.first_kickoff_utc) - 45 * 60_000).toISOString());
+  return (
+    <div data-day-status className={`mb-3 rounded-xl px-4 py-2.5 text-xs ${day.final ? "bg-good/15 text-good-ink" : "bg-surface-2 text-ink-2"}`}>
+      {day.final
+        ? <><span className="font-semibold">✓ Final slips.</span> These will not change. First match {first}.</>
+        : <><span className="font-semibold">Preview.</span> Final slips around {finalAround}, with the latest prices, about 45 minutes before the first match ({first}). They may still change until then.</>}
+    </div>
+  );
+}
+
 /** Where each tier is usually placed; changeable when recording the bet. */
 const DEFAULT_BOOKMAKER: Record<TierName, Bookmaker> = { safe: "betpawa", medium: "betpawa", big: "sportybet" };
 
@@ -140,6 +154,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
         <div className="flex items-center justify-between text-xs opacity-70">
           <span>{TIERS[tier].range}</span>
           {slip.locked && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">Locked · in play</span>}
+          {!slip.locked && slip.final && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">✓ Final</span>}
         </div>
         <div className="mt-3 flex items-end justify-between">
           <div>
@@ -348,6 +363,7 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
       {selected && upcoming.has(selected) && (
         <>
           <SectionTitle aside={`${upcoming.get(selected)!.fixtures.length} matches`}>Accumulators</SectionTitle>
+          <DayStatus day={upcoming.get(selected)!} />
           <UpcomingDay key={selected} day={upcoming.get(selected)!} data={data} ledger={ledger} onPlace={onPlace} />
         </>
       )}

@@ -48,6 +48,7 @@ for (const scheme of ["light", "dark"]) {
   check(await page.getByText(/Losing half of it takes \d+ Safe slips lost in a row/).count() === 1, `[${scheme}] staking risk line shown`);
   await page.getByRole("button", { name: "Bets", exact: true }).click();
   await openUpcomingDay();
+  check(await page.locator("[data-day-status]").filter({ hasText: /Preview\.|Final slips\./ }).count() === 1, `[${scheme}] day shows preview or final status`);
   // "skip" when the slip has no value. Pilot phase caps TSh 2,500 at 3% of the TSh 50,000 balance (TSh 1,500); a price warning halves it (TSh 700).
   const fixedShown = await page.getByText(/^TSh (1,500|700)$/).count();
   check(await page.getByText(/Pilot phase: max 3%/).count() === 1, `[${scheme}] pilot cap explained on the slip`);

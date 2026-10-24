@@ -1,14 +1,22 @@
 name: Daily predictions
 
-# Daily runs in GitHub's cloud (the PC is not needed). scripts/daily.sh does the
-# same job locally as a backup; both pull before pushing, so they never collide.
+# Runs in GitHub's cloud (the PC is not needed).
+# Woken every 30 minutes by an external timer (cron-job.org calls the workflow_dispatch API; GitHub's
+# own schedule can start hours late) plus GitHub's schedule as a backup. scripts/run_mode.py then
+# picks: final (shortly before today's first match: slips become final, phone notification), full
+# (07:00 / 13:00 / 18:00 Tanzania), prices (log Betpawa prices before kick-offs) or skip.
 on:
   schedule:
-    - cron: "0 4 * * *"        # 07:00 Tanzania
-    - cron: "0 10 * * *"       # 13:00 Tanzania
-    - cron: "0 15 * * *"       # 18:00 Tanzania
-  workflow_dispatch:           # "Run workflow" button in the Actions tab
-  push:                        # run once whenever this workflow itself changes
+    # Backups only (each wake-up costs at least one of the 2,000 free minutes a month).
+    - cron: "7 4 * * *"          # 07:07 Tanzania
+    - cron: "17 10 * * *"        # 13:17 Tanzania
+    - cron: "17 15 * * *"        # 18:17 Tanzania
+  workflow_dispatch:             # the external timer and the "Run workflow" button
+    inputs:
+      mode:
+        description: "auto, full, final or prices"
+        default: auto
+  push:                          # run once whenever this workflow itself changes
     branches: [main]
     paths: [.github/workflows/daily-predictions.yml]
 
@@ -26,39 +34,60 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Decide what this run does
+        id: decide
+        run: python3 scripts/run_mode.py "${{ github.event_name == 'push' && 'full' || inputs.mode }}"
+
       - uses: actions/setup-python@v7
+        if: steps.decide.outputs.mode != 'skip'
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: engine/requirements.txt
 
-      - run: pip install -r engine/requirements.txt
+      - if: steps.decide.outputs.mode != 'skip'
+        run: pip install -r engine/requirements.txt
 
       # Past seasons are committed; the in-progress season's raw downloads are cached
       # between runs so only new matches are fetched.
       - uses: actions/cache@v6
+        if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final'
         with:
           path: engine/data/raw
           key: raw-${{ github.run_id }}
           restore-keys: raw-
 
       - name: Tests
+        if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final'
         working-directory: engine
         run: python -m pytest -q
 
       - name: Predict upcoming fixtures
+        if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final'
         working-directory: engine
-        run: python -m src.predict
+        run: python -m src.predict ${{ steps.decide.outputs.mode == 'final' && '--final' || '' }}
 
-      - name: Publish predictions
+      - name: Log Betpawa prices before kick-off
+        if: steps.decide.outputs.mode == 'prices'
+        working-directory: engine
+        run: python -m src.prices
+
+      - name: Publish
+        if: steps.decide.outputs.mode != 'skip'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/public/data/predictions.json web/public/data/archive engine/data/live/slip_history.json
+          git add web/public/data/predictions.json web/public/data/archive engine/data/live
           git diff --cached --quiet && exit 0
-          git commit -m "Daily predictions $(date -u +%F)"
+          git commit -m "Predictions (${{ steps.decide.outputs.mode }}) $(date -u '+%F %H:%M') UTC"
           # The run also rebuilds tracked research files (e.g. matches.parquet) that are not
           # published; drop them so the pull below can rebase onto newer commits.
           git reset --hard HEAD
           git pull --rebase origin main
           git push
+
+      - name: Phone notification
+        if: steps.decide.outputs.mode == 'final'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 scripts/notify.py

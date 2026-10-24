@@ -93,7 +93,10 @@ FAILED the gates (`data/processed/market_gates.json`, `predict.failed_gates`) ->
 (exact DP search, `accumulators.best_slip`) with Flexi chances -> slip history frozen at first
 kickoff -> per-day archive `web/public/data/archive/<day>.json` settled from results -> live record
 and **health check** (`engine/src/health.py`: accuracy vs bookmaker, calibration, slips; "warning"
-halves all stakes) -> `web/public/data/predictions.json`.
+halves all stakes) -> `web/public/data/predictions.json`. Every run appends the Betpawa prices of the slip
+markets (next two local days) to `engine/data/live/prices/<day>.csv` (`src/prices.py`); price-only
+snapshots before kick-offs add the closing price; `clv` in predictions.json = published price / last
+price logged within 90 min before kick-off - 1, overall and per league, market and tier.
 
 ### App (`web/`, React + Vite + Tailwind PWA)
 Tabs: **Bets** (date strip, Safe/Medium/Big slips, "why this bet", Flexi, "I placed this bet"),
@@ -106,9 +109,18 @@ the user's slips have settled**.
 
 ### Deployment
 - Repo: GitHub `Lyzer10/betpred` (private), branch `main`.
-- GitHub Actions `.github/workflows/daily-predictions.yml`: 07:00, 13:00, 18:00 EAT (04/10/15 UTC),
-  runs tests then `src.predict`, commits predictions (resets rebuilt research files, pulls, pushes).
-  Also runs on workflow-file changes and via "Run workflow".
+- GitHub Actions `.github/workflows/daily-predictions.yml`, woken every 30 minutes (06:00-23:30 EAT) by
+  an external timer (cron-job.org POSTs the workflow_dispatch API with a fine-grained token limited to
+  Actions on this repo), plus GitHub's own schedule at 07:07 / 13:17 / 18:17 EAT as backup (GitHub's
+  schedule started 3-4 hours late on 24 Oct 2026, so it cannot time the final run). Each wake-up runs
+  `scripts/run_mode.py`, which picks one mode:
+  - **final**: from 55 minutes before today's first match (so after line-ups, ~25-55 min before kick-off),
+    full run with `--final`: today's slips become final (never replaced or added to, even by later
+    runs), then `scripts/notify.py` sends the phone notification (ntfy topic in secret `NTFY_TOPIC`).
+  - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
+  - **prices**: a match kicks off within 35 minutes: `python -m src.prices` logs Betpawa prices only.
+  - **skip**: nothing due (costs ~1 of the 2,000 free private-repo minutes a month).
+  Publishing commits predictions, archive and `engine/data/live` (resets rebuilt research files, pulls, pushes).
 - Vercel serves `web/` at **https://betpredz.vercel.app**; every push redeploys.
 - Backup: `scripts/daily.sh` + `scripts/install_schedule.ps1` (Windows Task Scheduler), not installed.
 
@@ -158,8 +170,13 @@ Claude (hard, affects predictions):
    - Reported, not gating: log loss vs bookmaker with bootstrap CI (non-inferiority vs superiority).
    - A league x market failing any of C1-C4 is removed from slip legs (still shown on match pages);
      the league stays live. Re-checked monthly.
-2. **Closing-line value tracking**: compare each published leg's Betpawa odds with the last
-   pre-kickoff snapshot; report CLV and realised ROI per league/market/tier.
+2. **Closing-line value tracking** (logging and CLV report live 2026-10-25; to do: show it on the
+   Record page with realised ROI per league/market/tier, then judge after >= 200 final legs). Also
+   test whether fresh Betpawa prices should feed the probabilities (Bet365 closing beat the early
+   average by 0.0020 log loss; Betpawa must show the same on our logged data before any change).
+2b. **Faster settlement**: football-data.co.uk results lag days (25 Oct: EPL only to 19 Oct). Settle
+   from Understat (same night, all five leagues, goal minutes for 1Up) after checking on past seasons
+   that its scores and 1Up outcomes agree with football-data.
 3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
@@ -177,6 +194,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- GitHub's scheduled runs can start hours late: never rely on them for timing (use the external timer).
+- Closing odds beat early odds (2019/20-2025/26, 12,457 matches, five leagues: 1X2 log loss 0.9729 ->
+  0.9705, O/U 2.5 0.6708 -> 0.6681, both 95% CIs above zero). Our consensus odds (fixtures.csv) are
+  early odds; only Betpawa prices are fresh at run time.
 - **Winner's curse**: the slip search picks legs where our probability most exceeds the price, so
   any over-confidence gets exploited. Always check calibration of the *selected* legs.
 - Safety gates must be one-sided: being too cautious is not a reason to drop a market (2026-10-25
@@ -191,6 +212,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: run modes (final / full / prices / skip) with an external 30-minute timer; final slips
+  before the first match (locked, phone notification via ntfy); Betpawa price log and CLV report
+  (`src/prices.py`); Bets page shows Preview / Final. Tests: test_schedule, test_prices, final history.
 - 2026-10-25: accumulator legs now show the selected team's badge, or both badges for match-wide markets.
 - 2026-10-25: gates made one-sided (over-confidence only): La Liga over 1.5 and EPL under 3.5 back in
   slips; 6 pairs remain excluded. Tests in `engine/tests/test_market_gates.py`.

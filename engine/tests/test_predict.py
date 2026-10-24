@@ -127,3 +127,37 @@ def test_at_least_matches_brute_force_and_flexi_options():
     assert abs(predict.at_least(probabilities, 4) - np.prod(probabilities)) < 1e-12
     assert [o["min_correct"] for o in predict.flexi_options(probabilities)] == [3, 2]
     assert predict.flexi_options([0.8, 0.7]) == []
+
+
+def _history_env(tmp_path, monkeypatch):
+    monkeypatch.setattr(predict, "LIVE_DIR", tmp_path)
+    monkeypatch.setattr(predict, "HISTORY_PATH", tmp_path / "history.json")
+    return pd.DataFrame(columns=["home_team", "away_team", "season", "home_goals", "away_goals",
+                                 "first_scorer", "home_led_at_any_point", "away_led_at_any_point"])
+
+
+def test_final_slips_are_never_replaced_or_added_to(tmp_path, monkeypatch):
+    matches = _history_env(tmp_path, monkeypatch)
+    morning, final, evening = (pd.Timestamp(t) for t in ("2026-10-24 04:00", "2026-10-24 13:00", "2026-10-24 15:00"))
+    predict.update_history("R1", {"safe": _slip("2026-10-24T18:00:00"), "big": _slip("2026-10-24T18:00:00")},
+                           matches, morning)
+    # The final run keeps only Safe: the morning's Big preview is dropped, Safe becomes final.
+    history = predict.update_history("R1", {"safe": _slip("2026-10-24T18:00:00")}, matches, final, final=True)
+    assert [(e["tier"], e["final"]) for e in history] == [("safe", True)]
+    # A later run before kickoff proposes new slips: nothing changes for a final day.
+    changed = _slip("2026-10-24T19:00:00")
+    changed["total_odds"] = 3.1
+    history = predict.update_history("R1", {"safe": changed, "medium": changed}, matches, evening)
+    assert [(e["tier"], e["total_odds"]) for e in history] == [("safe", 2.6)]
+    shown = predict.displayed_slips("R1", {"safe": changed, "medium": changed}, history, evening)
+    assert list(shown) == ["safe"] and shown["safe"]["final"] and not shown["safe"]["locked"]
+    assert shown["safe"]["total_odds"] == 2.6
+
+
+def test_preview_slips_still_update_before_final(tmp_path, monkeypatch):
+    matches = _history_env(tmp_path, monkeypatch)
+    predict.update_history("R1", {"safe": _slip("2026-10-24T18:00:00")}, matches, pd.Timestamp("2026-10-24 04:00"))
+    changed = _slip("2026-10-24T18:00:00")
+    changed["total_odds"] = 3.1
+    history = predict.update_history("R1", {"safe": changed}, matches, pd.Timestamp("2026-10-24 10:00"))
+    assert history[0]["total_odds"] == 3.1 and not history[0]["final"]

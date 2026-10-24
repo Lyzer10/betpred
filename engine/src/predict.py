@@ -39,6 +39,7 @@ from .goal_timing import (
 )
 from .leagues import get_league
 from .market_gates import GATES_PATH
+from .prices import clv_report, log_prices
 from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
 from .team_names import canonical_team
 
@@ -359,19 +360,31 @@ def outcome(match: pd.Series, market: str) -> bool:
     return bool(match[actual_column])
 
 
-def update_history(round_id: str | None, slips: dict, matches: pd.DataFrame, now: pd.Timestamp) -> list[dict]:
-    """Store this round's slips (until its first kickoff) and settle finished legs."""
+def update_history(round_id: str | None, slips: dict, matches: pd.DataFrame, now: pd.Timestamp,
+                   final: bool = False) -> list[dict]:
+    """Store this round's slips (until final or first kickoff) and settle finished legs.
+
+    `final` is the run shortly before the day's first match: its slips are the ones the owner places,
+    so they are marked final and never replaced; earlier (preview) slips it does not keep are dropped.
+    """
     LIVE_DIR.mkdir(parents=True, exist_ok=True)
     history = json.loads(HISTORY_PATH.read_text(encoding="utf-8")) if HISTORY_PATH.exists() else []
+    if round_id and final:
+        history = [entry for entry in history if not (entry["round"] == round_id and entry["tier"] not in slips
+                                                      and not entry.get("final") and _not_started(entry, now))]
+    if round_id and any(entry["round"] == round_id and entry.get("final") for entry in history):
+        slips = {}      # the day is final: later runs settle and collect prices but never add or change slips
     if round_id and slips:
-        # Each tier's slip is frozen once its first leg kicks off, so the history
+        # Each tier's slip is frozen once final or once its first leg kicks off, so the history
         # only ever records slips that were published before any of their matches.
         for tier, slip in slips.items():
             first_kickoff = min(pd.Timestamp(leg["kickoff_utc"]).tz_localize(None) for leg in slip["legs"])
             stored = [entry for entry in history if entry["round"] == round_id and entry["tier"] == tier]
-            if now < first_kickoff and (not stored or _not_started(stored[0], now)):
+            frozen = stored and (stored[0].get("final") or not _not_started(stored[0], now))
+            if now < first_kickoff and not frozen:
                 history = [entry for entry in history if not (entry["round"] == round_id and entry["tier"] == tier)]
-                history.append({"round": round_id, "tier": tier, "generated_at": now.isoformat() + "Z", **slip})
+                history.append({"round": round_id, "tier": tier, "generated_at": now.isoformat() + "Z", **slip,
+                                "final": final})
     settled = add_actuals(matches)
     lookup = {(row.home_team, row.away_team, row.season): row for _, row in settled.iterrows()}
     for entry in history:
@@ -404,11 +417,17 @@ def displayed_slips(round_id: str | None, slips: dict, history: list[dict], now:
     Later runs re-optimise over the matches not yet started, but those slips are
     never recorded, so showing them would let the app and the record disagree.
     """
-    shown = {tier: {**slip, "locked": False} for tier, slip in slips.items()}
+    day_final = any(entry["round"] == round_id and entry.get("final") for entry in history)
+    shown = {} if day_final else {tier: {**slip, "locked": False, "final": False} for tier, slip in slips.items()}
     for entry in history:
-        if entry["round"] == round_id and not _not_started(entry, now):
+        if entry["round"] != round_id:
+            continue
+        if not _not_started(entry, now):
             shown[entry["tier"]] = {key: entry[key] for key in ("total_odds", "win_probability", "legs", "status")}
-            shown[entry["tier"]]["locked"] = True
+            shown[entry["tier"]] |= {"locked": True, "final": bool(entry.get("final"))}
+        elif entry.get("final"):      # final, not started: the slip to place, with everything needed to stake it
+            shown[entry["tier"]] = {k: v for k, v in entry.items() if k not in ("round", "tier", "generated_at", "status")}
+            shown[entry["tier"]] |= {"locked": False, "final": True}
     return shown
 
 
@@ -528,6 +547,8 @@ def backtest_summary() -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-refresh", action="store_true", help="use cached data, skip downloads")
+    parser.add_argument("--final", action="store_true",
+                        help="final run before today's first match: today's slips become final (never replaced)")
     args = parser.parse_args()
     now = pd.Timestamp(datetime.now(timezone.utc)).tz_localize(None)
 
@@ -584,13 +605,18 @@ def main() -> None:
     print(f"Betpawa: {len(betpawa)} prices across {len(betpawa_parts)} leagues")
     legs = attach_betpawa(legs, betpawa)
     legs["day"] = local_day(legs.kickoff_utc)
+    today = local_day(pd.Series([now])).iloc[0]
+    log_prices(legs, now)
     days = []
     for day, day_legs in legs.groupby("day", sort=True):
         slips = build_slips(day_legs)
-        history = update_history(day, slips, all_matches, now)
+        history = update_history(day, slips, all_matches, now, final=args.final and day == today)
+        shown = displayed_slips(day, slips, history, now)
         days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
+                     "first_kickoff_utc": day_legs.kickoff_utc.min().isoformat() + "Z",
+                     "final": any(slip["final"] for slip in shown.values()),
                      "value_picks": value_picks(day_legs),
-                     "slips": displayed_slips(day, slips, history, now)})
+                     "slips": shown})
     if not days:
         history = update_history(None, {}, all_matches, now)
 
@@ -632,6 +658,7 @@ def main() -> None:
         archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
     output["archive"] = settle_archive(all_matches)
     output["live_record"] = live_record()
+    output["clv"] = clv_report(history)
     output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS)
     print(f"Model health: {output['health']['status']}")
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)

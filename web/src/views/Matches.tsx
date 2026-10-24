@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive } from "../lib";
-import { type ArchiveDay, type ArchivedFixture, type Fixture, type League, type MarketKey, type MarketPrediction, PREMIER_LEAGUE } from "../types";
+import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
 type Group = "result" | "lead" | "double" | "goals";
@@ -15,6 +15,66 @@ const GROUPS: { id: Group; label: string; markets: MarketKey[] }[] = [
 
 const named = (fixture: { home: string; away: string }, label: string) =>
   label.replace("Home", fixture.home).replace("Away", fixture.away);
+
+const ordinal = (position: number) => {
+  const finalTwo = position % 100;
+  if (finalTwo >= 11 && finalTwo <= 13) return `${position}th`;
+  return `${position}${position % 10 === 1 ? "st" : position % 10 === 2 ? "nd" : position % 10 === 3 ? "rd" : "th"}`;
+};
+
+const FORM_STYLES: Record<FormResult, string> = {
+  W: "bg-good/15 text-good-ink",
+  D: "bg-surface-2 text-ink-2",
+  L: "bg-critical/15 text-critical-ink",
+};
+
+function FormChips({ team, form }: { team: string; form: FormResult[] }) {
+  return (
+    <ol aria-label={`${team} recent form, oldest to latest`} className="flex gap-1">
+      {form.map((result, index) => (
+        <li key={`${index}-${result}`} className="flex flex-col items-center gap-0.5">
+          <span data-form-result className={`inline-flex h-6 w-6 items-center justify-center rounded-md text-[11px] font-bold ${FORM_STYLES[result]}`}>
+            {result}
+          </span>
+          <span aria-hidden className={`text-[8px] leading-none text-ink-3 ${index === form.length - 1 ? "" : "invisible"}`}>latest</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function TeamContextRow({ team, context }: { team: string; context: TeamContext | null }) {
+  return (
+    <li className="grid grid-cols-[auto_minmax(0,1fr)] gap-3 px-4 py-3.5">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-surface-2 p-1"><TeamBadge team={team} size={28} /></span>
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="min-w-0 truncate text-sm font-semibold">{team}</span>
+          {context ? (
+            <span className="text-[11px] text-ink-3">
+              {ordinal(context.position)} · {context.points} pts · {context.played} played · GD {context.gd >= 0 ? "+" : ""}{context.gd}
+            </span>
+          ) : <span className="text-[11px] text-ink-3">Table data unavailable</span>}
+        </div>
+        <div className="mt-2 flex justify-end">
+          {context?.form.length ? <FormChips team={team} form={context.form} /> : <span className="text-[11px] text-ink-3">No recent form</span>}
+        </div>
+      </div>
+    </li>
+  );
+}
+
+function FormAndTable({ fixture }: { fixture: Fixture }) {
+  return (
+    <Card className="overflow-hidden">
+      <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Form &amp; table</h2>
+      <ul className="divide-y divide-border/60">
+        <TeamContextRow team={fixture.home} context={fixture.context.home} />
+        <TeamContextRow team={fixture.away} context={fixture.context.away} />
+      </ul>
+    </Card>
+  );
+}
 
 function MarketRow({ fixture, market }: { fixture: Fixture; market: MarketPrediction }) {
   const label = named(fixture, market.label);
@@ -72,6 +132,8 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
         </div>
       </Card>
 
+      <FormAndTable fixture={fixture} />
+
       <Segmented options={GROUPS.map((g) => ({ id: g.id, label: g.label }))} value={group} onChange={setGroup} />
       <div className="px-1"><Legend /></div>
       {!fixture.has_market_odds && (
@@ -95,6 +157,7 @@ type ListFixture = Pick<Fixture, "home" | "away" | "kickoff_utc" | "league"> & {
   markets: { market: MarketKey; probability: number }[];
   result?: ArchivedFixture["result"];
   id?: number;
+  context?: MatchContext;
 };
 
 function MatchRow({ fixture, onOpen }: { fixture: ListFixture; onOpen?: () => void }) {
@@ -111,13 +174,19 @@ function MatchRow({ fixture, onOpen }: { fixture: ListFixture; onOpen?: () => vo
           : <div className="text-[11px] font-medium text-ink-3">{timeLabel(fixture.kickoff_utc)}</div>}
       </div>
       <div className="min-w-0 flex-1 space-y-2">
-        {[fixture.home, fixture.away].map((team, i) => (
-          <div key={team} className="flex items-center gap-2.5">
-            <TeamBadge team={team} size={22} />
-            <span className={`flex-1 truncate text-sm ${fixture.result && fixture.result.score[i] > fixture.result.score[1 - i] ? "font-bold" : "font-medium"}`}>{team}</span>
-            {fixture.result && <span className="w-5 text-right text-sm font-bold">{fixture.result.score[i]}</span>}
-          </div>
-        ))}
+        {[fixture.home, fixture.away].map((team, i) => {
+          const context = i === 0 ? fixture.context?.home : fixture.context?.away;
+          return (
+            <div key={team} className="flex items-center gap-2.5">
+              <TeamBadge team={team} size={22} />
+              <div className="flex min-w-0 flex-1 items-baseline gap-1.5">
+                <span className={`min-w-0 truncate text-sm ${fixture.result && fixture.result.score[i] > fixture.result.score[1 - i] ? "font-bold" : "font-medium"}`}>{team}</span>
+                {context && <span className="shrink-0 text-[10px] text-ink-3">{ordinal(context.position)}</span>}
+              </div>
+              {fixture.result && <span className="w-5 text-right text-sm font-bold">{fixture.result.score[i]}</span>}
+            </div>
+          );
+        })}
       </div>
       {known && (
         <div className="flex gap-1">

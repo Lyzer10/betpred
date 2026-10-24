@@ -82,10 +82,10 @@ def test_archive_keeps_pre_kickoff_prediction_and_settles(tmp_path, monkeypatch)
     morning = pd.Timestamp("2026-10-24 06:00")
     early = _fixture("Arsenal", "Everton", "2026-10-24", "2026-10-24T11:30:00Z", 0.60)
     late = _fixture("Chelsea", "Tottenham", "2026-10-24", "2026-10-24T16:30:00Z", 0.50)
-    predict.archive_snapshot([early, late], {}, "R1", morning)
+    predict.archive_snapshot([early, late], {}, "2026-10-24", morning)
     # Afternoon run: the early match has kicked off and is no longer in the fixture list.
     predict.archive_snapshot([_fixture("Chelsea", "Tottenham", "2026-10-24", "2026-10-24T16:30:00Z", 0.55)],
-                             {}, "R1", pd.Timestamp("2026-10-24 13:00"))
+                             {}, "2026-10-24", pd.Timestamp("2026-10-24 13:00"))
     snapshot = json.loads((tmp_path / "2026-10-24.json").read_text())
     probabilities = {f["home"]: f["markets"][0]["probability"] for f in snapshot["fixtures"]}
     assert probabilities == {"Arsenal": 0.60, "Chelsea": 0.55}
@@ -108,3 +108,9 @@ def test_displayed_slips_show_frozen_slip_once_started():
     after = predict.displayed_slips("R1", fresh, history, pd.Timestamp("2026-10-24 12:00"))
     assert before["big"]["total_odds"] == 11.0 and not before["big"]["locked"]
     assert after["big"]["total_odds"] == 10.0 and after["big"]["locked"]
+
+
+def test_local_day_uses_tanzania_time():
+    kickoffs = pd.Series(pd.to_datetime(["2026-10-24 20:00", "2026-10-24 21:30"]))
+    # 20:00 UTC = 23:00 EAT (same day); 21:30 UTC = 00:30 EAT next day.
+    assert predict.local_day(kickoffs).tolist() == ["2026-10-24", "2026-10-25"]

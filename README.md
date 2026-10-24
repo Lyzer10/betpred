@@ -99,6 +99,25 @@ last prediction made before its kickoff, and results are attached once known.
 Browser check (Microsoft Edge at phone width, light and dark):
 `npm run build`, `npx vite preview --port 4173`, then `npm run check:e2e`.
 
+## Betpawa odds, daily bets and staking
+
+`src/betpawa.py` reads Betpawa Tanzania's public Premier League prices (its
+robots.txt allows public pages; plain identified requests, 1 s apart) for every
+modelled market, including 1Up and first goal. SportyBet and Sofascore block
+automated access, so they are not used. If Betpawa is unavailable the run still
+publishes, with estimated odds.
+
+Bets are grouped by match day in Tanzania time (EAT). For each day the app
+shows value singles (Betpawa pays >= 3% above fair, probability >= 25%) and
+Safe / Medium / Big slips built from that day's matches only, all at real
+Betpawa prices. A price more than 8% above the market average is flagged as
+possible stale information (team news) and its stake halved.
+
+Stakes (web/src/lib.ts `STAKING`): quarter Kelly on the user's Betpawa balance,
+max 2% per single, 1% per accumulator, 10% per day, rounded down to TSh 100,
+nothing without value. Each match day is archived to
+`web/public/data/archive/<day>.json` and settled from results.
+
 ## Deploying for free
 
 1. Push this repository to a **private** GitHub repository. Past seasons' raw

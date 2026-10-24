@@ -1,4 +1,4 @@
-import { edge, odds, pct, settle } from "../lib";
+import { edge, odds, pct, settle, tsh } from "../lib";
 import type { HistoryEntry, Predictions, SavedPick, TierName } from "../types";
 import { Card, Empty, SectionTitle, Stat, StatusPill, TIERS } from "../ui";
 
@@ -12,11 +12,11 @@ export function MyPicks({ data, picks, onRemove }: { data: Predictions; picks: S
     <div className="space-y-4">
       <Card className="grid grid-cols-3 gap-3 px-5 py-4">
         <Stat label="Picks" value={String(picks.length)} sub={`${done.length} settled`} />
-        <Stat label="Profit (units)" value={`${profit >= 0 ? "+" : ""}${profit.toFixed(2)}`} sub={staked ? `ROI ${pct(profit / staked, 1)}` : "1 unit per pick"} />
+        <Stat label="Profit" value={`${profit >= 0 ? "+" : "−"}${tsh(Math.abs(profit))}`} sub={staked ? `ROI ${pct(profit / staked, 1)} on ${tsh(staked)}` : "settled picks"} />
         <Stat label="Avg edge" value={picks.length ? `${expected >= 0 ? "+" : ""}${pct(expected, 1)}` : "–"} sub="when saved" />
       </Card>
       {!picks.length ? (
-        <Empty>Open a match, type your bookmaker's odds next to a market and tap <b>Save to My picks</b>. Picks settle automatically when results come in.</Empty>
+        <Empty>Open a match and tap <b>Save pick</b> on a bet you placed. Picks settle automatically when results come in, and your profit is tracked in TSh.</Empty>
       ) : (
         <Card className="overflow-hidden">
           {settled.map(({ pick, won }) => (
@@ -24,7 +24,7 @@ export function MyPicks({ data, picks, onRemove }: { data: Predictions; picks: S
               <StatusPill status={won === null ? "pending" : won ? "won" : "lost"} />
               <div className="min-w-0 flex-1">
                 <div className="truncate text-sm font-semibold">{pick.label}</div>
-                <div className="truncate text-xs text-ink-3">{pick.home} v {pick.away} · {pct(pick.probability)} @ {odds(pick.odds)}</div>
+                <div className="truncate text-xs text-ink-3">{pick.home} v {pick.away} · {tsh(pick.stake)} @ {odds(pick.odds)} · {pct(pick.probability)}</div>
               </div>
               <button onClick={() => onRemove(pick.id)} className="text-xs text-ink-3" aria-label={`Remove ${pick.label}`}>Remove</button>
             </div>
@@ -65,6 +65,11 @@ export function Record({ data }: { data: Predictions }) {
           <Stat label="70%+ picks hit" value={live.confident_hit_rate != null ? pct(live.confident_hit_rate) : "–"} sub={`${live.confident_picks} picks`} />
           <Stat label="vs bookmaker" value={live.log_loss != null && live.market_log_loss != null ? (live.log_loss <= live.market_log_loss ? "Ahead" : "Behind") : "–"}
             sub={live.log_loss != null ? `log loss ${live.log_loss.toFixed(3)} v ${live.market_log_loss?.toFixed(3)}` : undefined} />
+          <div className="col-span-3 border-t border-border/60 pt-3">
+            <Stat label="Value bets at Betpawa prices (1 unit each)"
+              value={live.value_bets ? `${live.value_roi != null && live.value_roi >= 0 ? "+" : ""}${pct(live.value_roi ?? 0, 1)} return` : "–"}
+              sub={live.value_bets ? `${live.value_bets_won}/${live.value_bets} won` : "none settled yet"} />
+          </div>
         </Card>
       ) : (
         <Empty>Live accuracy appears here once the first predicted matches have finished.</Empty>

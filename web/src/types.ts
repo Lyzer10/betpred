@@ -11,6 +11,7 @@ export interface MarketPrediction {
   model_probability: number;
   market_probability: number | null;
   fair_odds: number;
+  betpawa_odds: number | null;
 }
 
 export interface Fixture {
@@ -20,7 +21,7 @@ export interface Fixture {
   kickoff_utc: string;
   home: string;
   away: string;
-  round: string;
+  day: string;                   // match day in the user's time zone (EAT)
   expected_goals: [number, number];
   top_scorelines: { score: string; probability: number }[];
   has_market_odds: boolean;
@@ -36,15 +37,26 @@ export interface SlipLeg {
   market: MarketKey;
   label: string;
   probability: number;
-  estimated_odds: number;
+  estimated_odds: number | null;
+  betpawa_odds: number | null;
   fair_odds: number;
+  price_warning?: boolean;
   won?: boolean | null;
+}
+
+export interface ValuePick extends SlipLeg {
+  edge: number;
+  kelly: number;
 }
 
 export interface Slip {
   total_odds: number;
   win_probability: number;
   legs: SlipLeg[];
+  odds_source?: "betpawa" | "estimated";
+  expected_value?: number;
+  kelly?: number;
+  price_warning?: boolean;
   locked?: boolean;              // first match under way: frozen and tracked
   status?: "won" | "lost" | "pending";
 }
@@ -73,13 +85,21 @@ export interface Result {
   outcomes: Record<MarketKey, boolean>;
 }
 
+export interface DayBets {
+  date: string;
+  fixtures: number[];
+  value_picks: ValuePick[];
+  slips: Partial<Record<TierName, Slip>>;
+}
+
 export interface Predictions {
   generated_at: string;
-  round: string | null;
+  time_zone: string;
   model: { training_last_date: string; market_blend_model_weight: number; retail_margin: number };
   backtest: Record<TierName, BacktestTier>;
   fixtures: Fixture[];
-  slips: Partial<Record<TierName, Slip>>;
+  days: DayBets[];
+  value_rules?: { min_edge: number; min_probability: number };
   history: HistoryEntry[];
   results: Result[];
   archive: ArchiveDay[];
@@ -95,6 +115,9 @@ export interface LiveRecord {
   market_log_loss?: number | null;
   confident_picks?: number;
   confident_hit_rate?: number | null;
+  value_bets?: number;
+  value_bets_won?: number;
+  value_roi?: number | null;
 }
 
 export interface ArchivedFixture {
@@ -104,7 +127,7 @@ export interface ArchivedFixture {
   home: string;
   away: string;
   expected_goals: [number, number];
-  markets: { market: MarketKey; label: string; probability: number; market_probability: number | null }[];
+  markets: { market: MarketKey; label: string; probability: number; market_probability: number | null; betpawa_odds?: number | null }[];
   result?: { score: [number, number]; outcomes: Record<MarketKey, boolean> };
 }
 
@@ -125,6 +148,6 @@ export interface SavedPick {
   label: string;
   probability: number;
   odds: number;
-  stake: number;
+  stake: number;                // TSh
   savedAt: string;
 }

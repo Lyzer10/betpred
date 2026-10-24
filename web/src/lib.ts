@@ -52,11 +52,73 @@ export const edge = (probability: number, odds: number) => probability * odds - 
 
 export type Verdict = "value" | "fair" | "none";
 
+/** Minimum edge for a value bet. Keep in sync with VALUE_EDGE in engine/src/predict.py. */
+export const VALUE_EDGE = 0.03;
+
 export function verdict(probability: number, odds: number): Verdict {
   const e = edge(probability, odds);
-  if (e >= 0.03) return "value";
-  if (e > -0.03) return "fair";
+  if (e >= VALUE_EDGE) return "value";
+  if (e > -VALUE_EDGE) return "fair";
   return "none";
+}
+
+// ---- Money management (TSh) -------------------------------------------------
+// Quarter-Kelly: full Kelly is optimal only if our probabilities were exact; they are
+// estimates, so professionals stake a fraction. Caps keep any one bet small.
+export const STAKING = {
+  kellyFraction: 0.25,
+  maxSingle: 0.02,          // max 2% of bankroll on one single
+  maxMulti: 0.01,           // max 1% on a multi-leg slip (higher variance)
+  maxRound: 0.10,           // all stakes for a round together: max 10%
+  warningFactor: 0.5,       // halve the stake when the price may be stale
+  minStake: 100,            // TSh; stakes below this are skipped
+  roundTo: 100,             // TSh
+};
+
+export function kellyFraction(probability: number, odds: number) {
+  return odds > 1 ? Math.max((probability * odds - 1) / (odds - 1), 0) : 0;
+}
+
+/** Recommended stake in TSh (0 = skip). */
+export function recommendedStake(bankroll: number, probability: number, odds: number,
+  opts: { legs?: number; warning?: boolean } = {}) {
+  if (!(bankroll > 0) || edge(probability, odds) < VALUE_EDGE) return 0;
+  const cap = (opts.legs ?? 1) > 1 ? STAKING.maxMulti : STAKING.maxSingle;
+  let fraction = Math.min(kellyFraction(probability, odds) * STAKING.kellyFraction, cap);
+  if (opts.warning) fraction *= STAKING.warningFactor;
+  const stake = Math.floor((bankroll * fraction) / STAKING.roundTo) * STAKING.roundTo;
+  return stake >= STAKING.minStake ? stake : 0;
+}
+
+/** Scale a round's stakes down proportionally so their total stays within maxRound. */
+export function capRound(stakes: number[], bankroll: number) {
+  const total = stakes.reduce((a, b) => a + b, 0);
+  const limit = bankroll * STAKING.maxRound;
+  if (total <= limit || total === 0) return stakes;
+  return stakes.map((s) => {
+    const scaled = Math.floor((s * limit) / total / STAKING.roundTo) * STAKING.roundTo;
+    return scaled >= STAKING.minStake ? scaled : 0;
+  });
+}
+
+export const tsh = (amount: number) => `TSh ${Math.round(amount).toLocaleString("en-US")}`;
+
+const BANKROLL_KEY = "pl-predictor:bankroll";
+
+export function loadBankroll(): number {
+  try {
+    return Number(localStorage.getItem(BANKROLL_KEY)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+export function storeBankroll(amount: number) {
+  try {
+    localStorage.setItem(BANKROLL_KEY, String(amount));
+  } catch {
+    /* storage unavailable: bankroll lives for this session only */
+  }
 }
 
 export const pct = (value: number, digits = 0) => `${(value * 100).toFixed(digits)}%`;

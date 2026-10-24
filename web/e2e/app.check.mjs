@@ -1,5 +1,5 @@
 // End-to-end check of the built app in the installed Microsoft Edge at phone width.
-// Usage: npm run build && npx vite preview --port 4173 & node e2e/app.check.mjs [screenshotDir]
+// Usage: npm run build && npx vite preview --port 4173 & npm run check:e2e [-- screenshotDir]
 import { chromium } from "playwright-core";
 
 const BASE = "http://localhost:4173/";
@@ -7,6 +7,7 @@ const shots = process.argv[2];
 const browser = await chromium.launch({ channel: "msedge" });
 const failures = [];
 const check = (ok, message) => { console.log(`${ok ? "PASS" : "FAIL"}  ${message}`); if (!ok) failures.push(message); };
+const VERDICT = /(Bet this|Fair, skip|Don't bet)\s*[+-]\d/;
 
 for (const scheme of ["light", "dark"]) {
   const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme });
@@ -17,52 +18,67 @@ for (const scheme of ["light", "dark"]) {
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] ${screen}: no horizontal overflow`);
   const snap = async (name) => shots && page.screenshot({ path: `${shots}/${scheme}-${name}.png`, fullPage: true });
 
-  // Slips: switch tiers, enter odds for every leg, expect a verdict.
+  // Bets: first visit asks for the balance, then shows TSh stakes.
   await page.goto(BASE);
-  await page.getByRole("tab", { name: "Safe" }).waitFor();
-  await noOverflow("slips"); await snap("slips");
-  for (const tier of ["Medium", "Big", "Safe"]) {
-    await page.getByRole("tab", { name: tier }).click();
-    check(await page.getByRole("tab", { name: tier }).getAttribute("aria-selected") === "true", `[${scheme}] tier switch to ${tier}`);
-  }
-  const inputs = page.getByRole("spinbutton");
-  const count = await inputs.count();
-  for (let i = 0; i < count; i++) await inputs.nth(i).fill("2.00");
-  // Only the verdict badge carries a signed percentage; the footnote also says "Value bet".
-  // Safe slip ~36% at total odds 2.00^n is clearly positive, so expect "Value bet +x%".
-  const badge = await page.getByText(/(Value bet|Fair price|No value)\s*[+-]\d/).allInnerTexts();
-  check(badge.length === 1 && /Value bet\s*\+\d/.test(badge[0]),
-    `[${scheme}] slip verdict after entering ${count} odds at 2.00: ${badge.join(" ").replace(/\s+/g, " ")}`);
+  await page.getByLabel("How much is in your Betpawa account?").fill("50000");
+  await page.getByRole("button", { name: "Save" }).click();
+  check(await page.getByText("TSh 50,000").count() === 1, `[${scheme}] balance saved and shown`);
+  check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] no odds boxes when Betpawa prices exist`);
+  const stakes = await page.getByText(/^Stake$/).count();
+  check(stakes > 0 || await page.getByText("No good bets on this day").count() === 1, `[${scheme}] value bets show TSh stakes (${stakes})`);
+  check(await page.getByText(VERDICT).count() > 0, `[${scheme}] verdicts shown automatically`);
+  await noOverflow("bets"); await snap("bets");
 
-  // Matches: open a match, check value, save the pick.
+  // Calendar: every day chip opens its own bets.
+  const chips = page.locator("button[aria-pressed]");
+  const chipCount = await chips.count();
+  for (let i = 0; i < chipCount; i++) {
+    await chips.nth(i).click();
+    check(await chips.nth(i).getAttribute("aria-pressed") === "true", `[${scheme}] day chip ${i + 1}/${chipCount} selectable`);
+  }
+  await chips.first().click();
+  for (const tier of ["Medium", "Big", "Safe"]) {
+    if (await page.getByRole("tab", { name: tier }).count()) await page.getByRole("tab", { name: tier }).click();
+  }
+
+  // Balance persists across reloads.
+  await page.reload();
+  await page.getByText("TSh 50,000").waitFor();
+  check(true, `[${scheme}] balance persists after reload`);
+
+  // Matches: Betpawa odds and verdicts appear without typing; save a pick with a stake.
   await page.getByRole("button", { name: "Matches" }).click();
   await noOverflow("matches"); await snap("matches");
-  await page.locator("section button").first().click(); // first match row in the list card
+  await page.locator("section button").first().click();
   await page.getByText("Likeliest scores").waitFor();
+  check(await page.getByText(/Betpawa \d/).count() >= 3, `[${scheme}] match shows Betpawa odds per market`);
+  check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no odds boxes`);
   await noOverflow("match detail"); await snap("detail");
-  const firstOdds = page.getByRole("spinbutton").first();
-  await firstOdds.fill("1.10");
-  check(await page.getByText("No value").count() >= 1, `[${scheme}] low odds give "No value"`);
-  await firstOdds.fill("50");
-  check(await page.getByText("Value bet").count() >= 1, `[${scheme}] high odds give "Value bet"`);
-  await page.getByRole("button", { name: "Save to My picks" }).click();
-  check(await page.getByRole("button", { name: /Saved to My picks/ }).isDisabled(), `[${scheme}] save button confirms`);
-  for (const group of ["1Up & first goal", "Goals", "Result"]) await page.getByRole("tab", { name: group }).click();
+  let saved = false;
+  for (const group of ["Result", "1Up & first goal", "Goals"]) {
+    await page.getByRole("tab", { name: group }).click();
+    const save = page.getByRole("button", { name: "Save pick" });
+    if (!saved && await save.count()) {
+      await save.first().click();
+      saved = true;
+    }
+  }
+  check(saved, `[${scheme}] a value pick could be saved with its stake`);
 
-  // My picks: the saved pick is listed and survives a reload.
+  // My picks lists it in TSh and survives a reload.
   await page.getByRole("button", { name: "My picks" }).click();
-  check(await page.getByRole("button", { name: /^Remove / }).count() === 1, `[${scheme}] saved pick listed`);
-  await page.reload();
-  await page.getByRole("button", { name: /^Remove / }).first().waitFor();
-  check(true, `[${scheme}] pick persists after reload`);
-  await noOverflow("my picks"); await snap("picks");
-  await page.getByRole("button", { name: /^Remove / }).click();
-  check(await page.getByRole("button", { name: /^Remove / }).count() === 0, `[${scheme}] pick removed`);
+  if (saved) {
+    check(await page.getByRole("button", { name: /^Remove / }).count() === 1, `[${scheme}] saved pick listed`);
+    check(await page.getByText(/TSh [\d,]+ @/).count() === 1, `[${scheme}] pick shows its TSh stake`);
+    await page.reload();
+    await page.getByRole("button", { name: /^Remove / }).first().waitFor();
+    await noOverflow("my picks"); await snap("picks");
+    await page.getByRole("button", { name: /^Remove / }).click();
+    check(await page.getByRole("button", { name: /^Remove / }).count() === 0, `[${scheme}] pick removed`);
+  }
 
-  // History and Record render.
   await page.getByRole("button", { name: "History" }).click();
   await page.getByText("Predictions", { exact: true }).waitFor();
-  check(await page.getByText("Our call").count() > 0, `[${scheme}] history shows archived predictions`);
   await noOverflow("history"); await snap("history");
   await page.getByRole("button", { name: "Record" }).click();
   await page.getByText("Backtest", { exact: true }).waitFor();

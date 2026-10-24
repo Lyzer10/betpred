@@ -69,16 +69,16 @@ export function Legend() {
 }
 
 const VERDICTS: Record<Verdict, { label: string; icon: string; className: string }> = {
-  value: { label: "Value bet", icon: "✓", className: "bg-good/12 text-good-ink" },
-  fair: { label: "Fair price", icon: "≈", className: "bg-warning/15 text-warning-ink" },
-  none: { label: "No value", icon: "✕", className: "bg-critical/10 text-critical-ink" },
+  value: { label: "Bet this", icon: "✓", className: "bg-good/12 text-good-ink" },
+  fair: { label: "Fair, skip", icon: "≈", className: "bg-warning/15 text-warning-ink" },
+  none: { label: "Don't bet", icon: "✕", className: "bg-critical/10 text-critical-ink" },
 };
 
 export function VerdictBadge({ probability, odds }: { probability: number; odds: number }) {
   const v = VERDICTS[verdict(probability, odds)];
   const e = edge(probability, odds);
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${v.className}`}>
+    <span className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold ${v.className}`}>
       <span aria-hidden>{v.icon}</span>{v.label}
       <span className="font-medium opacity-75">{e >= 0 ? "+" : ""}{pct(e, 1)}</span>
     </span>

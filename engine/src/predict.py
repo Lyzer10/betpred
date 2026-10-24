@@ -25,6 +25,7 @@ from .accumulators import (
     bookmaker_fair_probabilities, fit_model_weight,
 )
 from .backtest import _promoted_initialization
+from .betpawa import fetch_premier_league_odds
 from .build_dataset import build
 from .calibration import (
     DC_PATH, ENGINE_DIR, MARKETS, MATCHES_PATH, add_actuals, enforce_probability_constraints, fit_calibrator,
@@ -43,6 +44,15 @@ HISTORY_PATH = LIVE_DIR / "slip_history.json"
 WEB_DATA_PATH = ENGINE_DIR.parent / "web" / "public" / "data" / "predictions.json"
 ARCHIVE_DIR = WEB_DATA_PATH.parent / "archive"
 SIMULATIONS = 20_000
+# A bet is "value" when probability x odds - 1 >= VALUE_EDGE. Keep in sync with web/src/lib.ts.
+VALUE_EDGE = 0.03
+# Long shots carry the most model error and variance; value singles need at least this probability.
+VALUE_MIN_PROBABILITY = 0.25
+# If Betpawa pays this much more than the (older) market-average price implies, the
+# "edge" is more likely stale information (team news, line move) than a gift: warn and halve the stake.
+PRICE_MOVE_WARNING = 0.08
+# Bets are grouped by the user's calendar day (Tanzania, EAT), not by UK date.
+LOCAL_TZ = "Africa/Dar_es_Salaam"
 
 MARKET_LABELS = {
     "home_win": "Home win", "draw": "Draw", "away_win": "Away win",
@@ -162,32 +172,76 @@ def predict_fixtures(fixtures, model, matches, goals, calibrators, model_weight)
     return legs
 
 
-def build_slips(legs: pd.DataFrame) -> tuple[str | None, dict]:
-    """Slips for the next betting round; only legs with bookmaker prices qualify."""
-    if legs.empty:
-        return None, {}
-    next_round = sorted(legs["round"].unique())[0]
-    pool = legs[(legs["round"] == next_round) & legs.odds.notna() & (legs.odds >= 1.05)]
+def attach_betpawa(legs: pd.DataFrame, betpawa: pd.DataFrame) -> pd.DataFrame:
+    """Add real Betpawa odds per leg; slips then use real prices where available."""
+    legs = legs.copy()
+    if betpawa.empty:
+        legs["betpawa_odds"] = np.nan
+    else:
+        merged = legs.merge(betpawa[["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]]
+                            .rename(columns={"kickoff_utc": "betpawa_kickoff"}),
+                            on=["home_team", "away_team", "market"], how="left")
+        # Guard against a same-teams fixture on another date (e.g. a cup tie).
+        far = (merged.betpawa_kickoff - merged.kickoff_utc).abs() > pd.to_timedelta(1, unit="D")
+        merged.loc[far, "betpawa_odds"] = np.nan
+        legs = merged.drop(columns="betpawa_kickoff")
+    legs["estimated_odds"] = legs.odds
+    legs["odds"] = legs.betpawa_odds.fillna(legs.estimated_odds)
+    legs["edge"] = legs.probability * legs.betpawa_odds - 1
+    legs["price_warning"] = legs.bookmaker_probability * legs.betpawa_odds - 1 > PRICE_MOVE_WARNING
+    return legs
+
+
+def kelly_fraction(probability: float, odds: float) -> float:
+    """Full-Kelly stake fraction; the app stakes a quarter of it, capped."""
+    return max((probability * odds - 1) / (odds - 1), 0.0) if odds > 1 else 0.0
+
+
+def value_picks(legs: pd.DataFrame) -> list[dict]:
+    """Singles where Betpawa pays more than our fair odds, best edge first."""
+    picks = legs[(legs.edge >= VALUE_EDGE) & (legs.probability >= VALUE_MIN_PROBABILITY)]
+    picks = picks.sort_values("edge", ascending=False)
+    return [_leg_json(row) | {"edge": round(float(row.edge), 4),
+                              "kelly": round(kelly_fraction(row.probability, row.betpawa_odds), 4)}
+            for row in picks.itertuples()]
+
+
+def local_day(kickoff_utc: pd.Series) -> pd.Series:
+    """Calendar day of each kickoff in the user's time zone, as YYYY-MM-DD."""
+    return kickoff_utc.dt.tz_localize("UTC").dt.tz_convert(LOCAL_TZ).dt.strftime("%Y-%m-%d")
+
+
+def build_slips(legs: pd.DataFrame) -> dict:
+    """Tier slips from one day's matches; only legs with a price qualify."""
+    pool = legs[legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
     for tier in TIERS:
         picks = best_slip(pool, tier) if not pool.empty else None
         if picks is None:
             continue
         chosen = pool.loc[picks]
+        total, win = float(chosen.odds.prod()), float(chosen.probability.prod())
         slips[tier.name] = {
-            "total_odds": round(float(chosen.odds.prod()), 2),
-            "win_probability": round(float(chosen.probability.prod()), 4),
+            "total_odds": round(total, 2),
+            "win_probability": round(win, 4),
+            "odds_source": "betpawa" if chosen.betpawa_odds.notna().all() else "estimated",
+            "expected_value": round(win * total - 1, 4),
+            "kelly": round(kelly_fraction(win, total), 4),
+            "price_warning": bool(chosen.price_warning.any()),
             "legs": [_leg_json(row) for row in chosen.itertuples()],
         }
-    return next_round, slips
+    return slips
 
 
 def _leg_json(row) -> dict:
     return {"date": row.date.date().isoformat(), "time": row.time, "kickoff_utc": row.kickoff_utc.isoformat() + "Z",
             "home": row.home_team, "away": row.away_team,
             "market": row.market, "label": MARKET_LABELS[row.market],
-            "probability": round(float(row.probability), 4), "estimated_odds": round(float(row.odds), 2),
-            "fair_odds": round(1 / float(row.probability), 2)}
+            "probability": round(float(row.probability), 4),
+            "estimated_odds": round(float(row.estimated_odds), 2) if pd.notna(row.estimated_odds) else None,
+            "betpawa_odds": None if pd.isna(row.betpawa_odds) else round(float(row.betpawa_odds), 2),
+            "fair_odds": round(1 / float(row.probability), 2),
+            "price_warning": bool(getattr(row, "price_warning", False))}
 
 
 def outcome(match: pd.Series, market: str) -> bool:
@@ -255,19 +309,20 @@ def _fixture_key(fixture: dict) -> tuple:
     return fixture["date"], fixture["home"], fixture["away"]
 
 
-def archive_snapshot(fixtures: list[dict], slips: dict, round_id: str | None, now: pd.Timestamp) -> None:
-    """Save today's predictions; matches already kicked off keep their earlier prediction."""
+def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timestamp) -> None:
+    """Save a match day's predictions and bets; matches already kicked off keep their earlier prediction."""
     ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
-    path = ARCHIVE_DIR / f"{now.date().isoformat()}.json"
+    path = ARCHIVE_DIR / f"{day}.json"
     previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"fixtures": []}
     current = {_fixture_key(f): f for f in previous["fixtures"]}
     for fixture in fixtures:
         current[_fixture_key(fixture)] = {
             key: fixture[key] for key in ("date", "time", "kickoff_utc", "home", "away", "expected_goals", "top_scorelines")
-        } | {"markets": [{k: m[k] for k in ("market", "label", "probability", "market_probability")}
+        } | {"markets": [{k: m.get(k) for k in ("market", "label", "probability", "market_probability", "betpawa_odds")}
                          for m in fixture["markets"]]}
-    snapshot = {"date": now.date().isoformat(), "generated_at": now.isoformat() + "Z", "round": round_id,
+    snapshot = {"date": day, "generated_at": now.isoformat() + "Z",
                 "fixtures": sorted(current.values(), key=lambda f: f["kickoff_utc"]),
+                # Locked slips are already frozen; unlocked ones are the latest pre-kickoff version.
                 "slips": {tier: {k: v for k, v in slip.items() if k != "status"} for tier, slip in slips.items()}}
     path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
 
@@ -291,6 +346,16 @@ def settle_archive(matches: pd.DataFrame) -> list[dict]:
                 fixture["result"] = {"score": [int(match.home_goals), int(match.away_goals)],
                                      "outcomes": {m: outcome(match, m) for m in LEG_MARKETS}}
                 changed = True
+        for slip in snapshot.get("slips", {}).values():
+            for leg in slip["legs"]:
+                if leg.get("won") is None:
+                    season = season_label(current_season_start(pd.Timestamp(leg["date"]).date()))
+                    match = lookup.get((leg["home"], leg["away"], season))
+                    if match is not None:
+                        leg["won"] = outcome(match, leg["market"])
+                        changed = True
+            results = [leg.get("won") for leg in slip["legs"]]
+            slip["status"] = "lost" if False in results else "pending" if None in results else "won"
         if changed:
             path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
         done = sum("result" in f for f in snapshot["fixtures"])
@@ -309,9 +374,13 @@ def live_record() -> dict:
     if not settled:
         return {"matches": 0}
     keys = ("home_win", "draw", "away_win")
-    ours, market, actual, confident = [], [], [], []
+    ours, market, actual, confident, value_returns = [], [], [], [], []
     for fixture in settled:
         markets = {m["market"]: m for m in fixture["markets"]}
+        for m in fixture["markets"]:
+            price = m.get("betpawa_odds")
+            if price and m["probability"] >= VALUE_MIN_PROBABILITY and m["probability"] * price - 1 >= VALUE_EDGE:
+                value_returns.append(price - 1 if fixture["result"]["outcomes"][m["market"]] else -1.0)
         ours.append([markets[k]["probability"] for k in keys])
         market.append([markets[k]["market_probability"] or np.nan for k in keys])
         actual.append([fixture["result"]["outcomes"][k] for k in keys])
@@ -329,6 +398,9 @@ def live_record() -> dict:
         "market_log_loss": round(log_loss(market, has_market), 4) if has_market.any() else None,
         "confident_picks": len(confident),
         "confident_hit_rate": round(float(np.mean(confident)), 4) if confident else None,
+        "value_bets": len(value_returns),
+        "value_bets_won": int(sum(r > 0 for r in value_returns)),
+        "value_roi": round(float(np.mean(value_returns)), 4) if value_returns else None,
     }
 
 
@@ -358,21 +430,35 @@ def main() -> None:
     model, model_info = fit_live_model(matches, fixtures, now)
     model_weight = fit_model_weight(pd.read_parquet(LEGS_PATH))
     legs = predict_fixtures(fixtures, model, matches, goals, fit_calibrators(matches), model_weight)
-    round_id, slips = build_slips(legs)
-    history = update_history(round_id, slips, matches, now)
-    slips = displayed_slips(round_id, slips, history, now)
+    try:
+        betpawa = fetch_premier_league_odds()
+        print(f"Betpawa: {betpawa.home_team.nunique()} home teams, {len(betpawa)} prices")
+    except Exception as error:  # Betpawa down or changed: predictions still publish.
+        print(f"Betpawa odds unavailable ({error}); using estimated odds")
+        betpawa = pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"])
+    legs = attach_betpawa(legs, betpawa)
+    legs["day"] = local_day(legs.kickoff_utc)
+    days = []
+    for day, day_legs in legs.groupby("day", sort=True):
+        slips = build_slips(day_legs)
+        history = update_history(day, slips, matches, now)
+        days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
+                     "value_picks": value_picks(day_legs),
+                     "slips": displayed_slips(day, slips, history, now)})
+    if not days:
+        history = update_history(None, {}, matches, now)
 
     output = {
         "generated_at": now.isoformat() + "Z",
         "model": {**model_info, "market_blend_model_weight": model_weight, "retail_margin": RETAIL_MARGIN},
         "backtest": backtest_summary(),
-        "round": round_id,
+        "time_zone": LOCAL_TZ,
         "fixtures": [
             {
                 "id": int(fixture_id), "date": group.date.iloc[0].date().isoformat(), "time": group.time.iloc[0],
                 "kickoff_utc": group.kickoff_utc.iloc[0].isoformat() + "Z",
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
-                "round": group["round"].iloc[0],
+                "day": group["day"].iloc[0],
                 "expected_goals": [round(float(group.lambda_home.iloc[0]), 2), round(float(group.lambda_away.iloc[0]), 2)],
                 "top_scorelines": json.loads(group.top_scorelines.iloc[0]),
                 "has_market_odds": bool(group.bookmaker_probability.notna().all()),
@@ -381,22 +467,26 @@ def main() -> None:
                      "probability": round(float(row.probability), 4),
                      "model_probability": round(float(row.model_probability), 4),
                      "market_probability": None if pd.isna(row.bookmaker_probability) else round(float(row.bookmaker_probability), 4),
-                     "fair_odds": round(1 / float(row.probability), 2)}
+                     "fair_odds": round(1 / float(row.probability), 2),
+                     "betpawa_odds": None if pd.isna(row.betpawa_odds) else round(float(row.betpawa_odds), 2)}
                     for row in group.itertuples()
                 ],
             }
             for fixture_id, group in legs.groupby("fixture", sort=True)
         ],
-        "slips": slips,
+        "days": days,
+        "value_rules": {"min_edge": VALUE_EDGE, "min_probability": VALUE_MIN_PROBABILITY},
         "history": history,
         "results": recent_results(matches, now),
     }
-    archive_snapshot(output["fixtures"], output["slips"], round_id, now)
+    for day in days:
+        archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
     output["archive"] = settle_archive(matches)
     output["live_record"] = live_record()
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")
-    print(f"{len(output['fixtures'])} fixtures, slips for round {round_id}: {', '.join(slips)}")
+    print(f"{len(output['fixtures'])} fixtures over {len(days)} days: "
+          + "; ".join(f"{d['date']} {len(d['value_picks'])} value picks, slips {'/'.join(d['slips']) or '-'}" for d in days))
     print(f"Wrote {WEB_DATA_PATH}")
 
 

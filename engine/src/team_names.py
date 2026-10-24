@@ -24,6 +24,11 @@ CANONICAL_TEAM_NAMES = {
     "West Brom": "West Brom", "West Bromwich Albion": "West Brom",
     "West Ham": "West Ham", "West Ham United": "West Ham", "Wolves": "Wolves",
     "Wolverhampton Wanderers": "Wolves", "Brentford": "Brentford",
+    # Betpawa variants.
+    "AFC Bournemouth": "Bournemouth", "Arsenal FC": "Arsenal", "Brentford FC": "Brentford",
+    "Burnley FC": "Burnley", "Chelsea FC": "Chelsea", "Everton FC": "Everton", "Fulham FC": "Fulham",
+    "Liverpool FC": "Liverpool", "Southampton FC": "Southampton", "Sunderland AFC": "Sunderland",
+    "Watford FC": "Watford",
 }
 
 

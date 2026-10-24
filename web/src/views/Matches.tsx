@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dayLabel, fixtureKey, kickoffLabel, odds, pct, shortName, timeLabel } from "../lib";
+import { dayLabel, fixtureKey, kickoffLabel, odds, pct, recommendedStake, shortName, timeLabel } from "../lib";
 import type { Fixture, MarketKey, MarketPrediction, SavedPick } from "../types";
 import { Card, Crest, Legend, OddsInput, ProbBar, SectionTitle, Segmented, VerdictBadge, parseOdds } from "../ui";
 
@@ -14,11 +14,17 @@ const GROUPS: { id: Group; label: string; markets: MarketKey[] }[] = [
 const named = (fixture: { home: string; away: string }, label: string) =>
   label.replace("Home", fixture.home).replace("Away", fixture.away);
 
-function MarketRow({ fixture, market, onSave }: { fixture: Fixture; market: MarketPrediction; onSave: (pick: SavedPick) => void }) {
+function MarketRow({ fixture, market, bankroll, onSave }: {
+  fixture: Fixture; market: MarketPrediction; bankroll: number; onSave: (pick: SavedPick) => void;
+}) {
   const [text, setText] = useState("");
+  const [stakeText, setStakeText] = useState("");
   const [saved, setSaved] = useState(false);
   const entered = parseOdds(text);
+  const price = market.betpawa_odds ?? entered;   // typed odds only when Betpawa has no price
   const label = named(fixture, market.label);
+  const suggested = price ? recommendedStake(bankroll, market.probability, price) : 0;
+  const stake = Math.max(Math.round(Number(stakeText) || suggested), 0);
   return (
     <div className="border-t border-border/60 px-5 py-4 first:border-t-0">
       <div className="flex items-baseline justify-between gap-2">
@@ -27,33 +33,47 @@ function MarketRow({ fixture, market, onSave }: { fixture: Fixture; market: Mark
       </div>
       <div className="mt-2"><ProbBar probability={market.probability} market={market.market_probability} label={label} /></div>
       <div className="mt-3 flex items-center justify-between gap-2">
-        <span className="text-xs text-ink-3">Fair odds <b className="text-ink-2">{odds(market.fair_odds)}</b></span>
+        <span className="text-xs text-ink-3">
+          Fair <b className="text-ink-2">{odds(market.fair_odds)}</b>
+          {market.betpawa_odds != null && <> · Betpawa <b className="text-ink">{odds(market.betpawa_odds)}</b></>}
+        </span>
         <div className="flex items-center gap-2">
-          {entered && <VerdictBadge probability={market.probability} odds={entered} />}
-          <OddsInput label={`Your odds for ${label}`} placeholder="Odds" value={text} onChange={(v) => { setText(v); setSaved(false); }} />
+          {price && <VerdictBadge probability={market.probability} odds={price} />}
+          {market.betpawa_odds == null && (
+            <OddsInput label={`Your odds for ${label}`} placeholder="Odds" value={text} onChange={(v) => { setText(v); setSaved(false); }} />
+          )}
         </div>
       </div>
-      {entered && (
-        <button
-          className="mt-3 w-full rounded-xl bg-accent py-2.5 text-sm font-semibold text-white transition disabled:bg-surface-2 disabled:text-ink-3"
-          disabled={saved}
-          onClick={() => {
-            onSave({
-              id: `${fixture.id}-${market.market}-${Date.now()}`,
-              fixtureKey: fixtureKey(fixture.date, fixture.home, fixture.away),
-              date: fixture.date, home: fixture.home, away: fixture.away,
-              market: market.market, label, probability: market.probability, odds: entered, stake: 1,
-              savedAt: new Date().toISOString(),
-            });
-            setSaved(true);
-          }}
-        >{saved ? "✓ Saved to My picks" : "Save to My picks"}</button>
+      {price && (entered || suggested > 0) && (
+        <div className="mt-3 flex items-center gap-2">
+          <label className="flex flex-1 items-center gap-2 rounded-xl bg-surface-2 px-3 py-2 text-xs text-ink-3">
+            Stake TSh
+            <input inputMode="numeric" aria-label={`Stake for ${label}`} className="w-full bg-transparent text-sm font-semibold text-ink outline-none"
+              placeholder={suggested ? String(suggested) : "0"} value={stakeText} onChange={(e) => { setStakeText(e.target.value); setSaved(false); }} />
+          </label>
+          <button
+            className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white transition disabled:bg-surface-2 disabled:text-ink-3"
+            disabled={saved || stake <= 0}
+            onClick={() => {
+              onSave({
+                id: `${fixture.id}-${market.market}-${Date.now()}`,
+                fixtureKey: fixtureKey(fixture.date, fixture.home, fixture.away),
+                date: fixture.date, home: fixture.home, away: fixture.away,
+                market: market.market, label, probability: market.probability, odds: price, stake,
+                savedAt: new Date().toISOString(),
+              });
+              setSaved(true);
+            }}
+          >{saved ? "✓ Saved" : "Save pick"}</button>
+        </div>
       )}
     </div>
   );
 }
 
-function MatchDetail({ fixture, onBack, onSave }: { fixture: Fixture; onBack: () => void; onSave: (pick: SavedPick) => void }) {
+function MatchDetail({ fixture, bankroll, onBack, onSave }: {
+  fixture: Fixture; bankroll: number; onBack: () => void; onSave: (pick: SavedPick) => void;
+}) {
   const [group, setGroup] = useState<Group>("result");
   const active = GROUPS.find((g) => g.id === group)!;
   return (
@@ -97,12 +117,12 @@ function MatchDetail({ fixture, onBack, onSave }: { fixture: Fixture; onBack: ()
       <Card>
         {active.markets.map((key) => {
           const market = fixture.markets.find((m) => m.market === key);
-          return market ? <MarketRow key={key} fixture={fixture} market={market} onSave={onSave} /> : null;
+          return market ? <MarketRow key={key} fixture={fixture} market={market} bankroll={bankroll} onSave={onSave} /> : null;
         })}
       </Card>
       <p className="px-2 text-xs leading-relaxed text-ink-3">
-        Type your bookmaker's odds next to a market. <b className="text-good-ink">✓ Value bet</b> means they pay at
-        least 3% more than our probability says is fair.
+        Betpawa's prices are checked for you. <b className="text-good-ink">✓ Bet this</b> means Betpawa pays at least 3%
+        more than the fair price. Blue bar: our chance. Orange mark: what other bookmakers think.
       </p>
     </div>
   );
@@ -131,11 +151,11 @@ function MatchRow({ fixture, onOpen }: { fixture: Fixture; onOpen: () => void })
   );
 }
 
-export function Matches({ fixtures, selected, onSelect, onSave }: {
-  fixtures: Fixture[]; selected: number | null; onSelect: (id: number | null) => void; onSave: (pick: SavedPick) => void;
+export function Matches({ fixtures, bankroll, selected, onSelect, onSave }: {
+  fixtures: Fixture[]; bankroll: number; selected: number | null; onSelect: (id: number | null) => void; onSave: (pick: SavedPick) => void;
 }) {
   const fixture = fixtures.find((f) => f.id === selected);
-  if (fixture) return <MatchDetail fixture={fixture} onBack={() => onSelect(null)} onSave={onSave} />;
+  if (fixture) return <MatchDetail fixture={fixture} bankroll={bankroll} onBack={() => onSelect(null)} onSave={onSave} />;
   const days = new Map<string, Fixture[]>();
   for (const f of fixtures) {
     const day = dayLabel(f.kickoff_utc);

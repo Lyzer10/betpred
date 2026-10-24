@@ -239,6 +239,12 @@ Claude (hard, affects predictions):
      was in the rule (Claude's design), not in Codex's work. Shared matches do not cause the all-loss
      days: about half of days lose every slip in all variants because each slip's chance is low.
 6. Champions League (needs a free results source), monthly automatic re-check job.
+7. **Betpawa's own 1Up price** (PRE-REGISTERED 2026-10-25, `python -m src.betpawa_1up_study`; data
+   collecting since 24 Oct, needs >= 300 evaluation legs, about two months). Settled archived home/away
+   1Up predictions with a Betpawa price; first 60% of match days fit won ~ logit(ours) + logit(1/odds),
+   the last 40% compare it with won ~ logit(ours) fitted the same way (so a gain is Betpawa's
+   information, not a recalibration of ours). Paired log loss difference, 95% CI by whole days (2,000,
+   seed 20261025). Use it only if the CI is entirely above 0.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)
@@ -278,6 +284,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: Betpawa 1Up price study pre-registered and scripted (reports "insufficient" until enough
+  settled data); its first draft compared against our raw probability, which a useless price could
+  beat by recalibration alone. Fixed before any real data: baseline fitted the same way.
 - 2026-10-25: EPL model weight study (pre-registered): live weighting kept; gates now recompute the live
   EPL blend (`gate_column`) so rebuilt legs tables cannot change what they judge.
 - 2026-10-25: notifications from the app itself (Web Push): Money -> Notifications subscribes the

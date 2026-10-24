@@ -131,11 +131,19 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 
 ## 6. Open tasks (in priority order)
 Claude (hard, affects predictions):
-1. **Per league x market gates**, pre-registered before running: A = non-inferiority to bookmaker
-   (log loss <= +0.010) reported separately from superiority; B = slip predicted rate inside Wilson
-   95% CI of actual; C = calibration slope 95% CI must overlap 0.8-1.2 and bin |z| <= 3. Bootstrap
-   (by matchday) CIs for log-loss differences and slip win rates. A failing league x market is
-   removed from slip legs (the league stays). Re-run for all five leagues, deploy exactly what passes.
+1. **Per league x market gates** (in progress). PRE-REGISTERED RULES, committed 2026-10-24 before
+   any result was computed; do not change them after seeing results:
+   - Data: test seasons (2024/25 onwards), each league's legs table, the exact probability the slips
+     use (EPL: blended `probability`; market leagues: walk-forward `market_probability`), the 12 slip
+     markets. Fewer than 300 legs = INSUFFICIENT (kept in slips, flagged).
+   - C1 slope: logistic regression of outcome on logit(p); its 95% CI must overlap [0.8, 1.2].
+   - C2 level: mean(outcome) - mean(p); 95% bootstrap CI (1,000 resamples by matchday) must include 0.
+   - C3 bins: 10 equal-count bins, every |z| <= 3.
+   - C4 winner's curse: legs with p - bookmaker p > 0.03 (if >= 50 such legs): actual rate must not be
+     significantly below mean p (one-sided z >= -2).
+   - Reported, not gating: log loss vs bookmaker with bootstrap CI (non-inferiority vs superiority).
+   - A league x market failing any of C1-C4 is removed from slip legs (still shown on match pages);
+     the league stays live. Re-checked monthly.
 2. **Closing-line value tracking**: compare each published leg's Betpawa odds with the last
    pre-kickoff snapshot; report CLV and realised ROI per league/market/tier.
 3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).

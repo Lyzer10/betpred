@@ -88,6 +88,32 @@ def test_failed_gates_never_enter_slips(monkeypatch):
     assert ("SERIEA", "home_win") in seen[0] and ("EPL", "home_1up") in seen[0]
 
 
+def test_live_slips_do_not_repeat_matches_across_tiers(monkeypatch):
+    legs = pd.DataFrame({
+        "league": ["EPL", "LALIGA", "SERIEA"],
+        "match_id": [1, 1, 1],
+        "market": ["home_win"] * 3,
+        "odds": [3.0, 5.0, 10.0],
+        "probability": [0.7, 0.6, 0.5],
+        "betpawa_odds": [np.nan] * 3,
+        "price_warning": [False] * 3,
+    })
+    pools = []
+
+    def first_available(pool, tier):
+        pools.append(set(pool._slip_match_key))
+        return [pool.index[0]]
+
+    monkeypatch.setattr(predict, "best_slip", first_available)
+    monkeypatch.setattr(predict, "_leg_json", lambda row: {"match": row.match_id})
+
+    slips = predict.build_slips(legs, blocked=set())
+
+    assert [len(pool) for pool in pools] == [3, 2, 1]
+    chosen = [slips[tier]["legs"][0]["match"] for tier in ("safe", "medium", "big")]
+    assert len(set(chosen)) == 3
+
+
 def test_failed_gates_reads_only_fail_status(tmp_path, monkeypatch):
     path = tmp_path / "gates.json"
     path.write_text(json.dumps({"gates": {"EPL": {"over_2.5": "FAIL", "over_0.5": "INSUFFICIENT", "home_1up": "PASS"}}}))

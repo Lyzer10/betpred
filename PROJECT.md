@@ -151,6 +151,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   away-or-draw (56.5% vs 53.1%, low in all three). Serie A and Bundesliga home 1Up failures come mostly
   from one season and 2026/27 so far runs the other way (small n): the monthly re-check (same rules,
   more data) is how a pair comes back, never a manual override.
+- Tier diversity study (task 5, `engine/reports/slip_diversity.md`): no shared matches passed the
+  pre-registered rule and is live. Mean daily log growth was -0.00580 versus -0.00599 for independent
+  tiers (difference +0.00019, 95% CI -0.00383 to +0.00442); every-slip-loss days fell from 54.0% to
+  53.7%. The at-most-one-shared variant failed because its all-loss share did not fall.
 
 ## 6. Open tasks (in priority order)
 Claude (hard, affects predictions):
@@ -179,7 +183,8 @@ Claude (hard, affects predictions):
 3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
-5. **Tier diversification** (same leg in several slips correlates them): quantify the trade-off.
+5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; no shared matches
+   adopted in `predict.build_slips`).
    PRE-REGISTERED RULES, committed before any result was computed; do not change them after seeing results:
    - Data: test seasons 2024/25 onwards. Combine all five leagues' `paths(code).accumulator_legs`
      tables because the live app pools all leagues. Use `probability` for EPL and
@@ -204,6 +209,11 @@ Claude (hard, affects predictions):
    - Decision: adopt B or C, whichever has the higher mean daily log growth, only if the CI of its
      difference versus A includes zero or is above zero, and its every-slip-lost share is below A's.
      If both pass, take the higher log growth. If neither passes, keep A.
+   - Result: A mean daily log growth -0.00599 and 54.0% all-loss days; B -0.00580, difference
+     +0.00019 (95% CI -0.00383 to +0.00442), and 53.7% all-loss days; C -0.00506, difference
+     +0.00093 (95% CI -0.00240 to +0.00401), and 54.0% all-loss days. B passed both adoption
+     conditions. C failed the lower-all-loss condition. Safe / Medium / Big actual win rates were
+     A 35.7% / 27.2% / 10.2%, B 35.7% / 25.9% / 8.0%, C 35.7% / 26.2% / 11.2%.
 6. Champions League (needs a free results source), monthly automatic re-check job.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
@@ -215,6 +225,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Shots+corners "pressure" (Wheatcroft 2020, LSE paper owner sent) | no reliable gain for over/under or 1Up; paper loses at average odds | rejected (`src/pressure_study.py`, `src/pressure_1up_study.py`) |
 | Per-market model weights (EPL) | worse than one global weight (0.60164 vs 0.60147) | rejected (`src/market_weight_study.py`) |
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
+| No shared matches across Safe/Medium/Big | similar growth to independent tiers (difference +0.00019, 95% CI -0.00383 to +0.00442) and fewer all-loss days (53.7% vs 54.0%) | adopted (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
 - Settlement must not wait for football-data.co.uk (results lag days); Understat is same-night.
@@ -238,6 +249,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: pre-registered tier diversity study adopted no shared matches across Safe, Medium and
+  Big; exact pooled five-league backtest and live regression test added.
 - 2026-10-25: glass surfaces and floating four destination menu; History removed and past slip
   statuses, scores and Flexi results moved to expandable cards on Bets.
 - 2026-10-25: locked (in-play) slips are published complete, incl. Flexi, so past days can show

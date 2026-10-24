@@ -3,9 +3,9 @@ import { type Verdict, edge, odds as fmtOdds, pct, shortName, verdict } from "./
 import type { TierName } from "./types";
 
 export const TIERS: Record<TierName, { title: string; range: string; blurb: string }> = {
-  safe: { title: "Safe", range: "2–3 matches · odds 2.5–3.5", blurb: "Fewest legs, highest chance" },
-  medium: { title: "Medium", range: "3–5 matches · odds 5–8", blurb: "Balanced risk and return" },
-  big: { title: "Big", range: "4–8 matches · odds 10+", blurb: "Long shot, bigger payout" },
+  safe: { title: "Safe", range: "2–4 matches · odds 2.5–3.5", blurb: "Fewest legs, highest chance" },
+  medium: { title: "Medium", range: "3–6 matches · odds 3.5–8", blurb: "Balanced risk and return" },
+  big: { title: "Big", range: "4–8 matches · odds 8–12", blurb: "Long shot, bigger payout" },
 };
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
@@ -116,7 +116,7 @@ export function Stat({ label, value, sub }: { label: string; value: string; sub?
   return (
     <div>
       <div className="text-[11px] font-medium text-ink-3">{label}</div>
-      <div className="mt-0.5 text-xl font-bold tracking-tight text-ink">{value}</div>
+      <div className="mt-0.5 whitespace-nowrap text-lg font-bold tracking-tight text-ink">{value}</div>
       {sub && <div className="text-[11px] text-ink-3">{sub}</div>}
     </div>
   );

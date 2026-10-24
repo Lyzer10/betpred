@@ -2,7 +2,8 @@ export type MarketKey =
   | "home_win" | "draw" | "away_win"
   | "over_0.5" | "over_1.5" | "over_2.5" | "over_3.5" | "under_2.5" | "under_3.5"
   | "btts_yes" | "btts_no"
-  | "home_1up" | "away_1up" | "home_first" | "away_first";
+  | "home_1up" | "away_1up" | "home_first" | "away_first"
+  | "double_1x" | "double_x2" | "double_12";
 
 export interface MarketPrediction {
   market: MarketKey;
@@ -57,6 +58,7 @@ export interface Slip {
   expected_value?: number;
   kelly?: number;
   price_warning?: boolean;
+  flexi?: { min_correct: number; probability: number }[];   // SportyBet Flexi: P(at least k of n win)
   locked?: boolean;              // first match under way: frozen and tracked
   status?: "won" | "lost" | "pending";
 }

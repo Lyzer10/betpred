@@ -1,40 +1,6 @@
-import { edge, odds, pct, settle, tsh } from "../lib";
-import type { HistoryEntry, Predictions, SavedPick, TierName } from "../types";
+import { odds, pct } from "../lib";
+import type { HistoryEntry, Predictions, TierName } from "../types";
 import { Card, Empty, SectionTitle, Stat, StatusPill, TIERS } from "../ui";
-
-export function MyPicks({ data, picks, onRemove }: { data: Predictions; picks: SavedPick[]; onRemove: (id: string) => void }) {
-  const settled = picks.map((p) => ({ pick: p, won: settle(data.results, p) }));
-  const done = settled.filter((s) => s.won !== null);
-  const profit = done.reduce((sum, s) => sum + (s.won ? s.pick.odds - 1 : -1) * s.pick.stake, 0);
-  const staked = done.reduce((sum, s) => sum + s.pick.stake, 0);
-  const expected = picks.reduce((sum, p) => sum + edge(p.probability, p.odds), 0) / Math.max(picks.length, 1);
-  return (
-    <div className="space-y-4">
-      <Card className="grid grid-cols-3 gap-3 px-5 py-4">
-        <Stat label="Picks" value={String(picks.length)} sub={`${done.length} settled`} />
-        <Stat label="Profit" value={`${profit >= 0 ? "+" : "−"}${tsh(Math.abs(profit))}`} sub={staked ? `ROI ${pct(profit / staked, 1)} on ${tsh(staked)}` : "settled picks"} />
-        <Stat label="Avg edge" value={picks.length ? `${expected >= 0 ? "+" : ""}${pct(expected, 1)}` : "–"} sub="when saved" />
-      </Card>
-      {!picks.length ? (
-        <Empty>Open a match and tap <b>Save pick</b> on a bet you placed. Picks settle automatically when results come in, and your profit is tracked in TSh.</Empty>
-      ) : (
-        <Card className="overflow-hidden">
-          {settled.map(({ pick, won }) => (
-            <div key={pick.id} className="flex items-center gap-3 border-t border-border/60 px-5 py-3.5 first:border-t-0">
-              <StatusPill status={won === null ? "pending" : won ? "won" : "lost"} />
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-semibold">{pick.label}</div>
-                <div className="truncate text-xs text-ink-3">{pick.home} v {pick.away} · {tsh(pick.stake)} @ {odds(pick.odds)} · {pct(pick.probability)}</div>
-              </div>
-              <button onClick={() => onRemove(pick.id)} className="text-xs text-ink-3" aria-label={`Remove ${pick.label}`}>Remove</button>
-            </div>
-          ))}
-        </Card>
-      )}
-      <p className="px-2 text-xs text-ink-3">Picks are stored on this device only.</p>
-    </div>
-  );
-}
 
 function HistoryRow({ entry }: { entry: HistoryEntry }) {
   return (

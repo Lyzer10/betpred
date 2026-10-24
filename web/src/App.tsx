@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { loadBankroll, loadPicks, storeBankroll, storePicks, usePredictions } from "./lib";
-import type { SavedPick } from "./types";
+import { type Ledger, loadLedger, storeLedger } from "./ledger";
+import { usePredictions } from "./lib";
 import { Empty } from "./ui";
 import { History } from "./views/History";
 import { Matches } from "./views/Matches";
-import { MyPicks, Record } from "./views/Record";
+import { Money } from "./views/Money";
+import { Record } from "./views/Record";
 import { Slips } from "./views/Slips";
 
 const TABS = [
-  { id: "slips", label: "Bets", icon: "M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2Z M9 9h6 M9 13h6" },
+  { id: "bets", label: "Bets", icon: "M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2Z M9 9h6 M9 13h6" },
   { id: "matches", label: "Matches", icon: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 4 3.5 2.5-1.3 4h-4.4l-1.3-4Z" },
   { id: "history", label: "History", icon: "M12 7v5l3 2 M3.5 12a8.5 8.5 0 1 0 2.5-6 M3 4v4h4" },
-  { id: "picks", label: "My picks", icon: "M5 12l4 4L19 6" },
+  { id: "money", label: "Money", icon: "M3 7h18v12H3Z M3 11h18 M16 15h2" },
   { id: "record", label: "Record", icon: "M4 20V10m6 10V4m6 16v-7m4 7H2" },
 ] as const;
 
@@ -20,13 +21,11 @@ type Tab = (typeof TABS)[number]["id"];
 /** Routes live in the URL hash (#matches/3) so screens can be bookmarked and shared. */
 function readRoute(): { tab: Tab; fixtureId: number | null } {
   const [name, id] = window.location.hash.replace(/^#\/?/, "").split("/");
-  const tab = (TABS.find((t) => t.id === name)?.id ?? "slips") as Tab;
+  const tab = (TABS.find((t) => t.id === name)?.id ?? "bets") as Tab;
   return { tab, fixtureId: id !== undefined && /^\d+$/.test(id) ? Number(id) : null };
 }
 
-const TITLES: Record<Tab, string> = {
-  slips: "Bets", matches: "Matches", history: "History", picks: "My picks", record: "Record",
-};
+const TITLES: Record<Tab, string> = { bets: "Bets", matches: "Matches", history: "History", money: "Money", record: "Record" };
 
 export default function App() {
   const { data, error } = usePredictions();
@@ -38,10 +37,8 @@ export default function App() {
   }, []);
   const { tab, fixtureId } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
-  const [picks, setPicks] = useState<SavedPick[]>(loadPicks);
-  const updatePicks = (next: SavedPick[]) => { setPicks(next); storePicks(next); };
-  const [bankroll, setBankroll] = useState<number>(loadBankroll);
-  const updateBankroll = (amount: number) => { setBankroll(amount); storeBankroll(amount); };
+  const [ledger, setLedger] = useState<Ledger>(loadLedger);
+  const updateLedger = (next: Ledger) => { setLedger(next); storeLedger(next); };
 
   return (
     <div className="mx-auto min-h-screen max-w-lg px-4 pb-28">
@@ -60,11 +57,14 @@ export default function App() {
 
       {error && <Empty><span className="text-critical-ink">Could not load predictions ({error}).</span></Empty>}
       {!data && !error && <Empty>Loading predictions…</Empty>}
-      {data && tab === "slips" && <Slips data={data} bankroll={bankroll} onBankroll={updateBankroll} />}
-      {data && tab === "matches" && <Matches fixtures={data.fixtures} bankroll={bankroll} selected={fixtureId}
-        onSelect={(id) => go(id === null ? "matches" : `matches/${id}`)} onSave={(p) => updatePicks([p, ...picks])} />}
+      {data && tab === "bets" && (
+        <Slips data={data} ledger={ledger} onOpenMoney={() => go("money")}
+          onPlace={(bet) => updateLedger({ ...ledger, entries: [...ledger.entries, bet] })} />
+      )}
+      {data && tab === "matches" && <Matches fixtures={data.fixtures} selected={fixtureId}
+        onSelect={(id) => go(id === null ? "matches" : `matches/${id}`)} />}
       {data && tab === "history" && <History archive={data.archive ?? []} />}
-      {data && tab === "picks" && <MyPicks data={data} picks={picks} onRemove={(id) => updatePicks(picks.filter((p) => p.id !== id))} />}
+      {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
       {data && tab === "record" && <Record data={data} />}
 
       <p className="mt-10 text-center text-[11px] leading-relaxed text-ink-3">

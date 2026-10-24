@@ -107,16 +107,19 @@ modelled market, including 1Up and first goal. SportyBet and Sofascore block
 automated access, so they are not used. If Betpawa is unavailable the run still
 publishes, with estimated odds.
 
-Bets are grouped by match day in Tanzania time (EAT). For each day the app
-shows value singles (Betpawa pays >= 3% above fair, probability >= 25%) and
-Safe / Medium / Big slips built from that day's matches only, all at real
-Betpawa prices. A price more than 8% above the market average is flagged as
-possible stale information (team news) and its stake halved.
+Bets are grouped by match day in Tanzania time (EAT). Each day offers Safe
+(2.5-3.5 odds), Medium (3.5-8) and Big (8-12) accumulators built only from the
+user's markets (1Up, over/under goals, team to win, double chance), at real
+Betpawa prices, with SportyBet Flexi chances (at least k of n legs) for slips of
+three or more. A price more than 8% above the market average is flagged as
+possible team news and its stake halved.
 
-Stakes (web/src/lib.ts `STAKING`): quarter Kelly on the user's Betpawa balance,
-max 2% per single, 1% per accumulator, 10% per day, rounded down to TSh 100,
-nothing without value. Each match day is archived to
-`web/public/data/archive/<day>.json` and settled from results.
+Money page (stored on the device): Betpawa and SportyBet balances, "I placed
+this bet" from any slip (bookmaker, stake, odds, Flexi option and payout),
+deposits and withdrawals kept apart from betting profit, automatic settlement
+from results. Stakes (web/src/lib.ts `STAKING`): quarter Kelly, capped at 3% /
+2% / 1% of the bookmaker balance for Safe / Medium / Big and 10% per day,
+nothing without a 3% edge.
 
 ## Deploying for free
 

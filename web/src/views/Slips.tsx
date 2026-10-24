@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { STAKING, VALUE_EDGE, capRound, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
+import { BOOKMAKERS, type Bookmaker, type Ledger, type PlacedBet, newId, summarise } from "../ledger";
+import { STAKING, VALUE_EDGE, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
 import type { ArchiveSnapshot, DayBets, Predictions, Slip, TierName } from "../types";
 import { Card, Crest, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
 const named = (leg: { label: string; home: string; away: string }) =>
   leg.label.replace("Home", leg.home).replace("Away", leg.away);
 
-/** Local calendar day (YYYY-MM-DD) of a date, in the device's time zone. */
+/** Where each tier is usually placed; changeable when recording the bet. */
+const DEFAULT_BOOKMAKER: Record<TierName, Bookmaker> = { safe: "betpawa", medium: "betpawa", big: "sportybet" };
+
 const isoDay = (date: Date) =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
@@ -19,108 +22,85 @@ function dayName(day: string) {
   return new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
 }
 
-// ---- Balance -----------------------------------------------------------------
+// ---- Record a placed bet -------------------------------------------------------
 
-function BalanceCard({ bankroll, onChange }: { bankroll: number; onChange: (amount: number) => void }) {
-  const [editing, setEditing] = useState(bankroll <= 0);
-  const [text, setText] = useState(bankroll > 0 ? String(bankroll) : "");
-  const [showRules, setShowRules] = useState(false);
-  const save = () => {
-    const amount = Math.round(Number(text.replace(/[^\d.]/g, "")));
-    if (amount > 0) { onChange(amount); setEditing(false); }
-  };
-  return (
-    <Card className="px-5 py-4">
-      {editing ? (
-        <form onSubmit={(e) => { e.preventDefault(); save(); }}>
-          <label className="text-sm font-semibold" htmlFor="balance">How much is in your Betpawa account?</label>
-          <p className="text-xs text-ink-3">Stakes for every bet are worked out from this.</p>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="text-sm font-semibold text-ink-3">TSh</span>
-            <input id="balance" autoFocus inputMode="numeric" placeholder="e.g. 50000"
-              className="min-w-0 flex-1 rounded-xl bg-surface-2 px-3 py-2.5 text-base font-bold outline-none ring-accent focus:ring-2"
-              value={text} onChange={(e) => setText(e.target.value)} />
-            <button type="submit" className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white">Save</button>
-          </div>
-        </form>
-      ) : (
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-medium text-ink-3">Betpawa balance</div>
-            <div className="text-2xl font-extrabold tracking-tight">{tsh(bankroll)}</div>
-          </div>
-          <button onClick={() => setEditing(true)} className="rounded-xl bg-surface-2 px-3 py-2 text-sm font-semibold text-accent">Update</button>
-        </div>
-      )}
-      <button onClick={() => setShowRules(!showRules)} className="mt-3 text-xs font-medium text-ink-3">
-        How stakes are worked out {showRules ? "▴" : "▾"}
-      </button>
-      {showRules && (
-        <ul className="mt-2 space-y-1 text-xs leading-relaxed text-ink-2">
-          <li>• We only stake when Betpawa pays at least {pct(VALUE_EDGE)} more than the fair price.</li>
-          <li>• Size: a quarter of the Kelly amount, the professional standard when probabilities are estimates.</li>
-          <li>• Never more than {pct(STAKING.maxSingle)} of your balance on a single, {pct(STAKING.maxMulti)} on an accumulator, {pct(STAKING.maxRound)} on a whole day.</li>
-          <li>• Half stake if Betpawa's price looks suspiciously high (possible team news).</li>
-        </ul>
-      )}
-    </Card>
-  );
-}
-
-// ---- One bet ---------------------------------------------------------------
-
-function BetCard({ leg, stake, price }: {
-  leg: { label: string; home: string; away: string; kickoff_utc: string; probability: number; fair_odds: number; price_warning?: boolean };
-  stake: number; price: number;
+function PlaceForm({ tier, slip, day, total, balances, onPlace, onCancel }: {
+  tier: TierName; slip: Slip; day: string; total: number; balances: Record<Bookmaker, number>;
+  onPlace: (bet: PlacedBet) => void; onCancel: () => void;
 }) {
-  const e = edge(leg.probability, price);
+  const [bookmaker, setBookmaker] = useState<Bookmaker>(DEFAULT_BOOKMAKER[tier]);
+  const suggested = recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning });
+  const [stakeText, setStakeText] = useState("");
+  const [oddsText, setOddsText] = useState("");
+  const [flexiK, setFlexiK] = useState<number | null>(null);
+  const [toWinText, setToWinText] = useState("");
+  const stake = Math.round(Number(stakeText) || suggested);
+  const placedOdds = parseOdds(oddsText) ?? total;
+  const flexi = slip.flexi?.find((f) => f.min_correct === flexiK);
+  const toWin = Number(toWinText) || 0;
+  const flexiEdge = flexi && toWin > 0 && stake > 0 ? (flexi.probability * toWin) / stake - 1 : null;
+  const ready = stake > 0 && (!flexi || toWin > 0);
   return (
-    <Card className="px-5 py-4">
-      <div className="flex items-center gap-2 text-xs text-ink-3">
-        <Crest team={leg.home} size="sm" />
-        <span className="truncate">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)}</span>
+    <div className="space-y-3 border-t border-border/60 bg-surface px-5 py-4">
+      <div className="text-sm font-semibold">Record this bet</div>
+      <Segmented options={(Object.keys(BOOKMAKERS) as Bookmaker[]).map((b) => ({ id: b, label: BOOKMAKERS[b] }))}
+        value={bookmaker} onChange={(b) => { setBookmaker(b); setFlexiK(null); }} />
+      <div className="grid grid-cols-2 gap-2">
+        <label className="rounded-xl bg-surface-2 px-3 py-2 text-[11px] text-ink-3">Stake (TSh)
+          <input inputMode="numeric" aria-label="Stake in TSh" placeholder={String(suggested || 0)}
+            className="block w-full bg-transparent text-base font-bold text-ink outline-none" value={stakeText} onChange={(e) => setStakeText(e.target.value)} />
+        </label>
+        <label className="rounded-xl bg-surface-2 px-3 py-2 text-[11px] text-ink-3">Total odds on {BOOKMAKERS[bookmaker]}
+          <input inputMode="decimal" aria-label="Total odds as placed" placeholder={odds(total)}
+            className="block w-full bg-transparent text-base font-bold text-ink outline-none" value={oddsText} onChange={(e) => setOddsText(e.target.value)} />
+        </label>
       </div>
-      <div className="mt-2 flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <div className="text-lg font-bold leading-tight">{named(leg)}</div>
-          <div className="mt-0.5 text-xs text-ink-2">{pct(leg.probability)} chance</div>
+      {bookmaker === "sportybet" && (slip.flexi?.length ?? 0) > 0 && (
+        <div className="space-y-2">
+          <div className="text-[11px] text-ink-3">Flexi (SportyBet)</div>
+          <Segmented options={[{ id: "none", label: "Off" }, ...slip.flexi!.map((f) => ({ id: String(f.min_correct), label: `${f.min_correct} of ${slip.legs.length}` }))]}
+            value={flexiK === null ? "none" : String(flexiK)} onChange={(id) => setFlexiK(id === "none" ? null : Number(id))} />
+          {flexi && (
+            <label className="block rounded-xl bg-surface-2 px-3 py-2 text-[11px] text-ink-3">"To Win" shown by SportyBet (TSh)
+              <input inputMode="numeric" aria-label="Flexi To Win amount" className="block w-full bg-transparent text-base font-bold text-ink outline-none"
+                value={toWinText} onChange={(e) => setToWinText(e.target.value)} />
+            </label>
+          )}
+          {flexi && (
+            <p className="text-xs text-ink-2">
+              Chance at least {flexi.min_correct} of {slip.legs.length} win: <b>{pct(flexi.probability)}</b>
+              {flexiEdge !== null && <> · {flexiEdge >= VALUE_EDGE ? <b className="text-good-ink">✓ worth it ({pct(flexiEdge, 1)})</b> : <b className="text-critical-ink">✕ payout too low ({pct(flexiEdge, 1)})</b>}</>}
+            </p>
+          )}
         </div>
-        <div className="text-right">
-          <div className="text-[11px] text-ink-3">Betpawa</div>
-          <div className="text-2xl font-extrabold">{odds(price)}</div>
-        </div>
-      </div>
-      <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl bg-surface-2 px-4 py-3">
-        {stake > 0 ? (
-          <div>
-            <div className="text-[11px] text-ink-3">Stake</div>
-            <div className="text-base font-bold">{tsh(stake)}</div>
-            <div className="text-[11px] text-ink-3">returns {tsh(stake * price)}</div>
-          </div>
-        ) : (
-          <div className="text-xs text-ink-3">Add your balance above to see the stake</div>
-        )}
-        <VerdictBadge probability={leg.probability} odds={price} />
-      </div>
-      <p className="mt-2 text-xs leading-relaxed text-ink-3">
-        Why: fair odds are {odds(leg.fair_odds)}, Betpawa pays {odds(price)}, so you get {pct(e, 1)} more than the risk is worth.
-      </p>
-      {leg.price_warning && (
-        <p className="mt-1 text-xs font-medium text-warning-ink">⚠ This price is much higher than other bookmakers'. Check team news before betting; stake is halved.</p>
       )}
-    </Card>
+      <div className="flex gap-2">
+        <button onClick={onCancel} className="flex-1 rounded-xl bg-surface-2 py-2.5 text-sm font-semibold text-ink-2">Cancel</button>
+        <button disabled={!ready} className="flex-[2] rounded-xl bg-accent py-2.5 text-sm font-semibold text-white disabled:opacity-40"
+          onClick={() => onPlace({
+            id: newId(), type: "bet", placedAt: new Date().toISOString(), day, bookmaker, tier, stake,
+            odds: placedOdds, winProbability: slip.win_probability,
+            flexi: flexi ? { minCorrect: flexi.min_correct, toWin } : undefined,
+            legs: slip.legs.map((l) => ({ home: l.home, away: l.away, date: l.date, market: l.market, label: named(l), probability: l.probability })),
+          })}>Save: I placed {stake > 0 ? tsh(stake) : "it"}</button>
+      </div>
+    </div>
   );
 }
 
-// ---- Accumulator -------------------------------------------------------------
+// ---- Accumulator card ------------------------------------------------------------
 
-function SlipCard({ tier, slip, stake }: { tier: TierName; slip: Slip; stake: (total: number) => number }) {
-  // Only legs without a Betpawa price need typed odds.
+function SlipCard({ tier, slip, day, balances, placed, onPlace }: {
+  tier: TierName; slip: Slip; day: string; balances: Record<Bookmaker, number>; placed: boolean; onPlace: (bet: PlacedBet) => void;
+}) {
   const [entered, setEntered] = useState<Record<number, string>>({});
+  const [placing, setPlacing] = useState(false);
   const prices = slip.legs.map((leg, i) => leg.betpawa_odds ?? parseOdds(entered[i] ?? ""));
   const complete = prices.every((p) => p != null);
   const total = complete ? prices.reduce<number>((a, b) => a * (b as number), 1) : 0;
-  const amount = complete ? stake(total) : 0;
+  const bookmaker = DEFAULT_BOOKMAKER[tier];
+  const stake = complete ? recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning }) : 0;
+  const hasValue = complete && edge(slip.win_probability, total) >= VALUE_EDGE;
   return (
     <Card className="overflow-hidden">
       <div className="bg-hero px-5 pb-5 pt-4 text-hero-ink">
@@ -131,7 +111,7 @@ function SlipCard({ tier, slip, stake }: { tier: TierName; slip: Slip; stake: (t
         <div className="mt-3 flex items-end justify-between">
           <div>
             <div className="text-5xl font-extrabold tracking-tight">{pct(slip.win_probability)}</div>
-            <div className="mt-1 text-xs opacity-70">chance to win</div>
+            <div className="mt-1 text-xs opacity-70">chance all {slip.legs.length} win</div>
           </div>
           <div className="text-right">
             <div className="text-2xl font-bold">{complete ? odds(total) : "–"}</div>
@@ -153,157 +133,171 @@ function SlipCard({ tier, slip, stake }: { tier: TierName; slip: Slip; stake: (t
           </li>
         ))}
       </ul>
-      <div className="flex items-center justify-between gap-3 bg-surface-2/60 px-5 py-3.5">
-        {!complete ? <span className="text-xs text-ink-3">Betpawa has no price for one pick: type it to check.</span>
-          : amount > 0 ? <span className="text-sm">Stake <b>{tsh(amount)}</b> <span className="text-xs text-ink-3">→ returns {tsh(amount * total)}</span></span>
-          : <span className="text-xs text-ink-3">{edge(slip.win_probability, total) >= VALUE_EDGE ? "Add your balance to see the stake" : "Betpawa's odds are too low for this slip"}</span>}
-        {complete && <VerdictBadge probability={slip.win_probability} odds={total} />}
+
+      {(slip.flexi?.length ?? 0) > 0 && (
+        <div className="border-t border-border/60 px-5 py-3 text-xs text-ink-2">
+          <span className="font-semibold text-ink">SportyBet Flexi:</span>{" "}
+          {slip.flexi!.map((f) => `${f.min_correct} of ${slip.legs.length} → ${pct(f.probability)}`).join(" · ")}
+        </div>
+      )}
+
+      <div className="bg-surface-2/60 px-5 py-3.5">
+        {!complete ? (
+          <span className="text-xs text-ink-3">Betpawa has no price for one pick: type it to check.</span>
+        ) : (
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              {stake > 0 ? (
+                <>
+                  <div className="text-[11px] text-ink-3">Stake on {BOOKMAKERS[bookmaker]}</div>
+                  <div className="text-base font-bold">{tsh(stake)}</div>
+                  <div className="text-[11px] text-ink-3">returns {tsh(stake * total)}</div>
+                </>
+              ) : (
+                <div className="text-xs text-ink-3">
+                  {!hasValue ? "Betpawa's odds are too low for this slip: skip it."
+                    : balances[bookmaker] > 0 ? `The right stake is under TSh ${STAKING.minStake} for your ${BOOKMAKERS[bookmaker]} balance: skip, or keep it to the minimum.`
+                    : `Set your ${BOOKMAKERS[bookmaker]} balance in Money to see the stake.`}
+                </div>
+              )}
+            </div>
+            <VerdictBadge probability={slip.win_probability} odds={total} />
+          </div>
+        )}
+        {slip.price_warning && complete && (
+          <p className="mt-2 text-[11px] text-warning-ink">⚠ A pick's price is much higher than other bookmakers': check team news first. Stake halved.</p>
+        )}
       </div>
+
+      {!slip.locked && complete && !placing && (
+        <button onClick={() => setPlacing(true)} disabled={placed}
+          className="w-full border-t border-border/60 py-3.5 text-sm font-semibold text-accent disabled:text-good-ink">
+          {placed ? "✓ Recorded in Money" : "I placed this bet"}
+        </button>
+      )}
+      {placing && (
+        <PlaceForm tier={tier} slip={slip} day={day} total={total} balances={balances}
+          onCancel={() => setPlacing(false)} onPlace={(bet) => { onPlace(bet); setPlacing(false); }} />
+      )}
     </Card>
   );
 }
 
-// ---- Upcoming day ----------------------------------------------------------
+// ---- Days ------------------------------------------------------------------------
 
-function UpcomingDay({ day, data, bankroll }: { day: DayBets; data: Predictions; bankroll: number }) {
+function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void }) {
   const tiers = (["safe", "medium", "big"] as TierName[]).filter((t) => day.slips[t]);
   const [tier, setTier] = useState<TierName>(tiers[0] ?? "safe");
-  const picks = day.value_picks.filter((p) => p.betpawa_odds != null);
-
-  // One 10% cap across the whole day: singles plus each accumulator at Betpawa prices.
-  const slipTotal = (s: Slip) => s.legs.every((l) => l.betpawa_odds != null) ? s.legs.reduce((a, l) => a * l.betpawa_odds!, 1) : 0;
-  const slipStake = (s: Slip, total: number) =>
-    s.locked || !total ? 0 : recommendedStake(bankroll, s.win_probability, total, { legs: s.legs.length, warning: s.price_warning });
-  const raw = [
-    ...picks.map((p) => recommendedStake(bankroll, p.probability, p.betpawa_odds!, { warning: p.price_warning })),
-    ...tiers.map((t) => slipStake(day.slips[t]!, slipTotal(day.slips[t]!))),
-  ];
-  const capped = capRound(raw, bankroll);
-  const scale = raw.reduce((a, b) => a + b, 0) ? capped.reduce((a, b) => a + b, 0) / raw.reduce((a, b) => a + b, 0) : 1;
-  const dayTotal = capped.reduce((a, b) => a + b, 0);
-
+  const balances = Object.fromEntries((Object.keys(BOOKMAKERS) as Bookmaker[])
+    .map((b) => [b, summarise(ledger, b, data.results).balance])) as Record<Bookmaker, number>;
+  const placedKey = (t: TierName) => ledger.entries.some((e) => e.type === "bet" && e.day === day.date && e.tier === t);
+  if (!tiers.length) {
+    return <Empty>Not enough matches with prices on this day to build an accumulator.</Empty>;
+  }
+  const record = data.backtest[tier];
   return (
-    <div>
-      <SectionTitle aside={`${day.fixtures.length} ${day.fixtures.length === 1 ? "match" : "matches"}`}>Best single bets</SectionTitle>
-      {picks.length ? (
-        <div className="space-y-3">{picks.map((p, i) => <BetCard key={`${p.home}-${p.market}`} leg={p} price={p.betpawa_odds!} stake={capped[i]} />)}</div>
-      ) : (
-        <Empty>
-          <div className="text-base font-semibold text-ink">No good bets on this day</div>
-          <div className="mt-1">Betpawa's prices are at or below fair for every match. Not betting is the right move.</div>
-        </Empty>
+    <div className="space-y-3">
+      <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
+      <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
+        placed={placedKey(tier)} onPlace={onPlace} />
+      {record && (
+        <p className="px-2 text-xs leading-relaxed text-ink-3">
+          Track record of {TIERS[tier].title} slips: won <b className="text-ink-2">{pct(record.win_rate, 1)}</b> of {record.slips} past days
+          (we predicted {pct(record.predicted_win_rate, 1)}). A slip at odds {odds(record.average_odds)} can't win much more often than that:
+          it's what those odds mean.
+        </p>
       )}
-
-      {tiers.length > 0 && (
-        <>
-          <SectionTitle>Accumulators</SectionTitle>
-          <div className="space-y-3">
-            <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
-            <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!}
-              stake={(total) => Math.floor((slipStake(day.slips[tier]!, total) * scale) / STAKING.roundTo) * STAKING.roundTo} />
-            {data.backtest[tier] && (
-              <p className="px-2 text-xs text-ink-3">
-                Past record for {TIERS[tier].title}: won {pct(data.backtest[tier].win_rate, 1)} of {data.backtest[tier].slips} slips (predicted {pct(data.backtest[tier].predicted_win_rate, 1)}).
-              </p>
-            )}
-          </div>
-        </>
-      )}
-
-      {bankroll > 0 && dayTotal > 0 && (
-        <Card className="mt-4 flex items-center justify-between px-5 py-3.5">
-          <span className="text-sm text-ink-2">Total to stake this day</span>
-          <span className="text-sm font-bold">{tsh(dayTotal)} <span className="font-medium text-ink-3">({pct(dayTotal / bankroll, 1)})</span></span>
-        </Card>
-      )}
+      <p className="px-2 text-xs text-ink-3">
+        Stakes: a quarter of the Kelly amount, at most {pct(STAKING.maxTier[tier])} of your {BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance for {TIERS[tier].title}.
+        Nothing when the odds are below fair.
+      </p>
     </div>
   );
 }
 
-// ---- Past day ----------------------------------------------------------------
-
-function PastDay({ snapshot, rules }: { snapshot: ArchiveSnapshot; rules: { min_edge: number; min_probability: number } }) {
-  const bets = snapshot.fixtures.flatMap((f) => f.markets
-    .filter((m) => m.betpawa_odds && m.probability >= rules.min_probability && edge(m.probability, m.betpawa_odds) >= rules.min_edge)
-    .map((m) => ({ fixture: f, market: m, won: f.result ? f.result.outcomes[m.market] : null })));
-  const settled = bets.filter((b) => b.won !== null);
-  const units = settled.reduce((a, b) => a + (b.won ? b.market.betpawa_odds! - 1 : -1), 0);
+function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
   const tiers = (["safe", "medium", "big"] as TierName[]).filter((t) => snapshot.slips[t]);
+  if (!tiers.length) return <Empty>No accumulators were offered this day.</Empty>;
   return (
-    <div>
-      <SectionTitle aside={settled.length ? `${units >= 0 ? "+" : ""}${units.toFixed(2)} units` : undefined}>Single bets that day</SectionTitle>
-      {bets.length ? (
-        <Card className="overflow-hidden">
-          {bets.map(({ fixture, market, won }) => (
-            <div key={`${fixture.home}-${market.market}`} className="flex items-center gap-3 border-t border-border/60 px-5 py-3.5 first:border-t-0">
-              <StatusPill status={won === null ? "pending" : won ? "won" : "lost"} />
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-semibold">{named({ label: market.label, home: fixture.home, away: fixture.away })}</div>
-                <div className="truncate text-xs text-ink-3">
-                  {fixture.home} v {fixture.away}{fixture.result ? ` · ${fixture.result.score.join("-")}` : ""} · {pct(market.probability)}
-                </div>
-              </div>
-              <span className="text-sm font-bold">{odds(market.betpawa_odds!)}</span>
+    <Card className="overflow-hidden">
+      {tiers.map((t) => {
+        const slip = snapshot.slips[t]!;
+        return (
+          <div key={t} className="border-t border-border/60 px-5 py-4 first:border-t-0">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold">{TIERS[t].title} · odds {odds(slip.total_odds)} · {pct(slip.win_probability)}</span>
+              <StatusPill status={slip.status ?? "pending"} />
             </div>
-          ))}
-        </Card>
-      ) : <Empty>No single bets were recommended this day.</Empty>}
-      {tiers.length > 0 && <SectionTitle>Accumulators that day</SectionTitle>}
-      {tiers.length > 0 && (
-        <Card className="overflow-hidden">
-          {tiers.map((t) => {
-            const slip = snapshot.slips[t]!;
-            return (
-              <div key={t} className="border-t border-border/60 px-5 py-3.5 first:border-t-0">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">{TIERS[t].title} · odds {odds(slip.total_odds)}</span>
-                  <StatusPill status={slip.status ?? "pending"} />
-                </div>
-                <div className="mt-1 text-xs text-ink-3">{slip.legs.map((l) => `${l.won === true ? "✓" : l.won === false ? "✕" : "•"} ${named(l)}`).join("  ")}</div>
-              </div>
-            );
-          })}
-        </Card>
-      )}
-    </div>
+            <ul className="mt-2 space-y-1">
+              {slip.legs.map((l, i) => (
+                <li key={i} className="flex items-center gap-2 text-xs text-ink-2">
+                  <span className={`w-3 font-bold ${l.won === true ? "text-good-ink" : l.won === false ? "text-critical-ink" : "text-ink-3"}`}>
+                    {l.won === true ? "✓" : l.won === false ? "✕" : "•"}
+                  </span>
+                  <span className="truncate">{named(l)} · {l.home} v {l.away}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </Card>
   );
 }
 
-function ArchivedDay({ date, rules }: { date: string; rules: { min_edge: number; min_probability: number } }) {
+function ArchivedDay({ date }: { date: string }) {
   const snapshot = useArchive(date);
-  return snapshot ? <PastDay snapshot={snapshot} rules={rules} /> : <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
+  return snapshot ? <PastDay snapshot={snapshot} /> : <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
 }
 
-// ---- Screen ------------------------------------------------------------------
-
-export function Slips({ data, bankroll, onBankroll }: { data: Predictions; bankroll: number; onBankroll: (amount: number) => void }) {
+export function Slips({ data, ledger, onPlace, onOpenMoney }: {
+  data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void; onOpenMoney: () => void;
+}) {
   const today = isoDay(new Date());
   const upcoming = new Map(data.days.map((d) => [d.date, d]));
   const past = (data.archive ?? []).map((a) => a.date).filter((d) => d < today && !upcoming.has(d));
   const dates = [...new Set([...past, ...upcoming.keys()])].sort();
   const initial = upcoming.has(today) ? today : [...upcoming.keys()].find((d) => d >= today) ?? dates[dates.length - 1];
   const [selected, setSelected] = useState<string | undefined>(initial);
-  const rules = data.value_rules ?? { min_edge: VALUE_EDGE, min_probability: 0.25 };
+  const needsBalance = !ledger.start.betpawa && !ledger.start.sportybet;
 
   return (
     <div>
       <div className="no-scrollbar -mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {dates.map((d) => {
           const active = d === selected;
-          const count = upcoming.get(d)?.value_picks.length;
+          const slips = upcoming.get(d) ? Object.keys(upcoming.get(d)!.slips).length : null;
           return (
             <button key={d} onClick={() => setSelected(d)} aria-pressed={active}
               className={`shrink-0 rounded-2xl px-4 py-2.5 text-left transition ${active ? "bg-hero text-hero-ink" : "bg-surface text-ink shadow-card"}`}>
               <div className="text-sm font-bold">{dayName(d)}</div>
-              <div className="text-[11px] opacity-70">{count != null ? `${count} ${count === 1 ? "bet" : "bets"}` : "results"}</div>
+              <div className="text-[11px] opacity-70">{slips != null ? `${slips} ${slips === 1 ? "slip" : "slips"}` : "results"}</div>
             </button>
           );
         })}
       </div>
 
-      {selected && upcoming.has(selected) && <BalanceCard bankroll={bankroll} onChange={onBankroll} />}
-      {selected && upcoming.has(selected) && <UpcomingDay key={selected} day={upcoming.get(selected)!} data={data} bankroll={bankroll} />}
-      {selected && !upcoming.has(selected) && <ArchivedDay key={selected} date={selected} rules={rules} />}
+      {needsBalance && selected && upcoming.has(selected) && (
+        <button onClick={onOpenMoney} className="mb-4 block w-full text-left">
+          <Card className="px-5 py-4">
+            <div className="text-sm font-semibold">Set your Betpawa and SportyBet balances</div>
+            <div className="text-xs text-ink-3">Needed to tell you how much to stake. Open Money ›</div>
+          </Card>
+        </button>
+      )}
+
+      {selected && upcoming.has(selected) && (
+        <>
+          <SectionTitle aside={`${upcoming.get(selected)!.fixtures.length} matches`}>Accumulators</SectionTitle>
+          <UpcomingDay key={selected} day={upcoming.get(selected)!} data={data} ledger={ledger} onPlace={onPlace} />
+        </>
+      )}
+      {selected && !upcoming.has(selected) && (
+        <>
+          <SectionTitle>Slips that day</SectionTitle>
+          <ArchivedDay key={selected} date={selected} />
+        </>
+      )}
       {!selected && <Empty>No matches scheduled yet.</Empty>}
     </div>
   );

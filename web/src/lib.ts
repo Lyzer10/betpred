@@ -68,8 +68,9 @@ export function verdict(probability: number, odds: number): Verdict {
 export const STAKING = {
   kellyFraction: 0.25,
   maxSingle: 0.02,          // max 2% of bankroll on one single
-  maxMulti: 0.01,           // max 1% on a multi-leg slip (higher variance)
-  maxRound: 0.10,           // all stakes for a round together: max 10%
+  // Accumulator caps by tier: longer odds lose more often, so they get less.
+  maxTier: { safe: 0.03, medium: 0.02, big: 0.01 } as Record<"safe" | "medium" | "big", number>,
+  maxRound: 0.10,           // all stakes for a day together: max 10%
   warningFactor: 0.5,       // halve the stake when the price may be stale
   minStake: 100,            // TSh; stakes below this are skipped
   roundTo: 100,             // TSh
@@ -81,9 +82,9 @@ export function kellyFraction(probability: number, odds: number) {
 
 /** Recommended stake in TSh (0 = skip). */
 export function recommendedStake(bankroll: number, probability: number, odds: number,
-  opts: { legs?: number; warning?: boolean } = {}) {
+  opts: { tier?: "safe" | "medium" | "big"; warning?: boolean } = {}) {
   if (!(bankroll > 0) || edge(probability, odds) < VALUE_EDGE) return 0;
-  const cap = (opts.legs ?? 1) > 1 ? STAKING.maxMulti : STAKING.maxSingle;
+  const cap = opts.tier ? STAKING.maxTier[opts.tier] : STAKING.maxSingle;
   let fraction = Math.min(kellyFraction(probability, odds) * STAKING.kellyFraction, cap);
   if (opts.warning) fraction *= STAKING.warningFactor;
   const stake = Math.floor((bankroll * fraction) / STAKING.roundTo) * STAKING.roundTo;
@@ -103,23 +104,6 @@ export function capRound(stakes: number[], bankroll: number) {
 
 export const tsh = (amount: number) => `TSh ${Math.round(amount).toLocaleString("en-US")}`;
 
-const BANKROLL_KEY = "pl-predictor:bankroll";
-
-export function loadBankroll(): number {
-  try {
-    return Number(localStorage.getItem(BANKROLL_KEY)) || 0;
-  } catch {
-    return 0;
-  }
-}
-
-export function storeBankroll(amount: number) {
-  try {
-    localStorage.setItem(BANKROLL_KEY, String(amount));
-  } catch {
-    /* storage unavailable: bankroll lives for this session only */
-  }
-}
 
 export const pct = (value: number, digits = 0) => `${(value * 100).toFixed(digits)}%`;
 export const odds = (value: number) => value.toFixed(2);

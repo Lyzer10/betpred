@@ -26,6 +26,7 @@ from .accumulators import (
 )
 from .backtest import _promoted_initialization
 from .betpawa import fetch_premier_league_odds
+from .health import health_check
 from .build_dataset import build
 from .calibration import (
     DC_PATH, ENGINE_DIR, MARKETS, MATCHES_PATH, add_actuals, enforce_probability_constraints, fit_calibrator,
@@ -383,13 +384,18 @@ def settle_archive(matches: pd.DataFrame) -> list[dict]:
     return index
 
 
-def live_record() -> dict:
-    """Accuracy of published predictions: last pre-kickoff prediction per settled match."""
+def settled_predictions() -> list[dict]:
+    """Last pre-kickoff published prediction of every settled match, oldest first."""
     latest = {}
     for path in sorted(ARCHIVE_DIR.glob("20*.json")) if ARCHIVE_DIR.exists() else []:
         for fixture in json.loads(path.read_text(encoding="utf-8"))["fixtures"]:
             latest[_fixture_key(fixture)] = fixture
-    settled = [f for f in latest.values() if "result" in f]
+    return sorted((f for f in latest.values() if "result" in f), key=lambda f: f["kickoff_utc"])
+
+
+def live_record() -> dict:
+    """Accuracy of published predictions: last pre-kickoff prediction per settled match."""
+    settled = settled_predictions()
     if not settled:
         return {"matches": 0}
     keys = ("home_win", "draw", "away_win")
@@ -502,6 +508,8 @@ def main() -> None:
         archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
     output["archive"] = settle_archive(matches)
     output["live_record"] = live_record()
+    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS)
+    print(f"Model health: {output['health']['status']}")
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")
     print(f"{len(output['fixtures'])} fixtures over {len(days)} days: "

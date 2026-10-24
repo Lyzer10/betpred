@@ -106,6 +106,15 @@ export interface Predictions {
   results: Result[];
   archive: ArchiveDay[];
   live_record: LiveRecord;
+  health?: Health;
+}
+
+export type HealthStatus = "ok" | "watch" | "warning" | "insufficient";
+
+export interface Health {
+  status: HealthStatus;
+  stake_factor: number;          // multiply every recommended stake by this
+  checks: { name: string; status: HealthStatus; detail: string }[];
 }
 
 export interface ArchiveDay { date: string; fixtures: number; settled: number }

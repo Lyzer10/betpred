@@ -2,7 +2,7 @@
 // Usage: npm run build && npx vite preview --port 4173 & npm run check:e2e [-- screenshotDir]
 import { chromium } from "playwright-core";
 
-const BASE = "http://localhost:4173/";
+const BASE = process.env.BASE_URL ?? "http://localhost:4173/";
 const shots = process.argv[2];
 const browser = await chromium.launch({ channel: "msedge" });
 const failures = [];

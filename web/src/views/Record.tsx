@@ -22,8 +22,28 @@ export function Record({ data }: { data: Predictions }) {
     b.round.localeCompare(a.round) || tiers.indexOf(a.tier) - tiers.indexOf(b.tier));
   const live = data.live_record;
   const settledSlips = data.history.filter((h) => h.status !== "pending");
+  const health = data.health;
+  const HEALTH_LABEL = { ok: "✓ Healthy", watch: "≈ Watch", warning: "⚠ Under review", insufficient: "• Collecting data" } as const;
+  const HEALTH_TONE = { ok: "text-good-ink", watch: "text-warning-ink", warning: "text-critical-ink", insufficient: "text-ink-3" } as const;
   return (
     <div>
+      {health && (
+        <>
+          <SectionTitle>Model health</SectionTitle>
+          <Card className="px-5 py-4">
+            <div className={`text-base font-bold ${HEALTH_TONE[health.status]}`}>{HEALTH_LABEL[health.status]}</div>
+            <ul className="mt-2 space-y-1.5">
+              {health.checks.map((c) => (
+                <li key={c.name} className="flex items-start justify-between gap-3 text-xs">
+                  <span className="text-ink-2"><b className="capitalize text-ink">{c.name}</b> · {c.detail}</span>
+                  <span className={`shrink-0 font-semibold ${HEALTH_TONE[c.status]}`}>{HEALTH_LABEL[c.status].split(" ").slice(1).join(" ")}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-[11px] text-ink-3">Checked every update against the bookmakers and real results. "Under review" halves every stake automatically.</p>
+          </Card>
+        </>
+      )}
       <SectionTitle aside={live.matches ? `${live.matches} matches` : undefined}>Live predictions</SectionTitle>
       {live.matches ? (
         <Card className="grid grid-cols-3 gap-3 px-5 py-4">

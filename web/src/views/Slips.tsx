@@ -24,12 +24,13 @@ function dayName(day: string) {
 
 // ---- Record a placed bet -------------------------------------------------------
 
-function PlaceForm({ tier, slip, day, total, balances, onPlace, onCancel }: {
-  tier: TierName; slip: Slip; day: string; total: number; balances: Record<Bookmaker, number>;
+function PlaceForm({ tier, slip, day, total, balances, stakeFactor, onPlace, onCancel }: {
+  tier: TierName; slip: Slip; day: string; total: number; balances: Record<Bookmaker, number>; stakeFactor: number;
   onPlace: (bet: PlacedBet) => void; onCancel: () => void;
 }) {
   const [bookmaker, setBookmaker] = useState<Bookmaker>(DEFAULT_BOOKMAKER[tier]);
-  const suggested = recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning });
+  const suggested = Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning })
+    * stakeFactor / STAKING.roundTo) * STAKING.roundTo;
   const [stakeText, setStakeText] = useState("");
   const [oddsText, setOddsText] = useState("");
   const [flexiK, setFlexiK] = useState<number | null>(null);
@@ -90,8 +91,9 @@ function PlaceForm({ tier, slip, day, total, balances, onPlace, onCancel }: {
 
 // ---- Accumulator card ------------------------------------------------------------
 
-function SlipCard({ tier, slip, day, balances, placed, onPlace }: {
-  tier: TierName; slip: Slip; day: string; balances: Record<Bookmaker, number>; placed: boolean; onPlace: (bet: PlacedBet) => void;
+function SlipCard({ tier, slip, day, balances, placed, stakeFactor, onPlace }: {
+  tier: TierName; slip: Slip; day: string; balances: Record<Bookmaker, number>; placed: boolean; stakeFactor: number;
+  onPlace: (bet: PlacedBet) => void;
 }) {
   const [entered, setEntered] = useState<Record<number, string>>({});
   const [placing, setPlacing] = useState(false);
@@ -99,7 +101,8 @@ function SlipCard({ tier, slip, day, balances, placed, onPlace }: {
   const complete = prices.every((p) => p != null);
   const total = complete ? prices.reduce<number>((a, b) => a * (b as number), 1) : 0;
   const bookmaker = DEFAULT_BOOKMAKER[tier];
-  const stake = complete ? recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning }) : 0;
+  const stake = complete ? Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning })
+    * stakeFactor / STAKING.roundTo) * STAKING.roundTo : 0;
   const hasValue = complete && edge(slip.win_probability, total) >= VALUE_EDGE;
   return (
     <Card className="overflow-hidden">
@@ -176,7 +179,7 @@ function SlipCard({ tier, slip, day, balances, placed, onPlace }: {
         </button>
       )}
       {placing && (
-        <PlaceForm tier={tier} slip={slip} day={day} total={total} balances={balances}
+        <PlaceForm tier={tier} slip={slip} day={day} total={total} balances={balances} stakeFactor={stakeFactor}
           onCancel={() => setPlacing(false)} onPlace={(bet) => { onPlace(bet); setPlacing(false); }} />
       )}
     </Card>
@@ -199,7 +202,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
     <div className="space-y-3">
       <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
-        placed={placedKey(tier)} onPlace={onPlace} />
+        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} onPlace={onPlace} />
       {record && (
         <p className="px-2 text-xs leading-relaxed text-ink-3">
           Track record of {TIERS[tier].title} slips: won <b className="text-ink-2">{pct(record.win_rate, 1)}</b> of {record.slips} past days
@@ -260,9 +263,20 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
   const initial = upcoming.has(today) ? today : [...upcoming.keys()].find((d) => d >= today) ?? dates[dates.length - 1];
   const [selected, setSelected] = useState<string | undefined>(initial);
   const needsBalance = !ledger.start.betpawa && !ledger.start.sportybet;
+  const health = data.health;
 
   return (
     <div>
+      {health && (health.status === "warning" || health.status === "watch") && (
+        <Card className={`mb-4 px-5 py-4 ${health.status === "warning" ? "bg-critical/10" : "bg-warning/15"}`}>
+          <div className={`text-sm font-semibold ${health.status === "warning" ? "text-critical-ink" : "text-warning-ink"}`}>
+            {health.status === "warning" ? "⚠ Model under review: stakes halved" : "≈ Model on watch"}
+          </div>
+          <div className="mt-1 text-xs text-ink-2">
+            {health.checks.filter((c) => c.status === "warning" || c.status === "watch").map((c) => c.detail).join(" · ")}
+          </div>
+        </Card>
+      )}
       <div className="no-scrollbar -mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {dates.map((d) => {
           const active = d === selected;

@@ -222,6 +222,25 @@ def predict_market_fixtures(fixtures: pd.DataFrame, league) -> pd.DataFrame:
     return legs
 
 
+def league_context(matches: pd.DataFrame, season: str) -> dict[str, dict]:
+    """Current-season table and last-5 form per team (display only; not a model input:
+    the table was tested as a predictor and did not help, see PROJECT.md section 7)."""
+    played = matches[(matches.season == season) & matches.home_goals.notna()].sort_values("date")
+    table: dict[str, dict] = {}
+    for m in played.itertuples():
+        for team, scored, conceded in ((m.home_team, m.home_goals, m.away_goals), (m.away_team, m.away_goals, m.home_goals)):
+            row = table.setdefault(team, {"played": 0, "points": 0, "gd": 0, "gf": 0, "form": []})
+            result = "W" if scored > conceded else "D" if scored == conceded else "L"
+            row["played"] += 1
+            row["points"] += {"W": 3, "D": 1, "L": 0}[result]
+            row["gd"] += int(scored - conceded)
+            row["gf"] += int(scored)
+            row["form"] = (row["form"] + [result])[-5:]          # oldest -> newest
+    order = sorted(table, key=lambda t: (-table[t]["points"], -table[t]["gd"], -table[t]["gf"], t))
+    return {team: {"position": i + 1, "teams": len(order), **{k: v for k, v in table[team].items() if k != "gf"}}
+            for i, team in enumerate(order)}
+
+
 def league_json(code: str) -> dict:
     league = get_league(code)
     return {"code": league.code, "name": league.name, "country": league.country}
@@ -515,12 +534,15 @@ def main() -> None:
     # to know which matches are played and to settle bets. A failing league is skipped.
     season_start = current_season_start(now.date())
     settle_matches = [matches]
+    current_season = season_label(season_start)
+    context = league_context(matches, current_season)
     for code, mode in LIVE_LEAGUES.items():
         if mode != "market":
             continue
         try:
             current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
             settle_matches.append(current)
+            context.update(league_context(current, current_season))
             league_fixtures = load_fixtures(now, current, code)
             league_fixtures.index = league_fixtures.index + next_fixture_id
             next_fixture_id += len(league_fixtures)
@@ -568,6 +590,7 @@ def main() -> None:
                 "date": group.date.iloc[0].date().isoformat(), "time": group.time.iloc[0],
                 "kickoff_utc": group.kickoff_utc.iloc[0].isoformat() + "Z",
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
+                "context": {"home": context.get(group.home_team.iloc[0]), "away": context.get(group.away_team.iloc[0])},
                 "day": group["day"].iloc[0],
                 "expected_goals": [round(float(group.lambda_home.iloc[0]), 2), round(float(group.lambda_away.iloc[0]), 2)],
                 "top_scorelines": json.loads(group.top_scorelines.iloc[0]),

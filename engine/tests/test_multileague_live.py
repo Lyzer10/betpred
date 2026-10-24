@@ -61,3 +61,15 @@ def test_degenerate_calibrators_are_never_used():
     assert not usable({**good, "coef": -1.57})         # La Liga over 0.5: backwards slope
     assert not usable({**good, "minority": 3})         # almost no losses to learn from
     assert not usable(None)
+
+
+def test_league_context_table_and_form():
+    rows = [("2026/27", "2026-08-16", "A", "B", 2, 0), ("2026/27", "2026-08-23", "B", "C", 1, 1),
+            ("2026/27", "2026-08-30", "C", "A", 0, 1), ("2025/26", "2026-05-01", "A", "C", 0, 5)]
+    matches = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    matches["date"] = pd.to_datetime(matches.date)
+    ctx = predict.league_context(matches, "2026/27")
+    assert ctx["A"] == {"position": 1, "teams": 3, "played": 2, "points": 6, "gd": 3, "form": ["W", "W"]}
+    assert ctx["B"]["form"] == ["L", "D"] and ctx["B"]["points"] == 1   # last season's match ignored
+    # B and C both have 1 point; C's goal difference (-1) beats B's (-2).
+    assert ctx["C"]["position"] == 2 and ctx["B"]["position"] == 3

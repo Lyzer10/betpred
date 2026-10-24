@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-24T20:15:18.564879Z",
+  "generated_at": "2026-10-24T20:56:13.996058Z",
   "model": {
     "xi": 0.005,
     "blend_weight": 0.3,
@@ -50,6 +50,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Crystal Palace",
       "away": "Newcastle",
+      "context": {
+        "home": {
+          "position": 14,
+          "teams": 20,
+          "played": 7,
+          "points": 7,
+          "gd": -8,
+          "form": [
+            "W",
+            "L",
+            "D",
+            "W",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 11,
+          "teams": 20,
+          "played": 7,
+          "points": 8,
+          "gd": -4,
+          "form": [
+            "D",
+            "L",
+            "W",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.72,
@@ -58,15 +88,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.11261611588722936
+          "probability": 0.11261557390582426
         },
         {
           "score": "2-1",
-          "probability": 0.08895199851816639
+          "probability": 0.08895245002612716
         },
         {
           "score": "1-2",
-          "probability": 0.07712282580138254
+          "probability": 0.07712204261111033
         }
       ],
       "has_market_odds": true,
@@ -173,8 +203,8 @@
         {
           "market": "home_1up",
           "label": "Home 1Up",
-          "probability": 0.5574,
-          "model_probability": 0.6516,
+          "probability": 0.5582,
+          "model_probability": 0.6545,
           "market_probability": 0.5247,
           "fair_odds": 1.79,
           "betpawa_odds": 1.75
@@ -182,8 +212,8 @@
         {
           "market": "away_1up",
           "label": "Away 1Up",
-          "probability": 0.581,
-          "model_probability": 0.5387,
+          "probability": 0.5806,
+          "model_probability": 0.5373,
           "market_probability": 0.5948,
           "fair_odds": 1.72,
           "betpawa_odds": 1.6
@@ -191,19 +221,19 @@
         {
           "market": "home_first",
           "label": "Home scores first",
-          "probability": 0.4612,
-          "model_probability": 0.5178,
+          "probability": 0.4621,
+          "model_probability": 0.5211,
           "market_probability": 0.4425,
-          "fair_odds": 2.17,
+          "fair_odds": 2.16,
           "betpawa_odds": 2.08
         },
         {
           "market": "away_first",
           "label": "Away scores first",
-          "probability": 0.4871,
-          "model_probability": 0.4433,
+          "probability": 0.4863,
+          "model_probability": 0.4401,
           "market_probability": 0.5018,
-          "fair_odds": 2.05,
+          "fair_odds": 2.06,
           "betpawa_odds": 1.89
         },
         {
@@ -248,6 +278,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Hull",
       "away": "Brentford",
+      "context": {
+        "home": {
+          "position": 9,
+          "teams": 20,
+          "played": 7,
+          "points": 9,
+          "gd": 1,
+          "form": [
+            "D",
+            "D",
+            "L",
+            "D",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 6,
+          "teams": 20,
+          "played": 7,
+          "points": 10,
+          "gd": 5,
+          "form": [
+            "D",
+            "D",
+            "W",
+            "D",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.07,
@@ -256,15 +316,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.13451410152168045
+          "probability": 0.1345099377893186
         },
         {
           "score": "0-1",
-          "probability": 0.1046808725883861
+          "probability": 0.104680516261293
         },
         {
           "score": "1-2",
-          "probability": 0.0913122935868609
+          "probability": 0.09131598849376969
         }
       ],
       "has_market_odds": true,
@@ -272,7 +332,7 @@
         {
           "market": "home_win",
           "label": "Home win",
-          "probability": 0.2195,
+          "probability": 0.2194,
           "model_probability": 0.2697,
           "market_probability": 0.2043,
           "fair_odds": 4.56,
@@ -371,8 +431,8 @@
         {
           "market": "home_1up",
           "label": "Home 1Up",
-          "probability": 0.4066,
-          "model_probability": 0.4392,
+          "probability": 0.4063,
+          "model_probability": 0.438,
           "market_probability": 0.3958,
           "fair_odds": 2.46,
           "betpawa_odds": 2.3
@@ -380,10 +440,10 @@
         {
           "market": "away_1up",
           "label": "Away 1Up",
-          "probability": 0.6777,
-          "model_probability": 0.6101,
+          "probability": 0.6788,
+          "model_probability": 0.6149,
           "market_probability": 0.6988,
-          "fair_odds": 1.48,
+          "fair_odds": 1.47,
           "betpawa_odds": 1.39
         },
         {
@@ -416,7 +476,7 @@
         {
           "market": "double_x2",
           "label": "Away or draw",
-          "probability": 0.7805,
+          "probability": 0.7806,
           "model_probability": 0.7303,
           "market_probability": 0.7957,
           "fair_odds": 1.28,
@@ -446,6 +506,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Liverpool",
       "away": "Brighton",
+      "context": {
+        "home": {
+          "position": 5,
+          "teams": 20,
+          "played": 7,
+          "points": 12,
+          "gd": 1,
+          "form": [
+            "W",
+            "D",
+            "W",
+            "L",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 3,
+          "teams": 20,
+          "played": 7,
+          "points": 16,
+          "gd": 18,
+          "form": [
+            "D",
+            "W",
+            "W",
+            "W",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.48,
@@ -454,15 +544,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.12725074058424515
+          "probability": 0.12725135219006
         },
         {
           "score": "2-1",
-          "probability": 0.08659663237533598
+          "probability": 0.08659641191738164
         },
         {
           "score": "1-2",
-          "probability": 0.08061063423683626
+          "probability": 0.08061079727308351
         }
       ],
       "has_market_odds": true,
@@ -569,17 +659,17 @@
         {
           "market": "home_1up",
           "label": "Home 1Up",
-          "probability": 0.6201,
-          "model_probability": 0.5979,
+          "probability": 0.619,
+          "model_probability": 0.5932,
           "market_probability": 0.6274,
-          "fair_odds": 1.61,
+          "fair_odds": 1.62,
           "betpawa_odds": 1.53
         },
         {
           "market": "away_1up",
           "label": "Away 1Up",
-          "probability": 0.5105,
-          "model_probability": 0.5371,
+          "probability": 0.5108,
+          "model_probability": 0.5384,
           "market_probability": 0.5016,
           "fair_odds": 1.96,
           "betpawa_odds": 1.84
@@ -587,8 +677,8 @@
         {
           "market": "home_first",
           "label": "Home scores first",
-          "probability": 0.5177,
-          "model_probability": 0.489,
+          "probability": 0.5175,
+          "model_probability": 0.4884,
           "market_probability": 0.5272,
           "fair_odds": 1.93,
           "betpawa_odds": 1.8
@@ -596,8 +686,8 @@
         {
           "market": "away_first",
           "label": "Away scores first",
-          "probability": 0.4289,
-          "model_probability": 0.4518,
+          "probability": 0.4291,
+          "model_probability": 0.4525,
           "market_probability": 0.4213,
           "fair_odds": 2.33,
           "betpawa_odds": 2.2
@@ -644,6 +734,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Manchester United",
       "away": "Bournemouth",
+      "context": {
+        "home": {
+          "position": 13,
+          "teams": 20,
+          "played": 7,
+          "points": 7,
+          "gd": 0,
+          "form": [
+            "D",
+            "L",
+            "D",
+            "D",
+            "D"
+          ]
+        },
+        "away": {
+          "position": 15,
+          "teams": 20,
+          "played": 7,
+          "points": 6,
+          "gd": -4,
+          "form": [
+            "D",
+            "D",
+            "L",
+            "L",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.62,
@@ -652,15 +772,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.12204260508619885
+          "probability": 0.12204287287240312
         },
         {
           "score": "2-1",
-          "probability": 0.09078894345225776
+          "probability": 0.0907885617063398
         },
         {
           "score": "1-2",
-          "probability": 0.07586387125297911
+          "probability": 0.07586442818063345
         }
       ],
       "has_market_odds": true,
@@ -767,8 +887,8 @@
         {
           "market": "home_1up",
           "label": "Home 1Up",
-          "probability": 0.6273,
-          "model_probability": 0.6456,
+          "probability": 0.6279,
+          "model_probability": 0.6479,
           "market_probability": 0.6211,
           "fair_odds": 1.59,
           "betpawa_odds": 1.58
@@ -776,8 +896,8 @@
         {
           "market": "away_1up",
           "label": "Away 1Up",
-          "probability": 0.4969,
-          "model_probability": 0.5122,
+          "probability": 0.4964,
+          "model_probability": 0.5102,
           "market_probability": 0.4917,
           "fair_odds": 2.01,
           "betpawa_odds": 1.83
@@ -785,8 +905,8 @@
         {
           "market": "home_first",
           "label": "Home scores first",
-          "probability": 0.5254,
-          "model_probability": 0.5233,
+          "probability": 0.5263,
+          "model_probability": 0.5268,
           "market_probability": 0.5261,
           "fair_odds": 1.9,
           "betpawa_odds": 1.85
@@ -794,8 +914,8 @@
         {
           "market": "away_first",
           "label": "Away scores first",
-          "probability": 0.4186,
-          "model_probability": 0.4252,
+          "probability": 0.4177,
+          "model_probability": 0.4217,
           "market_probability": 0.4164,
           "fair_odds": 2.39,
           "betpawa_odds": 2.17
@@ -842,6 +962,36 @@
       "kickoff_utc": "2026-10-25T16:30:00Z",
       "home": "Sunderland",
       "away": "Leeds",
+      "context": {
+        "home": {
+          "position": 20,
+          "teams": 20,
+          "played": 7,
+          "points": 4,
+          "gd": -8,
+          "form": [
+            "D",
+            "L",
+            "L",
+            "L",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 7,
+          "teams": 20,
+          "played": 7,
+          "points": 10,
+          "gd": 3,
+          "form": [
+            "D",
+            "W",
+            "D",
+            "L",
+            "D"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.15,
@@ -850,15 +1000,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.13883303286824844
+          "probability": 0.1388329112205478
         },
         {
           "score": "0-1",
-          "probability": 0.10013969269566968
+          "probability": 0.10013651244053356
         },
         {
           "score": "0-0",
-          "probability": 0.09405691717202841
+          "probability": 0.0940551636112167
         }
       ],
       "has_market_odds": true,
@@ -965,8 +1115,8 @@
         {
           "market": "home_1up",
           "label": "Home 1Up",
-          "probability": 0.4777,
-          "model_probability": 0.4832,
+          "probability": 0.4776,
+          "model_probability": 0.4828,
           "market_probability": 0.4758,
           "fair_odds": 2.09,
           "betpawa_odds": 1.88
@@ -974,8 +1124,8 @@
         {
           "market": "away_1up",
           "label": "Away 1Up",
-          "probability": 0.5583,
-          "model_probability": 0.5666,
+          "probability": 0.5586,
+          "model_probability": 0.5675,
           "market_probability": 0.5556,
           "fair_odds": 1.79,
           "betpawa_odds": 1.76
@@ -984,7 +1134,7 @@
           "market": "home_first",
           "label": "Home scores first",
           "probability": 0.4173,
-          "model_probability": 0.4164,
+          "model_probability": 0.4166,
           "market_probability": 0.4175,
           "fair_odds": 2.4,
           "betpawa_odds": 2.17
@@ -993,7 +1143,7 @@
           "market": "away_first",
           "label": "Away scores first",
           "probability": 0.4893,
-          "model_probability": 0.4945,
+          "model_probability": 0.4943,
           "market_probability": 0.4876,
           "fair_odds": 2.04,
           "betpawa_odds": 2.01
@@ -1040,6 +1190,36 @@
       "kickoff_utc": "2026-10-25T13:00:00Z",
       "home": "Ath Bilbao",
       "away": "Getafe",
+      "context": {
+        "home": {
+          "position": 13,
+          "teams": 20,
+          "played": 8,
+          "points": 9,
+          "gd": -1,
+          "form": [
+            "W",
+            "D",
+            "D",
+            "D",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 15,
+          "teams": 20,
+          "played": 9,
+          "points": 9,
+          "gd": -6,
+          "form": [
+            "D",
+            "L",
+            "W",
+            "L",
+            "D"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.65,
@@ -1048,15 +1228,15 @@
       "top_scorelines": [
         {
           "score": "1-0",
-          "probability": 0.15519925786808142
+          "probability": 0.15519925786863104
         },
         {
           "score": "2-0",
-          "probability": 0.13005100986829232
+          "probability": 0.13005100986864526
         },
         {
           "score": "1-1",
-          "probability": 0.112452912876274
+          "probability": 0.11245291287618492
         }
       ],
       "has_market_odds": true,
@@ -1238,6 +1418,36 @@
       "kickoff_utc": "2026-10-25T15:15:00Z",
       "home": "Celta",
       "away": "Betis",
+      "context": {
+        "home": {
+          "position": 8,
+          "teams": 20,
+          "played": 9,
+          "points": 11,
+          "gd": 3,
+          "form": [
+            "D",
+            "D",
+            "W",
+            "D",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 4,
+          "teams": 20,
+          "played": 9,
+          "points": 19,
+          "gd": 2,
+          "form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.29,
@@ -1246,15 +1456,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.12366657424936735
+          "probability": 0.12366657421148115
         },
         {
           "score": "0-1",
-          "probability": 0.09144734015514103
+          "probability": 0.09144734010142705
         },
         {
           "score": "1-2",
-          "probability": 0.0875007514233508
+          "probability": 0.08750075144130812
         }
       ],
       "has_market_odds": true,
@@ -1266,7 +1476,7 @@
           "model_probability": 0.3111,
           "market_probability": 0.3239,
           "fair_odds": 3.21,
-          "betpawa_odds": 3.07
+          "betpawa_odds": 3.08
         },
         {
           "market": "draw",
@@ -1275,7 +1485,7 @@
           "model_probability": 0.2844,
           "market_probability": 0.2778,
           "fair_odds": 3.52,
-          "betpawa_odds": 3.58
+          "betpawa_odds": 3.6
         },
         {
           "market": "away_win",
@@ -1284,7 +1494,7 @@
           "model_probability": 0.3954,
           "market_probability": 0.3983,
           "fair_odds": 2.53,
-          "betpawa_odds": 2.4
+          "betpawa_odds": 2.38
         },
         {
           "market": "over_0.5",
@@ -1320,7 +1530,7 @@
           "model_probability": 0.2856,
           "market_probability": 0.293,
           "fair_odds": 3.5,
-          "betpawa_odds": 2.8
+          "betpawa_odds": 2.81
         },
         {
           "market": "under_2.5",
@@ -1383,7 +1593,7 @@
           "model_probability": 0.4298,
           "market_probability": 0.4388,
           "fair_odds": 2.33,
-          "betpawa_odds": 2.17
+          "betpawa_odds": 2.18
         },
         {
           "market": "away_first",
@@ -1392,7 +1602,7 @@
           "model_probability": 0.4902,
           "market_probability": 0.4934,
           "fair_odds": 2.04,
-          "betpawa_odds": 1.88
+          "betpawa_odds": 1.87
         },
         {
           "market": "double_1x",
@@ -1401,7 +1611,7 @@
           "model_probability": 0.6043,
           "market_probability": 0.6017,
           "fair_odds": 1.65,
-          "betpawa_odds": 1.6
+          "betpawa_odds": 1.61
         },
         {
           "market": "double_x2",
@@ -1436,6 +1646,36 @@
       "kickoff_utc": "2026-10-25T17:30:00Z",
       "home": "Sociedad",
       "away": "Levante",
+      "context": {
+        "home": {
+          "position": 5,
+          "teams": 20,
+          "played": 9,
+          "points": 16,
+          "gd": 0,
+          "form": [
+            "W",
+            "L",
+            "W",
+            "W",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 11,
+          "teams": 20,
+          "played": 9,
+          "points": 10,
+          "gd": -2,
+          "form": [
+            "L",
+            "L",
+            "D",
+            "D",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.98,
@@ -1444,15 +1684,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.10225326314094733
+          "probability": 0.10225326314995709
         },
         {
           "score": "2-1",
-          "probability": 0.09907571973411286
+          "probability": 0.09907571973600214
         },
         {
           "score": "2-0",
-          "probability": 0.08985915255249816
+          "probability": 0.08985915257212691
         }
       ],
       "has_market_odds": true,
@@ -1509,7 +1749,7 @@
           "model_probability": 0.617,
           "market_probability": 0.5979,
           "fair_odds": 1.62,
-          "betpawa_odds": 1.6
+          "betpawa_odds": 1.59
         },
         {
           "market": "over_3.5",
@@ -1518,7 +1758,7 @@
           "model_probability": 0.3722,
           "market_probability": 0.3713,
           "fair_odds": 2.69,
-          "betpawa_odds": 2.48
+          "betpawa_odds": 2.45
         },
         {
           "market": "under_2.5",
@@ -1527,7 +1767,7 @@
           "model_probability": 0.383,
           "market_probability": 0.4021,
           "fair_odds": 2.61,
-          "betpawa_odds": 2.4
+          "betpawa_odds": 2.43
         },
         {
           "market": "under_3.5",
@@ -1536,7 +1776,7 @@
           "model_probability": 0.6279,
           "market_probability": 0.6287,
           "fair_odds": 1.59,
-          "betpawa_odds": 1.57
+          "betpawa_odds": 1.58
         },
         {
           "market": "btts_yes",
@@ -1545,7 +1785,7 @@
           "model_probability": 0.6279,
           "market_probability": 0.5779,
           "fair_odds": 1.59,
-          "betpawa_odds": 1.66
+          "betpawa_odds": 1.65
         },
         {
           "market": "btts_no",
@@ -1554,7 +1794,7 @@
           "model_probability": 0.3721,
           "market_probability": 0.4221,
           "fair_odds": 2.69,
-          "betpawa_odds": 2.23
+          "betpawa_odds": 2.26
         },
         {
           "market": "home_1up",
@@ -1572,7 +1812,7 @@
           "model_probability": 0.3894,
           "market_probability": 0.3975,
           "fair_odds": 2.57,
-          "betpawa_odds": 2.36
+          "betpawa_odds": 2.35
         },
         {
           "market": "home_first",
@@ -1590,7 +1830,7 @@
           "model_probability": 0.3249,
           "market_probability": 0.3402,
           "fair_odds": 3.08,
-          "betpawa_odds": 2.82
+          "betpawa_odds": 2.81
         },
         {
           "market": "double_1x",
@@ -1634,6 +1874,36 @@
       "kickoff_utc": "2026-10-25T20:00:00Z",
       "home": "Barcelona",
       "away": "Real Madrid",
+      "context": {
+        "home": {
+          "position": 1,
+          "teams": 20,
+          "played": 9,
+          "points": 27,
+          "gd": 30,
+          "form": [
+            "W",
+            "W",
+            "W",
+            "W",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 3,
+          "teams": 20,
+          "played": 9,
+          "points": 21,
+          "gd": 14,
+          "form": [
+            "W",
+            "W",
+            "L",
+            "W",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.65,
@@ -1642,15 +1912,15 @@
       "top_scorelines": [
         {
           "score": "2-1",
-          "probability": 0.07781251945824696
+          "probability": 0.07781251948553893
         },
         {
           "score": "3-1",
-          "probability": 0.06869442748196342
+          "probability": 0.06869442749012113
         },
         {
           "score": "2-2",
-          "probability": 0.06523735865080257
+          "probability": 0.0652373586543557
         }
       ],
       "has_market_odds": true,
@@ -1832,6 +2102,36 @@
       "kickoff_utc": "2026-10-26T20:00:00Z",
       "home": "Sevilla",
       "away": "Osasuna",
+      "context": {
+        "home": {
+          "position": 6,
+          "teams": 20,
+          "played": 9,
+          "points": 14,
+          "gd": -2,
+          "form": [
+            "W",
+            "W",
+            "L",
+            "D",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 10,
+          "teams": 20,
+          "played": 9,
+          "points": 11,
+          "gd": -8,
+          "form": [
+            "L",
+            "L",
+            "D",
+            "L",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-26",
       "expected_goals": [
         1.48,
@@ -1840,15 +2140,15 @@
       "top_scorelines": [
         {
           "score": "1-0",
-          "probability": 0.1271099760128062
+          "probability": 0.12710997599847126
         },
         {
           "score": "1-1",
-          "probability": 0.12651670653149968
+          "probability": 0.12651670653292318
         },
         {
           "score": "2-0",
-          "probability": 0.09603601051901078
+          "probability": 0.09603601050729733
         }
       ],
       "has_market_odds": true,
@@ -2030,6 +2330,36 @@
       "kickoff_utc": "2026-10-25T11:30:00Z",
       "home": "Inter",
       "away": "Fiorentina",
+      "context": {
+        "home": {
+          "position": 1,
+          "teams": 20,
+          "played": 7,
+          "points": 19,
+          "gd": 12,
+          "form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 18,
+          "teams": 20,
+          "played": 7,
+          "points": 4,
+          "gd": -9,
+          "form": [
+            "L",
+            "W",
+            "D",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.47,
@@ -2038,15 +2368,15 @@
       "top_scorelines": [
         {
           "score": "2-0",
-          "probability": 0.09887409507888952
+          "probability": 0.09887409507920723
         },
         {
           "score": "2-1",
-          "probability": 0.09475783319570956
+          "probability": 0.0947578331958143
         },
         {
           "score": "3-0",
-          "probability": 0.0815589887792004
+          "probability": 0.08155898877925725
         }
       ],
       "has_market_odds": true,
@@ -2076,7 +2406,7 @@
           "model_probability": 0.0938,
           "market_probability": 0.122,
           "fair_odds": 10.66,
-          "betpawa_odds": 7.56
+          "betpawa_odds": 7.63
         },
         {
           "market": "over_0.5",
@@ -2148,7 +2478,7 @@
           "model_probability": 0.4359,
           "market_probability": 0.4313,
           "fair_odds": 2.29,
-          "betpawa_odds": 2.2
+          "betpawa_odds": 2.19
         },
         {
           "market": "home_1up",
@@ -2166,7 +2496,7 @@
           "model_probability": 0.3037,
           "market_probability": 0.3122,
           "fair_odds": 3.29,
-          "betpawa_odds": 2.84
+          "betpawa_odds": 2.86
         },
         {
           "market": "home_first",
@@ -2184,7 +2514,7 @@
           "model_probability": 0.261,
           "market_probability": 0.2681,
           "fair_odds": 3.83,
-          "betpawa_odds": 3.42
+          "betpawa_odds": 3.44
         },
         {
           "market": "double_1x",
@@ -2202,7 +2532,7 @@
           "model_probability": 0.2876,
           "market_probability": 0.2989,
           "fair_odds": 3.48,
-          "betpawa_odds": 2.98
+          "betpawa_odds": 2.99
         },
         {
           "market": "double_12",
@@ -2228,6 +2558,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Atalanta",
       "away": "Frosinone",
+      "context": {
+        "home": {
+          "position": 11,
+          "teams": 20,
+          "played": 7,
+          "points": 9,
+          "gd": -1,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "W",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 6,
+          "teams": 20,
+          "played": 7,
+          "points": 13,
+          "gd": 4,
+          "form": [
+            "W",
+            "D",
+            "W",
+            "L",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.08,
@@ -2236,15 +2596,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.09449923525669005
+          "probability": 0.09449923526892703
         },
         {
           "score": "2-1",
-          "probability": 0.0931240130680609
+          "probability": 0.09312401307049246
         },
         {
           "score": "2-0",
-          "probability": 0.0661921184541291
+          "probability": 0.06619211845879718
         }
       ],
       "has_market_odds": true,
@@ -2426,6 +2786,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Genoa",
       "away": "Venezia",
+      "context": {
+        "home": {
+          "position": 17,
+          "teams": 20,
+          "played": 7,
+          "points": 4,
+          "gd": -8,
+          "form": [
+            "L",
+            "D",
+            "L",
+            "W",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 20,
+          "teams": 20,
+          "played": 7,
+          "points": 3,
+          "gd": -10,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.5,
@@ -2434,15 +2824,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.12895091214639934
+          "probability": 0.1289509121442992
         },
         {
           "score": "1-0",
-          "probability": 0.10313733349078509
+          "probability": 0.10313733348474804
         },
         {
           "score": "2-1",
-          "probability": 0.09184214172720805
+          "probability": 0.09184214172786372
         }
       ],
       "has_market_odds": true,
@@ -2624,6 +3014,36 @@
       "kickoff_utc": "2026-10-25T17:00:00Z",
       "home": "Lecce",
       "away": "Juventus",
+      "context": {
+        "home": {
+          "position": 12,
+          "teams": 20,
+          "played": 7,
+          "points": 9,
+          "gd": -3,
+          "form": [
+            "L",
+            "W",
+            "L",
+            "L",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 8,
+          "teams": 20,
+          "played": 7,
+          "points": 11,
+          "gd": 1,
+          "form": [
+            "D",
+            "L",
+            "W",
+            "D",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         0.76,
@@ -2632,15 +3052,15 @@
       "top_scorelines": [
         {
           "score": "0-2",
-          "probability": 0.12673277129524418
+          "probability": 0.1267327713058887
         },
         {
           "score": "0-1",
-          "probability": 0.12277744603051784
+          "probability": 0.12277744603737435
         },
         {
           "score": "1-1",
-          "probability": 0.10243028696564739
+          "probability": 0.10243028695963691
         }
       ],
       "has_market_odds": true,
@@ -2822,6 +3242,36 @@
       "kickoff_utc": "2026-10-25T19:45:00Z",
       "home": "Udinese",
       "away": "Milan",
+      "context": {
+        "home": {
+          "position": 16,
+          "teams": 20,
+          "played": 7,
+          "points": 4,
+          "gd": -7,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 4,
+          "teams": 20,
+          "played": 7,
+          "points": 15,
+          "gd": 7,
+          "form": [
+            "D",
+            "D",
+            "W",
+            "D",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         0.94,
@@ -2830,15 +3280,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1163940127322998
+          "probability": 0.11639401273342209
         },
         {
           "score": "0-1",
-          "probability": 0.11204936671828315
+          "probability": 0.11204936673179447
         },
         {
           "score": "0-2",
-          "probability": 0.10479716774920747
+          "probability": 0.10479716775902985
         }
       ],
       "has_market_odds": true,
@@ -2895,7 +3345,7 @@
           "model_probability": 0.5012,
           "market_probability": 0.5107,
           "fair_odds": 2.0,
-          "betpawa_odds": 1.91
+          "betpawa_odds": 1.9
         },
         {
           "market": "over_3.5",
@@ -2904,7 +3354,7 @@
           "model_probability": 0.2694,
           "market_probability": 0.2883,
           "fair_odds": 3.71,
-          "betpawa_odds": 3.23
+          "betpawa_odds": 3.21
         },
         {
           "market": "under_2.5",
@@ -2913,7 +3363,7 @@
           "model_probability": 0.4988,
           "market_probability": 0.4893,
           "fair_odds": 2.0,
-          "betpawa_odds": 1.94
+          "betpawa_odds": 1.95
         },
         {
           "market": "under_3.5",
@@ -3020,6 +3470,36 @@
       "kickoff_utc": "2026-10-25T14:30:00Z",
       "home": "Hoffenheim",
       "away": "Leverkusen",
+      "context": {
+        "home": {
+          "position": 14,
+          "teams": 18,
+          "played": 6,
+          "points": 6,
+          "gd": -3,
+          "form": [
+            "L",
+            "W",
+            "L",
+            "L",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 4,
+          "teams": 18,
+          "played": 6,
+          "points": 13,
+          "gd": 7,
+          "form": [
+            "W",
+            "D",
+            "W",
+            "W",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.69,
@@ -3028,15 +3508,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.10168692421358509
+          "probability": 0.1016869242131089
         },
         {
           "score": "1-2",
-          "probability": 0.08380681079142446
+          "probability": 0.08380681079161421
         },
         {
           "score": "2-1",
-          "probability": 0.07657961839220336
+          "probability": 0.0765796183917072
         }
       ],
       "has_market_odds": true,
@@ -3218,6 +3698,36 @@
       "kickoff_utc": "2026-10-25T16:30:00Z",
       "home": "Freiburg",
       "away": "Bayern Munich",
+      "context": {
+        "home": {
+          "position": 3,
+          "teams": 18,
+          "played": 6,
+          "points": 13,
+          "gd": 9,
+          "form": [
+            "W",
+            "W",
+            "D",
+            "W",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 1,
+          "teams": 18,
+          "played": 6,
+          "points": 14,
+          "gd": 17,
+          "form": [
+            "D",
+            "W",
+            "W",
+            "D",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.26,
@@ -3226,15 +3736,15 @@
       "top_scorelines": [
         {
           "score": "1-2",
-          "probability": 0.08536963245497628
+          "probability": 0.08536963246496287
         },
         {
           "score": "1-3",
-          "probability": 0.07958202820578285
+          "probability": 0.07958202820517755
         },
         {
           "score": "1-1",
-          "probability": 0.06864915283020975
+          "probability": 0.06864915284679314
         }
       ],
       "has_market_odds": true,
@@ -3246,7 +3756,7 @@
           "model_probability": 0.1305,
           "market_probability": 0.1458,
           "fair_odds": 7.66,
-          "betpawa_odds": 6.11
+          "betpawa_odds": 6.19
         },
         {
           "market": "draw",
@@ -3255,7 +3765,7 @@
           "model_probability": 0.1976,
           "market_probability": 0.1648,
           "fair_odds": 5.06,
-          "betpawa_odds": 6.04
+          "betpawa_odds": 6.09
         },
         {
           "market": "away_win",
@@ -3264,7 +3774,7 @@
           "model_probability": 0.6929,
           "market_probability": 0.6894,
           "fair_odds": 1.44,
-          "betpawa_odds": 1.44
+          "betpawa_odds": 1.43
         },
         {
           "market": "over_0.5",
@@ -3345,7 +3855,7 @@
           "model_probability": 0.3404,
           "market_probability": 0.3645,
           "fair_odds": 2.94,
-          "betpawa_odds": 2.42
+          "betpawa_odds": 2.43
         },
         {
           "market": "away_1up",
@@ -3363,7 +3873,7 @@
           "model_probability": 0.2755,
           "market_probability": 0.3007,
           "fair_odds": 3.63,
-          "betpawa_odds": 2.97
+          "betpawa_odds": 2.99
         },
         {
           "market": "away_first",
@@ -3372,7 +3882,7 @@
           "model_probability": 0.6975,
           "market_probability": 0.6743,
           "fair_odds": 1.43,
-          "betpawa_odds": 1.43
+          "betpawa_odds": 1.42
         },
         {
           "market": "double_1x",
@@ -3381,7 +3891,7 @@
           "model_probability": 0.3078,
           "market_probability": 0.3106,
           "fair_odds": 3.25,
-          "betpawa_odds": 2.78
+          "betpawa_odds": 2.8
         },
         {
           "market": "double_x2",
@@ -3416,6 +3926,36 @@
       "kickoff_utc": "2026-10-25T14:00:00Z",
       "home": "Monaco",
       "away": "Lille",
+      "context": {
+        "home": {
+          "position": 5,
+          "teams": 18,
+          "played": 7,
+          "points": 14,
+          "gd": 4,
+          "form": [
+            "W",
+            "D",
+            "W",
+            "D",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 4,
+          "teams": 18,
+          "played": 7,
+          "points": 14,
+          "gd": 5,
+          "form": [
+            "W",
+            "W",
+            "L",
+            "W",
+            "D"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.59,
@@ -3424,15 +3964,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1262006298197293
+          "probability": 0.12620062981443775
         },
         {
           "score": "2-1",
-          "probability": 0.09345943073945592
+          "probability": 0.09345943074001538
         },
         {
           "score": "1-0",
-          "probability": 0.09172799629051771
+          "probability": 0.09172799627880852
         }
       ],
       "has_market_odds": true,
@@ -3614,6 +4154,36 @@
       "kickoff_utc": "2026-10-25T16:15:00Z",
       "home": "Angers",
       "away": "Lorient",
+      "context": {
+        "home": {
+          "position": 15,
+          "teams": 18,
+          "played": 7,
+          "points": 7,
+          "gd": -6,
+          "form": [
+            "L",
+            "D",
+            "W",
+            "L",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 7,
+          "teams": 18,
+          "played": 7,
+          "points": 11,
+          "gd": 1,
+          "form": [
+            "W",
+            "D",
+            "L",
+            "W",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.22,
@@ -3622,15 +4192,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.1352836252521592
+          "probability": 0.1352836252499547
         },
         {
           "score": "0-1",
-          "probability": 0.09451920784469149
+          "probability": 0.09451920784326238
         },
         {
           "score": "0-0",
-          "probability": 0.08604107538695223
+          "probability": 0.08604107538194393
         }
       ],
       "has_market_odds": true,
@@ -3812,6 +4382,36 @@
       "kickoff_utc": "2026-10-25T16:15:00Z",
       "home": "Auxerre",
       "away": "Le Mans",
+      "context": {
+        "home": {
+          "position": 12,
+          "teams": 18,
+          "played": 7,
+          "points": 9,
+          "gd": -6,
+          "form": [
+            "L",
+            "W",
+            "W",
+            "L",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 16,
+          "teams": 18,
+          "played": 7,
+          "points": 6,
+          "gd": -5,
+          "form": [
+            "D",
+            "D",
+            "W",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         1.64,
@@ -3820,15 +4420,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.12132412581794902
+          "probability": 0.12132412581711056
         },
         {
           "score": "2-1",
-          "probability": 0.0928092162823606
+          "probability": 0.09280921628228327
         },
         {
           "score": "1-0",
-          "probability": 0.08026784021372875
+          "probability": 0.0802678402122231
         }
       ],
       "has_market_odds": true,
@@ -4010,6 +4610,36 @@
       "kickoff_utc": "2026-10-25T16:15:00Z",
       "home": "Marseille",
       "away": "Le Havre",
+      "context": {
+        "home": {
+          "position": 9,
+          "teams": 18,
+          "played": 7,
+          "points": 9,
+          "gd": 4,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "W",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 18,
+          "teams": 18,
+          "played": 7,
+          "points": 2,
+          "gd": -6,
+          "form": [
+            "L",
+            "D",
+            "L",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.1,
@@ -4018,15 +4648,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.10117318408057176
+          "probability": 0.10117318409633584
         },
         {
           "score": "2-1",
-          "probability": 0.09906871633928722
+          "probability": 0.09906871634195287
         },
         {
           "score": "2-0",
-          "probability": 0.09207909676713039
+          "probability": 0.0920790967868304
         }
       ],
       "has_market_odds": true,
@@ -4208,6 +4838,36 @@
       "kickoff_utc": "2026-10-25T16:15:00Z",
       "home": "Rennes",
       "away": "Strasbourg",
+      "context": {
+        "home": {
+          "position": 6,
+          "teams": 18,
+          "played": 7,
+          "points": 13,
+          "gd": 1,
+          "form": [
+            "W",
+            "W",
+            "L",
+            "W",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 14,
+          "teams": 18,
+          "played": 7,
+          "points": 7,
+          "gd": -3,
+          "form": [
+            "W",
+            "D",
+            "L",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.07,
@@ -4216,15 +4876,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.09835788315419923
+          "probability": 0.09835788315837524
         },
         {
           "score": "2-1",
-          "probability": 0.09491136160506289
+          "probability": 0.0949113616065798
         },
         {
           "score": "2-0",
-          "probability": 0.07093318663046788
+          "probability": 0.07093318663457697
         }
       ],
       "has_market_odds": true,
@@ -4406,6 +5066,36 @@
       "kickoff_utc": "2026-10-25T16:15:00Z",
       "home": "Toulouse",
       "away": "Troyes",
+      "context": {
+        "home": {
+          "position": 11,
+          "teams": 18,
+          "played": 7,
+          "points": 9,
+          "gd": 1,
+          "form": [
+            "L",
+            "D",
+            "W",
+            "D",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 17,
+          "teams": 18,
+          "played": 7,
+          "points": 4,
+          "gd": -11,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ]
+        }
+      },
       "day": "2026-10-25",
       "expected_goals": [
         2.0,
@@ -4414,15 +5104,15 @@
       "top_scorelines": [
         {
           "score": "1-1",
-          "probability": 0.10670083574378024
+          "probability": 0.10670083574386742
         },
         {
           "score": "2-1",
-          "probability": 0.09945198422417037
+          "probability": 0.09945198422421377
         },
         {
           "score": "2-0",
-          "probability": 0.09466989777459803
+          "probability": 0.09466989777545899
         }
       ],
       "has_market_odds": true,
@@ -4604,6 +5294,36 @@
       "kickoff_utc": "2026-10-26T19:30:00Z",
       "home": "Paris SG",
       "away": "Lyon",
+      "context": {
+        "home": {
+          "position": 2,
+          "teams": 18,
+          "played": 7,
+          "points": 14,
+          "gd": 5,
+          "form": [
+            "L",
+            "W",
+            "W",
+            "W",
+            "W"
+          ]
+        },
+        "away": {
+          "position": 1,
+          "teams": 18,
+          "played": 7,
+          "points": 14,
+          "gd": 8,
+          "form": [
+            "W",
+            "D",
+            "W",
+            "L",
+            "W"
+          ]
+        }
+      },
       "day": "2026-10-26",
       "expected_goals": [
         2.41,
@@ -4612,15 +5332,15 @@
       "top_scorelines": [
         {
           "score": "2-1",
-          "probability": 0.09547016543153962
+          "probability": 0.09547016542935746
         },
         {
           "score": "2-0",
-          "probability": 0.08637032705570857
+          "probability": 0.08637032704820859
         },
         {
           "score": "1-1",
-          "probability": 0.08492467807744794
+          "probability": 0.08492467807216075
         }
       ],
       "has_market_odds": true,
@@ -5114,27 +5834,6 @@
         },
         {
           "date": "2026-10-25",
-          "time": "17:30",
-          "kickoff_utc": "2026-10-25T17:30:00Z",
-          "league": {
-            "code": "LALIGA",
-            "name": "La Liga",
-            "country": "Spain"
-          },
-          "home": "Sociedad",
-          "away": "Levante",
-          "market": "btts_yes",
-          "label": "Both teams score",
-          "probability": 0.6279,
-          "estimated_odds": 1.62,
-          "betpawa_odds": 1.66,
-          "fair_odds": 1.59,
-          "price_warning": false,
-          "edge": 0.0422,
-          "kelly": 0.064
-        },
-        {
-          "date": "2026-10-25",
           "time": "14:00",
           "kickoff_utc": "2026-10-25T14:00:00Z",
           "league": {
@@ -5153,6 +5852,27 @@
           "price_warning": false,
           "edge": 0.0416,
           "kelly": 0.031
+        },
+        {
+          "date": "2026-10-25",
+          "time": "17:30",
+          "kickoff_utc": "2026-10-25T17:30:00Z",
+          "league": {
+            "code": "LALIGA",
+            "name": "La Liga",
+            "country": "Spain"
+          },
+          "home": "Sociedad",
+          "away": "Levante",
+          "market": "btts_yes",
+          "label": "Both teams score",
+          "probability": 0.6279,
+          "estimated_odds": 1.62,
+          "betpawa_odds": 1.65,
+          "fair_odds": 1.59,
+          "price_warning": false,
+          "edge": 0.036,
+          "kelly": 0.0553
         },
         {
           "date": "2026-10-25",
@@ -5891,7 +6611,7 @@
     {
       "round": "2026-10-25",
       "tier": "safe",
-      "generated_at": "2026-10-24T20:15:18.564879Z",
+      "generated_at": "2026-10-24T20:56:13.996058Z",
       "total_odds": 2.51,
       "win_probability": 0.4773,
       "odds_source": "betpawa",
@@ -5971,7 +6691,7 @@
     {
       "round": "2026-10-25",
       "tier": "medium",
-      "generated_at": "2026-10-24T20:15:18.564879Z",
+      "generated_at": "2026-10-24T20:56:13.996058Z",
       "total_odds": 3.52,
       "win_probability": 0.3724,
       "odds_source": "betpawa",
@@ -6075,7 +6795,7 @@
     {
       "round": "2026-10-25",
       "tier": "big",
-      "generated_at": "2026-10-24T20:15:18.564879Z",
+      "generated_at": "2026-10-24T20:56:13.996058Z",
       "total_odds": 8.08,
       "win_probability": 0.1808,
       "odds_source": "betpawa",
@@ -6199,7 +6919,7 @@
     {
       "round": "2026-10-26",
       "tier": "safe",
-      "generated_at": "2026-10-24T20:15:18.564879Z",
+      "generated_at": "2026-10-24T20:56:13.996058Z",
       "total_odds": 2.51,
       "win_probability": 0.3832,
       "odds_source": "betpawa",
@@ -6273,9 +6993,9 @@
         "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
-        "home_1up": true,
+        "home_1up": false,
         "away_1up": false,
-        "home_first": true,
+        "home_first": false,
         "away_first": false,
         "double_1x": true,
         "double_x2": false,

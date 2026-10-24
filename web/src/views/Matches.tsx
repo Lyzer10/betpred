@@ -69,8 +69,8 @@ function FormAndTable({ fixture }: { fixture: Fixture }) {
     <Card className="overflow-hidden">
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Form &amp; table</h2>
       <ul className="divide-y divide-border/60">
-        <TeamContextRow team={fixture.home} context={fixture.context.home} />
-        <TeamContextRow team={fixture.away} context={fixture.context.away} />
+        <TeamContextRow team={fixture.home} context={fixture.context?.home ?? null} />
+        <TeamContextRow team={fixture.away} context={fixture.context?.away ?? null} />
       </ul>
     </Card>
   );

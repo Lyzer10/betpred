@@ -49,7 +49,7 @@ export interface Fixture {
   top_scorelines: { score: string; probability: number }[];
   has_market_odds: boolean;
   markets: MarketPrediction[];
-  context: MatchContext;
+  context?: MatchContext;   // absent in data files published before 24 Oct 2026
 }
 
 export interface SlipLeg {

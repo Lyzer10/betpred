@@ -253,6 +253,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- Workflow runs must check out `main`, not the triggering commit: a queued run otherwise starts from
+  data older than the previous run's publish and its push fails on rebase conflicts.
 - When comparing strategies that bet different amounts, compare per unit staked or on matched days:
   with negative-EV backtest odds, the variant that bets least always "grows" most (2026-10-25).
 - Settlement must not wait for football-data.co.uk (results lag days); Understat is same-night.

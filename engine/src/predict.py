@@ -422,12 +422,10 @@ def displayed_slips(round_id: str | None, slips: dict, history: list[dict], now:
     for entry in history:
         if entry["round"] != round_id:
             continue
-        if not _not_started(entry, now):
-            shown[entry["tier"]] = {key: entry[key] for key in ("total_odds", "win_probability", "legs", "status")}
-            shown[entry["tier"]] |= {"locked": True, "final": bool(entry.get("final"))}
-        elif entry.get("final"):      # final, not started: the slip to place, with everything needed to stake it
-            shown[entry["tier"]] = {k: v for k, v in entry.items() if k not in ("round", "tier", "generated_at", "status")}
-            shown[entry["tier"]] |= {"locked": False, "final": True}
+        started = not _not_started(entry, now)
+        if started or entry.get("final"):   # the recorded slip, complete (Flexi too, to settle it later)
+            shown[entry["tier"]] = {k: v for k, v in entry.items() if k not in ("round", "tier", "generated_at")}
+            shown[entry["tier"]] |= {"locked": started, "final": bool(entry.get("final"))}
     return shown
 
 

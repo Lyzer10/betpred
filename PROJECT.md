@@ -212,6 +212,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: locked (in-play) slips are published complete, incl. Flexi, so past days can show
+  whether Flexi paid.
 - 2026-10-25: slips settle the same night from Understat (`build_dataset.understat_results`, settlement
   only, never training data); football-data rows replace them when they arrive. Check: scores agree on
   21,932 of 21,934 matches 2014/15-2026/27 (2 later disciplinary changes), EPL 2026/27 scores and 1Up

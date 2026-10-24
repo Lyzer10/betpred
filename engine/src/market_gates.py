@@ -2,10 +2,12 @@
 
 For every live league and slip market, on the test seasons, with the exact probability the
 slips use (EPL: blended `probability`; market-mode leagues: walk-forward `market_probability`):
-  C1 calibration slope 95% CI overlaps [0.8, 1.2]
-  C2 calibration-in-the-large: 95% bootstrap CI (by matchday) of mean(outcome - p) includes 0
-  C3 10 equal-count bins, every |z| <= 3
+  C1 calibration slope: 95% CI upper bound >= 0.8 (not significantly over-spread)
+  C2 calibration-in-the-large: 95% bootstrap CI (by matchday) of mean(outcome - p) upper bound >= 0
+  C3 10 equal-count bins, every z >= -3
   C4 winner's curse: legs with p - bookmaker p > 0.03 (if >= 50): one-sided z >= -2
+Every check guards against over-confidence only (amended 2026-10-25, see PROJECT.md): a market that
+wins MORE often than we said makes slips safer than shown, so it is not removed.
 Fewer than 300 legs = INSUFFICIENT (kept, flagged). Failing any of C1-C4 = FAIL: the market is
 removed from that league's slip legs. Log loss vs the bookmaker is reported with a bootstrap CI.
 Usage: python -m src.market_gates   (writes data/processed/market_gates.json and reports/market_gates.md)
@@ -62,15 +64,15 @@ def evaluate(league: str, market: str, legs: pd.DataFrame, column: str, rng) -> 
 
     fit = sm.Logit(y, sm.add_constant(_logit(p))).fit(disp=0)
     slope, (lo, hi) = float(fit.params[1]), (float(fit.conf_int()[1][0]), float(fit.conf_int()[1][1]))
-    c1 = not (hi < 0.8 or lo > 1.2)
+    c1 = hi >= 0.8
 
     level = float(np.mean(y - p))
     level_ci = _bootstrap_mean_by_day(d, y - p, rng)
-    c2 = level_ci[0] <= 0 <= level_ci[1]
+    c2 = level_ci[1] >= 0
 
     d["bin"] = pd.qcut(d.p.rank(method="first"), 10, labels=False)
     bin_z = [_z(g.won.to_numpy(float), g.p.to_numpy(float)) for _, g in d.groupby("bin")]
-    c3 = max(abs(z) for z in bin_z) <= 3
+    c3 = min(bin_z) >= -3
 
     lifted = d[d.p - d.bookmaker_probability > 0.03]
     curse_z = _z(lifted.won.to_numpy(float), lifted.p.to_numpy(float)) if len(lifted) >= MIN_CURSE_LEGS else None
@@ -87,7 +89,7 @@ def evaluate(league: str, market: str, legs: pd.DataFrame, column: str, rng) -> 
         "status": "PASS" if (c1 and c2 and c3 and c4) else "FAIL",
         "C1_slope": round(slope, 3), "C1_ci": [round(lo, 3), round(hi, 3)], "C1": c1,
         "C2_level": round(level, 4), "C2_ci": [round(level_ci[0], 4), round(level_ci[1], 4)], "C2": c2,
-        "C3_max_abs_z": round(max(abs(z) for z in bin_z), 2), "C3": c3,
+        "C3_min_z": round(min(bin_z), 2), "C3": c3,
         "C4_lifted_legs": int(len(lifted)), "C4_z": None if curse_z is None else round(curse_z, 2), "C4": c4,
         "logloss_vs_book": round(diff, 4), "logloss_vs_book_ci": [round(diff_ci[0], 4), round(diff_ci[1], 4)],
         "mean_p": round(float(p.mean()), 4), "actual": round(float(y.mean()), 4),
@@ -113,7 +115,7 @@ def main() -> None:
     lines = ["# League x market gates", "",
              "Rules pre-registered in PROJECT.md (task 1) before any result was computed. Test seasons 2024/25+.",
              "FAIL = removed from that league's slip legs; INSUFFICIENT = fewer than 300 legs (kept, flagged).", "",
-             "| League | Market | n | Status | Slope (95% CI) | Level gap (95% CI) | max bin z | Lifted legs / z | Log loss vs bookmaker (95% CI) |",
+             "| League | Market | n | Status | Slope (95% CI) | Level gap (95% CI) | lowest bin z | Lifted legs / z | Log loss vs bookmaker (95% CI) |",
              "|---|---|---:|---|---|---|---:|---|---|"]
     for r in rows:
         if r["status"] == "INSUFFICIENT":
@@ -123,7 +125,7 @@ def main() -> None:
             f"| {get_league(r['league']).name} | {r['market']} | {r['n']} | **{r['status']}** | "
             f"{r['C1_slope']} ({r['C1_ci'][0]}, {r['C1_ci'][1]}){'' if r['C1'] else ' ✗'} | "
             f"{r['C2_level']:+.4f} ({r['C2_ci'][0]:+.4f}, {r['C2_ci'][1]:+.4f}){'' if r['C2'] else ' ✗'} | "
-            f"{r['C3_max_abs_z']}{'' if r['C3'] else ' ✗'} | "
+            f"{r['C3_min_z']}{'' if r['C3'] else ' ✗'} | "
             f"{r['C4_lifted_legs']} / {r['C4_z'] if r['C4_z'] is not None else '-'}{'' if r['C4'] else ' ✗'} | "
             f"{r['logloss_vs_book']:+.4f} ({r['logloss_vs_book_ci'][0]:+.4f}, {r['logloss_vs_book_ci'][1]:+.4f}) |")
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")

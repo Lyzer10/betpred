@@ -125,11 +125,10 @@ nothing without a 3% edge.
 
 1. Code lives in a private GitHub repository. Completed seasons' raw data is
    committed; the current season is re-downloaded.
-2. Daily run on this PC: `scripts/daily.sh` refreshes data, predicts with live
-   Betpawa odds and pushes the new predictions. Install the schedule once by
-   running `scripts/install_schedule.ps1` in PowerShell (07:00, 13:00, 18:00;
-   catches up after the PC was off). Log: `engine/data/live/daily.log`.
-   `.github/workflows/daily-predictions.yml` is a manual backup.
+2. Daily run in GitHub Actions (`.github/workflows/daily-predictions.yml`) at
+   07:00, 13:00 and 18:00 Tanzania time: tests, `src.predict`, commit the new
+   predictions. Backup on this PC: `scripts/daily.sh`, installable with
+   `scripts/install_schedule.ps1`. Both pull before pushing.
 3. Vercel: import the repository as a single project with **Root Directory =
    `web`** (not "Services"); every push redeploys the app.
 4. On the phone, open the Vercel URL and choose **Add to Home Screen**.

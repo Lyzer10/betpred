@@ -1,12 +1,16 @@
 name: Daily predictions
 
-# The daily run happens on the owner's PC (scripts/daily.sh via Task Scheduler):
-# it is free and fetches Betpawa Tanzania from a Tanzanian connection. This
-# workflow is a manual backup; to make it the scheduler, add back e.g.
-#   schedule:
-#     - cron: "0 4 * * *"
+# Daily runs in GitHub's cloud (the PC is not needed). scripts/daily.sh does the
+# same job locally as a backup; both pull before pushing, so they never collide.
 on:
+  schedule:
+    - cron: "0 4 * * *"        # 07:00 Tanzania
+    - cron: "0 10 * * *"       # 13:00 Tanzania
+    - cron: "0 15 * * *"       # 18:00 Tanzania
   workflow_dispatch:           # "Run workflow" button in the Actions tab
+  push:                        # run once whenever this workflow itself changes
+    branches: [main]
+    paths: [.github/workflows/daily-predictions.yml]
 
 permissions:
   contents: write
@@ -51,5 +55,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add web/public/data/predictions.json web/public/data/archive engine/data/live/slip_history.json
-          git diff --cached --quiet || git commit -m "Daily predictions $(date -u +%F)"
+          git diff --cached --quiet && exit 0
+          git commit -m "Daily predictions $(date -u +%F)"
+          git pull --rebase origin main
           git push

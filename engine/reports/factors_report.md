@@ -70,3 +70,32 @@ Evaluated on 2021/22, 2022/23, 2023/24, 2024/25, 2025/26, 2026/27 (1970 matches)
 | opp_def_resid | -0.427 | 0.214 | x0.653 |
 | rest_diff | -0.001 | 0.008 | x0.999 |
 | short_rest | +0.007 | 0.039 | x1.007 |
+
+## Absences (missing regular starters), evaluated 2022/23 onwards
+
+554 matches with lineup data. Uses actual starting XIs, so it is an upper bound for live injury news.
+
+| Variant | 1X2 | Over 1.5 | Over 2.5 | Under 3.5 | Home win |
+|---|---:|---:|---:|---:|---:|
+| absences | 0.9851 | 0.5298 | 0.6758 | 0.6420 | 0.6361 |
+| baseline | 0.9710 | 0.5280 | 0.6732 | 0.6394 | 0.6265 |
+
+### Absence effects, home goals
+
+| Feature | Coefficient | Std. error | Goals multiplier |
+|---|---:|---:|---:|
+| const | +0.009 | 0.017 | x1.009 |
+| att_missing_self | +0.200 | 0.292 | x1.222 |
+| def_missing_opp | +0.028 | 0.050 | x1.028 |
+| att_missing_opp | -0.381 | 0.265 | x0.683 |
+| def_missing_self | +0.028 | 0.050 | x1.028 |
+
+### Absence effects, away goals
+
+| Feature | Coefficient | Std. error | Goals multiplier |
+|---|---:|---:|---:|
+| const | +0.005 | 0.019 | x1.005 |
+| att_missing_self | +0.202 | 0.319 | x1.224 |
+| def_missing_opp | +0.014 | 0.056 | x1.014 |
+| att_missing_opp | -0.293 | 0.306 | x0.746 |
+| def_missing_self | +0.014 | 0.056 | x1.014 |

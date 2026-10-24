@@ -27,3 +27,29 @@ def test_rest_days_count_from_previous_league_match():
     assert rest[("m1", "home")] == 14            # no previous match: capped default
     assert rest[("m3", "home")] == 7             # A: 16 Aug -> 23 Aug
     assert rest[("m4", "away")] == 4             # A: 23 Aug -> 27 Aug
+
+
+def test_absences_use_earlier_matches_only():
+    from src.factors import _absence_features
+
+    rows = iter(range(500000, 600000))
+
+    def player(pid, start=True, xg=0.0, pos="FW"):
+        # Like Understat: entries are keyed by a roster-row id that differs from player_id.
+        return str(next(rows)), {"player_id": str(pid), "position": pos if start else "Sub", "xG": str(xg), "xA": "0"}
+
+    matches, rosters = [], {}
+    for i in range(4):
+        mid = f"m{i}"
+        matches.append((mid, f"2025-08-{10 + 7 * i}", "A", "B", 1, 0))
+        home = dict([player(1, xg=0.6), player(2, xg=0.2, pos="DC"), player(3, xg=0.2)])
+        if i == 3:   # star striker (player 1) and the defender (player 2) miss the 4th match
+            home = dict([player(3, xg=0.2), player(4, xg=0.1)])
+        rosters[mid] = {"h": home, "a": dict([player(9, xg=0.3)])}
+    frame = pd.DataFrame(matches, columns=["match_id", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    frame["date"] = pd.to_datetime(frame.date)
+    features = _absence_features(frame, rosters).set_index(["match_id", "side"])
+    assert pd.isna(features.loc[("m2", "home"), "att_missing"])        # needs 3 earlier matches
+    assert abs(features.loc[("m3", "home"), "att_missing"] - 0.8) < 1e-9  # players 1+2: 0.8 of 1.0 xG
+    assert features.loc[("m3", "home"), "def_missing"] == 1.0
+    assert features.loc[("m3", "away"), "att_missing"] == 0.0

@@ -28,7 +28,7 @@ from .accumulators import (
 from .backtest import _promoted_initialization
 from .betpawa import fetch_competition_odds
 from .health import health_check
-from .build_dataset import build
+from .build_dataset import build, understat_results
 from .calibration import (
     DC_PATH, ENGINE_DIR, MARKETS, MATCHES_PATH, add_actuals, enforce_probability_constraints, fit_calibrator,
 )
@@ -592,7 +592,15 @@ def main() -> None:
     if not parts:
         raise SystemExit("No upcoming fixtures in any live league")
     legs = pd.concat(parts, ignore_index=True)
-    all_matches = pd.concat(settle_matches, ignore_index=True)
+    # Settle from Understat the same night; football-data rows (when they arrive days later) take over.
+    fast = []
+    for code in LIVE_LEAGUES:
+        try:
+            fast.append(understat_results(code, season_start))
+        except Exception as error:
+            print(f"Understat results unavailable for {get_league(code).name} ({error})")
+    all_matches = (pd.concat(fast + settle_matches, ignore_index=True)
+                   .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
 
     betpawa_parts = []
     for code in legs.league.unique():

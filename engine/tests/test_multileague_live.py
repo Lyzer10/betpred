@@ -95,3 +95,19 @@ def test_failed_gates_reads_only_fail_status(tmp_path, monkeypatch):
     assert predict.failed_gates() == {("EPL", "over_2.5")}
     monkeypatch.setattr(predict, "GATES_PATH", tmp_path / "missing.json")
     assert predict.failed_gates() == set()
+
+
+def test_understat_results_settle_scores_and_1up(monkeypatch):
+    from src import build_dataset
+    results = [{"id": "1", "isResult": True, "datetime": "2026-10-24 16:30:00", "h": {"title": "Chelsea"},
+                "a": {"title": "Tottenham"}, "goals": {"h": "0", "a": "2"}, "xG": {"h": "1.1", "a": "1.4"}},
+               {"id": "2", "isResult": False, "datetime": "2026-10-31 16:30:00", "h": {"title": "Arsenal"},
+                "a": {"title": "Everton"}, "goals": {"h": None, "a": None}, "xG": {"h": None, "a": None}}]
+    shots = {"1": {"h": [], "a": [{"result": "Goal", "minute": "30"}, {"result": "Goal", "minute": "80"}]}}
+    monkeypatch.setattr(build_dataset, "fetch_season", lambda year, refresh, league: (results, shots))
+    monkeypatch.setattr(build_dataset, "current_season_start", lambda: 2026)
+    rows = build_dataset.understat_results("EPL")
+    assert len(rows) == 1                                  # unplayed match ignored
+    row = rows.iloc[0]
+    assert (row.home_goals, row.away_goals, row.first_scorer) == (0, 2, "away")
+    assert row.away_led_at_any_point and not row.home_led_at_any_point

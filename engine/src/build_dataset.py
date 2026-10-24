@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 
 from .elo import add_elo_features
-from .fetch_results import fetch_all as fetch_results
-from .fetch_understat import fetch_all as fetch_understat
+from .fetch_results import current_season_start, fetch_all as fetch_results
+from .fetch_understat import fetch_all as fetch_understat, fetch_season, normalize_season
 from .team_names import canonical_team
 from .leagues import get_league, paths
 
@@ -123,6 +123,32 @@ def build(refresh_current: bool = False, league="EPL", write: bool = True,
     if merge_pct < 98:
         raise RuntimeError(f"Understat merge rate {merge_pct:.2f}% is below the 98% target")
     return output, goals
+
+
+def understat_results(league="EPL", start: int | None = None) -> pd.DataFrame:
+    """Finished matches straight from Understat's cache (filled by `build`), for settlement only.
+
+    Understat posts results the same night; football-data.co.uk can lag days. Checked 2014/15-2026/27,
+    five leagues: scores agree on 21,932 of 21,934 matches (the two others had results changed later
+    by a disciplinary decision; Understat keeps the final-whistle score bookmakers settle on).
+    Never used as model training data.
+    """
+    selected = get_league(league)
+    first = current_season_start() if start is None else start
+    rows = []
+    for year in range(first, current_season_start() + 1):
+        results, shots = fetch_season(year, False, selected.code)
+        matches, goals = normalize_season(year, results, shots, selected.code)
+        scores = {str(r["id"]): (int(r["goals"]["h"]), int(r["goals"]["a"])) for r in results if r.get("isResult")}
+        for match in matches.itertuples():
+            first_scorer, home_led, away_led = derive_goal_states(
+                goals[goals.understat_id == match.understat_id][["minute", "team"]].reset_index(drop=True))
+            rows.append({"date": match.date, "season": match.season, "home_team": match.home_team,
+                         "away_team": match.away_team, "home_goals": scores[match.understat_id][0],
+                         "away_goals": scores[match.understat_id][1], "first_scorer": first_scorer,
+                         "home_led_at_any_point": home_led, "away_led_at_any_point": away_led})
+    return pd.DataFrame(rows, columns=["date", "season", "home_team", "away_team", "home_goals", "away_goals",
+                                       "first_scorer", "home_led_at_any_point", "away_led_at_any_point"])
 
 
 def main() -> None:

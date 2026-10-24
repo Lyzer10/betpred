@@ -174,9 +174,6 @@ Claude (hard, affects predictions):
    Record page with realised ROI per league/market/tier, then judge after >= 200 final legs). Also
    test whether fresh Betpawa prices should feed the probabilities (Bet365 closing beat the early
    average by 0.0020 log loss; Betpawa must show the same on our logged data before any change).
-2b. **Faster settlement**: football-data.co.uk results lag days (25 Oct: EPL only to 19 Oct). Settle
-   from Understat (same night, all five leagues, goal minutes for 1Up) after checking on past seasons
-   that its scores and 1Up outcomes agree with football-data.
 3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
@@ -194,6 +191,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- Settlement must not wait for football-data.co.uk (results lag days); Understat is same-night.
+- 24 Oct 2026: one result (Chelsea 0-2 Tottenham) lost all three slips: the same match was in every
+  tier. Evidence for open task 5 (tier diversification).
 - GitHub's scheduled runs can start hours late: never rely on them for timing (use the external timer).
 - Closing odds beat early odds (2019/20-2025/26, 12,457 matches, five leagues: 1X2 log loss 0.9729 ->
   0.9705, O/U 2.5 0.6708 -> 0.6681, both 95% CIs above zero). Our consensus odds (fixtures.csv) are
@@ -212,6 +212,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: slips settle the same night from Understat (`build_dataset.understat_results`, settlement
+  only, never training data); football-data rows replace them when they arrive. Check: scores agree on
+  21,932 of 21,934 matches 2014/15-2026/27 (2 later disciplinary changes), EPL 2026/27 scores and 1Up
+  outcomes 70/70. Football-data lagged days (25 Oct: EPL results only to 19 Oct).
 - 2026-10-25: run modes (final / full / prices / skip) with an external 30-minute timer; final slips
   before the first match (locked, phone notification via ntfy); Betpawa price log and CLV report
   (`src/prices.py`); Bets page shows Preview / Final. Tests: test_schedule, test_prices, final history.

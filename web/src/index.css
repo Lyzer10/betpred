@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f3f4f1;
-  --surface: #fcfcfb;
+  --bg: #f4f5f2;
+  --surface: #ffffff;
   --surface-2: #f0efec;
   --border: #e2e1dc;
   --ink: #0b0b0b;
@@ -22,6 +22,7 @@
   --hero: #0f1a2e;
   --hero-ink: #f0efec;
   --accent: #2a78d6;
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 4px 16px rgb(16 24 40 / 0.06);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,8 +40,9 @@
     --good-ink: #4cc94c;
     --warning-ink: #fab219;
     --critical-ink: #ef7272;
-    --hero: #0f1a2e;
+    --hero: #13213a;
     --accent: #3987e5;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
   }
 }
 
@@ -65,6 +67,7 @@
   --color-hero: var(--hero);
   --color-hero-ink: var(--hero-ink);
   --color-accent: var(--accent);
+  --shadow-card: var(--shadow);
 }
 
 html, body {
@@ -81,3 +84,6 @@ body {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

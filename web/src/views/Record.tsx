@@ -1,12 +1,6 @@
 import { edge, odds, pct, settle } from "../lib";
 import type { HistoryEntry, Predictions, SavedPick, TierName } from "../types";
-import { Card, Stat, TIERS } from "../ui";
-
-const STATUS = {
-  won: { icon: "✓", label: "Won", className: "text-good-ink" },
-  lost: { icon: "✕", label: "Lost", className: "text-critical-ink" },
-  pending: { icon: "•", label: "Pending", className: "text-ink-3" },
-} as const;
+import { Card, Empty, SectionTitle, Stat, StatusPill, TIERS } from "../ui";
 
 export function MyPicks({ data, picks, onRemove }: { data: Predictions; picks: SavedPick[]; onRemove: (id: string) => void }) {
   const settled = picks.map((p) => ({ pick: p, won: settle(data.results, p) }));
@@ -16,51 +10,42 @@ export function MyPicks({ data, picks, onRemove }: { data: Predictions; picks: S
   const expected = picks.reduce((sum, p) => sum + edge(p.probability, p.odds), 0) / Math.max(picks.length, 1);
   return (
     <div className="space-y-4">
-      <Card className="grid grid-cols-3 gap-3 p-4">
+      <Card className="grid grid-cols-3 gap-3 px-5 py-4">
         <Stat label="Picks" value={String(picks.length)} sub={`${done.length} settled`} />
-        <Stat label="Profit" value={`${profit >= 0 ? "+" : ""}${profit.toFixed(2)}`} sub={staked ? `ROI ${pct(profit / staked, 1)}` : "units"} />
-        <Stat label="Avg edge" value={picks.length ? `${expected >= 0 ? "+" : ""}${pct(expected, 1)}` : "–"} sub="expected" />
+        <Stat label="Profit (units)" value={`${profit >= 0 ? "+" : ""}${profit.toFixed(2)}`} sub={staked ? `ROI ${pct(profit / staked, 1)}` : "1 unit per pick"} />
+        <Stat label="Avg edge" value={picks.length ? `${expected >= 0 ? "+" : ""}${pct(expected, 1)}` : "–"} sub="when saved" />
       </Card>
-      {!picks.length && (
-        <Card className="p-6 text-center text-sm text-ink-2">
-          Open a match, type your bookmaker's odds next to a market and tap <b>Save</b>. Picks settle automatically when results come in.
+      {!picks.length ? (
+        <Empty>Open a match, type your bookmaker's odds next to a market and tap <b>Save to My picks</b>. Picks settle automatically when results come in.</Empty>
+      ) : (
+        <Card className="overflow-hidden">
+          {settled.map(({ pick, won }) => (
+            <div key={pick.id} className="flex items-center gap-3 border-t border-border/60 px-5 py-3.5 first:border-t-0">
+              <StatusPill status={won === null ? "pending" : won ? "won" : "lost"} />
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-semibold">{pick.label}</div>
+                <div className="truncate text-xs text-ink-3">{pick.home} v {pick.away} · {pct(pick.probability)} @ {odds(pick.odds)}</div>
+              </div>
+              <button onClick={() => onRemove(pick.id)} className="text-xs text-ink-3" aria-label={`Remove ${pick.label}`}>Remove</button>
+            </div>
+          ))}
         </Card>
       )}
-      {settled.length > 0 && (
-        <Card>
-          <ul className="divide-y divide-border">
-            {settled.map(({ pick, won }) => {
-              const s = STATUS[won === null ? "pending" : won ? "won" : "lost"];
-              return (
-                <li key={pick.id} className="flex items-center gap-3 px-4 py-3">
-                  <span className={`w-14 text-xs font-semibold ${s.className}`}><span aria-hidden>{s.icon}</span> {s.label}</span>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate text-sm font-semibold">{pick.label}</div>
-                    <div className="truncate text-xs text-ink-3">{pick.home} v {pick.away} · {pct(pick.probability)} @ {odds(pick.odds)}</div>
-                  </div>
-                  <button onClick={() => onRemove(pick.id)} className="text-xs text-ink-3 hover:text-critical-ink" aria-label="Remove pick">Remove</button>
-                </li>
-              );
-            })}
-          </ul>
-        </Card>
-      )}
-      <p className="px-1 text-xs text-ink-3">Picks are stored on this device only.</p>
+      <p className="px-2 text-xs text-ink-3">Picks are stored on this device only.</p>
     </div>
   );
 }
 
 function HistoryRow({ entry }: { entry: HistoryEntry }) {
-  const s = STATUS[entry.status];
   return (
-    <li className="flex items-center gap-3 px-4 py-3">
-      <span className={`w-16 text-xs font-semibold ${s.className}`}><span aria-hidden>{s.icon}</span> {s.label}</span>
+    <div className="flex items-center gap-3 border-t border-border/60 px-5 py-3.5 first:border-t-0">
+      <StatusPill status={entry.status} />
       <div className="min-w-0 flex-1">
         <div className="text-sm font-semibold">{TIERS[entry.tier].title} · odds {odds(entry.total_odds)}</div>
-        <div className="truncate text-xs text-ink-3">{entry.legs.map((l) => `${l.home} v ${l.away}: ${l.label}`).join(" · ")}</div>
+        <div className="truncate text-xs text-ink-3">{entry.legs.map((l) => `${l.home} v ${l.away}`).join(" · ")}</div>
       </div>
-      <span className="text-xs text-ink-2">{pct(entry.win_probability)}</span>
-    </li>
+      <span className="text-xs font-medium text-ink-2">{pct(entry.win_probability)}</span>
+    </div>
   );
 }
 
@@ -69,14 +54,33 @@ export function Record({ data }: { data: Predictions }) {
   // Newest round first; within a round, Safe -> Medium -> Big.
   const history = [...data.history].sort((a, b) =>
     b.round.localeCompare(a.round) || tiers.indexOf(a.tier) - tiers.indexOf(b.tier));
+  const live = data.live_record;
+  const settledSlips = data.history.filter((h) => h.status !== "pending");
   return (
-    <div className="space-y-4">
-      <Card className="p-4">
-        <h3 className="text-sm font-semibold">Backtest · 2024/25 to today</h3>
-        <p className="mt-1 text-xs text-ink-3">Every round replayed using only data available before kickoff.</p>
-        <table className="mt-3 w-full text-sm">
+    <div>
+      <SectionTitle aside={live.matches ? `${live.matches} matches` : undefined}>Live predictions</SectionTitle>
+      {live.matches ? (
+        <Card className="grid grid-cols-3 gap-3 px-5 py-4">
+          <Stat label="Main call right" value={pct(live.result_hit_rate ?? 0)} sub="home / draw / away" />
+          <Stat label="70%+ picks hit" value={live.confident_hit_rate != null ? pct(live.confident_hit_rate) : "–"} sub={`${live.confident_picks} picks`} />
+          <Stat label="vs bookmaker" value={live.log_loss != null && live.market_log_loss != null ? (live.log_loss <= live.market_log_loss ? "Ahead" : "Behind") : "–"}
+            sub={live.log_loss != null ? `log loss ${live.log_loss.toFixed(3)} v ${live.market_log_loss?.toFixed(3)}` : undefined} />
+        </Card>
+      ) : (
+        <Empty>Live accuracy appears here once the first predicted matches have finished.</Empty>
+      )}
+
+      <SectionTitle aside={settledSlips.length ? `${settledSlips.filter((h) => h.status === "won").length}/${settledSlips.length} won` : undefined}>
+        Live slips
+      </SectionTitle>
+      {history.length ? <Card className="overflow-hidden">{history.map((e) => <HistoryRow key={`${e.round}-${e.tier}`} entry={e} />)}</Card>
+        : <Empty>No live slips yet.</Empty>}
+
+      <SectionTitle aside="2024/25 to today">Backtest</SectionTitle>
+      <Card className="px-5 py-4">
+        <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs text-ink-3">
+            <tr className="text-left text-[11px] text-ink-3">
               <th className="pb-2 font-medium">Tier</th>
               <th className="pb-2 text-right font-medium">Slips</th>
               <th className="pb-2 text-right font-medium">Avg odds</th>
@@ -84,27 +88,22 @@ export function Record({ data }: { data: Predictions }) {
               <th className="pb-2 text-right font-medium">Won</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody>
             {tiers.map((tier) => {
               const b = data.backtest[tier];
               return b ? (
-                <tr key={tier}>
-                  <td className="py-2 font-semibold">{TIERS[tier].title}</td>
-                  <td className="py-2 text-right">{b.slips}</td>
-                  <td className="py-2 text-right">{odds(b.average_odds)}</td>
-                  <td className="py-2 text-right text-ink-2">{pct(b.predicted_win_rate, 1)}</td>
-                  <td className="py-2 text-right font-bold">{pct(b.win_rate, 1)}</td>
+                <tr key={tier} className="border-t border-border/60">
+                  <td className="py-2.5 font-semibold">{TIERS[tier].title}</td>
+                  <td className="py-2.5 text-right text-ink-2">{b.slips}</td>
+                  <td className="py-2.5 text-right text-ink-2">{odds(b.average_odds)}</td>
+                  <td className="py-2.5 text-right text-ink-2">{pct(b.predicted_win_rate, 1)}</td>
+                  <td className="py-2.5 text-right font-bold">{pct(b.win_rate, 1)}</td>
                 </tr>
               ) : null;
             })}
           </tbody>
         </table>
-      </Card>
-      <Card>
-        <h3 className="px-4 pt-4 text-sm font-semibold">Live slips</h3>
-        <p className="px-4 text-xs text-ink-3">Published before kickoff and never edited afterwards.</p>
-        {history.length ? <ul className="mt-2 divide-y divide-border">{history.map((e) => <HistoryRow key={`${e.round}-${e.tier}`} entry={e} />)}</ul>
-          : <p className="p-4 text-sm text-ink-2">No live slips yet.</p>}
+        <p className="mt-3 text-[11px] leading-relaxed text-ink-3">Every round replayed using only information available before kickoff.</p>
       </Card>
     </div>
   );

@@ -87,9 +87,17 @@ npm run build      # production build in web/dist
 ```
 
 Screens: **Slips** (three tiers; type your bookmaker's odds to get a value
-verdict), **Matches** (every market with our probability vs the bookmaker's),
-**My picks** (saved on the device, settled from results), **Record** (backtest
-and live slip history).
+verdict; a slip locks once its first match starts), **Matches** (every market
+with our probability vs the bookmaker's), **History** (each day's saved
+predictions next to the actual results), **My picks** (saved on the device,
+settled from results), **Record** (live accuracy vs the bookmaker, live slips,
+backtest).
+
+Every run also saves `web/public/data/archive/<date>.json`; a match keeps the
+last prediction made before its kickoff, and results are attached once known.
+
+Browser check (Microsoft Edge at phone width, light and dark):
+`npm run build`, `npx vite preview --port 4173`, then `npm run check:e2e`.
 
 ## Deploying for free
 

@@ -9,7 +9,7 @@ probability is the product of the calibrated leg probabilities.
 
 Odds: football-data.co.uk has no history for 1Up, first scorer, BTTS or the other
 goal lines. Leg odds are therefore ESTIMATED from the bookmaker's own pre-match
-prices (never from our model, which would make the backtest circular):
+average prices, the kind fixtures.csv offers live (never from our model, which would make the backtest circular):
   1. remove the margin from opening 1X2 and over/under 2.5 odds;
   2. fit the bookmaker-implied DC score matrix to those fair probabilities;
   3. read every market off that matrix (1Up/first scorer via the exchangeable
@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import least_squares
 
-from .calibration import ENGINE_DIR, OUTPUT_PATH, TEST_SEASONS
+from .calibration import ENGINE_DIR, MATCHES_PATH, OUTPUT_PATH, TEST_SEASONS
 from .dixon_coles import market_probabilities, score_matrix
 from .goal_timing import PRIORS, TIMING_PATH
 
@@ -34,6 +34,7 @@ LEGS_PATH = ENGINE_DIR / "data" / "processed" / "accumulator_legs.parquet"
 SLIPS_PATH = ENGINE_DIR / "data" / "processed" / "accumulator_slips.parquet"
 REPORT_PATH = ENGINE_DIR / "reports" / "stage4_report.md"
 RETAIL_MARGIN = 0.07
+AVERAGE_ODDS = ["avg_odds_home", "avg_odds_draw", "avg_odds_away", "avg_odds_over25", "avg_odds_under25"]
 ODDS_RESOLUTION = 0.005  # log-odds bucket width for the slip search (~0.5% in odds)
 
 
@@ -119,6 +120,9 @@ def build_leg_table() -> pd.DataFrame:
     cal_columns = ["cal_home", "cal_draw", "cal_away", "cal_over05", "cal_over15",
                    "cal_over25", "cal_over35", "cal_btts", "rho"]
     frame = timing.merge(calibrated[["match_id", *cal_columns]], on="match_id", validate="one_to_one")
+    # Use market-average prices, the same kind the live fixtures file provides.
+    average = pd.read_parquet(MATCHES_PATH)[["match_id", *AVERAGE_ODDS]]
+    frame = frame.merge(average, on="match_id", validate="one_to_one")
     frame["cal_under25"] = 1 - frame.cal_over25
     frame["cal_under35"] = 1 - frame.cal_over35
     frame["cal_btts_no"] = 1 - frame.cal_btts
@@ -129,8 +133,7 @@ def build_leg_table() -> pd.DataFrame:
 
     rows = []
     for match in frame.itertuples(index=False):
-        fair = bookmaker_fair_probabilities(match.odds_home, match.odds_draw, match.odds_away,
-                                            match.odds_over25, match.odds_under25, match.rho)
+        fair = bookmaker_fair_probabilities(*(getattr(match, column) for column in AVERAGE_ODDS), match.rho)
         for market, (probability_column, actual_column) in LEG_MARKETS.items():
             rows.append({
                 "match_id": match.match_id, "date": match.date, "season": match.season,

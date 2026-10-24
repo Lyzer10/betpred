@@ -22,6 +22,7 @@ SOURCE_COLUMNS = {
     # Older seasons (pre-2019/20) publish Betbrain averages instead of Avg.
     "P>2.5": "p_over25", "P<2.5": "p_under25",
     "BbAv>2.5": "bbav_over25", "BbAv<2.5": "bbav_under25",
+    "BbAvH": "bbavh", "BbAvD": "bbavd", "BbAvA": "bbava",
     # Closing odds: evaluation only, never model inputs.
     "PSCH": "psch", "PSCD": "pscd", "PSCA": "psca",
     "AvgCH": "avgch", "AvgCD": "avgcd", "AvgCA": "avgca",

@@ -74,6 +74,13 @@ def build(refresh_current: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
         "odds_away": _preferred(merged, ["psa", "avga", "b365a"]),
         "odds_over25": _preferred(merged, ["p_over25", "avg_over25", "bbav_over25", "b365_over25"]),
         "odds_under25": _preferred(merged, ["p_under25", "avg_under25", "bbav_under25", "b365_under25"]),
+        # Market-average odds: the only prices fixtures.csv offers for upcoming matches,
+        # so the live market blend is fitted on the same kind of prices it will see.
+        "avg_odds_home": _preferred(merged, ["avgh", "bbavh", "b365h"]),
+        "avg_odds_draw": _preferred(merged, ["avgd", "bbavd", "b365d"]),
+        "avg_odds_away": _preferred(merged, ["avga", "bbava", "b365a"]),
+        "avg_odds_over25": _preferred(merged, ["avg_over25", "bbav_over25", "b365_over25"]),
+        "avg_odds_under25": _preferred(merged, ["avg_under25", "bbav_under25", "b365_under25"]),
         # Closing odds are for evaluation only and must never be used as model features.
         "close_odds_home": _preferred(merged, ["psch", "avgch"]),
         "close_odds_draw": _preferred(merged, ["pscd", "avgcd"]),

@@ -45,6 +45,8 @@ export interface Slip {
   total_odds: number;
   win_probability: number;
   legs: SlipLeg[];
+  locked?: boolean;              // first match under way: frozen and tracked
+  status?: "won" | "lost" | "pending";
 }
 
 export interface HistoryEntry extends Slip {
@@ -80,6 +82,37 @@ export interface Predictions {
   slips: Partial<Record<TierName, Slip>>;
   history: HistoryEntry[];
   results: Result[];
+  archive: ArchiveDay[];
+  live_record: LiveRecord;
+}
+
+export interface ArchiveDay { date: string; fixtures: number; settled: number }
+
+export interface LiveRecord {
+  matches: number;
+  result_hit_rate?: number;
+  log_loss?: number | null;
+  market_log_loss?: number | null;
+  confident_picks?: number;
+  confident_hit_rate?: number | null;
+}
+
+export interface ArchivedFixture {
+  date: string;
+  time: string;
+  kickoff_utc: string;
+  home: string;
+  away: string;
+  expected_goals: [number, number];
+  markets: { market: MarketKey; label: string; probability: number; market_probability: number | null }[];
+  result?: { score: [number, number]; outcomes: Record<MarketKey, boolean> };
+}
+
+export interface ArchiveSnapshot {
+  date: string;
+  generated_at: string;
+  fixtures: ArchivedFixture[];
+  slips: Partial<Record<TierName, Slip>>;
 }
 
 export interface SavedPick {

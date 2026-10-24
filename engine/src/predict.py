@@ -41,6 +41,7 @@ TUNING_PATH = ENGINE_DIR / "reports" / "stage2_tuning.csv"
 LIVE_DIR = ENGINE_DIR / "data" / "live"
 HISTORY_PATH = LIVE_DIR / "slip_history.json"
 WEB_DATA_PATH = ENGINE_DIR.parent / "web" / "public" / "data" / "predictions.json"
+ARCHIVE_DIR = WEB_DATA_PATH.parent / "archive"
 SIMULATIONS = 20_000
 
 MARKET_LABELS = {
@@ -236,6 +237,101 @@ def recent_results(matches: pd.DataFrame, now: pd.Timestamp, days: int = 120) ->
             for _, row in recent.sort_values("date", ascending=False).iterrows()]
 
 
+def displayed_slips(round_id: str | None, slips: dict, history: list[dict], now: pd.Timestamp) -> dict:
+    """Slips to show: once a tier's slip has a match under way, show that frozen slip.
+
+    Later runs re-optimise over the matches not yet started, but those slips are
+    never recorded, so showing them would let the app and the record disagree.
+    """
+    shown = {tier: {**slip, "locked": False} for tier, slip in slips.items()}
+    for entry in history:
+        if entry["round"] == round_id and not _not_started(entry, now):
+            shown[entry["tier"]] = {key: entry[key] for key in ("total_odds", "win_probability", "legs", "status")}
+            shown[entry["tier"]]["locked"] = True
+    return shown
+
+
+def _fixture_key(fixture: dict) -> tuple:
+    return fixture["date"], fixture["home"], fixture["away"]
+
+
+def archive_snapshot(fixtures: list[dict], slips: dict, round_id: str | None, now: pd.Timestamp) -> None:
+    """Save today's predictions; matches already kicked off keep their earlier prediction."""
+    ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
+    path = ARCHIVE_DIR / f"{now.date().isoformat()}.json"
+    previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"fixtures": []}
+    current = {_fixture_key(f): f for f in previous["fixtures"]}
+    for fixture in fixtures:
+        current[_fixture_key(fixture)] = {
+            key: fixture[key] for key in ("date", "time", "kickoff_utc", "home", "away", "expected_goals", "top_scorelines")
+        } | {"markets": [{k: m[k] for k in ("market", "label", "probability", "market_probability")}
+                         for m in fixture["markets"]]}
+    snapshot = {"date": now.date().isoformat(), "generated_at": now.isoformat() + "Z", "round": round_id,
+                "fixtures": sorted(current.values(), key=lambda f: f["kickoff_utc"]),
+                "slips": {tier: {k: v for k, v in slip.items() if k != "status"} for tier, slip in slips.items()}}
+    path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
+
+
+def settle_archive(matches: pd.DataFrame) -> list[dict]:
+    """Attach final scores and per-market outcomes to archived predictions; return the index."""
+    if not ARCHIVE_DIR.exists():
+        return []
+    settled = add_actuals(matches)
+    lookup = {(row.home_team, row.away_team, row.season): row for _, row in settled.iterrows()}
+    index = []
+    for path in sorted(ARCHIVE_DIR.glob("20*.json"), reverse=True):
+        snapshot = json.loads(path.read_text(encoding="utf-8"))
+        changed = False
+        for fixture in snapshot["fixtures"]:
+            if "result" in fixture:
+                continue
+            season = season_label(current_season_start(pd.Timestamp(fixture["date"]).date()))
+            match = lookup.get((fixture["home"], fixture["away"], season))
+            if match is not None:
+                fixture["result"] = {"score": [int(match.home_goals), int(match.away_goals)],
+                                     "outcomes": {m: outcome(match, m) for m in LEG_MARKETS}}
+                changed = True
+        if changed:
+            path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
+        done = sum("result" in f for f in snapshot["fixtures"])
+        index.append({"date": snapshot["date"], "fixtures": len(snapshot["fixtures"]), "settled": done})
+    (ARCHIVE_DIR / "index.json").write_text(json.dumps(index, indent=1), encoding="utf-8")
+    return index
+
+
+def live_record() -> dict:
+    """Accuracy of published predictions: last pre-kickoff prediction per settled match."""
+    latest = {}
+    for path in sorted(ARCHIVE_DIR.glob("20*.json")) if ARCHIVE_DIR.exists() else []:
+        for fixture in json.loads(path.read_text(encoding="utf-8"))["fixtures"]:
+            latest[_fixture_key(fixture)] = fixture
+    settled = [f for f in latest.values() if "result" in f]
+    if not settled:
+        return {"matches": 0}
+    keys = ("home_win", "draw", "away_win")
+    ours, market, actual, confident = [], [], [], []
+    for fixture in settled:
+        markets = {m["market"]: m for m in fixture["markets"]}
+        ours.append([markets[k]["probability"] for k in keys])
+        market.append([markets[k]["market_probability"] or np.nan for k in keys])
+        actual.append([fixture["result"]["outcomes"][k] for k in keys])
+        confident += [fixture["result"]["outcomes"][m["market"]] for m in fixture["markets"] if m["probability"] >= 0.7]
+    ours, market, actual = np.array(ours), np.array(market, float), np.array(actual, float)
+    has_market = ~np.isnan(market).any(axis=1)
+
+    def log_loss(p, rows):
+        return float(-np.mean(np.log(np.clip((p[rows] * actual[rows]).sum(axis=1), 1e-9, 1))))
+
+    return {
+        "matches": len(settled),
+        "result_hit_rate": round(float(np.mean(ours.argmax(axis=1) == actual.argmax(axis=1))), 4),
+        "log_loss": round(log_loss(ours, has_market), 4) if has_market.any() else None,
+        "market_log_loss": round(log_loss(market, has_market), 4) if has_market.any() else None,
+        "confident_picks": len(confident),
+        "confident_hit_rate": round(float(np.mean(confident)), 4) if confident else None,
+    }
+
+
 def backtest_summary() -> dict:
     slips = pd.read_parquet(SLIPS_PATH)
     accuracy = slips[slips["mode"] == "accuracy"]
@@ -264,6 +360,7 @@ def main() -> None:
     legs = predict_fixtures(fixtures, model, matches, goals, fit_calibrators(matches), model_weight)
     round_id, slips = build_slips(legs)
     history = update_history(round_id, slips, matches, now)
+    slips = displayed_slips(round_id, slips, history, now)
 
     output = {
         "generated_at": now.isoformat() + "Z",
@@ -294,6 +391,9 @@ def main() -> None:
         "history": history,
         "results": recent_results(matches, now),
     }
+    archive_snapshot(output["fixtures"], output["slips"], round_id, now)
+    output["archive"] = settle_archive(matches)
+    output["live_record"] = live_record()
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")
     print(f"{len(output['fixtures'])} fixtures, slips for round {round_id}: {', '.join(slips)}")

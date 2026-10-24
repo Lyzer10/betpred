@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { MarketKey, Predictions, Result, SavedPick } from "./types";
+import type { ArchiveSnapshot, MarketKey, Predictions, Result, SavedPick } from "./types";
 
 export function usePredictions() {
   const [data, setData] = useState<Predictions | null>(null);
@@ -14,6 +14,37 @@ export function usePredictions() {
       .catch((reason) => setError(String(reason)));
   }, []);
   return { data, error };
+}
+
+export function useArchive(date: string | null) {
+  const [snapshot, setSnapshot] = useState<ArchiveSnapshot | null>(null);
+  useEffect(() => {
+    if (!date) return;
+    setSnapshot(null);
+    fetch(`${import.meta.env.BASE_URL}data/archive/${date}.json`, { cache: "no-cache" })
+      .then((response) => (response.ok ? response.json() : null))
+      .then(setSnapshot)
+      .catch(() => setSnapshot(null));
+  }, [date]);
+  return snapshot;
+}
+
+const SHORT_NAMES: Record<string, string> = {
+  "Manchester City": "MCI", "Manchester United": "MUN", "Nottingham Forest": "NFO", "Crystal Palace": "CRY",
+  "Aston Villa": "AVL", "West Ham": "WHU", "Newcastle": "NEW", "Tottenham": "TOT", "Wolves": "WOL",
+  "Brighton": "BHA", "Bournemouth": "BOU", "Brentford": "BRE", "Everton": "EVE", "Fulham": "FUL",
+  "Leeds": "LEE", "Liverpool": "LIV", "Arsenal": "ARS", "Chelsea": "CHE", "Sunderland": "SUN",
+  "Burnley": "BUR", "Coventry": "COV", "Hull": "HUL", "Ipswich": "IPS", "Leicester": "LEI", "Southampton": "SOU",
+};
+
+export const shortName = (team: string) => SHORT_NAMES[team] ?? team.slice(0, 3).toUpperCase();
+
+export function dayLabel(iso: string) {
+  return new Date(iso).toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });
+}
+
+export function timeLabel(iso: string) {
+  return new Date(iso).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
 }
 
 /** Expected return per unit staked: probability x odds - 1. */

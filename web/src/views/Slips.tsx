@@ -32,6 +32,15 @@ function LegBadge({ leg }: { leg: SlipLeg }) {
   );
 }
 
+function PastSlipStatus({ status }: { status: "won" | "lost" | "pending" }) {
+  const content = status === "won" ? ["✓", "Won"] : status === "lost" ? ["✕", "Lost"] : ["•", "Pending"];
+  return (
+    <span className={`past-slip-status past-slip-status-${status}`}>
+      <span aria-hidden>{content[0]}</span>{content[1]}
+    </span>
+  );
+}
+
 /** Preview until the final run shortly before the day's first match; then final, ready to place. */
 function DayStatus({ day }: { day: DayBets }) {
   if (!day.first_kickoff_utc || !Object.keys(day.slips).length) return null;
@@ -167,7 +176,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
           </div>
         </div>
       </div>
-      <ul>
+      <ul className="bg-surface">
         {slip.legs.map((leg, i) => {
           const fixture = fixtures.find((f) => f.home === leg.home && f.away === leg.away);
           const why = fixture ? explainPick(leg.market, fixture) : [];
@@ -290,31 +299,82 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
 
 function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
   const tiers = (["safe", "medium", "big"] as TierName[]).filter((t) => snapshot.slips[t]);
+  const [open, setOpen] = useState<Record<TierName, boolean>>({ safe: false, medium: false, big: false });
   if (!tiers.length) return <Empty>No accumulators were offered this day.</Empty>;
   return (
-    <Card className="overflow-hidden">
+    <div className="space-y-3">
       {tiers.map((t) => {
         const slip = snapshot.slips[t]!;
+        const status = slip.status ?? "pending";
+        const won = slip.legs.filter((leg) => leg.won === true).length;
+        const settled = slip.legs.filter((leg) => leg.won != null).length;
+        const minimum = t === "big" && slip.flexi?.length
+          ? Math.min(...slip.flexi.map((option) => option.min_correct))
+          : null;
+        const flexiPaid = minimum == null || settled < slip.legs.length ? null : won >= minimum;
         return (
-          <div key={t} className="border-t border-border/60 px-5 py-4 first:border-t-0">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold">{TIERS[t].title} · odds {odds(slip.total_odds)} · {pct(slip.win_probability)}</span>
-              <StatusPill status={slip.status ?? "pending"} />
-            </div>
-            <ul className="mt-2 space-y-1">
-              {slip.legs.map((l, i) => (
-                <li key={i} className="flex items-center gap-2 text-xs text-ink-2">
-                  <span className={`w-3 font-bold ${l.won === true ? "text-good-ink" : l.won === false ? "text-critical-ink" : "text-ink-3"}`}>
-                    {l.won === true ? "✓" : l.won === false ? "✕" : "•"}
-                  </span>
-                  <span className="truncate">{named(l)} · {l.home} v {l.away}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Card key={t} data-past-slip className="overflow-hidden">
+            <button className="block w-full bg-hero px-5 pb-5 pt-4 text-left text-hero-ink"
+              aria-expanded={open[t]} aria-controls={`past-${t}-legs`} onClick={() => setOpen({ ...open, [t]: !open[t] })}>
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className="opacity-70">{TIERS[t].range}</span>
+                <PastSlipStatus status={status} />
+              </div>
+              <div className="mt-3 flex items-end justify-between gap-4">
+                <div>
+                  <div className="text-xl font-bold">{TIERS[t].title} slip</div>
+                  <div className="mt-1 text-xs opacity-70">{open[t] ? "Tap to hide results" : "Tap to see every result"}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold">{odds(slip.total_odds)}</div>
+                  <div className="mt-1 text-xs opacity-70">{pct(slip.win_probability)} predicted</div>
+                </div>
+              </div>
+            </button>
+            {open[t] && (
+              <div id={`past-${t}-legs`}>
+                <ul className="bg-surface">
+                  {slip.legs.map((leg, i) => {
+                    const fixture = snapshot.fixtures.find((item) => item.home === leg.home && item.away === leg.away);
+                    const legStatus = leg.won === true ? "won" : leg.won === false ? "lost" : "pending";
+                    return (
+                      <li key={i} data-past-leg data-leg-status={legStatus}
+                        className="border-t border-border/60 px-5 py-3.5 first:border-t-0">
+                        <div className="flex items-center gap-3">
+                          <LegBadge leg={leg} />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex min-w-0 items-center gap-2">
+                              <span className="truncate text-sm font-semibold">{named(leg)}</span>
+                              <StatusPill status={legStatus} />
+                            </div>
+                            {fixture?.result ? (
+                              <div data-final-score className="mt-1 truncate text-xs font-semibold text-ink-2">
+                                {leg.home} {fixture.result.score[0]}–{fixture.result.score[1]} {leg.away}
+                              </div>
+                            ) : (
+                              <div className="mt-1 truncate text-xs text-ink-3">{leg.home} v {leg.away}</div>
+                            )}
+                            <div className="mt-1 truncate text-[11px] text-ink-3">
+                              {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)} · Betpawa {leg.betpawa_odds != null ? odds(leg.betpawa_odds) : "–"}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {minimum != null && (
+                  <div className="border-t border-border/60 bg-surface-2 px-5 py-3 text-xs text-ink-2">
+                    <span className="font-semibold text-ink">SportyBet Flexi:</span>{" "}
+                    {won} of {slip.legs.length} won · {flexiPaid == null ? "Pending" : flexiPaid ? "Would have paid" : "Would not have paid"}
+                  </div>
+                )}
+              </div>
+            )}
+          </Card>
         );
       })}
-    </Card>
+    </div>
   );
 }
 

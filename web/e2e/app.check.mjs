@@ -29,11 +29,39 @@ for (const scheme of ["light", "dark"]) {
   };
   const noOverflow = async (screen) => check(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] ${screen}: no horizontal overflow`);
-  const snap = async (name) => shots && page.screenshot({ path: `${shots}/${scheme}-${name}.png`, fullPage: true });
+  const menuClearsPageEnd = async (screen) => {
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    const clear = await page.evaluate(() => {
+      const end = document.querySelector("[data-page-end]")?.getBoundingClientRect();
+      const menu = document.querySelector("[data-floating-nav]")?.getBoundingClientRect();
+      return Boolean(end && menu && end.bottom <= menu.top);
+    });
+    check(clear, `[${scheme}] ${screen}: floating menu does not cover the page end`);
+  };
+  const snap = async (name) => {
+    if (!shots) return;
+    await page.waitForFunction(() => Array.from(document.images)
+      .filter((image) => {
+        const box = image.getBoundingClientRect();
+        return box.bottom > 0 && box.top < window.innerHeight;
+      })
+      .every((image) => image.complete));
+    await page.screenshot({ path: `${shots}/${scheme}-${name}.png`, fullPage: true });
+  };
   const balanceOf = async (name) => money(await page.locator("section", { hasText: `${name} balance` }).locator(".text-2xl").first().innerText());
 
   // First visit: Bets asks for balances; set them in Money.
-  await page.goto(BASE);
+  await page.goto(`${BASE}#history`);
+  await page.locator("main[data-page='bets']").waitFor();
+  check(await page.getByRole("navigation", { name: "Primary" }).getByRole("button").count() === 4,
+    `[${scheme}] floating menu has exactly four destinations`);
+  check(await page.getByRole("button", { name: "History", exact: true }).count() === 0 && await page.locator("main[data-page='bets']").count() === 1,
+    `[${scheme}] old history route opens Bets and History is removed`);
+  for (const [label, id] of [["Bets", "bets"], ["Matches", "matches"], ["Money", "money"], ["Record", "record"]]) {
+    await page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: label, exact: true }).click();
+    check(await page.locator(`main[data-page='${id}']`).count() === 1, `[${scheme}] ${label} menu destination opens`);
+  }
+  await page.getByRole("button", { name: "Bets", exact: true }).click();
   await page.getByText("Set your Betpawa and SportyBet balances").click();
   for (const [name, amount] of [["Betpawa", "50000"], ["SportyBet", "20000"]]) {
     await page.locator("section", { hasText: `${name} balance` }).getByRole("button", { name: "Set balance" }).click();
@@ -84,7 +112,7 @@ for (const scheme of ["light", "dark"]) {
       `[${scheme}] ${label || "away leg"}: badge belongs to the named away team`);
   }
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
-  await noOverflow("bets"); await snap("bets");
+  await noOverflow("bets today"); await snap("bets-today");
   await page.getByRole("button", { name: "I placed this bet" }).click();
   // Type the stake: a slip without value has no recommended stake, but you can still record a bet.
   await page.getByLabel("Stake in TSh").fill("900");
@@ -104,8 +132,29 @@ for (const scheme of ["light", "dark"]) {
   await flexiTab.click();
   await page.getByLabel("Flexi To Win amount").fill("800");
   check(await page.getByText(/Chance at least \d of \d win/).count() === 1, `[${scheme}] Flexi chance and value check shown`);
-  await noOverflow("place form"); await snap("place");
+  await noOverflow("place form");
   await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
+
+  // Past results now live on Bets: each settled slip expands to leg statuses and final scores.
+  await page.locator("[data-date='2026-10-24']").click();
+  const pastSlips = page.locator("[data-past-slip]");
+  await pastSlips.first().waitFor();
+  check(await pastSlips.first().getByText(/Won|Lost/, { exact: true }).count() === 1, `[${scheme}] past slip shows its final status`);
+  await pastSlips.first().getByRole("button").click();
+  check(await pastSlips.first().getByRole("button").getAttribute("aria-expanded") === "true", `[${scheme}] past slip expands`);
+  const settledLegs = pastSlips.first().locator("[data-past-leg][data-leg-status='won'], [data-past-leg][data-leg-status='lost']");
+  const settledLegCount = await settledLegs.count();
+  check(settledLegCount > 0, `[${scheme}] expanded past slip contains settled legs`);
+  let allSettledLegsHaveScores = settledLegCount > 0;
+  for (let i = 0; i < settledLegCount; i++) {
+    allSettledLegsHaveScores &&= await settledLegs.nth(i).locator("[data-final-score]").count() === 1;
+  }
+  check(allSettledLegsHaveScores, `[${scheme}] every settled leg shows a final score`);
+  await noOverflow("past Bets"); await snap("bets-past");
+  const pastBigSlip = pastSlips.filter({ hasText: "Big slip" });
+  await pastBigSlip.getByRole("button").click();
+  check(await pastBigSlip.getByText(/SportyBet Flexi: \d+ of \d+ won · Would have paid/).count() === 1,
+    `[${scheme}] settled Big slip shows its Flexi result`);
 
   // Money: balances follow the bets; deposits and withdrawals never count as profit.
   await page.getByRole("button", { name: "Money", exact: true }).click();
@@ -149,12 +198,13 @@ for (const scheme of ["light", "dark"]) {
   check(await recentForm.locator("[data-form-result]").count() === 5, `[${scheme}] match shows five form chips`);
   await page.getByRole("tab", { name: "Double" }).click();
   check(await page.getByText(/or draw/).count() >= 1, `[${scheme}] double chance markets shown`);
-  await noOverflow("match detail"); await snap("detail");
+  await noOverflow("match detail"); await snap("matches");
 
-  for (const screen of ["History", "Record"]) {
-    await page.getByRole("button", { name: screen, exact: true }).click();
-    await page.waitForTimeout(300);
+  for (const [screen, id] of [["Bets", "bets"], ["Matches", "matches"], ["Money", "money"], ["Record", "record"]]) {
+    await page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: screen, exact: true }).click();
+    await page.locator(`main[data-page='${id}']`).waitFor();
     await noOverflow(screen.toLowerCase());
+    await menuClearsPageEnd(screen);
   }
   // Theme switch cycles Auto -> Light -> Dark -> Auto and is remembered.
   const themeButton = page.getByRole("button", { name: /^Theme:/ });

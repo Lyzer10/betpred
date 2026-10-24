@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { TeamBadge } from "./badges";
 import { type Verdict, edge, odds as fmtOdds, pct, verdict } from "./lib";
 import type { TierName } from "./types";
@@ -9,8 +9,8 @@ export const TIERS: Record<TierName, { title: string; range: string; blurb: stri
   big: { title: "Big", range: "4–8 matches · odds 8–12", blurb: "Long shot, bigger payout" },
 };
 
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <section className={`rounded-3xl bg-surface shadow-card ${className}`}>{children}</section>;
+export function Card({ children, className = "", ...props }: ComponentPropsWithoutRef<"section">) {
+  return <section {...props} className={`glass-light rounded-3xl ${className}`}>{children}</section>;
 }
 
 export function SectionTitle({ children, aside }: { children: ReactNode; aside?: ReactNode }) {
@@ -143,7 +143,7 @@ export function DateStrip({ dates, selected, onSelect }: { dates: string[]; sele
         const date = new Date(`${d}T12:00:00`);
         const active = d === selected;
         return (
-          <button key={d} role="tab" aria-selected={active} onClick={() => onSelect(d)}
+          <button key={d} role="tab" data-date={d} aria-selected={active} onClick={() => onSelect(d)}
             className={`relative shrink-0 px-3 pb-2.5 pt-1 text-center ${active ? "text-accent" : "text-ink-3"}`}>
             <div className="text-[11px] font-bold tracking-wide">
               {d === today ? "TODAY" : date.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()}

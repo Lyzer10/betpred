@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-10-24 (Africa/Dar_es_Salaam), by Claude Code.
+Last updated: 2026-10-25 (Africa/Dar_es_Salaam), by Codex.
 
 ---
 
@@ -99,10 +99,11 @@ snapshots before kick-offs add the closing price; `clv` in predictions.json = pu
 price logged within 90 min before kick-off - 1, overall and per league, market and tier.
 
 ### App (`web/`, React + Vite + Tailwind PWA)
-Tabs: **Bets** (date strip, Safe/Medium/Big slips, "why this bet", Flexi, "I placed this bet"),
-**Matches** (league groups with flags, badges, every market with Betpawa odds and verdict),
-**History** (each day's predictions vs results), **Money** (balances, staking mode, ledger),
-**Record** (model health, live record, backtest). Data stays on the device (localStorage).
+Tabs: **Bets** (date strip, Safe/Medium/Big slips, "why this bet", Flexi, "I placed this bet",
+and expandable past slip results with scores), **Matches** (league groups with flags, badges,
+every market with Betpawa odds and verdict), **Money** (balances, staking mode, ledger), and
+**Record** (model health, live record, backtest). The old `#history` route opens Bets. Data stays
+on the device (localStorage).
 Staking (`web/src/lib.ts` `STAKING`): smart = quarter Kelly with tier caps (3/2/1%), or % of balance,
 or fixed TSh; never a stake without a 3% edge; **pilot cap: max 3% of balance per slip until 30 of
 the user's slips have settled**.
@@ -134,7 +135,8 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 
 ## 5. Current status (2026-10-25)
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
-  pilot stake cap, health check ("insufficient data" until ~30 settled matches).
+  pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
+  and a four destination floating menu with past slip results on Bets.
 - Profitability: **not proven**. Backtest ROI used estimated odds (indicative only). Real Betpawa
   prices are archived from 24 Oct 2026 onwards: the live period is the **untouched holdout**;
   never tune any setting on it, only judge.
@@ -212,6 +214,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: glass surfaces and floating four destination menu; History removed and past slip
+  statuses, scores and Flexi results moved to expandable cards on Bets.
 - 2026-10-25: locked (in-play) slips are published complete, incl. Flexi, so past days can show
   whether Flexi paid.
 - 2026-10-25: slips settle the same night from Understat (`build_dataset.understat_results`, settlement

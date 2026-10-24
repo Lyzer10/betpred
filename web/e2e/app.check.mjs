@@ -64,6 +64,24 @@ for (const scheme of ["light", "dark"]) {
   await openUpcomingDay();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] no odds boxes on slips`);
   check(await page.getByText(VERDICT).count() === 1, `[${scheme}] slip verdict shown`);
+  const awayLegs = page.locator("[data-slip-leg][data-market='away_win'], [data-slip-leg][data-market='away_1up'], [data-slip-leg][data-market='away_first'], [data-slip-leg][data-market='double_x2']");
+  const awayLegCount = await awayLegs.count();
+  check(awayLegCount > 0, `[${scheme}] slip includes an away-team leg`);
+  for (let i = 0; i < awayLegCount; i++) {
+    const leg = awayLegs.nth(i);
+    const badge = leg.locator("img[alt$=' badge']");
+    if (await badge.count() !== 1) {
+      check(false, `[${scheme}] away leg has one team badge image`);
+      continue;
+    }
+    const alt = await badge.getAttribute("alt");
+    const team = alt?.replace(/ badge$/, "") ?? "";
+    const lines = (await leg.innerText()).split(/\r?\n/);
+    const label = lines[0] ?? "";
+    const fixture = lines.find((line) => line.includes(" v ")) ?? "";
+    check(label.includes(team) && fixture.includes(` v ${team} ·`),
+      `[${scheme}] ${label || "away leg"}: badge belongs to the named away team`);
+  }
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
   await noOverflow("bets"); await snap("bets");
   await page.getByRole("button", { name: "I placed this bet" }).click();
@@ -75,6 +93,8 @@ for (const scheme of ["light", "dark"]) {
 
   // Big slip on SportyBet with Flexi.
   await page.getByRole("tab", { name: "Big" }).click();
+  const matchWideLeg = page.locator("[data-slip-leg][data-market='under_3.5']").first();
+  check(await matchWideLeg.locator("img[alt$=' badge']").count() === 2, `[${scheme}] match-wide leg shows both team badges`);
   check(await page.getByText(/SportyBet Flexi:/).count() === 1, `[${scheme}] Flexi chances shown on Big slip`);
   await page.getByRole("button", { name: "I placed this bet" }).click();
   await page.getByRole("tab", { name: "SportyBet" }).click();

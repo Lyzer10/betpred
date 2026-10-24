@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { StakingSettings } from "./ledger";
-import type { ArchiveSnapshot, MarketKey, Predictions, Result, SavedPick } from "./types";
+import type { ArchiveSnapshot, MarketKey, Predictions, Result, SavedPick, SlipLeg } from "./types";
 
 export function usePredictions() {
   const [data, setData] = useState<Predictions | null>(null);
@@ -39,6 +39,24 @@ const SHORT_NAMES: Record<string, string> = {
 };
 
 export const shortName = (team: string) => SHORT_NAMES[team] ?? team.slice(0, 3).toUpperCase();
+
+/** Team represented by a slip leg's badge; null means the market concerns both teams. */
+export function legTeam(leg: Pick<SlipLeg, "market">): "home" | "away" | null {
+  switch (leg.market) {
+    case "home_win":
+    case "home_1up":
+    case "home_first":
+    case "double_1x":
+      return "home";
+    case "away_win":
+    case "away_1up":
+    case "away_first":
+    case "double_x2":
+      return "away";
+    default:
+      return null;
+  }
+}
 
 export function dayLabel(iso: string) {
   return new Date(iso).toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" });

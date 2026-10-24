@@ -1,14 +1,36 @@
 import { useState } from "react";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingSettings, newId, settledSlips, summarise } from "../ledger";
-import { STAKING, VALUE_EDGE, edge, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
-import type { ArchiveSnapshot, DayBets, Predictions, Slip, TierName } from "../types";
-import { Flag } from "../badges";
+import { STAKING, VALUE_EDGE, edge, legTeam, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
+import type { ArchiveSnapshot, DayBets, Predictions, Slip, SlipLeg, TierName } from "../types";
+import { Flag, TeamBadge } from "../badges";
 import { explainPick } from "../explain";
 import { type Fixture, PREMIER_LEAGUE } from "../types";
-import { Card, Crest, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
+import { Card, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
 const named = (leg: { label: string; home: string; away: string }) =>
   leg.label.replace("Home", leg.home).replace("Away", leg.away);
+
+function LegBadge({ leg }: { leg: SlipLeg }) {
+  const side = legTeam(leg);
+  if (side) {
+    const team = leg[side];
+    return (
+      <span className="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={team} size={22} alt={`${team} badge`} />
+      </span>
+    );
+  }
+  return (
+    <span className="relative h-[26px] w-[26px] shrink-0">
+      <span className="absolute right-0 top-[3px] inline-flex rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={leg.away} size={16} alt={`${leg.away} badge`} />
+      </span>
+      <span className="absolute left-0 top-[3px] z-10 inline-flex rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={leg.home} size={16} alt={`${leg.home} badge`} />
+      </span>
+    </span>
+  );
+}
 
 /** Where each tier is usually placed; changeable when recording the bet. */
 const DEFAULT_BOOKMAKER: Record<TierName, Bookmaker> = { safe: "betpawa", medium: "betpawa", big: "sportybet" };
@@ -135,11 +157,11 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
           const fixture = fixtures.find((f) => f.home === leg.home && f.away === leg.away);
           const why = fixture ? explainPick(leg.market, fixture) : [];
           return (
-            <li key={i} className="border-t border-border/60 first:border-t-0">
+            <li key={i} data-slip-leg data-market={leg.market} className="border-t border-border/60 first:border-t-0">
               <div className="flex items-center gap-3 px-5 py-3.5">
                 <button className="flex min-w-0 flex-1 items-center gap-3 text-left" disabled={!why.length}
                   onClick={() => setOpen({ ...open, [i]: !open[i] })} aria-expanded={!!open[i]} aria-label={`Why ${named(leg)}`}>
-                  <Crest team={leg.home} size="sm" />
+                  <LegBadge leg={leg} />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5 text-sm font-semibold">
                       <span className="truncate">{named(leg)}</span>

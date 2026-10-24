@@ -191,6 +191,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: accumulator legs now show the selected team's badge, or both badges for match-wide markets.
 - 2026-10-25: gates made one-sided (over-confidence only): La Liga over 1.5 and EPL under 3.5 back in
   slips; 6 pairs remain excluded. Tests in `engine/tests/test_market_gates.py`.
 - 2026-10-25: pre-registered league x market gates run (`engine/src/market_gates.py`); the 8 FAIL

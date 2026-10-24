@@ -20,12 +20,12 @@ const badgeUrl = (team: string) => {
 };
 
 /** Club badge; falls back to the team's initials when there is no image or it fails to load. */
-export function TeamBadge({ team, size = 28 }: { team: string; size?: number }) {
+export function TeamBadge({ team, size = 28, alt = "" }: { team: string; size?: number; alt?: string }) {
   const [failed, setFailed] = useState(false);
   const url = badgeUrl(team);
   if (url && !failed) {
     return (
-      <img src={url} alt="" width={size} height={size} loading="lazy" onError={() => setFailed(true)}
+      <img src={url} alt={alt} width={size} height={size} loading="lazy" onError={() => setFailed(true)}
         className="shrink-0 object-contain" style={{ width: size, height: size }} />
     );
   }

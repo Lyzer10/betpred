@@ -4,6 +4,7 @@ import pandas as pd
 from src.leagues import ENGINE_DIR, LEAGUES, paths
 from src.build_dataset import build
 from src.fetch_results import current_season_start
+from src.team_names import canonical_team
 
 
 def test_registry_fields_and_team_counts():
@@ -27,6 +28,28 @@ def test_epl_paths_are_exactly_legacy_paths():
 def test_unknown_league_is_strict():
     with pytest.raises(ValueError, match="Unknown league"):
         paths("UNKNOWN")
+
+
+@pytest.mark.parametrize("league,source,canonical", [
+    ("EPL", "Manchester United", "Manchester United"),
+    ("LALIGA", "Athletic Club", "Ath Bilbao"),
+    ("SERIEA", "Inter Milano", "Inter"),
+    ("BUNDES", "Borussia M.Gladbach", "M'gladbach"),
+    ("LIGUE1", "Paris Saint-Germain", "Paris SG"),
+])
+def test_team_mapping_is_strict_per_league(league, source, canonical):
+    assert canonical_team(source, league) == canonical
+    with pytest.raises(ValueError, match="Unmapped team"):
+        canonical_team(f"Unknown {league}", league)
+
+
+@pytest.mark.parametrize("league", LEAGUES)
+def test_saved_walk_forward_has_no_leakage(league):
+    prediction_path = paths(league).predictions_dc
+    if not prediction_path.exists():
+        pytest.skip(f"No saved backtest for {league}")
+    predictions = pd.read_parquet(prediction_path)
+    assert (predictions.training_max_date < predictions.prediction_date).all()
 
 
 def test_epl_parameterized_rebuild_is_identical():

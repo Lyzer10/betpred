@@ -134,8 +134,10 @@ def build_leg_table(league="EPL") -> pd.DataFrame:
                    "cal_over25", "cal_over35", "cal_btts", "rho"]
     frame = timing.merge(calibrated[["match_id", *cal_columns]], on="match_id", validate="one_to_one")
     # Use market-average prices, the same kind the live fixtures file provides.
-    average = pd.read_parquet(league_paths.matches)[["match_id", *AVERAGE_ODDS]]
-    frame = frame.merge(average, on="match_id", validate="one_to_one")
+    missing_odds = [column for column in AVERAGE_ODDS if column not in frame]
+    if missing_odds:
+        average = pd.read_parquet(league_paths.matches)[["match_id", *missing_odds]]
+        frame = frame.merge(average, on="match_id", validate="one_to_one")
     frame["cal_under25"] = 1 - frame.cal_over25
     frame["cal_under35"] = 1 - frame.cal_over35
     frame["cal_btts_no"] = 1 - frame.cal_btts

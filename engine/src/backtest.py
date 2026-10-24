@@ -115,7 +115,7 @@ def _binary_metrics(probability, actual):
 
 
 def _normalized_odds(frame: pd.DataFrame, columns: list[str]) -> tuple[np.ndarray, np.ndarray]:
-    valid = frame[columns].notna().all(axis=1).to_numpy()
+    valid = (frame[columns].notna() & frame[columns].gt(0)).all(axis=1).to_numpy()
     inverse = 1 / frame.loc[valid, columns].to_numpy(float)
     return inverse / inverse.sum(axis=1, keepdims=True), valid
 

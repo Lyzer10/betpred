@@ -39,9 +39,9 @@ def fetch_season(year: int, refresh: bool = False, league="EPL") -> tuple[list[d
     selected = get_league(league)
     results_path = paths(selected).understat_file(year, "results")
     shots_path = paths(selected).understat_file(year, "shots")
-    if results_path.exists() and shots_path.exists() and not refresh:
+    # Preserve the legacy EPL cache semantics and its byte-for-byte rebuild.
+    if selected.code == "EPL" and results_path.exists() and shots_path.exists() and not refresh:
         return json.loads(results_path.read_text(encoding="utf-8")), json.loads(shots_path.read_text(encoding="utf-8"))
-
     with UnderstatClient() as client:
         if results_path.exists() and not refresh:
             results = json.loads(results_path.read_text(encoding="utf-8"))

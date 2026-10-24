@@ -57,8 +57,15 @@ def test_epl_parameterized_rebuild_is_identical():
     current = current_season_start()
     if not league_paths.understat_file(current, "shots").exists():
         pytest.skip("Current EPL raw cache is not available")
-    expected_matches = pd.read_parquet(league_paths.matches)
-    expected_goals = pd.read_parquet(league_paths.goals)
-    actual_matches, actual_goals = build(league="EPL", write=False)
+    # Compare completed seasons only: the daily run refreshes the in-progress season's raw
+    # files (new goals every matchday) without re-committing the parquet files.
+    season = f"{current}/{str(current + 1)[-2:]}"
+
+    def completed(matches: pd.DataFrame, goals: pd.DataFrame):
+        past = matches[matches.season != season].reset_index(drop=True)
+        return past, goals[goals.match_id.isin(past.match_id)].reset_index(drop=True)
+
+    expected_matches, expected_goals = completed(pd.read_parquet(league_paths.matches), pd.read_parquet(league_paths.goals))
+    actual_matches, actual_goals = completed(*build(league="EPL", write=False))
     assert actual_matches.equals(expected_matches)
     assert actual_goals.equals(expected_goals)

@@ -139,6 +139,9 @@ for (const scheme of ["light", "dark"]) {
   await page.locator("[data-date='2026-10-24']").click();
   const pastSlips = page.locator("[data-past-slip]");
   await pastSlips.first().waitFor();
+  const pastBlue = await page.locator("[data-past-slip-header]").first().evaluate((el) => getComputedStyle(el).backgroundColor);
+  const [, , pastB] = (pastBlue.match(/[\d.]+/g) ?? []).map(Number);
+  check(pastB >= 150, `[${scheme}] past slip card is logo blue, not the dark hero (${pastBlue})`);
   check(await pastSlips.first().getByText(/Won|Lost/, { exact: true }).count() === 1, `[${scheme}] past slip shows its final status`);
   await pastSlips.first().getByRole("button").click();
   check(await pastSlips.first().getByRole("button").getAttribute("aria-expanded") === "true", `[${scheme}] past slip expands`);
@@ -182,7 +185,24 @@ for (const scheme of ["light", "dark"]) {
   });
   await page.reload();
   await page.getByText("Placed bets").waitFor();
-  check(await page.getByText(/^✓\s*Won$/).count() >= 1, `[${scheme}] finished bet settles as Won`);
+  const placed = page.locator("[data-placed-bets]");
+  // Month totals equal the sum of that month's bets in the saved ledger.
+  const monthStake = await page.evaluate(() => {
+    const ledger = JSON.parse(localStorage.getItem("pl-predictor:ledger"));
+    const bets = ledger.entries.filter((e) => e.type === "bet");
+    const month = bets.map((b) => b.day).sort().at(-1).slice(0, 7);
+    return bets.filter((b) => b.day.startsWith(month)).reduce((a, b) => a + b.stake, 0);
+  });
+  const stakedShown = Number((await placed.locator("[data-month-summary]").getByText(/^TSh/).nth(0).textContent()).replace(/[^\d]/g, ""));
+  check(stakedShown === monthStake, `[${scheme}] month summary staked equals the month's bets (${stakedShown} vs ${monthStake})`);
+  // Choosing a day in the strip shows only that day's bets.
+  await placed.locator("[data-date='2026-10-19']").click();
+  check(await placed.locator("[data-bet-row]").count() === 1, `[${scheme}] Money day strip shows only that day's bets`);
+  check(await placed.getByText(/^✓\s*Won$/).count() >= 1, `[${scheme}] finished bet settles as Won`);
+  // Deposits and withdrawals live in their own section, never among bets.
+  check(await placed.locator("[data-transfer-row]").count() === 0, `[${scheme}] no transfers among bets`);
+  await page.locator("[data-transfers] > button").click();
+  check(await page.locator("[data-transfers] [data-transfer-row]").count() === 2, `[${scheme}] deposits and withdrawals listed separately`);
   check(await balanceOf("Betpawa") === betpawaAfter + 5000 - 1000 + 2500, `[${scheme}] winnings added to balance`);
   await noOverflow("money"); await snap("money");
 
@@ -205,6 +225,7 @@ for (const scheme of ["light", "dark"]) {
     await page.locator(`main[data-page='${id}']`).waitFor();
     await noOverflow(screen.toLowerCase());
     await menuClearsPageEnd(screen);
+    if (id === "record") await snap("record");
   }
   // Theme switch cycles Auto -> Light -> Dark -> Auto and is remembered.
   const themeButton = page.getByRole("button", { name: /^Theme:/ });

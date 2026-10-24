@@ -135,7 +135,11 @@ const isoDay = (date: Date) =>
 export const todayIso = () => isoDay(new Date());
 
 /** Compact date strip: weekday over date, TODAY highlighted, selected day underlined. */
-export function DateStrip({ dates, selected, onSelect }: { dates: string[]; selected?: string; onSelect: (date: string) => void }) {
+export type DateMarker = "won" | "lost" | "mixed" | "pending";
+
+export function DateStrip({ dates, selected, onSelect, markers }: {
+  dates: string[]; selected?: string; onSelect: (date: string) => void; markers?: Record<string, DateMarker>;
+}) {
   const today = todayIso();
   return (
     <div className="no-scrollbar -mx-4 flex overflow-x-auto border-b border-border/70 px-2" role="tablist">
@@ -149,7 +153,8 @@ export function DateStrip({ dates, selected, onSelect }: { dates: string[]; sele
               {d === today ? "TODAY" : date.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()}
             </div>
             <div className="text-[11px] font-medium">{date.toLocaleDateString(undefined, { day: "numeric", month: "short" }).toUpperCase()}</div>
-            {active && <span className="absolute inset-x-2 bottom-0 h-[3px] rounded-full bg-accent" />}
+            {markers?.[d] && <span aria-label={`${markers[d]} bets`} className={`date-result-dot date-result-${markers[d]} mt-1`} />}
+            {active && <span className="date-active-line absolute inset-x-2 bottom-0 h-[3px] rounded-full" />}
           </button>
         );
       })}

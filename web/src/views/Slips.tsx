@@ -159,7 +159,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
   const hasValue = complete && edge(slip.win_probability, total) >= VALUE_EDGE;
   return (
     <Card className="overflow-hidden">
-      <div className="bg-hero px-5 pb-5 pt-4 text-hero-ink">
+      <div data-current-slip-hero className="slip-hero px-5 pb-5 pt-4 text-hero-ink">
         <div className="flex items-center justify-between text-xs opacity-70">
           <span>{TIERS[tier].range}</span>
           {slip.locked && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">Locked · in play</span>}
@@ -314,7 +314,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
         const flexiPaid = minimum == null || settled < slip.legs.length ? null : won >= minimum;
         return (
           <Card key={t} data-past-slip className="overflow-hidden">
-            <button className="block w-full bg-hero px-5 pb-5 pt-4 text-left text-hero-ink"
+            <button data-past-slip-header className="past-slip-card block w-full px-5 pb-5 pt-4 text-left"
               aria-expanded={open[t]} aria-controls={`past-${t}-legs`} onClick={() => setOpen({ ...open, [t]: !open[t] })}>
               <div className="flex items-center justify-between gap-3 text-xs">
                 <span className="opacity-70">{TIERS[t].range}</span>

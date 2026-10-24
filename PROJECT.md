@@ -258,6 +258,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: colours from the logo (navy #000f30, electric blue #0dd9fe, gold #f6c956), real-black
+  dark mode without purple; past slips on logo-blue glass; Money placed bets as month summary + day
+  strip + compact table, deposits/withdrawals in their own collapsed section.
 - 2026-10-25: pre-registered tier diversity study (`src/diversity_study.py`, tests); its rule picked
   no-shared-matches, but review showed the metric rewarded betting less, so live tiers stay independent.
 - 2026-10-25: glass surfaces and floating four destination menu; History removed and past slip

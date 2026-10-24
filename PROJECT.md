@@ -151,10 +151,9 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   away-or-draw (56.5% vs 53.1%, low in all three). Serie A and Bundesliga home 1Up failures come mostly
   from one season and 2026/27 so far runs the other way (small n): the monthly re-check (same rules,
   more data) is how a pair comes back, never a manual override.
-- Tier diversity study (task 5, `engine/reports/slip_diversity.md`): no shared matches passed the
-  pre-registered rule and is live. Mean daily log growth was -0.00580 versus -0.00599 for independent
-  tiers (difference +0.00019, 95% CI -0.00383 to +0.00442); every-slip-loss days fell from 54.0% to
-  53.7%. The at-most-one-shared variant failed because its all-loss share did not fall.
+- Tier diversity study (task 5, `engine/reports/slip_diversity.md`): independent tiers (A) KEPT.
+  No-shared-matches (B) passed the pre-registered rule, but the rule's metric was biased (see task 5):
+  per TSh staked B lost more (-11.6% vs -8.4%), and all-loss days fell by one day in 402.
 
 ## 6. Open tasks (in priority order)
 Claude (hard, affects predictions):
@@ -183,8 +182,8 @@ Claude (hard, affects predictions):
 3. **Per-league and per-market monitoring** in the health check and Record page (1Up first).
 4. **EPL model weight**: live 0.25 was learned on test legs only; learned on all 5 seasons it is
    ~0.05. Test 0.05 vs 0.25 on slip outcomes under the task-1 rules; change only if it wins.
-5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; no shared matches
-   adopted in `predict.build_slips`).
+5. **Tier diversification** (DONE 2026-10-25, `python -m src.diversity_study`; independent tiers KEPT,
+   see the review after the result).
    PRE-REGISTERED RULES, committed before any result was computed; do not change them after seeing results:
    - Data: test seasons 2024/25 onwards. Combine all five leagues' `paths(code).accumulator_legs`
      tables because the live app pools all leagues. Use `probability` for EPL and
@@ -214,6 +213,14 @@ Claude (hard, affects predictions):
      +0.00093 (95% CI -0.00240 to +0.00401), and 54.0% all-loss days. B passed both adoption
      conditions. C failed the lower-all-loss condition. Safe / Medium / Big actual win rates were
      A 35.7% / 27.2% / 10.2%, B 35.7% / 25.9% / 8.0%, C 35.7% / 26.2% / 11.2%.
+   - REVIEW (Claude, 2026-10-25), why B was NOT adopted although it passed: every backtest slip loses
+     on average (estimated odds include the margin), so a variant that offers fewer slips "grows" the
+     bankroll just by betting less. B offers 220 fewer Medium/Big slips. Measured without that bias,
+     B is worse: ROI per unit staked A -8.4%, B -11.6%, C -8.7%; on the 207 days where A and B offer
+     the same tiers, B-A daily log growth -0.0013 (95% CI -0.0075 to +0.0049); the 220 slips B drops
+     were well calibrated (won 19.5%, predicted 19.3%); all-loss days A 198, B 197 of 402. The flaw
+     was in the rule (Claude's design), not in Codex's work. Shared matches do not cause the all-loss
+     days: about half of days lose every slip in all variants because each slip's chance is low.
 6. Champions League (needs a free results source), monthly automatic re-check job.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
@@ -225,9 +232,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Shots+corners "pressure" (Wheatcroft 2020, LSE paper owner sent) | no reliable gain for over/under or 1Up; paper loses at average odds | rejected (`src/pressure_study.py`, `src/pressure_1up_study.py`) |
 | Per-market model weights (EPL) | worse than one global weight (0.60164 vs 0.60147) | rejected (`src/market_weight_study.py`) |
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
-| No shared matches across Safe/Medium/Big | similar growth to independent tiers (difference +0.00019, 95% CI -0.00383 to +0.00442) and fewer all-loss days (53.7% vs 54.0%) | adopted (`src/diversity_study.py`) |
+| No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- When comparing strategies that bet different amounts, compare per unit staked or on matched days:
+  with negative-EV backtest odds, the variant that bets least always "grows" most (2026-10-25).
 - Settlement must not wait for football-data.co.uk (results lag days); Understat is same-night.
 - 24 Oct 2026: one result (Chelsea 0-2 Tottenham) lost all three slips: the same match was in every
   tier. Evidence for open task 5 (tier diversification).
@@ -249,8 +258,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
-- 2026-10-25: pre-registered tier diversity study adopted no shared matches across Safe, Medium and
-  Big; exact pooled five-league backtest and live regression test added.
+- 2026-10-25: pre-registered tier diversity study (`src/diversity_study.py`, tests); its rule picked
+  no-shared-matches, but review showed the metric rewarded betting less, so live tiers stay independent.
 - 2026-10-25: glass surfaces and floating four destination menu; History removed and past slip
   statuses, scores and Flexi results moved to expandable cards on Bets.
 - 2026-10-25: locked (in-play) slips are published complete, incl. Flexi, so past days can show

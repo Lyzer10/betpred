@@ -39,3 +39,17 @@ A challenger passes only when its paired difference interval includes zero or is
 |---|---:|---:|---:|
 | B | Yes | Yes | Yes |
 | C | Yes | No | No |
+
+## Review (Claude, 2026-10-25): independent tiers kept
+
+Every backtest slip loses money on average (the estimated odds include the bookmaker margin), so a
+variant that offers fewer slips shows higher "growth" simply by betting less. B offers 220 fewer
+Medium/Big slips. Measured without that bias:
+
+| Check | A | B | C |
+|---|---:|---:|---:|
+| ROI per unit staked | -8.4% | -11.6% | -8.7% |
+| All-loss days (of 402) | 198 | 197 | 198 |
+
+On the 207 days where A and B offer the same tiers, B-A daily log growth is -0.0013 (95% CI -0.0075
+to +0.0049). The 220 slips B drops won 19.5% against 19.3% predicted. Decision: keep A.

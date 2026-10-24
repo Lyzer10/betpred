@@ -319,22 +319,13 @@ def build_slips(legs: pd.DataFrame, blocked: set[tuple[str, str]] | None = None)
     blocked = failed_gates() if blocked is None else blocked
     league = legs["league"] if "league" in legs else pd.Series("EPL", index=legs.index)
     allowed = pd.Series([(lg, m) not in blocked for lg, m in zip(league, legs.market)], index=legs.index, dtype=bool)
-    pool = legs[legs.market.isin(SLIP_MARKETS) & allowed & legs.odds.notna() & (legs.odds >= 1.05)].copy()
-    # The pooled live feed spans leagues whose source IDs need not be unique.
-    # Variant B of the pre-registered diversity study won the adoption rule:
-    # after each tier is chosen, its matches cannot appear in a later tier.
-    match_ids = pool["match_id"] if "match_id" in pool else pool.index.to_series()
-    pool["_slip_match_key"] = list(zip(league.loc[pool.index], match_ids))
-    pool["match_id"] = pool._slip_match_key
+    pool = legs[legs.market.isin(SLIP_MARKETS) & allowed & legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
-    used_matches = set()
     for tier in TIERS:
-        available = pool[~pool._slip_match_key.isin(used_matches)]
-        picks = best_slip(available, tier) if not available.empty else None
+        picks = best_slip(pool, tier) if not pool.empty else None
         if picks is None:
             continue
-        chosen = available.loc[picks]
-        used_matches.update(chosen._slip_match_key)
+        chosen = pool.loc[picks]
         total, win = float(chosen.odds.prod()), float(chosen.probability.prod())
         slips[tier.name] = {
             "total_odds": round(total, 2),

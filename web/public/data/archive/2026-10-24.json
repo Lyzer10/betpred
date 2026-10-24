@@ -153,7 +153,33 @@
      "market_probability": 0.7793,
      "betpawa_odds": 1.22
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     1
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": false,
+     "under_2.5": false,
+     "under_3.5": true,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   }
   },
   {
    "date": "2026-10-24",
@@ -306,7 +332,33 @@
      "market_probability": 0.7868,
      "betpawa_odds": 1.21
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   }
   },
   {
    "date": "2026-10-24",
@@ -459,7 +511,33 @@
      "market_probability": 0.729,
      "betpawa_odds": 1.32
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     1
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": false,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": false,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   }
   },
   {
    "date": "2026-10-24",
@@ -612,7 +690,33 @@
      "market_probability": 0.7719,
      "betpawa_odds": 1.28
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     2
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": false,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   }
   }
  ],
  "slips": {
@@ -638,7 +742,7 @@
      "betpawa_odds": 1.82,
      "fair_odds": 1.64,
      "price_warning": true,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-24",
@@ -653,10 +757,11 @@
      "betpawa_odds": 1.47,
      "fair_odds": 1.39,
      "price_warning": false,
-     "won": null
+     "won": false
     }
    ],
-   "locked": false
+   "locked": false,
+   "status": "lost"
   },
   "medium": {
    "total_odds": 3.84,
@@ -685,7 +790,7 @@
      "betpawa_odds": 1.82,
      "fair_odds": 1.64,
      "price_warning": true,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-24",
@@ -700,7 +805,7 @@
      "betpawa_odds": 1.05,
      "fair_odds": 1.07,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-24",
@@ -715,10 +820,11 @@
      "betpawa_odds": 2.01,
      "fair_odds": 1.79,
      "price_warning": true,
-     "won": null
+     "won": false
     }
    ],
-   "locked": false
+   "locked": false,
+   "status": "lost"
   },
   "big": {
    "total_odds": 8.03,
@@ -751,7 +857,7 @@
      "betpawa_odds": 2.95,
      "fair_odds": 2.59,
      "price_warning": true,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-10-24",
@@ -766,7 +872,7 @@
      "betpawa_odds": 1.29,
      "fair_odds": 1.3,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-24",
@@ -781,7 +887,7 @@
      "betpawa_odds": 1.05,
      "fair_odds": 1.07,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-24",
@@ -796,10 +902,11 @@
      "betpawa_odds": 2.01,
      "fair_odds": 1.79,
      "price_warning": true,
-     "won": null
+     "won": false
     }
    ],
-   "locked": false
+   "locked": false,
+   "status": "lost"
   }
  }
 }

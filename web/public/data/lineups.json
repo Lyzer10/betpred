@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-25T17:04:41.510808Z",
+ "generated_at": "2026-10-25T17:22:10.789856Z",
  "matches": [
   {
    "league": "EPL",
@@ -1003,7 +1003,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "3-4-1-2",
+    "formation": "3-5-2",
     "starters": [
      {
       "name": "Guglielmo Vicario",
@@ -1036,16 +1036,16 @@
       "formation_place": 8
      },
      {
-      "name": "Douglas Luiz",
-      "number": "12",
+      "name": "Weston McKennie",
+      "number": "22",
       "position": "CM-R",
       "formation_place": 7
      },
      {
-      "name": "Weston McKennie",
-      "number": "22",
+      "name": "Douglas Luiz",
+      "number": "12",
       "position": "AM",
-      "formation_place": 9
+      "formation_place": 11
      },
      {
       "name": "Andrea Cambiaso",
@@ -1060,14 +1060,14 @@
       "formation_place": 2
      },
      {
-      "name": "Randal Kolo Muani",
-      "number": "9",
-      "position": "CF-L",
-      "formation_place": 11
-     },
-     {
       "name": "Nick Woltemade",
       "number": "27",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Randal Kolo Muani",
+      "number": "9",
       "position": "CF-R",
       "formation_place": 10
      }
@@ -1783,7 +1783,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "3-5-2",
+    "formation": "3-1-4-2",
     "starters": [
      {
       "name": "Nicolas Kocik",
@@ -1795,37 +1795,37 @@
       "name": "Samuel Yohou",
       "number": "17",
       "position": "CD",
-      "formation_place": 5
+      "formation_place": 4
      },
      {
       "name": "Raúl Torrente",
       "number": "16",
       "position": "CD-L",
-      "formation_place": 4
+      "formation_place": 6
      },
      {
       "name": "Djibril Sidibé",
       "number": "19",
       "position": "CD-R",
-      "formation_place": 6
+      "formation_place": 5
      },
      {
       "name": "Alexandre Lauray",
       "number": "8",
-      "position": "CM-L",
+      "position": "SW",
       "formation_place": 8
+     },
+     {
+      "name": "Lucas Bretelle",
+      "number": "29",
+      "position": "CM-L",
+      "formation_place": 11
      },
      {
       "name": "Antoine Rabillard",
       "number": "9",
       "position": "CM-R",
       "formation_place": 7
-     },
-     {
-      "name": "Lucas Bretelle",
-      "number": "29",
-      "position": "AM",
-      "formation_place": 11
      },
      {
       "name": "Lucas Calodat",
@@ -1843,68 +1843,68 @@
       "name": "Habib Diallo",
       "number": "13",
       "position": "CF-L",
-      "formation_place": 9
+      "formation_place": 10
      },
      {
       "name": "Louis Mafouta",
       "number": "14",
       "position": "CF-R",
-      "formation_place": 10
+      "formation_place": 9
      }
     ],
     "subs": [
      {
       "name": "Jean Vercruysse",
       "number": "10",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Daouda Traoré",
       "number": "23",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Ewan Hatfout",
       "number": "1",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Rayan Bamba",
       "number": "26",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Lenny Videira",
       "number": "36",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "William Harhouz",
       "number": "20",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Bilal Brahimi",
       "number": "7",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Dame Guèye",
       "number": "25",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Noa Boissé",
       "number": "15",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      }
     ]

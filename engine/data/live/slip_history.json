@@ -369,7 +369,7 @@
         "betpawa_odds": 1.05,
         "fair_odds": 1.06,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-10-25",
@@ -389,7 +389,7 @@
         "betpawa_odds": 2.0,
         "fair_odds": 1.71,
         "price_warning": false,
-        "won": null
+        "won": false
       },
       {
         "date": "2026-10-25",
@@ -453,12 +453,12 @@
       }
     ],
     "final": true,
-    "status": "pending"
+    "status": "lost"
   },
   {
     "round": "2026-10-26",
     "tier": "safe",
-    "generated_at": "2026-10-25T15:01:09.348212Z",
+    "generated_at": "2026-10-25T17:20:22.617307Z",
     "total_odds": 2.6,
     "win_probability": 0.3719,
     "odds_source": "betpawa",

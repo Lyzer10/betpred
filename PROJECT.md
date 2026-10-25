@@ -299,6 +299,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: "Full table" from a match opens `#league/<CODE>/table/<home>/<away>` and highlights the two
+  teams in light blue; from the league header nothing is highlighted.
 - 2026-10-25: Bets page shows the health banner only when stakes are halved ("under review"); "on watch"
   is shown on the Record page only (owner request).
 - 2026-10-25: merged Codex `codex/matches-redesign` (shared calendar, league pages with table and ESPN

@@ -24,7 +24,7 @@ type Tab = (typeof TABS)[number]["id"];
  * #matches/2026-10-25 (a day) and #matches/2026-10-25/Udinese/Milan (one match, any day). */
 type MatchTab = "insights" | "form" | "stats" | "lineups" | "overview" | "h2h";
 type LeagueTab = "matches" | "table" | "news";
-function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null; matchTab: MatchTab; league: string | null; leagueTab: LeagueTab } {
+function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null; matchTab: MatchTab; league: string | null; leagueTab: LeagueTab; highlight: string[] } {
   const parts = window.location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const [name, day, home, away] = parts;
   const tab = (TABS.find((t) => t.id === (name === "history" ? "bets" : name))?.id ?? "bets") as Tab;
@@ -32,7 +32,9 @@ function readRoute(): { tab: Tab; day: string | null; match: { home: string; awa
   const league = name === "league" ? day?.toUpperCase() ?? null : null;
   const leagueTab = (["matches", "table", "news"].includes(home) ? home : "matches") as LeagueTab;
   const matchTab = (["insights", "form", "stats", "lineups", "overview", "h2h"].includes(parts[4]) ? parts[4] : "insights") as MatchTab;
-  return { tab: league ? "matches" : tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null, matchTab, league, leagueTab };
+  // #league/LALIGA/table/Barcelona/Real Madrid: the table opened from a match highlights its two teams.
+  const highlight = league ? parts.slice(3).filter(Boolean) : [];
+  return { tab: league ? "matches" : tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null, matchTab, league, leagueTab, highlight };
 }
 
 const TITLES: Record<Tab, string> = { bets: "Bets", matches: "Matches", money: "Money", record: "Record" };
@@ -48,7 +50,7 @@ export default function App() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
   useEffect(() => { if (route.day) setSharedDay(route.day); }, [route.day]);
-  const { tab, day, match, matchTab, league, leagueTab } = route;
+  const { tab, day, match, matchTab, league, leagueTab, highlight } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
   const [ledger, setLedger] = useState<Ledger>(loadLedger);
   const [theme, setTheme] = useState<Theme>(loadTheme);
@@ -103,7 +105,7 @@ export default function App() {
             onPlace={(bet) => updateLedger({ ...ledger, entries: [...ledger.entries, bet] })} />
         )}
         {data && tab === "matches" && <Matches data={data} schedule={schedule} dates={dates} day={selectedDay} match={match}
-          matchTab={matchTab} leagueCode={league} leagueTab={leagueTab} markers={markers} onNavigate={go} />}
+          matchTab={matchTab} leagueCode={league} leagueTab={leagueTab} highlight={highlight} markers={markers} onNavigate={go} />}
         {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
         {data && tab === "record" && <Record data={data} />}
       </main>

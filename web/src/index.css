@@ -254,6 +254,35 @@ input[type="number"] { -moz-appearance: textfield; }
 .past-slip-status-lost { color: var(--hero-status-critical); background: var(--hero-status-critical-bg); }
 .past-slip-status-pending { color: var(--hero-ink); background: rgb(255 255 255 / 0.13); }
 
+.best-pick {
+  width: 7.5rem;
+  min-height: 3.25rem;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0.8rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--ink);
+  background: linear-gradient(145deg, rgb(13 217 254 / 0.13), transparent 65%), var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  line-height: 1.15rem;
+}
+.best-pick-compact { width: 6.65rem; }
+.best-pick-won { background: color-mix(in srgb, var(--good) 22%, var(--surface)); color: var(--good-ink); border-color: color-mix(in srgb, var(--good) 45%, transparent); }
+.best-pick-lost { background: color-mix(in srgb, var(--critical) 18%, var(--surface)); color: var(--critical-ink); border-color: color-mix(in srgb, var(--critical) 42%, transparent); }
+.best-pick-later {
+  align-items: center;
+  color: var(--ink-3);
+  background: repeating-linear-gradient(125deg, var(--surface-2) 0 10px, color-mix(in srgb, var(--ink-3) 8%, var(--surface-2)) 10px 20px);
+}
+.best-pick > span { margin-top: 0.18rem; border-top: 1px solid currentColor; padding-top: 0.18rem; opacity: 0.82; }
+
+@media (max-width: 390px) {
+  .best-pick-compact { width: 6rem; padding-inline: 0.5rem; font-size: 0.66rem; }
+}
+
 [role="tab"][aria-selected="true"] > .date-active-line { background: var(--logo-gold); }
 
 @media (prefers-reduced-motion: reduce) {

@@ -41,6 +41,28 @@ export interface MatchContext {
   away: TeamContext | null;
 }
 
+export interface BestPick {
+  market: MarketKey;
+  label: string;
+  probability: number;
+  odds: number;
+  odds_source: "betpawa" | "estimated";
+}
+
+export interface LeagueTableRow {
+  position: number;
+  team: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  points: number;
+  form: FormResult[];
+}
+
 export interface Fixture {
   id: number;
   league?: League;
@@ -57,6 +79,7 @@ export interface Fixture {
   markets: MarketPrediction[];
   context?: MatchContext;
   head_to_head?: HeadToHead | null;      // last league meetings (display only)   // absent in data files published before 24 Oct 2026
+  best_pick?: BestPick | null;
 }
 
 export interface SlipLeg {
@@ -138,6 +161,7 @@ export interface Predictions {
   value_rules?: { min_edge: number; min_probability: number };
   history: HistoryEntry[];
   results: Result[];
+  tables: Record<string, LeagueTableRow[]>;
   archive: ArchiveDay[];
   live_record: LiveRecord;
   health?: Health;
@@ -149,6 +173,14 @@ export interface LineupPlayer { name: string; number: string | null; position: s
 export interface TeamLineup { formation: string | null; starters: LineupPlayer[]; subs: LineupPlayer[] }
 /** Announced line-ups (ESPN), about an hour before kick-off. Display only. */
 export interface MatchLineup { league: string; home: string; away: string; kickoff_utc: string; home_lineup: TeamLineup; away_lineup: TeamLineup }
+
+export interface ScheduledMatch { league: string; home: string; away: string; kickoff_utc: string; event_id: string; slug: string }
+export interface ExpectedLineup extends TeamLineup { from_match: string }
+export interface ScheduleData {
+  generated_at: string;
+  matches: ScheduledMatch[];
+  expected_lineups: Record<string, ExpectedLineup>;
+}
 
 export interface ClvSummary { legs: number; mean_clv: number; beat_close: number; moved_against: number }
 /** Price tracking: published Betpawa price vs the last price before kick-off. */
@@ -196,6 +228,12 @@ export interface ArchivedFixture {
   expected_goals: [number, number];
   markets: { market: MarketKey; label: string; probability: number; market_probability: number | null; betpawa_odds?: number | null }[];
   result?: { score: [number, number]; outcomes: Record<MarketKey, boolean> };
+  context?: MatchContext;
+  head_to_head?: HeadToHead | null;
+  best_pick?: BestPick | null;
+  top_scorelines?: { score: string; probability: number }[];
+  has_market_odds?: boolean;
+  day?: string;
 }
 
 export interface ArchiveSnapshot {

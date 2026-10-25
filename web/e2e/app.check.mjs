@@ -1,6 +1,9 @@
 // End-to-end check of the built app in the installed Microsoft Edge at phone width.
 // Usage: npm run build && npx vite preview --port 4173 & npm run check:e2e [-- screenshotDir]
 import { chromium } from "playwright-core";
+import { readFileSync, readdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:4173/";
 const shots = process.argv[2];
@@ -9,6 +12,9 @@ const failures = [];
 const check = (ok, message) => { console.log(`${ok ? "PASS" : "FAIL"}  ${message}`); if (!ok) failures.push(message); };
 const VERDICT = /(Bet this|Fair, skip|Don't bet)\s*[+-]\d/;
 const money = (text) => Number(text.replace(/[^\d]/g, ""));
+const fixtureDir = join(dirname(fileURLToPath(import.meta.url)), "fixtures");
+const predictionsFixture = JSON.parse(readFileSync(join(fixtureDir, "predictions.json"), "utf8"));
+const scheduleFixture = JSON.parse(readFileSync(join(fixtureDir, "schedule.json"), "utf8"));
 
 for (const scheme of ["light", "dark"]) {
   // A normal Android Chrome user agent: ESPN's network turns away "Headless" browsers, which real phones never are.
@@ -17,6 +23,14 @@ for (const scheme of ["light", "dark"]) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+  await page.route("**/data/predictions.json", (route) => route.fulfill({ path: join(fixtureDir, "predictions.json"), contentType: "application/json" }));
+  await page.route("**/data/schedule.json", (route) => route.fulfill({ path: join(fixtureDir, "schedule.json"), contentType: "application/json" }));
+  await page.route("**/data/lineups.json", (route) => route.fulfill({ path: join(fixtureDir, "lineups.json"), contentType: "application/json" }));
+  await page.route("**/data/archive/*.json", (route) => {
+    const name = new URL(route.request().url()).pathname.split("/").pop();
+    try { route.fulfill({ body: readFileSync(join(fixtureDir, "archive", name)), contentType: "application/json" }); }
+    catch { route.fulfill({ status: 200, body: "null", contentType: "application/json" }); }
+  });
   // Today may only have locked slips (all its matches started): then open the last day in the strip.
   // Prefer a day offering all three tiers (a day with few matches may only have a Safe slip).
   const openUpcomingDay = async () => {
@@ -226,16 +240,27 @@ for (const scheme of ["light", "dark"]) {
   // Matches: information only, Betpawa odds and verdicts, double chance tab.
   await page.getByRole("button", { name: "Matches", exact: true }).click();
   await noOverflow("matches list");
-  await page.getByRole("tab").filter({ hasText: /\d/ }).last().click();   // an upcoming day: its matches open
-  await page.locator("section button").first().click();
+  const predictedFixture = predictionsFixture.fixtures.find((fixture) => fixture.best_pick && fixture.context?.home?.form?.length >= 5);
+  const predictedDay = predictedFixture?.day;
+  await page.goto(`${BASE}#matches/${predictedDay}`);
+  await snap("matches-list");
+  await page.locator("button:has([data-best-pick-state])", { hasText: predictedFixture.home }).filter({ hasText: predictedFixture.away }).click();
   await page.getByText("Likeliest scores").waitFor();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no inputs`);
+  for (const tab of ["Insights", "Line-ups", "H2H", "Stats", "Form & table"]) {
+    await page.getByRole("tab", { name: tab, exact: true }).click();
+    check(decodeURIComponent(await page.evaluate(() => location.hash)).endsWith(tab === "Form & table" ? "/form" : `/${tab.toLowerCase().replace("-", "")}`), `[${scheme}] ${tab} match tab opens`);
+    await snap(`match-${tab.toLowerCase().replace(/[^a-z]+/g, "-")}`);
+  }
   check(await page.getByRole("heading", { name: "Form & table" }).count() === 1, `[${scheme}] match shows form and table context`);
+  await page.getByRole("tab", { name: "Line-ups", exact: true }).click();
   const lineupCard = page.locator("[data-lineups]");
-  check(await lineupCard.count() === 1 && (await lineupCard.locator("[data-starter]").count() === 11
-    || await lineupCard.getByText(/about an hour before kick-off/).count() === 1), `[${scheme}] match shows line-ups or when they come`);
+  check(await lineupCard.count() === 1 && (await lineupCard.locator("[data-starter-count='11'], [data-lineup-fallback] [data-starter]").count() >= 1
+    || await lineupCard.getByText(/Expected: starting XI|about an hour before kick-off/).count() === 1), `[${scheme}] match shows official or expected line-ups`);
+  await page.getByRole("tab", { name: "Form & table", exact: true }).click();
   const recentForm = page.getByLabel(/recent form, oldest to latest/).first();
   check(await recentForm.locator("[data-form-result]").count() === 5, `[${scheme}] match shows five form chips`);
+  await page.getByRole("tab", { name: "Insights", exact: true }).click();
   await page.getByRole("tab", { name: "Double" }).click();
   check(await page.getByText(/or draw/).count() >= 1, `[${scheme}] double chance markets shown`);
   await noOverflow("match detail"); await snap("matches");
@@ -243,21 +268,62 @@ for (const scheme of ["light", "dark"]) {
   // Every match of a day opens (upcoming, under way or finished), and Back returns to that same day.
   const routeDay = await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]);
   await page.getByText("‹ Matches").click();
-  const rows = page.locator("section button");
+  const rows = page.locator("button:has([data-best-pick-state])");
   const rowCount = await rows.count();
   let opened = 0;
   for (let i = 0; i < rowCount; i++) {
     await rows.nth(i).click();
-    if (await page.getByText("Likeliest scores").count() === 1) opened += 1;
+    if (await page.getByRole("tab", { name: "Insights", exact: true }).count() === 1) opened += 1;
     await page.getByText("‹ Matches").click();
     await rows.first().waitFor();
   }
   check(rowCount > 0 && opened === rowCount, `[${scheme}] every match of the day opens (${opened}/${rowCount})`);
   check(await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]) === routeDay, `[${scheme}] Back keeps the chosen day`);
   await page.locator("[data-date='2026-10-24']").click();
-  await page.locator("section button").first().click();
-  check(await page.getByText("Likeliest scores").count() === 1, `[${scheme}] a past day's match opens`);
+  await page.locator("button:has([data-best-pick-state])").first().click();
+  check(await page.getByRole("tab", { name: "Insights", exact: true }).count() === 1, `[${scheme}] a past day's match opens`);
   await page.getByText("‹ Matches").click();
+
+  // Shared calendar, schedule-only rows, empty days, and league navigation.
+  const predictionDays = new Set(predictionsFixture.fixtures.map((fixture) => fixture.day));
+  const scheduleDays = [...new Set(scheduleFixture.matches.map((item) => new Date(item.kickoff_utc).toLocaleDateString("en-CA")))];
+  const laterDay = scheduleDays.find((date) => !predictionDays.has(date));
+  await page.goto(`${BASE}#matches/${laterDay}`);
+  check(await page.locator("[data-best-pick-state='later']").count() > 0, `[${scheme}] schedule-only day shows Later boxes`);
+  await snap("matches-later");
+  await page.getByRole("button", { name: "Bets", exact: true }).click();
+  check(decodeURIComponent(await page.evaluate(() => location.hash)).includes(`bets/${laterDay}`), `[${scheme}] selected date survives Matches to Bets`);
+  await page.getByRole("button", { name: "Matches", exact: true }).click();
+  check(decodeURIComponent(await page.evaluate(() => location.hash)).includes(`matches/${laterDay}`), `[${scheme}] selected date survives Bets to Matches`);
+  const start = new Date("2026-10-25T12:00:00");
+  const noMatchDay = Array.from({ length: 15 }, (_, offset) => { const date = new Date(start); date.setDate(date.getDate() + offset); return date.toLocaleDateString("en-CA"); }).find((date) => !scheduleDays.includes(date));
+  await page.goto(`${BASE}#matches/${noMatchDay}`);
+  check(await page.getByText("No matches", { exact: true }).count() === 1, `[${scheme}] empty calendar day says No matches`);
+
+  await page.goto(`${BASE}#league/EPL/table`);
+  const expectedRows = predictionsFixture.tables.EPL.length;
+  check(await page.locator("tbody tr").count() === expectedRows, `[${scheme}] league table has exactly ${expectedRows} rows`);
+  const positions = await page.locator("tbody tr td:first-child").allTextContents();
+  check(positions.every((value, index) => Number(value) === index + 1), `[${scheme}] league table is in position order`);
+  await noOverflow("league table"); await snap("league-table");
+  await page.getByRole("tab", { name: "News", exact: true }).click();
+  await page.waitForTimeout(800);
+  check(await page.getByText("News unavailable", { exact: true }).count() === 1 || await page.locator("a[target='_blank']").count() > 0, `[${scheme}] league news renders ESPN results or its error state`);
+  await snap("league-news");
+
+  // Official settlement wins over live state. The copied real fixture set will exercise each
+  // colour as soon as the publisher contains a settled best_pick (none existed at fixture capture).
+  const archivedFixtures = readdirSync(join(fixtureDir, "archive")).filter((name) => /^\d{4}-\d{2}-\d{2}\.json$/.test(name))
+    .flatMap((name) => JSON.parse(readFileSync(join(fixtureDir, "archive", name), "utf8")).fixtures ?? []);
+  const settledPicks = archivedFixtures.filter((fixture) => fixture.best_pick && fixture.result);
+  for (const wanted of [true, false]) {
+    const fixture = settledPicks.find((item) => Boolean(item.result.outcomes[item.best_pick.market]) === wanted);
+    if (!fixture) { console.log(`SKIP  [${scheme}] no real archived ${wanted ? "winning" : "losing"} best_pick is published yet`); continue; }
+    const date = new Date(fixture.kickoff_utc).toLocaleDateString("en-CA");
+    await page.goto(`${BASE}#matches/${date}`);
+    const row = page.locator("button:has([data-best-pick-state])", { hasText: fixture.home }).filter({ hasText: fixture.away });
+    check(await row.locator(`[data-best-pick-state='${wanted ? "won" : "lost"}']`).count() === 1, `[${scheme}] settled best pick is ${wanted ? "green" : "red"}`);
+  }
 
   for (const [screen, id] of [["Bets", "bets"], ["Matches", "matches"], ["Money", "money"], ["Record", "record"]]) {
     await page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: screen, exact: true }).click();

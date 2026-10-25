@@ -2,7 +2,7 @@
 // 69 matches (16-25 Oct 2026, five leagues) and the engine's outcome() for the same matches.
 // Run: npm run check:live
 import { readFileSync } from "node:fs";
-import { legLive, parseEvent } from "../src/live.ts";
+import { legLive, parseEvent } from "../src/liveRules.ts";
 
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/live_parity.json", import.meta.url), "utf8"));
 let legs = 0;

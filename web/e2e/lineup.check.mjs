@@ -20,7 +20,8 @@ for (const scheme of ["light", "dark"]) {
   await page.goto(BASE);
   await page.getByRole("button", { name: "Matches", exact: true }).click();
   await page.locator("[data-date='2026-10-25']").click();
-  await page.locator("section button", { hasText: "Sunderland" }).click();
+  await page.locator("button:has([data-best-pick-state])", { hasText: "Sunderland" }).click();
+  await page.getByRole("tab", { name: "Line-ups", exact: true }).click();
   const card = page.locator("[data-lineups]");
   await card.locator("[data-pitch]").waitFor();
   if (scheme === "dark") await card.getByRole("tab", { name: "Leeds" }).click();

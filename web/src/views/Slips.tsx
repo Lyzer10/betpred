@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingSettings, newId, settledSlips, summarise } from "../ledger";
 import { STAKING, VALUE_EDGE, edge, legTeam, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
-import type { ArchiveSnapshot, DayBets, Predictions, Slip, SlipLeg, TierName } from "../types";
+import { localDay } from "../matchData";
+import type { ArchiveSnapshot, DayBets, Predictions, ScheduledMatch, Slip, SlipLeg, TierName } from "../types";
 import { Flag, TeamBadge } from "../badges";
 import { explainPick } from "../explain";
 import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
@@ -398,19 +399,17 @@ function ArchivedDay({ date }: { date: string }) {
   return snapshot ? <PastDay snapshot={snapshot} /> : <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
 }
 
-export function Slips({ data, ledger, onPlace, onOpenMoney }: {
-  data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void; onOpenMoney: () => void;
+export function Slips({ data, ledger, day: selected, dates, schedule, markers, onSelectDay, onPlace, onOpenMoney }: {
+  data: Predictions; ledger: Ledger; day: string; dates: string[]; schedule: ScheduledMatch[];
+  markers: Record<string, "won" | "lost" | "mixed" | "pending">; onSelectDay: (day: string) => void;
+  onPlace: (bet: PlacedBet) => void; onOpenMoney: () => void;
 }) {
   const today = todayIso();
   const upcoming = new Map(data.days.map((d) => [d.date, d]));
-  // Archived days up to and including today: once today's last match has kicked off it has no
-  // upcoming fixtures, but its locked slips must stay visible.
-  const past = (data.archive ?? []).map((a) => a.date).filter((d) => d <= today && !upcoming.has(d));
-  const dates = [...new Set([...past, ...upcoming.keys()])].sort();
-  const initial = dates.includes(today) ? today : [...upcoming.keys()].find((d) => d >= today) ?? dates[dates.length - 1];
-  const [selected, setSelected] = useState<string | undefined>(initial);
   const needsBalance = !ledger.start.betpawa && !ledger.start.sportybet;
   const health = data.health;
+  const archived = (data.archive ?? []).some((item) => item.date === selected);
+  const hasScheduled = schedule.some((match) => localDay(match.kickoff_utc) === selected);
 
   return (
     <div>
@@ -424,7 +423,7 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
           </div>
         </Card>
       )}
-      <div className="mb-4"><DateStrip dates={dates} selected={selected} onSelect={setSelected} /></div>
+      <div className="mb-4"><DateStrip dates={dates} selected={selected} markers={markers} onSelect={onSelectDay} /></div>
 
       {needsBalance && (
         <button onClick={onOpenMoney} className="mb-4 block w-full text-left">
@@ -435,20 +434,21 @@ export function Slips({ data, ledger, onPlace, onOpenMoney }: {
         </button>
       )}
 
-      {selected && upcoming.has(selected) && (
+      {upcoming.has(selected) && (
         <>
           <SectionTitle aside={`${upcoming.get(selected)!.fixtures.length} matches`}>Accumulators</SectionTitle>
           <DayStatus day={upcoming.get(selected)!} />
           <UpcomingDay key={selected} day={upcoming.get(selected)!} data={data} ledger={ledger} onPlace={onPlace} />
         </>
       )}
-      {selected && !upcoming.has(selected) && (
+      {!upcoming.has(selected) && archived && (
         <>
           <SectionTitle aside={selected === today ? "results update after the games" : undefined}>{selected === today ? "Today's slips" : "Slips that day"}</SectionTitle>
           <ArchivedDay key={selected} date={selected} />
         </>
       )}
-      {!selected && <Empty>No matches scheduled yet.</Empty>}
+      {!upcoming.has(selected) && !archived && hasScheduled && <Empty>Slips appear on the morning of the match day.</Empty>}
+      {!upcoming.has(selected) && !archived && !hasScheduled && <Empty>No matches</Empty>}
     </div>
   );
 }

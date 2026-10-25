@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { StakingSettings } from "./ledger";
-import type { ArchiveSnapshot, MarketKey, MatchLineup, Predictions, Result, SavedPick, SlipLeg } from "./types";
+import type { ArchiveSnapshot, MarketKey, MatchLineup, Predictions, Result, SavedPick, ScheduleData, SlipLeg } from "./types";
 
 /** Data files fetched once per minute at most, shared by every screen (going back is instant). */
 const jsonCache = new Map<string, { at: number; value: Promise<any> }>();
@@ -23,16 +23,20 @@ export function useLineups() {
   return lineups;
 }
 
+export function useSchedule() {
+  const [schedule, setSchedule] = useState<ScheduleData | null>(null);
+  useEffect(() => {
+    cachedJson("data/schedule.json").then(setSchedule);
+  }, []);
+  return schedule;
+}
+
 export function usePredictions() {
   const [data, setData] = useState<Predictions | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/predictions.json`, { cache: "no-cache" })
-      .then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then(setData)
+    cachedJson("data/predictions.json", 0)
+      .then((value) => value ? setData(value) : setError("predictions unavailable"))
       .catch((reason) => setError(String(reason)));
   }, []);
   return { data, error };
@@ -46,6 +50,18 @@ export function useArchive(date: string | null) {
     cachedJson(`data/archive/${date}.json`).then(setSnapshot);
   }, [date]);
   return snapshot;
+}
+
+export function useArchives(dates: string[]) {
+  const [snapshots, setSnapshots] = useState<Record<string, ArchiveSnapshot | null>>({});
+  const key = dates.join("|");
+  useEffect(() => {
+    let active = true;
+    Promise.all(dates.map(async (date) => [date, await cachedJson(`data/archive/${date}.json`)] as const))
+      .then((entries) => active && setSnapshots(Object.fromEntries(entries)));
+    return () => { active = false; };
+  }, [key]);
+  return snapshots;
 }
 
 const SHORT_NAMES: Record<string, string> = {

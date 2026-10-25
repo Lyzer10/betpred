@@ -99,9 +99,9 @@ snapshots before kick-offs add the closing price; `clv` in predictions.json = pu
 price logged within 90 min before kick-off - 1, overall and per league, market and tier.
 
 ### App (`web/`, React + Vite + Tailwind PWA)
-Tabs: **Bets** (date strip, Safe/Medium/Big slips, "why this bet", Flexi, "I placed this bet",
-and expandable past slip results with scores), **Matches** (league groups with flags, badges,
-every market with Betpawa odds and verdict), **Money** (balances, staking mode, ledger), and
+Tabs: **Bets** (shared 15-day date strip, Safe/Medium/Big slips, "why this bet", Flexi, "I placed this bet",
+and expandable past slip results with scores), **Matches** (league groups, one best-pick panel per match,
+league pages with fixtures/table/news, and tabbed Insights/Line-ups/H2H/Stats/Form match pages), **Money** (balances, staking mode, ledger), and
 **Record** (model health, live record, backtest). The old `#history` route opens Bets. Data stays
 on the device (localStorage).
 Staking (`web/src/lib.ts` `STAKING`): smart = quarter Kelly with tier caps (3/2/1%), or % of balance,
@@ -141,7 +141,8 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
   a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
-  a full pitch by formation, with a safe numbered-list fallback when placement is uncertain.
+  a full pitch by formation, with a safe numbered-list fallback when placement is uncertain. Bets and
+  Matches share their URL date; Matches also includes schedule-only days, league tables/news and tabbed details.
 - Profitability: **not proven**. Backtest ROI used estimated odds (indicative only). Real Betpawa
   prices are archived from 24 Oct 2026 onwards: the live period is the **untouched holdout**;
   never tune any setting on it, only judge.
@@ -298,6 +299,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: redesigned Matches around a single best-pick state, shared Bets/Matches calendar through
+  the next 14 days, schedule-only "Later" rows, league fixture/table/ESPN-news pages, and URL-backed
+  Insights/Line-ups/H2H/Stats/Form tabs with official or clearly labelled expected line-ups.
 - 2026-10-25: FIX (settlement safety): Understat had Rennes v Paris SG (23 Aug 2026, ESPN: Rennes at home)
   as Paris SG v Rennes, which double-counted it in tables and could have settled the real reverse fixture
   later with that score. Now `merge_results` drops a same-night row matching an official match (same teams

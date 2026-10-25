@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
 import { useEspnEvent, useLiveMatch } from "../live";
-import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
+import { type ArchiveDay, type ArchivedFixture, type ExpectedLineup, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
 type Group = "result" | "lead" | "double" | "goals";
@@ -65,7 +65,7 @@ function TeamContextRow({ team, context }: { team: string; context: TeamContext 
   );
 }
 
-function FormAndTable({ fixture }: { fixture: Fixture }) {
+export function FormAndTable({ fixture, onFullTable }: { fixture: Fixture; onFullTable?: () => void }) {
   return (
     <Card className="overflow-hidden">
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Form &amp; table</h2>
@@ -73,13 +73,15 @@ function FormAndTable({ fixture }: { fixture: Fixture }) {
         <TeamContextRow team={fixture.home} context={fixture.context?.home ?? null} />
         <TeamContextRow team={fixture.away} context={fixture.context?.away ?? null} />
       </ul>
+      {onFullTable && <button onClick={onFullTable} className="w-full border-t border-border/60 px-4 py-3 text-left text-xs font-semibold text-accent">Full table ›</button>}
     </Card>
   );
 }
 
 /** Last league meetings of the two teams (display only: head-to-head is not a model input). */
-function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
+export function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
   const h2h = fixture.head_to_head;
+  const [showAll, setShowAll] = useState(false);
   return (
     <Card className="overflow-hidden" data-h2h>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Head-to-head</h2>
@@ -101,7 +103,7 @@ function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
             Last {h2h.meetings.length}: {h2h.avg_goals.toFixed(1)} goals a game · over 2.5 in {h2h.over_2_5} · both scored in {h2h.btts}
           </p>
           <ul className="divide-y divide-border/60 border-t border-border/60">
-            {h2h.meetings.map((m) => (
+            {(showAll ? h2h.meetings : h2h.meetings.slice(0, 3)).map((m) => (
               <li key={m.date} data-h2h-meeting className="flex items-center gap-2 px-4 py-2 text-xs">
                 <span className="w-16 shrink-0 text-ink-3">{new Date(`${m.date}T12:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "2-digit" })}</span>
                 <span className={`min-w-0 flex-1 truncate text-right ${m.score[0] > m.score[1] ? "font-bold" : ""}`}>{m.home}</span>
@@ -110,6 +112,7 @@ function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
               </li>
             ))}
           </ul>
+          {h2h.meetings.length > 3 && <button onClick={() => setShowAll((value) => !value)} className="w-full border-t border-border/60 px-4 py-2 text-xs font-semibold text-accent">{showAll ? "Show less" : "Show all"}</button>}
           <p className="px-4 py-2 text-[10px] text-ink-3">League matches since {h2h.since}. For reading only: our numbers do not use it.</p>
         </>
       )}
@@ -121,7 +124,7 @@ const STATS: [string, string][] = [["possessionPct", "Possession %"], ["totalSho
   ["wonCorners", "Corners"], ["saves", "Saves"], ["foulsCommitted", "Fouls"], ["yellowCards", "Yellow cards"], ["redCards", "Red cards"], ["offsides", "Offsides"]];
 
 /** Team statistics from ESPN once the match has started (refreshed with the live feed). */
-function MatchStats({ fixture }: { fixture: Fixture }) {
+export function MatchStats({ fixture }: { fixture: Fixture }) {
   const event = useEspnEvent(fixture.home, fixture.away);
   const live = useLiveMatch(fixture.home, fixture.away);
   const started = live && (live.state === "in" || live.state === "post");
@@ -139,7 +142,8 @@ function MatchStats({ fixture }: { fixture: Fixture }) {
       })
       .catch(() => undefined);
   }, [event?.event_id, started, live?.clock]);
-  if (!started || !stats) return null;
+  if (!started) return <Card className="px-5 py-8 text-center text-sm text-ink-3" data-match-stats>Stats appear when the match starts</Card>;
+  if (!stats) return <Card className="px-5 py-8 text-center text-sm text-ink-3" data-match-stats>Loading match stats…</Card>;
   return (
     <Card className="overflow-hidden" data-match-stats>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Match stats</h2>
@@ -254,18 +258,19 @@ function StarterList({ starters }: { starters: LineupPlayer[] }) {
   );
 }
 
-function Lineups({ fixture }: { fixture: Fixture }) {
+export function Lineups({ fixture, expected }: { fixture: Fixture; expected?: { home: ExpectedLineup; away: ExpectedLineup } | null }) {
   const lineup = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
   const [side, setSide] = useState<"home" | "away">("home");
-  const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"];
+  const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"] ?? expected?.[side];
   const lines = team ? pitchLines(team.formation, team.starters) : null;
   return (
     <Card className="overflow-hidden" data-lineups>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Line-ups</h2>
-      {!lineup || !team ? (
+      {!team ? (
         <p className="px-4 pb-4 text-xs text-ink-3">Line-ups appear here about an hour before kick-off, once the clubs announce them.</p>
       ) : (
         <>
+          {!lineup && expected && <p className="mx-4 mb-3 rounded-xl bg-warning/15 px-3 py-2 text-xs font-semibold text-warning-ink">Expected: starting XI from last league match ({(team as ExpectedLineup).from_match}). Official line-ups replace this about an hour before kick-off.</p>}
           <div className="px-4 pb-2">
             <Segmented options={[{ id: "home", label: fixture.home }, { id: "away", label: fixture.away }]} value={side} onChange={setSide} />
           </div>
@@ -289,7 +294,7 @@ function Lineups({ fixture }: { fixture: Fixture }) {
   );
 }
 
-function MarketRow({ fixture, market }: { fixture: Fixture; market: MarketPrediction }) {
+export function MarketRow({ fixture, market }: { fixture: Fixture; market: MarketPrediction }) {
   const label = named(fixture, market.label);
   return (
     <div className="border-t border-border/60 px-5 py-4 first:border-t-0">

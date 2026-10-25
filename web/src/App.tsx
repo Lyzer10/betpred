@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { type Ledger, loadLedger, storeLedger } from "./ledger";
-import { usePredictions } from "./lib";
+import { useArchives, usePredictions, useSchedule } from "./lib";
+import { localDay, sharedDates } from "./matchData";
 import { LiveProvider } from "./live";
 import { NEXT_THEME, type Theme, applyTheme, loadTheme } from "./theme";
 import { Empty } from "./ui";
 import { FloatingNav } from "./components/FloatingNav";
-import { Matches } from "./views/Matches";
+import { MatchesRedesign as Matches } from "./views/MatchesRedesign";
 import { Money } from "./views/Money";
 import { Record } from "./views/Record";
 import { Slips } from "./views/Slips";
@@ -21,29 +22,51 @@ type Tab = (typeof TABS)[number]["id"];
 
 /** Routes live in the URL hash so screens can be bookmarked and shared:
  * #matches/2026-10-25 (a day) and #matches/2026-10-25/Udinese/Milan (one match, any day). */
-function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null } {
-  const [name, day, home, away] = window.location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
+type MatchTab = "insights" | "lineups" | "h2h" | "stats" | "form";
+type LeagueTab = "matches" | "table" | "news";
+function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null; matchTab: MatchTab; league: string | null; leagueTab: LeagueTab } {
+  const parts = window.location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
+  const [name, day, home, away] = parts;
   const tab = (TABS.find((t) => t.id === (name === "history" ? "bets" : name))?.id ?? "bets") as Tab;
   const isDay = day !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(day);
-  return { tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null };
+  const league = name === "league" ? day?.toUpperCase() ?? null : null;
+  const leagueTab = (["matches", "table", "news"].includes(home) ? home : "matches") as LeagueTab;
+  const matchTab = (["insights", "lineups", "h2h", "stats", "form"].includes(parts[4]) ? parts[4] : "insights") as MatchTab;
+  return { tab: league ? "matches" : tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null, matchTab, league, leagueTab };
 }
 
 const TITLES: Record<Tab, string> = { bets: "Bets", matches: "Matches", money: "Money", record: "Record" };
 
 export default function App() {
   const { data, error } = usePredictions();
+  const schedule = useSchedule();
   const [route, setRoute] = useState(readRoute);
+  const [sharedDay, setSharedDay] = useState(() => readRoute().day ?? localDay(new Date().toISOString()));
   useEffect(() => {
     const onHash = () => setRoute(readRoute());
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
-  const { tab, day, match } = route;
+  useEffect(() => { if (route.day) setSharedDay(route.day); }, [route.day]);
+  const { tab, day, match, matchTab, league, leagueTab } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
   const [ledger, setLedger] = useState<Ledger>(loadLedger);
   const [theme, setTheme] = useState<Theme>(loadTheme);
   const cycleTheme = () => { const next = NEXT_THEME[theme]; setTheme(next); applyTheme(next); };
   const updateLedger = (next: Ledger) => { setLedger(next); storeLedger(next); };
+  const today = localDay(new Date().toISOString());
+  const dates = data ? sharedDates(today, data.archive ?? []) : [today];
+  const selectedDay = day ?? sharedDay;
+  const archives = useArchives(data?.archive?.map((item) => item.date) ?? []);
+  const markers = Object.fromEntries(Object.entries(archives).flatMap(([date, snapshot]) => {
+    if (!snapshot) return [];
+    const statuses = Object.values(snapshot.slips).map((slip) => slip?.status).filter(Boolean);
+    if (!statuses.length) return [];
+    const marker = statuses.every((status) => status === "won") ? "won" : statuses.every((status) => status === "lost") ? "lost"
+      : statuses.some((status) => status === "pending") ? "pending" : "mixed";
+    return [[date, marker]];
+  })) as Record<string, "won" | "lost" | "mixed" | "pending">;
+  const selectPrimary = (next: Tab) => go(next === "bets" || next === "matches" ? `${next}/${selectedDay}` : next);
 
   return (
     <div className="mx-auto min-h-screen max-w-lg px-4 pb-40">
@@ -75,11 +98,12 @@ export default function App() {
         {error && <Empty><span className="text-critical-ink">Could not load predictions ({error}).</span></Empty>}
         {!data && !error && <Empty>Loading predictions…</Empty>}
         {data && tab === "bets" && (
-          <Slips data={data} ledger={ledger} onOpenMoney={() => go("money")}
+          <Slips data={data} ledger={ledger} day={selectedDay} dates={dates} schedule={schedule?.matches ?? []} markers={markers}
+            onSelectDay={(next) => { setSharedDay(next); go(`bets/${next}`); }} onOpenMoney={() => go("money")}
             onPlace={(bet) => updateLedger({ ...ledger, entries: [...ledger.entries, bet] })} />
         )}
-        {data && tab === "matches" && <Matches fixtures={data.fixtures} archive={data.archive ?? []} day={day} match={match}
-          onNavigate={(path) => go(path)} />}
+        {data && tab === "matches" && <Matches data={data} schedule={schedule} dates={dates} day={selectedDay} match={match}
+          matchTab={matchTab} leagueCode={league} leagueTab={leagueTab} markers={markers} onNavigate={go} />}
         {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
         {data && tab === "record" && <Record data={data} />}
       </main>
@@ -89,7 +113,7 @@ export default function App() {
         Probabilities, not guarantees. Only stake what you can afford to lose. 18+.
       </p>
 
-      <FloatingNav items={TABS} active={tab} onSelect={go} />
+      <FloatingNav items={TABS} active={tab} onSelect={selectPrimary} />
     </div>
   );
 }

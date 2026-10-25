@@ -289,6 +289,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: external timer live: cron-job.org job 8716884 "BetPredz" (owner's account), POST to the
+  workflow_dispatch API every 30 min 06:00-23:30 Africa/Dar_es_Salaam with a fine-grained token (Actions
+  read/write on betpred only). Phone notifications live (secret PUSH_SUBSCRIPTION; test sent OK).
+  Workflow mode `test-notify` sends a test notification.
 - 2026-10-25: monthly gate re-check workflow; gates include settled live predictions (same rules).
 - 2026-10-25: Betpawa 1Up price study pre-registered and scripted (reports "insufficient" until enough
   settled data); its first draft compared against our raw probability, which a useless price could

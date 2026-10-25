@@ -2,14 +2,23 @@ import { useEffect, useState } from "react";
 import type { StakingSettings } from "./ledger";
 import type { ArchiveSnapshot, MarketKey, MatchLineup, Predictions, Result, SavedPick, SlipLeg } from "./types";
 
+/** Data files fetched once per minute at most, shared by every screen (going back is instant). */
+const jsonCache = new Map<string, { at: number; value: Promise<any> }>();
+export function cachedJson(path: string, maxAgeMs = 60_000): Promise<any> {
+  const hit = jsonCache.get(path);
+  if (hit && Date.now() - hit.at < maxAgeMs) return hit.value;
+  const value = fetch(`${import.meta.env.BASE_URL}${path}`, { cache: "no-cache" })
+    .then((response) => (response.ok ? response.json() : null))
+    .catch(() => null);
+  jsonCache.set(path, { at: Date.now(), value });
+  return value;
+}
+
 /** Announced line-ups; missing file or network error simply means none yet. */
 export function useLineups() {
   const [lineups, setLineups] = useState<MatchLineup[]>([]);
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/lineups.json`, { cache: "no-cache" })
-      .then((response) => (response.ok ? response.json() : { matches: [] }))
-      .then((file) => setLineups(file.matches ?? []))
-      .catch(() => setLineups([]));
+    cachedJson("data/lineups.json").then((file) => setLineups(file?.matches ?? []));
   }, []);
   return lineups;
 }
@@ -34,10 +43,7 @@ export function useArchive(date: string | null) {
   useEffect(() => {
     if (!date) return;
     setSnapshot(null);
-    fetch(`${import.meta.env.BASE_URL}data/archive/${date}.json`, { cache: "no-cache" })
-      .then((response) => (response.ok ? response.json() : null))
-      .then(setSnapshot)
-      .catch(() => setSnapshot(null));
+    cachedJson(`data/archive/${date}.json`).then(setSnapshot);
   }, [date]);
   return snapshot;
 }

@@ -240,6 +240,25 @@ for (const scheme of ["light", "dark"]) {
   check(await page.getByText(/or draw/).count() >= 1, `[${scheme}] double chance markets shown`);
   await noOverflow("match detail"); await snap("matches");
 
+  // Every match of a day opens (upcoming, under way or finished), and Back returns to that same day.
+  const routeDay = await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]);
+  await page.getByText("‹ Matches").click();
+  const rows = page.locator("section button");
+  const rowCount = await rows.count();
+  let opened = 0;
+  for (let i = 0; i < rowCount; i++) {
+    await rows.nth(i).click();
+    if (await page.getByText("Likeliest scores").count() === 1) opened += 1;
+    await page.getByText("‹ Matches").click();
+    await rows.first().waitFor();
+  }
+  check(rowCount > 0 && opened === rowCount, `[${scheme}] every match of the day opens (${opened}/${rowCount})`);
+  check(await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]) === routeDay, `[${scheme}] Back keeps the chosen day`);
+  await page.locator("[data-date='2026-10-24']").click();
+  await page.locator("section button").first().click();
+  check(await page.getByText("Likeliest scores").count() === 1, `[${scheme}] a past day's match opens`);
+  await page.getByText("‹ Matches").click();
+
   for (const [screen, id] of [["Bets", "bets"], ["Matches", "matches"], ["Money", "money"], ["Record", "record"]]) {
     await page.getByRole("navigation", { name: "Primary" }).getByRole("button", { name: screen, exact: true }).click();
     await page.locator(`main[data-page='${id}']`).waitFor();

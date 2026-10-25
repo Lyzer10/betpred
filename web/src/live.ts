@@ -1,4 +1,5 @@
 import { createContext, createElement, type ReactNode, useContext, useEffect, useRef, useState } from "react";
+import { cachedJson } from "./lib";
 import type { MarketKey } from "./types";
 
 /** Live scores of the matches on the user's slips, straight from ESPN (display only: the official
@@ -101,10 +102,7 @@ export function useLive() {
   const [live, setLive] = useState<Record<string, LiveMatch>>({});
   const finished = useRef(new Set<string>());     // full time: never fetched again
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/lineups.json`, { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : { events: [] }))
-      .then((file) => setEvents(file.events ?? []))
-      .catch(() => setEvents([]));
+    cachedJson("data/lineups.json").then((file) => setEvents(file?.events ?? []));
   }, []);
   const wanted = events;
 
@@ -146,8 +144,7 @@ export function useLive() {
 export function useEspnEvent(home: string, away: string): EspnEvent | undefined {
   const [events, setEvents] = useState<EspnEvent[]>([]);
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/lineups.json`, { cache: "no-cache" })
-      .then((r) => (r.ok ? r.json() : { events: [] })).then((f) => setEvents(f.events ?? [])).catch(() => setEvents([]));
+    cachedJson("data/lineups.json").then((file) => setEvents(file?.events ?? []));
   }, []);
   return events.find((e) => e.home === home && e.away === away);
 }

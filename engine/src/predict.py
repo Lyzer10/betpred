@@ -465,10 +465,9 @@ def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timest
     previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"fixtures": []}
     current = {_fixture_key(f): f for f in previous["fixtures"]}
     for fixture in fixtures:
-        current[_fixture_key(fixture)] = {
-            key: fixture[key] for key in ("league", "mode", "date", "time", "kickoff_utc", "home", "away", "expected_goals", "top_scorelines") if key in fixture
-        } | {"markets": [{k: m.get(k) for k in ("market", "label", "probability", "market_probability", "betpawa_odds")}
-                         for m in fixture["markets"]]}
+        # The full published record (form, table, head-to-head, every market), so any past or started
+        # match can still be opened in the app; only the run-specific id is dropped.
+        current[_fixture_key(fixture)] = {key: value for key, value in fixture.items() if key != "id"}
     snapshot = {"date": day, "generated_at": now.isoformat() + "Z",
                 "fixtures": sorted(current.values(), key=lambda f: f["kickoff_utc"]),
                 # Locked slips are already frozen; unlocked ones are the latest pre-kickoff version.

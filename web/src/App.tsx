@@ -19,11 +19,13 @@ const TABS = [
 
 type Tab = (typeof TABS)[number]["id"];
 
-/** Routes live in the URL hash (#matches/3) so screens can be bookmarked and shared. */
-function readRoute(): { tab: Tab; fixtureId: number | null } {
-  const [name, id] = window.location.hash.replace(/^#\/?/, "").split("/");
+/** Routes live in the URL hash so screens can be bookmarked and shared:
+ * #matches/2026-10-25 (a day) and #matches/2026-10-25/Udinese/Milan (one match, any day). */
+function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null } {
+  const [name, day, home, away] = window.location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
   const tab = (TABS.find((t) => t.id === (name === "history" ? "bets" : name))?.id ?? "bets") as Tab;
-  return { tab, fixtureId: id !== undefined && /^\d+$/.test(id) ? Number(id) : null };
+  const isDay = day !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(day);
+  return { tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null };
 }
 
 const TITLES: Record<Tab, string> = { bets: "Bets", matches: "Matches", money: "Money", record: "Record" };
@@ -36,7 +38,7 @@ export default function App() {
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
-  const { tab, fixtureId } = route;
+  const { tab, day, match } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
   const [ledger, setLedger] = useState<Ledger>(loadLedger);
   const [theme, setTheme] = useState<Theme>(loadTheme);
@@ -76,8 +78,8 @@ export default function App() {
           <Slips data={data} ledger={ledger} onOpenMoney={() => go("money")}
             onPlace={(bet) => updateLedger({ ...ledger, entries: [...ledger.entries, bet] })} />
         )}
-        {data && tab === "matches" && <Matches fixtures={data.fixtures} archive={data.archive ?? []} selected={fixtureId}
-          onSelect={(id) => go(id === null ? "matches" : `matches/${id}`)} />}
+        {data && tab === "matches" && <Matches fixtures={data.fixtures} archive={data.archive ?? []} day={day} match={match}
+          onNavigate={(path) => go(path)} />}
         {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
         {data && tab === "record" && <Record data={data} />}
       </main>

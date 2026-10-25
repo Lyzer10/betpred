@@ -83,7 +83,9 @@ function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
   return (
     <Card className="overflow-hidden" data-h2h>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Head-to-head</h2>
-      {!h2h ? (
+      {h2h === undefined ? (
+        <p className="px-4 pb-4 text-xs text-ink-3">Head-to-head appears after the next update.</p>
+      ) : !h2h ? (
         <p className="px-4 pb-4 text-xs text-ink-3">No league meetings in our data (top-flight matches since 2014/15).</p>
       ) : (
         <>
@@ -461,32 +463,56 @@ function UpcomingMatches({ day, fixtures, onOpen }: { day: string; fixtures: Fix
   const archived = useArchive(day);
   const upcoming = fixtures.filter((f) => f.day === day);
   const started = (archived?.fixtures ?? []).filter((a) => !upcoming.some((f) => f.home === a.home && f.away === a.away));
-  return <LeagueGroups fixtures={[...started, ...upcoming]} onOpen={(f) => f.id != null && onOpen(f)} />;
+  return <LeagueGroups fixtures={[...started, ...upcoming]} onOpen={onOpen} />;
 }
 
-function PastMatches({ date }: { date: string }) {
+function PastMatches({ date, onOpen }: { date: string; onOpen: (f: ListFixture) => void }) {
   const snapshot = useArchive(date);
   if (!snapshot) return <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
-  return snapshot.fixtures.length ? <LeagueGroups fixtures={snapshot.fixtures} /> : <Empty>No matches this day.</Empty>;
+  return snapshot.fixtures.length ? <LeagueGroups fixtures={snapshot.fixtures} onOpen={onOpen} /> : <Empty>No matches this day.</Empty>;
 }
 
-export function Matches({ fixtures, archive, selected, onSelect }: {
-  fixtures: Fixture[]; archive: ArchiveDay[]; selected: number | null; onSelect: (id: number | null) => void;
+/** An archived match (started or finished) in the shape the match page needs. Older archive days
+ * stored fewer fields, so missing ones get safe defaults. */
+function fromArchive(a: ArchivedFixture, day: string): Fixture {
+  return {
+    ...(a as unknown as Fixture), id: -1, day,
+    top_scorelines: (a as Partial<Fixture>).top_scorelines ?? [],
+    has_market_odds: (a as Partial<Fixture>).has_market_odds ?? a.markets.every((m) => m.market_probability != null),
+    markets: a.markets.map((m) => ({ ...m, model_probability: (m as Partial<MarketPrediction>).model_probability ?? m.probability,
+      fair_odds: (m as Partial<MarketPrediction>).fair_odds ?? 1 / m.probability, betpawa_odds: m.betpawa_odds ?? null })),
+  };
+}
+
+/** One match of any day: from the upcoming list, else from that day's archive. */
+function MatchPage({ day, match, fixtures, onBack }: { day: string; match: { home: string; away: string }; fixtures: Fixture[]; onBack: () => void }) {
+  const archived = useArchive(day);
+  const upcoming = fixtures.find((f) => f.home === match.home && f.away === match.away && f.day === day);
+  const past = archived?.fixtures.find((f) => f.home === match.home && f.away === match.away);
+  const fixture = upcoming ?? (past ? fromArchive(past, day) : undefined);
+  if (fixture) return <MatchDetail fixture={fixture} onBack={onBack} />;
+  return archived ? <Empty>Match not found. <button className="text-accent" onClick={onBack}>Back to matches</button></Empty>
+    : <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
+}
+
+export function Matches({ fixtures, archive, day: routeDay, match, onNavigate }: {
+  fixtures: Fixture[]; archive: ArchiveDay[]; day: string | null; match: { home: string; away: string } | null;
+  onNavigate: (path: string) => void;
 }) {
   const today = todayIso();
   const upcomingDays = [...new Set(fixtures.map((f) => f.day))];
   const pastDays = archive.map((a) => a.date).filter((d) => d <= today && !upcomingDays.includes(d));
   const dates = [...new Set([...pastDays, ...upcomingDays])].sort();
-  const [day, setDay] = useState<string | undefined>(dates.includes(today) ? today : upcomingDays[0] ?? dates[dates.length - 1]);
-  const fixture = fixtures.find((f) => f.id === selected);
-  if (fixture) return <MatchDetail fixture={fixture} onBack={() => onSelect(null)} />;
+  const day = routeDay && dates.includes(routeDay) ? routeDay
+    : dates.includes(today) ? today : upcomingDays[0] ?? dates[dates.length - 1];
+  const open = (f: { home: string; away: string }) =>
+    onNavigate(`matches/${day}/${encodeURIComponent(f.home)}/${encodeURIComponent(f.away)}`);
+  if (day && match) return <MatchPage day={day} match={match} fixtures={fixtures} onBack={() => onNavigate(`matches/${day}`)} />;
   return (
     <div>
-      <div className="mb-4"><DateStrip dates={dates} selected={day} onSelect={setDay} /></div>
-      {day && upcomingDays.includes(day) && (
-        <UpcomingMatches key={day} day={day} fixtures={fixtures} onOpen={(f) => onSelect(f.id ?? null)} />
-      )}
-      {day && !upcomingDays.includes(day) && <PastMatches key={day} date={day} />}
+      <div className="mb-4"><DateStrip dates={dates} selected={day} onSelect={(d) => onNavigate(`matches/${d}`)} /></div>
+      {day && upcomingDays.includes(day) && <UpcomingMatches key={day} day={day} fixtures={fixtures} onOpen={open} />}
+      {day && !upcomingDays.includes(day) && <PastMatches key={day} date={day} onOpen={open} />}
       {!day && <Empty>No matches scheduled yet.</Empty>}
     </div>
   );

@@ -296,6 +296,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: FIX: matches already started or finished could not be opened (only upcoming ones had an id).
+  The archive now keeps the full published record of each match; matches open by date and teams
+  (`#matches/<day>/<home>/<away>`) on any day; Back keeps the chosen day; data files are cached in memory
+  for a minute (`lib.cachedJson`), so returning to Matches is instant. Head-to-head distinguishes "not
+  computed yet" from "no meetings".
 - 2026-10-25: FIX (would have stopped Monday's runs): `load_fixtures` crashed once every match of a league
   had kicked off (an empty list filter made pandas select no columns); now a boolean array, with a test.
 - 2026-10-25: match page: head-to-head (last 6 league meetings since 2014/15 from our own results, with a

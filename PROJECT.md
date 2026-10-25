@@ -299,6 +299,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: line-up pitch drawn as a real team shape (full-backs/wing-backs higher and wider, centre-backs
+  tucked in, wide midfielders up, holding midfielders deeper, wingers just behind the striker); unknown
+  ESPN codes (e.g. RCF for Pulisic in Milan's 4-4-1-1) are read from their letters instead of falling back
+  to a list. FIX: moving from one match page to another kept the previous match's line-ups (and stats); each
+  match page now starts fresh. Checked on six real line-ups of 25 Oct 2026, no overlapping names.
 - 2026-10-25: official line-ups appear as soon as ESPN publishes them: the match page asks ESPN directly from
   90 minutes before kick-off and re-checks every 2 minutes (no waiting for a run). Display only.
 - 2026-10-25: "Full table" from a match opens `#league/<CODE>/table/<home>/<away>` and highlights the two

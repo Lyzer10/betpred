@@ -175,17 +175,56 @@ const POSITION_LINE: Record<string, number> = {
   F: 4, CF: 4, ST: 4, LF: 4, RF: 4, LW: 4, RW: 4,
 };
 
-const positionLine = (position: string, lineCount: number) =>
-  position === "CF-L" || position === "CF-R" ? (lineCount >= 4 ? 3 : 4) : POSITION_LINE[position];
+/** Pitch line of a position code (0 keeper ... 4 forwards). Second strikers (CF-L, CF-R, LCF, RCF) play
+ * just behind the striker when the formation has a separate line for them (4-4-1-1, 3-4-2-1). Codes ESPN
+ * rarely uses are read from their letters, so a new code never breaks the drawing. */
+const positionLine = (position: string, lineCount: number): number | undefined => {
+  if (/^(CF-[LR]|[LR]CF)$/.test(position)) return lineCount >= 4 ? 3 : 4;
+  if (position in POSITION_LINE) return POSITION_LINE[position];
+  const core = position.replace(/-[LR]$/, "").replace(/^[LR](?=[A-Z]{2})/, "");
+  if (/^(G|GK)$/.test(core)) return 0;
+  if (/B$|^CD|^D$|^SW/.test(core)) return 1;
+  if (/^DM/.test(core)) return 2;
+  if (/^AM/.test(core)) return 3;
+  if (/M/.test(core)) return 2;
+  if (/F|S|W/.test(core)) return 4;
+  return undefined;
+};
 
-/** Left to right across the pitch: wide left (LB, LM, ...) < inner left (CD-L, ...) < centre < inner right < wide right. */
+/** Left to right across the pitch: wide left (LB, LM, ...) < inner left (CD-L, LCB, ...) < centre < inner right < wide right. */
 const sideOrder = (position: string) => {
   if (/^(LB|LWB|LM|LW|LF)$/.test(position)) return 0;
-  if (position.endsWith("-L")) return 1;
-  if (position.endsWith("-R")) return 3;
+  if (position.endsWith("-L") || /^L[CDA][A-Z]/.test(position)) return 1;
+  if (position.endsWith("-R") || /^R[CDA][A-Z]/.test(position)) return 3;
   if (/^(RB|RWB|RM|RW|RF)$/.test(position)) return 4;
   return 2;
 };
+
+const isWide = (position: string) => sideOrder(position) === 0 || sideOrder(position) === 4;
+
+/** Realistic shape: full-backs and wing-backs higher and wider, centre-backs tucked in, wide midfielders
+ * pushed up, holding midfielders deeper, wingers slightly behind the striker (y: smaller = further forward). */
+function shapeOffset(position: string, lineIndex: number, lineCount: number): number {
+  if (lineIndex === 0) return 0;
+  const wide = isWide(position);
+  if (lineIndex === 1) return wide ? -6 : 0;                        // defence
+  if (lineIndex === lineCount - 1) return wide ? 4 : 0;             // attack: wingers a little deeper
+  if (/DM/.test(position)) return 4;                                 // holding midfielder
+  return wide ? -4 : 0;                                              // midfield / attacking midfield
+}
+
+/** Horizontal spots for one line: wide players on the touchline side, central players closer together. */
+function lineXs(line: LineupPlayer[]): number[] {
+  const n = line.length;
+  const even = line.map((_, i) => (100 * (i + 1)) / (n + 1));
+  const outerWide = n >= 4 && isWide(line[0].position ?? "") && isWide(line[n - 1].position ?? "");
+  if (!outerWide) return even;
+  // Central players between the wide ones: a pair at 35 / 65, three at 30 / 50 / 70, more spread evenly.
+  const inner = n - 2;
+  const centre = inner === 1 ? [50] : inner === 2 ? [35, 65] : inner === 3 ? [30, 50, 70]
+    : Array.from({ length: inner }, (_, k) => 26 + (48 * k) / (inner - 1));
+  return line.map((_, i) => (i === 0 ? 10 : i === n - 1 ? 90 : centre[i - 1]));
+}
 
 function pitchLines(formation: string | null, starters: LineupPlayer[]) {
   if (!formation || starters.length !== 11) return null;
@@ -194,7 +233,7 @@ function pitchLines(formation: string | null, starters: LineupPlayer[]) {
   const keepers = starters.filter((player) => positionLine(player.position ?? "", counts.length) === 0);
   const outfield = starters.filter((player) => positionLine(player.position ?? "", counts.length) !== 0);
   if (keepers.length !== 1 || outfield.some((player) => positionLine(player.position ?? "", counts.length) == null)) return null;
-  outfield.sort((a, b) => positionLine(a.position!, counts.length) - positionLine(b.position!, counts.length)
+  outfield.sort((a, b) => positionLine(a.position!, counts.length)! - positionLine(b.position!, counts.length)!
     || sideOrder(a.position!) - sideOrder(b.position!)
     || (a.formation_place ?? 99) - (b.formation_place ?? 99));
   const lines: LineupPlayer[][] = [[keepers[0]]];
@@ -220,7 +259,7 @@ const surname = (name: string) => {
 
 function Pitch({ formation, starters }: { formation: string; starters: LineupPlayer[] }) {
   const lines = pitchLines(formation, starters)!;
-  const yFor = (index: number) => 119 - index * (106 / (lines.length - 1));
+  const yFor = (index: number) => 119 - index * (104 / (lines.length - 1));
   return (
     <svg viewBox="0 0 100 132" className="block w-full" role="img" aria-label={`Starting eleven in a ${formation} formation`} data-pitch>
       <rect width="100" height="132" rx="3" fill="var(--pitch)" />
@@ -230,8 +269,8 @@ function Pitch({ formation, starters }: { formation: string; starters: LineupPla
         <path d="M29 2v17h42V2M39 2v8h22V2M29 130v-17h42v17M39 130v-8h22v8" />
       </g>
       {lines.flatMap((line, lineIndex) => line.map((player, playerIndex) => {
-        const x = 100 * (playerIndex + 1) / (line.length + 1);
-        const y = yFor(lineIndex);
+        const x = lineXs(line)[playerIndex];
+        const y = yFor(lineIndex) + shapeOffset(player.position ?? "", lineIndex, lines.length);
         return (
           <g key={`${player.number}-${player.name}`} data-player-marker data-position={player.position} transform={`translate(${x} ${y})`}>
             <circle r="4.4" fill={lineIndex === 0 ? "var(--keeper)" : "var(--player)"} stroke="var(--player-ring)" strokeWidth="0.7" />

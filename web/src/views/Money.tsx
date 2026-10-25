@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { currentPushCode, enablePush, pushSupported } from "../push";
+import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingMode, type Transfer, betStatus, isBet, isTransfer, newId, payout, settledSlips, summarise } from "../ledger";
 import { STAKING, losingStreakChance, odds, pct, tsh } from "../lib";
 import type { Result } from "../types";
@@ -136,6 +137,12 @@ const shiftMonth = (month: string, by: number) => {
   return d.toISOString().slice(0, 7);
 };
 
+/** A placed bet not yet settled officially: its live state while its matches play. */
+function PendingBetStatus({ bet }: { bet: PlacedBet }) {
+  const live = useSlipLive(bet.legs, bet.flexi?.minCorrect);
+  return live ? <SlipLivePill legs={bet.legs} need={bet.flexi?.minCorrect} /> : <StatusPill status="pending" />;
+}
+
 /** One month of placed bets: totals, a strip of days with bets, and the chosen day's bets as a table. */
 function PlacedBets({ bets, results, onDelete }: { bets: PlacedBet[]; results: Result[]; onDelete: (id: string) => void }) {
   const sortedDays = bets.map((b) => b.day).sort();
@@ -201,7 +208,7 @@ function PlacedBets({ bets, results, onDelete }: { bets: PlacedBet[]; results: R
                       <span className="block text-[11px] text-ink-3">@ {odds(bet.odds)}</span>
                     </span>
                     <span className="flex flex-col items-end gap-0.5">
-                      <StatusPill status={s} />
+                      {s === "pending" ? <PendingBetStatus bet={bet} /> : <StatusPill status={s} />}
                       <span className="whitespace-nowrap text-[11px] font-semibold text-ink-2">
                         {s === "won" ? `+${tsh(payout(bet))}` : s === "lost" ? "–" : `pays ${tsh(payout(bet))}`}
                       </span>
@@ -216,6 +223,7 @@ function PlacedBets({ bets, results, onDelete }: { bets: PlacedBet[]; results: R
                               {legs[i] === true ? "✓" : legs[i] === false ? "✕" : "•"}
                             </span>
                             <span className="truncate">{l.label} · {l.home} v {l.away}</span>
+                            {legs[i] == null && <LiveLeg home={l.home} away={l.away} market={l.market} />}
                           </li>
                         ))}
                       </ul>

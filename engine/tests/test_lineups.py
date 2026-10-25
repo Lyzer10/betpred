@@ -17,3 +17,11 @@ def test_lineups_only_when_both_elevens_are_announced():
     }
     assert parse_summary({"rosters": [_roster("home", "Inter", 11), _roster("away", "Milan", 0)]}, "SERIEA") is None
     assert parse_summary({"rosters": []}, "SERIEA") is None
+
+
+def test_event_teams_maps_espn_names_to_ours():
+    from src.lineups import event_teams
+    event = {"competitions": [{"competitors": [
+        {"homeAway": "away", "team": {"displayName": "Tottenham Hotspur"}},
+        {"homeAway": "home", "team": {"displayName": "Chelsea"}}]}]}
+    assert event_teams(event, "EPL") == ("Chelsea", "Tottenham")

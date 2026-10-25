@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { type Ledger, loadLedger, storeLedger } from "./ledger";
 import { usePredictions } from "./lib";
+import { LiveProvider } from "./live";
+import { isBet } from "./ledger";
 import { NEXT_THEME, type Theme, applyTheme, loadTheme } from "./theme";
 import { Empty } from "./ui";
 import { FloatingNav } from "./components/FloatingNav";
@@ -38,6 +40,17 @@ export default function App() {
   const { tab, fixtureId } = route;
   const go = (hash: string) => { window.location.hash = hash; window.scrollTo(0, 0); };
   const [ledger, setLedger] = useState<Ledger>(loadLedger);
+  // Live scores follow today's matches, today's slips and the user's recent placed bets.
+  const tracked = useMemo(() => {
+    const now = Date.now();
+    const near = (iso: string) => Math.abs(Date.parse(iso) - now) < 30 * 3_600_000;
+    const recent = new Date(now - 2 * 86_400_000).toISOString().slice(0, 10);
+    return [
+      ...(data?.fixtures ?? []).filter((f) => near(f.kickoff_utc)),
+      ...(data?.history ?? []).flatMap((h) => h.legs).filter((l) => near(l.kickoff_utc)),
+      ...ledger.entries.filter(isBet).flatMap((b) => b.legs).filter((l) => l.date >= recent),
+    ].map((m) => ({ home: m.home, away: m.away }));
+  }, [data, ledger]);
   const [theme, setTheme] = useState<Theme>(loadTheme);
   const cycleTheme = () => { const next = NEXT_THEME[theme]; setTheme(next); applyTheme(next); };
   const updateLedger = (next: Ledger) => { setLedger(next); storeLedger(next); };
@@ -67,6 +80,7 @@ export default function App() {
         </div>
       </header>
 
+      <LiveProvider matches={tracked}>
       <main data-page={tab}>
         {error && <Empty><span className="text-critical-ink">Could not load predictions ({error}).</span></Empty>}
         {!data && !error && <Empty>Loading predictions…</Empty>}
@@ -79,6 +93,7 @@ export default function App() {
         {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
         {data && tab === "record" && <Record data={data} />}
       </main>
+      </LiveProvider>
 
       <p data-page-end className="mt-10 text-center text-[11px] leading-relaxed text-ink-3">
         Probabilities, not guarantees. Only stake what you can afford to lose. 18+.

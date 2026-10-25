@@ -11,7 +11,9 @@ const VERDICT = /(Bet this|Fair, skip|Don't bet)\s*[+-]\d/;
 const money = (text) => Number(text.replace(/[^\d]/g, ""));
 
 for (const scheme of ["light", "dark"]) {
-  const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme });
+  // A normal Android Chrome user agent: ESPN's network turns away "Headless" browsers, which real phones never are.
+  const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme,
+    userAgent: "Mozilla/5.0 (Linux; Android 14; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36" });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));

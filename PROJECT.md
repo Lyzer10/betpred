@@ -269,6 +269,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- Test data must be real: Codex's invented line-up hid a left/right ordering bug that the real
+  Sunderland v Leeds line-ups exposed at once (2026-10-25).
 - Workflow runs must check out `main`, not the triggering commit: a queued run otherwise starts from
   data older than the previous run's publish and its push fails on rebase conflicts.
 - When comparing strategies that bet different amounts, compare per unit staked or on matched days:
@@ -294,6 +296,14 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: live tracking (display only; the official result still settles overnight). `src/lineups.py`
+  writes ESPN event ids (`events` in lineups.json, last 18 h to next 36 h); the app (`web/src/live.ts`)
+  polls ESPN scoreboards every 45 s while open and shows live minute and score on Matches, and per leg
+  ✓ / ✕ / on track plus a slip state (Live x/y, Won, Lost; Flexi aware) on Bets and Money placed bets.
+  Leg rules mirror `add_actuals`; own goals count for the benefiting team (as ESPN credits them).
+  Verified: 69 real matches, 1,242 legs, 0 disagreements with the official settlement
+  (`npm run check:live`, recorded fixture). Browser checks use a normal phone user agent: ESPN refuses
+  "Headless" browsers (not real phones).
 - 2026-10-25: line-ups on a full pitch by formation (Codex branch `codex/lineup-pitch`, code only; its
   local data files were not merged). Fixes before merging: left-to-right order now has five bands (wide
   left, inner left, centre, inner right, wide right; Codex's three bands put RB Hume inside CB-R

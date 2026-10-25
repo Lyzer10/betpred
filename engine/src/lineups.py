@@ -3,6 +3,8 @@
 Clubs announce line-ups about an hour before kick-off; ESPN shows them as soon as they are out.
 Display only: line-ups are not a model input until a study shows they improve on the odds (the
 earlier absences study found no gain beyond the bookmaker price).
+The same file lists ESPN's event ids of the matches in that window (`events`), so the app can follow
+live scores of the user's slips straight from ESPN without guessing team names.
 Usage: python -m src.lineups   (writes web/public/data/lineups.json for matches in the next 36 hours)
 """
 from __future__ import annotations
@@ -20,6 +22,7 @@ ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer"
 SLUGS = {"EPL": "eng.1", "LALIGA": "esp.1", "SERIEA": "ita.1", "BUNDES": "ger.1", "LIGUE1": "fra.1"}
 LINEUPS_PATH = ENGINE_DIR.parent / "web" / "public" / "data" / "lineups.json"
 HORIZON = pd.Timedelta(hours=36)
+EVENTS_BACK = pd.Timedelta(hours=18)    # finished matches keep their live FT score until the nightly settlement
 
 
 def _team(roster: dict) -> dict:
@@ -48,10 +51,21 @@ def parse_summary(summary: dict, league: str) -> dict | None:
             "home_lineup": teams["home"][1], "away_lineup": teams["away"][1]}
 
 
+def event_teams(event: dict, league: str) -> tuple[str, str]:
+    """Our (home, away) names for an ESPN scoreboard event."""
+    sides = {c["homeAway"]: canonical_team(c["team"]["displayName"], league) for c in event["competitions"][0]["competitors"]}
+    return sides["home"], sides["away"]
+
+
 def fetch_lineups(now: pd.Timestamp, session: requests.Session | None = None) -> list[dict]:
+    return fetch_espn(now, session)[0]
+
+
+def fetch_espn(now: pd.Timestamp, session: requests.Session | None = None) -> tuple[list[dict], list[dict]]:
+    """(announced line-ups from 3 hours ago, ESPN events from EVENTS_BACK ago) up to HORIZON ahead."""
     session = session or requests.Session()
-    found = []
-    days = sorted({(now + pd.Timedelta(hours=h)).strftime("%Y%m%d") for h in (0, 12, 24, 36)})
+    found, events_seen = [], {}
+    days = sorted({(now + pd.Timedelta(hours=h)).strftime("%Y%m%d") for h in (-18, -12, 0, 12, 24, 36)})
     for league, slug in SLUGS.items():
         for day in days:
             try:
@@ -61,8 +75,17 @@ def fetch_lineups(now: pd.Timestamp, session: requests.Session | None = None) ->
                 continue
             for event in events:
                 kickoff = pd.Timestamp(event["date"]).tz_localize(None)
-                if not (now - pd.Timedelta(hours=3) <= kickoff <= now + HORIZON):
+                if not (now - EVENTS_BACK <= kickoff <= now + HORIZON):
                     continue
+                try:
+                    home, away = event_teams(event, league)
+                    events_seen[event["id"]] = {"league": league, "home": home, "away": away,
+                                                "kickoff_utc": kickoff.isoformat() + "Z", "slug": slug,
+                                                "espn_date": day, "event_id": event["id"]}
+                except (ValueError, KeyError) as error:
+                    print(f"{league} {event.get('name')}: not mapped ({error})")
+                if kickoff < now - pd.Timedelta(hours=3):
+                    continue                     # line-ups only for matches still to come or just started
                 try:
                     summary = session.get(f"{ESPN}/{slug}/summary", params={"event": event["id"]}, timeout=20).json()
                     lineup = parse_summary(summary, league)
@@ -71,16 +94,16 @@ def fetch_lineups(now: pd.Timestamp, session: requests.Session | None = None) ->
                     continue
                 if lineup:
                     found.append(lineup | {"kickoff_utc": kickoff.isoformat() + "Z"})
-    return found
+    return found, list(events_seen.values())
 
 
 def main() -> None:
     now = pd.Timestamp(datetime.now(timezone.utc)).tz_localize(None)
-    lineups = fetch_lineups(now)
+    lineups, events = fetch_espn(now)
     LINEUPS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    LINEUPS_PATH.write_text(json.dumps({"generated_at": now.isoformat() + "Z", "matches": lineups}, ensure_ascii=False, indent=1),
-                            encoding="utf-8")
-    print(f"Line-ups: {len(lineups)} matches announced")
+    LINEUPS_PATH.write_text(json.dumps({"generated_at": now.isoformat() + "Z", "matches": lineups, "events": events},
+                                       ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"Line-ups: {len(lineups)} matches announced; {len(events)} ESPN events for live scores")
 
 
 if __name__ == "__main__":

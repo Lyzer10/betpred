@@ -4,6 +4,7 @@ import { STAKING, VALUE_EDGE, edge, legTeam, odds, pct, recommendedStake, timeLa
 import type { ArchiveSnapshot, DayBets, Predictions, Slip, SlipLeg, TierName } from "../types";
 import { Flag, TeamBadge } from "../badges";
 import { explainPick } from "../explain";
+import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
 import { type Fixture, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
@@ -32,6 +33,14 @@ function LegBadge({ leg }: { leg: SlipLeg }) {
   );
 }
 
+/** Today's slips after kick-off: live state until the official result settles them. */
+function PastLiveStatus({ legs }: { legs: SlipLeg[] }) {
+  const live = useSlipLive(legs);
+  if (!live) return <PastSlipStatus status="pending" />;
+  if (live.status === "live") return <span data-slip-live="live" className="past-slip-status past-slip-status-pending">● Live · {live.won}/{live.total} won</span>;
+  return <PastSlipStatus status={live.status} />;
+}
+
 function PastSlipStatus({ status }: { status: "won" | "lost" | "pending" }) {
   const content = status === "won" ? ["✓", "Won"] : status === "lost" ? ["✕", "Lost"] : ["•", "Pending"];
   return (
@@ -49,7 +58,7 @@ function DayStatus({ day }: { day: DayBets }) {
   return (
     <div data-day-status className={`mb-3 rounded-xl px-4 py-2.5 text-xs ${day.final ? "bg-good/15 text-good-ink" : "bg-surface-2 text-ink-2"}`}>
       {day.final
-        ? <><span className="font-semibold">✓ Final slips.</span> These will not change. First match {first}.</>
+        ? <><span className="font-semibold">✓ Final slips.</span> These will not change.{Date.parse(day.first_kickoff_utc) > Date.now() ? ` First match ${first}.` : " Matches under way: scores update live below."}</>
         : <><span className="font-semibold">Preview.</span> Final slips around {finalAround}, with the latest prices, about 45 minutes before the first match ({first}). They may still change until then.</>}
     </div>
   );
@@ -157,12 +166,14 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
   const stake = complete ? Math.floor(recommendedStake(balances[bookmaker], slip.win_probability, total, { tier, warning: slip.price_warning, staking })
     * stakeFactor / STAKING.roundTo) * STAKING.roundTo : 0;
   const hasValue = complete && edge(slip.win_probability, total) >= VALUE_EDGE;
+  const liveSlip = useSlipLive(slip.legs);
   return (
     <Card className="overflow-hidden">
       <div data-current-slip-hero className="slip-hero px-5 pb-5 pt-4 text-hero-ink">
         <div className="flex items-center justify-between text-xs opacity-70">
           <span>{TIERS[tier].range}</span>
-          {slip.locked && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">Locked · in play</span>}
+          {slip.locked && (liveSlip ? <SlipLivePill legs={slip.legs} onDark />
+            : <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">Locked · in play</span>)}
           {!slip.locked && slip.final && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">✓ Final</span>}
         </div>
         <div className="mt-3 flex items-end justify-between">
@@ -195,6 +206,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
                       <Flag country={(leg.league ?? PREMIER_LEAGUE).country} width={15} />
                       <span className="truncate">{leg.home} v {leg.away} · {timeLabel(leg.kickoff_utc)} · {pct(leg.probability)}</span>
                     </div>
+                    <div className="mt-1 empty:hidden"><LiveLeg home={leg.home} away={leg.away} market={leg.market} /></div>
                   </div>
                 </button>
                 {slip.locked && leg.won != null ? <StatusPill status={leg.won ? "won" : "lost"} />
@@ -318,7 +330,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
               aria-expanded={open[t]} aria-controls={`past-${t}-legs`} onClick={() => setOpen({ ...open, [t]: !open[t] })}>
               <div className="flex items-center justify-between gap-3 text-xs">
                 <span className="opacity-70">{TIERS[t].range}</span>
-                <PastSlipStatus status={status} />
+                {status === "pending" ? <PastLiveStatus legs={slip.legs} /> : <PastSlipStatus status={status} />}
               </div>
               <div className="mt-3 flex items-end justify-between gap-4">
                 <div>
@@ -347,6 +359,9 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
                               <span className="truncate text-sm font-semibold">{named(leg)}</span>
                               <StatusPill status={legStatus} />
                             </div>
+                            {!fixture?.result && leg.won == null && (
+                              <div className="mt-1"><LiveLeg home={leg.home} away={leg.away} market={leg.market} /></div>
+                            )}
                             {fixture?.result ? (
                               <div data-final-score className="mt-1 truncate text-xs font-semibold text-ink-2">
                                 {leg.home} {fixture.result.score[0]}–{fixture.result.score[1]} {leg.away}

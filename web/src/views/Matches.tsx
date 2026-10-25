@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
+import { useLiveMatch } from "../live";
 import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
@@ -295,10 +296,16 @@ function MatchRow({ fixture, onOpen }: { fixture: ListFixture; onOpen?: () => vo
   const best = known ? result.indexOf(result.reduce((a, b) => (b!.probability > a!.probability ? b : a))) : -1;
   const outcome = fixture.result?.outcomes;
   const actual = outcome ? (outcome.home_win ? 0 : outcome.draw ? 1 : 2) : -1;
+  // Live score until the official result is in (display only).
+  const live = useLiveMatch(fixture.home, fixture.away);
+  const playing = !fixture.result && live && (live.state === "in" || live.state === "post") ? live : undefined;
+  const score = fixture.result?.score ?? playing?.score;
   const body = (
     <>
       <div className="w-11 shrink-0 text-center">
         {fixture.result ? <div className="text-[11px] font-bold text-ink-3">FT</div>
+          : playing ? <div data-live-minute className={`text-[11px] font-bold ${playing.state === "in" ? "text-good-ink" : "text-ink-3"}`}>
+              {playing.state === "in" && <span aria-hidden className="live-dot mr-1" />}{playing.clock}</div>
           : <div className="text-[11px] font-medium text-ink-3">{timeLabel(fixture.kickoff_utc)}</div>}
       </div>
       <div className="min-w-0 flex-1 space-y-2">
@@ -308,10 +315,10 @@ function MatchRow({ fixture, onOpen }: { fixture: ListFixture; onOpen?: () => vo
             <div key={team} className="flex items-center gap-2.5">
               <TeamBadge team={team} size={22} />
               <div className="flex min-w-0 flex-1 items-baseline gap-1.5">
-                <span className={`min-w-0 truncate text-sm ${fixture.result && fixture.result.score[i] > fixture.result.score[1 - i] ? "font-bold" : "font-medium"}`}>{team}</span>
-                {context && <span className="shrink-0 text-[10px] text-ink-3">{ordinal(context.position)}</span>}
+                <span className={`min-w-0 truncate text-sm ${score && score[i] > score[1 - i] ? "font-bold" : "font-medium"}`}>{team}</span>
+                {context && !score && <span className="shrink-0 text-[10px] text-ink-3">{ordinal(context.position)}</span>}
               </div>
-              {fixture.result && <span className="w-5 text-right text-sm font-bold">{fixture.result.score[i]}</span>}
+              {score && <span data-score className={`w-5 text-right text-sm font-bold ${playing?.state === "in" ? "text-good-ink" : ""}`}>{score[i]}</span>}
             </div>
           );
         })}

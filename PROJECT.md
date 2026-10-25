@@ -299,6 +299,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: official line-ups appear as soon as ESPN publishes them: the match page asks ESPN directly from
+  90 minutes before kick-off and re-checks every 2 minutes (no waiting for a run). Display only.
 - 2026-10-25: "Full table" from a match opens `#league/<CODE>/table/<home>/<away>` and highlights the two
   teams in light blue; from the league header nothing is highlighted.
 - 2026-10-25: Bets page shows the health banner only when stakes are halved ("under review"); "on watch"

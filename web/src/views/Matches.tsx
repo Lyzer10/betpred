@@ -258,13 +258,19 @@ function StarterList({ starters }: { starters: LineupPlayer[] }) {
   );
 }
 
-/** Line-ups of a match that has started, straight from ESPN's match record (for matches no longer in
- * lineups.json and not yet stored in the archive). */
-function usePlayedLineup(fixture: Fixture, wanted: boolean) {
+const LINEUP_WINDOW_MS = 90 * 60_000;   // clubs announce about 60-40 minutes before kick-off
+const LINEUP_RETRY_MS = 2 * 60_000;
+
+/** Official line-ups straight from ESPN's match record, from 90 minutes before kick-off onwards: they show
+ * as soon as ESPN has them (no waiting for a daily run), re-checked every 2 minutes until they appear.
+ * Display only: line-ups are not a model input. */
+function useEspnLineup(fixture: Fixture, wanted: boolean) {
   const event = useEspnEvent(fixture.home, fixture.away);
   const [played, setPlayed] = useState<{ home_lineup: TeamLineup; away_lineup: TeamLineup } | null>(null);
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    if (!wanted || !event) return;
+    if (!wanted || !event || played) return;
+    const retry = window.setTimeout(() => setAttempt((n) => n + 1), LINEUP_RETRY_MS);
     fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${event.slug}/summary?event=${event.event_id}`)
       .then((r) => r.json())
       .then((summary) => {
@@ -280,16 +286,18 @@ function usePlayedLineup(fixture: Fixture, wanted: boolean) {
         if (home && away) setPlayed({ home_lineup: home, away_lineup: away });
       })
       .catch(() => undefined);
-  }, [wanted, event?.event_id]);
+    return () => window.clearTimeout(retry);
+  }, [wanted, event?.event_id, attempt, played]);
   return played;
 }
 
 export function Lineups({ fixture, expected }: { fixture: Fixture & { lineups?: { home_lineup: TeamLineup; away_lineup: TeamLineup } }; expected?: { home: ExpectedLineup; away: ExpectedLineup } | null }) {
   const announced = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
   const started = Date.parse(fixture.kickoff_utc) <= Date.now();
-  const fetched = usePlayedLineup(fixture, started && !announced && !fixture.lineups);
-  // Official line-ups first (announced, stored after the match, or ESPN's match record once it has started);
-  // the "expected" XI only before kick-off.
+  const soon = Date.parse(fixture.kickoff_utc) - Date.now() <= LINEUP_WINDOW_MS;
+  const fetched = useEspnLineup(fixture, soon && !announced && !fixture.lineups);
+  // Official line-ups first (published file, stored after the match, or ESPN's match record from 90 minutes
+  // before kick-off); the "expected" XI only before kick-off and only while no official line-up exists.
   const lineup = announced ?? fixture.lineups ?? fetched ?? undefined;
   const [side, setSide] = useState<"home" | "away">("home");
   const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"] ?? (started ? undefined : expected?.[side]);

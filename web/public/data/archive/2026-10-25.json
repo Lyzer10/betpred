@@ -1,6 +1,6 @@
 {
  "date": "2026-10-25",
- "generated_at": "2026-10-25T11:01:10.824437Z",
+ "generated_at": "2026-10-25T15:01:09.348212Z",
  "fixtures": [
   {
    "league": {
@@ -159,7 +159,33 @@
      "market_probability": 0.8231,
      "betpawa_odds": 1.17
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     1
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": false,
+     "under_2.5": false,
+     "under_3.5": true,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   }
   },
   {
    "league": {
@@ -1628,126 +1654,126 @@
      "label": "Home win",
      "probability": 0.3111,
      "market_probability": 0.3239,
-     "betpawa_odds": 3.15
+     "betpawa_odds": 2.73
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2844,
      "market_probability": 0.2778,
-     "betpawa_odds": 3.53
+     "betpawa_odds": 3.4
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.3954,
      "market_probability": 0.3983,
-     "betpawa_odds": 2.37
+     "betpawa_odds": 2.76
     },
     {
      "market": "over_0.5",
      "label": "Over 0.5 goals",
      "probability": 0.9323,
      "market_probability": 0.9323,
-     "betpawa_odds": 1.05
+     "betpawa_odds": 1.06
     },
     {
      "market": "over_1.5",
      "label": "Over 1.5 goals",
      "probability": 0.7508,
      "market_probability": 0.7598,
-     "betpawa_odds": 1.25
+     "betpawa_odds": 1.3
     },
     {
      "market": "over_2.5",
      "label": "Over 2.5 goals",
      "probability": 0.5264,
      "market_probability": 0.5201,
-     "betpawa_odds": 1.79
+     "betpawa_odds": 1.94
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.2856,
      "market_probability": 0.293,
-     "betpawa_odds": 2.9
+     "betpawa_odds": 3.27
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.4736,
      "market_probability": 0.4799,
-     "betpawa_odds": 2.08
+     "betpawa_odds": 1.91
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.7144,
      "market_probability": 0.707,
-     "betpawa_odds": 1.44
+     "betpawa_odds": 1.36
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.603,
      "market_probability": 0.5559,
-     "betpawa_odds": 1.64
+     "betpawa_odds": 1.72
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.397,
      "market_probability": 0.4441,
-     "betpawa_odds": 2.27
+     "betpawa_odds": 2.13
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.5007,
      "market_probability": 0.5083,
-     "betpawa_odds": 1.89
+     "betpawa_odds": 1.75
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.5799,
      "market_probability": 0.5715,
-     "betpawa_odds": 1.61
+     "betpawa_odds": 1.78
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.4298,
      "market_probability": 0.4388,
-     "betpawa_odds": 2.21
+     "betpawa_odds": 2.03
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.4902,
      "market_probability": 0.4934,
-     "betpawa_odds": 1.87
+     "betpawa_odds": 2.07
     },
     {
      "market": "double_1x",
      "label": "Home or draw",
      "probability": 0.6043,
      "market_probability": 0.6017,
-     "betpawa_odds": 1.61
+     "betpawa_odds": 1.46
     },
     {
      "market": "double_x2",
      "label": "Away or draw",
      "probability": 0.6908,
      "market_probability": 0.6761,
-     "betpawa_odds": 1.38
+     "betpawa_odds": 1.49
     },
     {
      "market": "double_12",
      "label": "Home or away",
      "probability": 0.7156,
      "market_probability": 0.7222,
-     "betpawa_odds": 1.33
+     "betpawa_odds": 1.35
     }
    ]
   },
@@ -1815,28 +1841,28 @@
      "label": "Over 1.5 goals",
      "probability": 0.7301,
      "market_probability": 0.7346,
-     "betpawa_odds": 1.33
+     "betpawa_odds": 1.34
     },
     {
      "market": "over_2.5",
      "label": "Over 2.5 goals",
      "probability": 0.4842,
      "market_probability": 0.4733,
-     "betpawa_odds": 2.03
+     "betpawa_odds": 2.04
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.259,
      "market_probability": 0.2562,
-     "betpawa_odds": 3.53
+     "betpawa_odds": 3.55
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.5158,
      "market_probability": 0.5267,
-     "betpawa_odds": 1.83
+     "betpawa_odds": 1.82
     },
     {
      "market": "under_3.5",
@@ -1850,14 +1876,14 @@
      "label": "Both teams score",
      "probability": 0.5505,
      "market_probability": 0.53,
-     "betpawa_odds": 1.79
+     "betpawa_odds": 1.8
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.4495,
      "market_probability": 0.47,
-     "betpawa_odds": 2.03
+     "betpawa_odds": 2.02
     },
     {
      "market": "home_1up",
@@ -1871,7 +1897,7 @@
      "label": "Away 1Up",
      "probability": 0.5634,
      "market_probability": 0.5499,
-     "betpawa_odds": 1.69
+     "betpawa_odds": 1.7
     },
     {
      "market": "home_first",
@@ -1885,7 +1911,7 @@
      "label": "Away scores first",
      "probability": 0.4968,
      "market_probability": 0.4797,
-     "betpawa_odds": 1.94
+     "betpawa_odds": 1.95
     },
     {
      "market": "double_1x",
@@ -1946,21 +1972,21 @@
      "label": "Home win",
      "probability": 0.4481,
      "market_probability": 0.4494,
-     "betpawa_odds": 2.2
+     "betpawa_odds": 2.19
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2589,
      "market_probability": 0.2604,
-     "betpawa_odds": 3.72
+     "betpawa_odds": 3.71
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.292,
      "market_probability": 0.2903,
-     "betpawa_odds": 3.35
+     "betpawa_odds": 3.37
     },
     {
      "market": "over_0.5",
@@ -1974,7 +2000,7 @@
      "label": "Over 1.5 goals",
      "probability": 0.7989,
      "market_probability": 0.7968,
-     "betpawa_odds": 1.22
+     "betpawa_odds": 1.23
     },
     {
      "market": "over_2.5",
@@ -1988,14 +2014,14 @@
      "label": "Over 3.5 goals",
      "probability": 0.339,
      "market_probability": 0.335,
-     "betpawa_odds": 2.7
+     "betpawa_odds": 2.72
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.4369,
      "market_probability": 0.4406,
-     "betpawa_odds": 2.2
+     "betpawa_odds": 2.19
     },
     {
      "market": "under_3.5",
@@ -2009,14 +2035,14 @@
      "label": "Both teams score",
      "probability": 0.5966,
      "market_probability": 0.5902,
-     "betpawa_odds": 1.6
+     "betpawa_odds": 1.61
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.4034,
      "market_probability": 0.4098,
-     "betpawa_odds": 2.35
+     "betpawa_odds": 2.34
     },
     {
      "market": "home_1up",
@@ -2030,7 +2056,7 @@
      "label": "Away 1Up",
      "probability": 0.4966,
      "market_probability": 0.4814,
-     "betpawa_odds": 1.93
+     "betpawa_odds": 1.94
     },
     {
      "market": "home_first",
@@ -2044,7 +2070,7 @@
      "label": "Away scores first",
      "probability": 0.4259,
      "market_probability": 0.4109,
-     "betpawa_odds": 2.28
+     "betpawa_odds": 2.29
     },
     {
      "market": "double_1x",
@@ -2105,119 +2131,119 @@
      "label": "Home win",
      "probability": 0.6171,
      "market_probability": 0.603,
-     "betpawa_odds": 1.51
+     "betpawa_odds": 1.49
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2069,
      "market_probability": 0.2134,
-     "betpawa_odds": 5.13
+     "betpawa_odds": 5.23
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.1795,
      "market_probability": 0.1836,
-     "betpawa_odds": 6.04
+     "betpawa_odds": 6.21
     },
     {
      "market": "over_0.5",
      "label": "Over 0.5 goals",
      "probability": 0.9514,
      "market_probability": 0.9514,
-     "betpawa_odds": 1.03
+     "betpawa_odds": 1.02
     },
     {
      "market": "over_1.5",
      "label": "Over 1.5 goals",
      "probability": 0.8374,
      "market_probability": 0.8322,
-     "betpawa_odds": 1.17
+     "betpawa_odds": 1.16
     },
     {
      "market": "over_2.5",
      "label": "Over 2.5 goals",
      "probability": 0.6125,
      "market_probability": 0.6132,
-     "betpawa_odds": 1.52
+     "betpawa_odds": 1.5
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.3966,
      "market_probability": 0.3918,
-     "betpawa_odds": 2.28
+     "betpawa_odds": 2.24
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.3875,
      "market_probability": 0.3868,
-     "betpawa_odds": 2.61
+     "betpawa_odds": 2.67
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.6034,
      "market_probability": 0.6082,
-     "betpawa_odds": 1.66
+     "betpawa_odds": 1.69
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.5926,
      "market_probability": 0.585,
-     "betpawa_odds": 1.68
+     "betpawa_odds": 1.67
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.4074,
      "market_probability": 0.415,
-     "betpawa_odds": 2.2
+     "betpawa_odds": 2.21
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.7449,
      "market_probability": 0.7371,
-     "betpawa_odds": 1.28
+     "betpawa_odds": 1.27
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.3929,
      "market_probability": 0.3762,
-     "betpawa_odds": 2.6
+     "betpawa_odds": 2.62
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.6129,
      "market_probability": 0.6301,
-     "betpawa_odds": 1.44
+     "betpawa_odds": 1.43
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.3328,
      "market_probability": 0.3214,
-     "betpawa_odds": 3.11
+     "betpawa_odds": 3.14
     },
     {
      "market": "double_1x",
      "label": "Home or draw",
      "probability": 0.8212,
      "market_probability": 0.8164,
-     "betpawa_odds": 1.15
+     "betpawa_odds": 1.14
     },
     {
      "market": "double_x2",
      "label": "Away or draw",
      "probability": 0.3851,
      "market_probability": 0.397,
-     "betpawa_odds": 2.56
+     "betpawa_odds": 2.62
     },
     {
      "market": "double_12",
@@ -2264,21 +2290,21 @@
      "label": "Home win",
      "probability": 0.5445,
      "market_probability": 0.5367,
-     "betpawa_odds": 1.84
+     "betpawa_odds": 1.82
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2181,
      "market_probability": 0.2236,
-     "betpawa_odds": 4.36
+     "betpawa_odds": 4.38
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.2383,
      "market_probability": 0.2396,
-     "betpawa_odds": 4.0
+     "betpawa_odds": 4.07
     },
     {
      "market": "over_0.5",
@@ -2292,7 +2318,7 @@
      "label": "Over 1.5 goals",
      "probability": 0.8675,
      "market_probability": 0.8604,
-     "betpawa_odds": 1.15
+     "betpawa_odds": 1.14
     },
     {
      "market": "over_2.5",
@@ -2306,21 +2332,21 @@
      "label": "Over 3.5 goals",
      "probability": 0.4484,
      "market_probability": 0.443,
-     "betpawa_odds": 2.14
+     "betpawa_odds": 2.13
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.3435,
      "market_probability": 0.3389,
-     "betpawa_odds": 2.78
+     "betpawa_odds": 2.79
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.5516,
      "market_probability": 0.557,
-     "betpawa_odds": 1.74
+     "betpawa_odds": 1.75
     },
     {
      "market": "btts_yes",
@@ -2341,28 +2367,28 @@
      "label": "Home 1Up",
      "probability": 0.7011,
      "market_probability": 0.6999,
-     "betpawa_odds": 1.4
+     "betpawa_odds": 1.39
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.4675,
      "market_probability": 0.4517,
-     "betpawa_odds": 2.04
+     "betpawa_odds": 2.05
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.5582,
      "market_probability": 0.5837,
-     "betpawa_odds": 1.63
+     "betpawa_odds": 1.62
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.3902,
      "market_probability": 0.3765,
-     "betpawa_odds": 2.47
+     "betpawa_odds": 2.49
     },
     {
      "market": "double_1x",
@@ -2376,14 +2402,14 @@
      "label": "Away or draw",
      "probability": 0.4563,
      "market_probability": 0.4633,
-     "betpawa_odds": 1.98
+     "betpawa_odds": 2.0
     },
     {
      "market": "double_12",
      "label": "Home or away",
      "probability": 0.779,
      "market_probability": 0.7764,
-     "betpawa_odds": 1.25
+     "betpawa_odds": 1.24
     }
    ]
   },
@@ -2423,21 +2449,21 @@
      "label": "Home win",
      "probability": 0.5991,
      "market_probability": 0.5865,
-     "betpawa_odds": 1.55
+     "betpawa_odds": 1.57
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2205,
      "market_probability": 0.2258,
-     "betpawa_odds": 4.85
+     "betpawa_odds": 4.79
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.1837,
      "market_probability": 0.1876,
-     "betpawa_odds": 5.8
+     "betpawa_odds": 5.61
     },
     {
      "market": "over_0.5",
@@ -2458,28 +2484,28 @@
      "label": "Over 2.5 goals",
      "probability": 0.5885,
      "market_probability": 0.587,
-     "betpawa_odds": 1.59
+     "betpawa_odds": 1.6
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.368,
      "market_probability": 0.3636,
-     "betpawa_odds": 2.46
+     "betpawa_odds": 2.49
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.4115,
      "market_probability": 0.413,
-     "betpawa_odds": 2.42
+     "betpawa_odds": 2.4
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.632,
      "market_probability": 0.6364,
-     "betpawa_odds": 1.58
+     "betpawa_odds": 1.57
     },
     {
      "market": "btts_yes",
@@ -2493,35 +2519,35 @@
      "label": "Both teams score: No",
      "probability": 0.4195,
      "market_probability": 0.4308,
-     "betpawa_odds": 2.13
+     "betpawa_odds": 2.14
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.7272,
      "market_probability": 0.722,
-     "betpawa_odds": 1.3
+     "betpawa_odds": 1.31
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.3947,
      "market_probability": 0.378,
-     "betpawa_odds": 2.56
+     "betpawa_odds": 2.53
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.6018,
      "market_probability": 0.6207,
-     "betpawa_odds": 1.47
+     "betpawa_odds": 1.48
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.3363,
      "market_probability": 0.3247,
-     "betpawa_odds": 3.06
+     "betpawa_odds": 3.02
     },
     {
      "market": "double_1x",
@@ -2535,7 +2561,7 @@
      "label": "Away or draw",
      "probability": 0.4027,
      "market_probability": 0.4135,
-     "betpawa_odds": 2.45
+     "betpawa_odds": 2.4
     },
     {
      "market": "double_12",
@@ -2565,15 +2591,15 @@
    "top_scorelines": [
     {
      "score": "1-1",
-     "probability": 0.13883155677220246
+     "probability": 0.138829937644622
     },
     {
      "score": "0-1",
-     "probability": 0.1001305279538179
+     "probability": 0.10012916971183376
     },
     {
      "score": "0-0",
-     "probability": 0.09404956880553539
+     "probability": 0.09404575732193168
     }
    ],
    "markets": [
@@ -2582,14 +2608,14 @@
      "label": "Home win",
      "probability": 0.3107,
      "market_probability": 0.3086,
-     "betpawa_odds": 2.93
+     "betpawa_odds": 2.94
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2934,
      "market_probability": 0.2922,
-     "betpawa_odds": 3.24
+     "betpawa_odds": 3.22
     },
     {
      "market": "away_win",
@@ -2617,14 +2643,14 @@
      "label": "Over 2.5 goals",
      "probability": 0.4633,
      "market_probability": 0.4509,
-     "betpawa_odds": 2.23
+     "betpawa_odds": 2.24
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.2492,
      "market_probability": 0.238,
-     "betpawa_odds": 4.04
+     "betpawa_odds": 4.06
     },
     {
      "market": "under_2.5",
@@ -2645,7 +2671,7 @@
      "label": "Both teams score",
      "probability": 0.52,
      "market_probability": 0.5132,
-     "betpawa_odds": 1.9
+     "betpawa_odds": 1.91
     },
     {
      "market": "btts_no",
@@ -2657,28 +2683,28 @@
     {
      "market": "home_1up",
      "label": "Home 1Up",
-     "probability": 0.4785,
+     "probability": 0.478,
      "market_probability": 0.4758,
      "betpawa_odds": 1.89
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
-     "probability": 0.5588,
+     "probability": 0.558,
      "market_probability": 0.5556,
      "betpawa_odds": 1.78
     },
     {
      "market": "home_first",
      "label": "Home scores first",
-     "probability": 0.4171,
+     "probability": 0.4178,
      "market_probability": 0.4175,
      "betpawa_odds": 2.17
     },
     {
      "market": "away_first",
      "label": "Away scores first",
-     "probability": 0.4895,
+     "probability": 0.4888,
      "market_probability": 0.4876,
      "betpawa_odds": 2.04
     },
@@ -2741,21 +2767,21 @@
      "label": "Home win",
      "probability": 0.1305,
      "market_probability": 0.1458,
-     "betpawa_odds": 5.3
+     "betpawa_odds": 5.33
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.1976,
      "market_probability": 0.1648,
-     "betpawa_odds": 5.32
+     "betpawa_odds": 5.36
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.6929,
      "market_probability": 0.6894,
-     "betpawa_odds": 1.55
+     "betpawa_odds": 1.54
     },
     {
      "market": "over_0.5",
@@ -2776,49 +2802,49 @@
      "label": "Over 2.5 goals",
      "probability": 0.7802,
      "market_probability": 0.7667,
-     "betpawa_odds": 1.34
+     "betpawa_odds": 1.33
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.6132,
      "market_probability": 0.5766,
-     "betpawa_odds": 1.84
+     "betpawa_odds": 1.81
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.2198,
      "market_probability": 0.2333,
-     "betpawa_odds": 3.41
+     "betpawa_odds": 3.48
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.3868,
      "market_probability": 0.4234,
-     "betpawa_odds": 2.02
+     "betpawa_odds": 2.05
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.723,
      "market_probability": 0.679,
-     "betpawa_odds": 1.45
+     "betpawa_odds": 1.44
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.277,
      "market_probability": 0.321,
-     "betpawa_odds": 2.76
+     "betpawa_odds": 2.82
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.3404,
      "market_probability": 0.3645,
-     "betpawa_odds": 2.3
+     "betpawa_odds": 2.29
     },
     {
      "market": "away_1up",
@@ -2832,7 +2858,7 @@
      "label": "Home scores first",
      "probability": 0.2755,
      "market_probability": 0.3007,
-     "betpawa_odds": 2.81
+     "betpawa_odds": 2.8
     },
     {
      "market": "away_first",
@@ -2846,7 +2872,7 @@
      "label": "Home or draw",
      "probability": 0.3078,
      "market_probability": 0.3106,
-     "betpawa_odds": 2.47
+     "betpawa_odds": 2.46
     },
     {
      "market": "double_x2",
@@ -2900,21 +2926,21 @@
      "label": "Home win",
      "probability": 0.0917,
      "market_probability": 0.1281,
-     "betpawa_odds": 6.16
+     "betpawa_odds": 5.97
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2353,
      "market_probability": 0.2168,
-     "betpawa_odds": 4.37
+     "betpawa_odds": 4.34
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.7362,
      "market_probability": 0.655,
-     "betpawa_odds": 1.58
+     "betpawa_odds": 1.6
     },
     {
      "market": "over_0.5",
@@ -2928,7 +2954,7 @@
      "label": "Over 1.5 goals",
      "probability": 0.7565,
      "market_probability": 0.7634,
-     "betpawa_odds": 1.27
+     "betpawa_odds": 1.26
     },
     {
      "market": "over_2.5",
@@ -2942,7 +2968,7 @@
      "label": "Over 3.5 goals",
      "probability": 0.2745,
      "market_probability": 0.2943,
-     "betpawa_odds": 3.0
+     "betpawa_odds": 2.99
     },
     {
      "market": "under_2.5",
@@ -2956,56 +2982,56 @@
      "label": "Under 3.5 goals",
      "probability": 0.7255,
      "market_probability": 0.7057,
-     "betpawa_odds": 1.41
+     "betpawa_odds": 1.42
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.4877,
      "market_probability": 0.4635,
-     "betpawa_odds": 1.92
+     "betpawa_odds": 1.9
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.5123,
      "market_probability": 0.5365,
-     "betpawa_odds": 1.89
+     "betpawa_odds": 1.91
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.2529,
      "market_probability": 0.2886,
-     "betpawa_odds": 2.77
+     "betpawa_odds": 2.68
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.8057,
      "market_probability": 0.7571,
-     "betpawa_odds": 1.33
+     "betpawa_odds": 1.34
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.2223,
      "market_probability": 0.2565,
-     "betpawa_odds": 3.25
+     "betpawa_odds": 3.19
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.7055,
      "market_probability": 0.6735,
-     "betpawa_odds": 1.47
+     "betpawa_odds": 1.48
     },
     {
      "market": "double_1x",
      "label": "Home or draw",
      "probability": 0.2645,
      "market_probability": 0.345,
-     "betpawa_odds": 2.38
+     "betpawa_odds": 2.35
     },
     {
      "market": "double_x2",
@@ -3059,21 +3085,21 @@
      "label": "Home win",
      "probability": 0.6174,
      "market_probability": 0.5721,
-     "betpawa_odds": 1.62
+     "betpawa_odds": 1.6
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.2139,
      "market_probability": 0.23,
-     "betpawa_odds": 4.82
+     "betpawa_odds": 4.87
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.1655,
      "market_probability": 0.1979,
-     "betpawa_odds": 5.06
+     "betpawa_odds": 5.17
     },
     {
      "market": "over_0.5",
@@ -3094,35 +3120,35 @@
      "label": "Over 2.5 goals",
      "probability": 0.617,
      "market_probability": 0.5979,
-     "betpawa_odds": 1.49
+     "betpawa_odds": 1.48
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.3722,
      "market_probability": 0.3713,
-     "betpawa_odds": 2.2
+     "betpawa_odds": 2.17
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.383,
      "market_probability": 0.4021,
-     "betpawa_odds": 2.71
+     "betpawa_odds": 2.75
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.6279,
      "market_probability": 0.6287,
-     "betpawa_odds": 1.71
+     "betpawa_odds": 1.73
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.6279,
      "market_probability": 0.5779,
-     "betpawa_odds": 1.58
+     "betpawa_odds": 1.57
     },
     {
      "market": "btts_no",
@@ -3136,42 +3162,42 @@
      "label": "Home 1Up",
      "probability": 0.7484,
      "market_probability": 0.7147,
-     "betpawa_odds": 1.32
+     "betpawa_odds": 1.31
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.3894,
      "market_probability": 0.3975,
-     "betpawa_odds": 2.34
+     "betpawa_odds": 2.35
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.6243,
      "market_probability": 0.6118,
-     "betpawa_odds": 1.51
+     "betpawa_odds": 1.5
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.3249,
      "market_probability": 0.3402,
-     "betpawa_odds": 2.82
+     "betpawa_odds": 2.84
     },
     {
      "market": "double_1x",
      "label": "Home or draw",
      "probability": 0.8368,
      "market_probability": 0.8021,
-     "betpawa_odds": 1.19
+     "betpawa_odds": 1.18
     },
     {
      "market": "double_x2",
      "label": "Away or draw",
      "probability": 0.3817,
      "market_probability": 0.4279,
-     "betpawa_odds": 2.31
+     "betpawa_odds": 2.34
     },
     {
      "market": "double_12",
@@ -3218,7 +3244,7 @@
      "label": "Home win",
      "probability": 0.1447,
      "market_probability": 0.1866,
-     "betpawa_odds": 4.36
+     "betpawa_odds": 4.41
     },
     {
      "market": "draw",
@@ -3232,7 +3258,7 @@
      "label": "Away win",
      "probability": 0.6328,
      "market_probability": 0.5643,
-     "betpawa_odds": 1.91
+     "betpawa_odds": 1.9
     },
     {
      "market": "over_0.5",
@@ -3253,21 +3279,21 @@
      "label": "Over 2.5 goals",
      "probability": 0.5012,
      "market_probability": 0.5107,
-     "betpawa_odds": 1.93
+     "betpawa_odds": 1.94
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.2694,
      "market_probability": 0.2883,
-     "betpawa_odds": 3.27
+     "betpawa_odds": 3.29
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.4988,
      "market_probability": 0.4893,
-     "betpawa_odds": 1.92
+     "betpawa_odds": 1.91
     },
     {
      "market": "under_3.5",
@@ -3281,49 +3307,49 @@
      "label": "Both teams score",
      "probability": 0.5219,
      "market_probability": 0.5106,
-     "betpawa_odds": 1.82
+     "betpawa_odds": 1.83
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.4781,
      "market_probability": 0.4894,
-     "betpawa_odds": 1.99
+     "betpawa_odds": 1.98
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
      "probability": 0.3336,
      "market_probability": 0.3641,
-     "betpawa_odds": 2.28
+     "betpawa_odds": 2.29
     },
     {
      "market": "away_1up",
      "label": "Away 1Up",
      "probability": 0.7408,
      "market_probability": 0.6939,
-     "betpawa_odds": 1.47
+     "betpawa_odds": 1.46
     },
     {
      "market": "home_first",
      "label": "Home scores first",
      "probability": 0.2871,
      "market_probability": 0.3191,
-     "betpawa_odds": 2.68
+     "betpawa_odds": 2.7
     },
     {
      "market": "away_first",
      "label": "Away scores first",
      "probability": 0.6364,
      "market_probability": 0.6085,
-     "betpawa_odds": 1.66
+     "betpawa_odds": 1.65
     },
     {
      "market": "double_1x",
      "label": "Home or draw",
      "probability": 0.368,
      "market_probability": 0.4357,
-     "betpawa_odds": 1.91
+     "betpawa_odds": 1.92
     },
     {
      "market": "double_x2",
@@ -3377,21 +3403,21 @@
      "label": "Home win",
      "probability": 0.6334,
      "market_probability": 0.5855,
-     "betpawa_odds": 1.64
+     "betpawa_odds": 1.62
     },
     {
      "market": "draw",
      "label": "Draw",
      "probability": 0.1454,
      "market_probability": 0.1791,
-     "betpawa_odds": 5.67
+     "betpawa_odds": 5.8
     },
     {
      "market": "away_win",
      "label": "Away win",
      "probability": 0.2058,
      "market_probability": 0.2354,
-     "betpawa_odds": 4.22
+     "betpawa_odds": 4.27
     },
     {
      "market": "over_0.5",
@@ -3412,42 +3438,42 @@
      "label": "Over 2.5 goals",
      "probability": 0.842,
      "market_probability": 0.8047,
-     "betpawa_odds": 1.22
+     "betpawa_odds": 1.21
     },
     {
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.6557,
      "market_probability": 0.6273,
-     "betpawa_odds": 1.56
+     "betpawa_odds": 1.54
     },
     {
      "market": "under_2.5",
      "label": "Under 2.5 goals",
      "probability": 0.158,
      "market_probability": 0.1953,
-     "betpawa_odds": 4.57
+     "betpawa_odds": 4.69
     },
     {
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.3448,
      "market_probability": 0.3727,
-     "betpawa_odds": 2.51
+     "betpawa_odds": 2.55
     },
     {
      "market": "btts_yes",
      "label": "Both teams score",
      "probability": 0.8151,
      "market_probability": 0.7568,
-     "betpawa_odds": 1.3
+     "betpawa_odds": 1.29
     },
     {
      "market": "btts_no",
      "label": "Both teams score: No",
      "probability": 0.1849,
      "market_probability": 0.2432,
-     "betpawa_odds": 3.58
+     "betpawa_odds": 3.61
     },
     {
      "market": "home_1up",
@@ -3461,7 +3487,7 @@
      "label": "Away 1Up",
      "probability": 0.4791,
      "market_probability": 0.4795,
-     "betpawa_odds": 2.0
+     "betpawa_odds": 2.01
     },
     {
      "market": "home_first",
@@ -3482,14 +3508,14 @@
      "label": "Home or draw",
      "probability": 0.7963,
      "market_probability": 0.7646,
-     "betpawa_odds": 1.24
+     "betpawa_odds": 1.23
     },
     {
      "market": "double_x2",
      "label": "Away or draw",
      "probability": 0.3656,
      "market_probability": 0.4145,
-     "betpawa_odds": 2.28
+     "betpawa_odds": 2.3
     },
     {
      "market": "double_12",
@@ -3753,7 +3779,7 @@
     }
    ],
    "final": true,
-   "locked": false
+   "locked": true
   }
  }
 }

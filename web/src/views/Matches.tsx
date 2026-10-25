@@ -200,30 +200,12 @@ const sideOrder = (position: string) => {
   return 2;
 };
 
-const isWide = (position: string) => sideOrder(position) === 0 || sideOrder(position) === 4;
-
-/** Realistic shape: full-backs and wing-backs higher and wider, centre-backs tucked in, wide midfielders
- * pushed up, holding midfielders deeper, wingers slightly behind the striker (y: smaller = further forward). */
-function shapeOffset(position: string, lineIndex: number, lineCount: number): number {
-  if (lineIndex === 0) return 0;
-  const wide = isWide(position);
-  if (lineIndex === 1) return wide ? -6 : 0;                        // defence
-  if (lineIndex === lineCount - 1) return wide ? 4 : 0;             // attack: wingers a little deeper
-  if (/DM/.test(position)) return 4;                                 // holding midfielder
-  return wide ? -4 : 0;                                              // midfield / attacking midfield
-}
-
-/** Horizontal spots for one line: wide players on the touchline side, central players closer together. */
-function lineXs(line: LineupPlayer[]): number[] {
-  const n = line.length;
-  const even = line.map((_, i) => (100 * (i + 1)) / (n + 1));
-  const outerWide = n >= 4 && isWide(line[0].position ?? "") && isWide(line[n - 1].position ?? "");
-  if (!outerWide) return even;
-  // Central players between the wide ones: a pair at 35 / 65, three at 30 / 50 / 70, more spread evenly.
-  const inner = n - 2;
-  const centre = inner === 1 ? [50] : inner === 2 ? [35, 65] : inner === 3 ? [30, 50, 70]
-    : Array.from({ length: inner }, (_, k) => 26 + (48 * k) / (inner - 1));
-  return line.map((_, i) => (i === 0 ? 10 : i === n - 1 ? 90 : centre[i - 1]));
+/** Horizontal spots for one line, as SofaScore draws them: straight lines, players spread evenly across the
+ * width (a back four at about 13 / 38 / 62 / 87, a front two at a third and two thirds). */
+function lineXs(count: number): number[] {
+  if (count === 1) return [50];
+  if (count === 2) return [32, 68];
+  return Array.from({ length: count }, (_, i) => 13 + (74 * i) / (count - 1));
 }
 
 function pitchLines(formation: string | null, starters: LineupPlayer[]) {
@@ -269,8 +251,8 @@ function Pitch({ formation, starters }: { formation: string; starters: LineupPla
         <path d="M29 2v17h42V2M39 2v8h22V2M29 130v-17h42v17M39 130v-8h22v8" />
       </g>
       {lines.flatMap((line, lineIndex) => line.map((player, playerIndex) => {
-        const x = lineXs(line)[playerIndex];
-        const y = yFor(lineIndex) + shapeOffset(player.position ?? "", lineIndex, lines.length);
+        const x = lineXs(line.length)[playerIndex];
+        const y = yFor(lineIndex);
         return (
           <g key={`${player.number}-${player.name}`} data-player-marker data-position={player.position} transform={`translate(${x} ${y})`}>
             <circle r="4.4" fill={lineIndex === 0 ? "var(--keeper)" : "var(--player)"} stroke="var(--player-ring)" strokeWidth="0.7" />

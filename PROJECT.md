@@ -299,6 +299,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: line-up pitch follows SofaScore (owner's reference): straight lines, players spread evenly
+  across the width (back four at ~13/38/62/87, front two at a third / two thirds), lines evenly spaced from
+  the goalkeeper; replaces the earlier up/down "shape" offsets.
 - 2026-10-25: line-up pitch drawn as a real team shape (full-backs/wing-backs higher and wider, centre-backs
   tucked in, wide midfielders up, holding midfielders deeper, wingers just behind the striker); unknown
   ESPN codes (e.g. RCF for Pulisic in Milan's 4-4-1-1) are read from their letters instead of falling back

@@ -233,16 +233,46 @@ def league_context(matches: pd.DataFrame, season: str) -> dict[str, dict]:
     table: dict[str, dict] = {}
     for m in played.itertuples():
         for team, scored, conceded in ((m.home_team, m.home_goals, m.away_goals), (m.away_team, m.away_goals, m.home_goals)):
-            row = table.setdefault(team, {"played": 0, "points": 0, "gd": 0, "gf": 0, "form": []})
+            row = table.setdefault(team, {"played": 0, "won": 0, "drawn": 0, "lost": 0, "points": 0, "gd": 0,
+                                          "gf": 0, "ga": 0, "form": []})
             result = "W" if scored > conceded else "D" if scored == conceded else "L"
             row["played"] += 1
+            row[{"W": "won", "D": "drawn", "L": "lost"}[result]] += 1
+            row["ga"] += int(conceded)
             row["points"] += {"W": 3, "D": 1, "L": 0}[result]
             row["gd"] += int(scored - conceded)
             row["gf"] += int(scored)
             row["form"] = (row["form"] + [result])[-5:]          # oldest -> newest
     order = sorted(table, key=lambda t: (-table[t]["points"], -table[t]["gd"], -table[t]["gf"], t))
-    return {team: {"position": i + 1, "teams": len(order), **{k: v for k, v in table[team].items() if k != "gf"}}
-            for i, team in enumerate(order)}
+    return {team: {"position": i + 1, "teams": len(order), **table[team]} for i, team in enumerate(order)}
+
+
+def league_tables(context: dict[str, dict], league_of: dict[str, str]) -> dict[str, list[dict]]:
+    """Full current tables per league code, in position order (display only)."""
+    tables: dict[str, list[dict]] = {}
+    for team, row in context.items():
+        if team in league_of:
+            tables.setdefault(league_of[team], []).append({"team": team, **{k: v for k, v in row.items() if k != "teams"}})
+    return {code: sorted(rows, key=lambda r: r["position"]) for code, rows in tables.items()}
+
+
+BEST_PICK_MIN_ODDS = 1.20
+MARKET_PRIORITY = ("home_1up", "away_1up", "over_1.5", "over_2.5", "under_2.5", "under_3.5", "over_0.5",
+                   "home_win", "away_win", "double_1x", "double_x2", "double_12")
+
+
+def best_pick(legs: pd.DataFrame, blocked: set[tuple[str, str]]) -> dict | None:
+    """The match's headline pick on the Matches page: the most likely slip-eligible market (gates and
+    monitoring respected) that pays at least BEST_PICK_MIN_ODDS; ties go to the owner's market priority.
+    Display only: it is a likelihood headline, not a value bet."""
+    pool = legs[legs.market.isin(SLIP_MARKETS) & legs.odds.notna() & (legs.odds >= BEST_PICK_MIN_ODDS)]
+    pool = pool[[(lg, m) not in blocked for lg, m in zip(pool.league, pool.market)]] if "league" in pool else pool
+    if pool.empty:
+        return None
+    pool = pool.assign(rank=pool.market.map({m: i for i, m in enumerate(MARKET_PRIORITY)}))
+    row = pool.sort_values(["probability", "rank"], ascending=[False, True]).iloc[0]
+    return {"market": row.market, "label": MARKET_LABELS[row.market], "probability": round(float(row.probability), 4),
+            "odds": round(float(row.odds), 2), "odds_source": "betpawa" if pd.notna(row.betpawa_odds) else "estimated"}
 
 
 def head_to_head(history: pd.DataFrame | None, home: str, away: str, n: int = 6) -> dict | None:
@@ -385,6 +415,38 @@ def outcome(match: pd.Series, market: str) -> bool:
     return bool(match[actual_column])
 
 
+SETTLE_MAX_DAYS = 3
+
+
+def result_lookup(matches: pd.DataFrame):
+    """find(home, away, date) -> settled result row, only if played within SETTLE_MAX_DAYS of `date`.
+
+    The date check matters: a source that swapped home and away (Understat had Rennes v Paris SG
+    23 Aug 2026 as Paris SG v Rennes) must never settle the real reverse fixture months later.
+    """
+    settled = add_actuals(matches)
+    rows = {(r.home_team, r.away_team, r.season): r for _, r in settled.iterrows()}
+
+    def find(home: str, away: str, date) -> pd.Series | None:
+        day = pd.Timestamp(date)
+        row = rows.get((home, away, season_label(current_season_start(day.date()))))
+        if row is None or abs((pd.Timestamp(row.date).normalize() - day.normalize()).days) > SETTLE_MAX_DAYS:
+            return None
+        return row
+    return find
+
+
+def merge_results(official: pd.DataFrame, fast: pd.DataFrame) -> pd.DataFrame:
+    """Official results plus same-night ones not yet in them. A fast row is dropped when the official data
+    has the same two teams within 2 days in either order (so a home/away swap is not counted twice)."""
+    if official.empty or fast.empty:
+        return pd.concat([official, fast], ignore_index=True)
+    known = {(frozenset((r.home_team, r.away_team)), pd.Timestamp(r.date).normalize()) for r in official.itertuples()}
+    keep = [not any((frozenset((r.home_team, r.away_team)), pd.Timestamp(r.date).normalize() + pd.Timedelta(days=d)) in known
+                    for d in (-2, -1, 0, 1, 2)) for r in fast.itertuples()]
+    return pd.concat([official, fast[np.array(keep, dtype=bool)]], ignore_index=True)
+
+
 def update_history(round_id: str | None, slips: dict, matches: pd.DataFrame, now: pd.Timestamp,
                    final: bool = False) -> list[dict]:
     """Store this round's slips (until final or first kickoff) and settle finished legs.
@@ -410,12 +472,10 @@ def update_history(round_id: str | None, slips: dict, matches: pd.DataFrame, now
                 history = [entry for entry in history if not (entry["round"] == round_id and entry["tier"] == tier)]
                 history.append({"round": round_id, "tier": tier, "generated_at": now.isoformat() + "Z", **slip,
                                 "final": final})
-    settled = add_actuals(matches)
-    lookup = {(row.home_team, row.away_team, row.season): row for _, row in settled.iterrows()}
+    find = result_lookup(matches)
     for entry in history:
         for leg in entry["legs"]:
-            season = season_label(current_season_start(pd.Timestamp(leg["date"]).date()))
-            match = lookup.get((leg["home"], leg["away"], season))
+            match = find(leg["home"], leg["away"], leg["date"])
             leg["won"] = None if match is None else outcome(match, leg["market"])
         results = [leg["won"] for leg in entry["legs"]]
         entry["status"] = ("lost" if False in results else "pending" if None in results else "won")
@@ -479,8 +539,7 @@ def settle_archive(matches: pd.DataFrame) -> list[dict]:
     """Attach final scores and per-market outcomes to archived predictions; return the index."""
     if not ARCHIVE_DIR.exists():
         return []
-    settled = add_actuals(matches)
-    lookup = {(row.home_team, row.away_team, row.season): row for _, row in settled.iterrows()}
+    find = result_lookup(matches)
     index = []
     for path in sorted(ARCHIVE_DIR.glob("20*.json"), reverse=True):
         snapshot = json.loads(path.read_text(encoding="utf-8"))
@@ -488,8 +547,7 @@ def settle_archive(matches: pd.DataFrame) -> list[dict]:
         for fixture in snapshot["fixtures"]:
             if "result" in fixture:
                 continue
-            season = season_label(current_season_start(pd.Timestamp(fixture["date"]).date()))
-            match = lookup.get((fixture["home"], fixture["away"], season))
+            match = find(fixture["home"], fixture["away"], fixture["date"])
             if match is not None:
                 fixture["result"] = {"score": [int(match.home_goals), int(match.away_goals)],
                                      "outcomes": {m: outcome(match, m) for m in LEG_MARKETS}}
@@ -497,8 +555,7 @@ def settle_archive(matches: pd.DataFrame) -> list[dict]:
         for slip in snapshot.get("slips", {}).values():
             for leg in slip["legs"]:
                 if leg.get("won") is None:
-                    season = season_label(current_season_start(pd.Timestamp(leg["date"]).date()))
-                    match = lookup.get((leg["home"], leg["away"], season))
+                    match = find(leg["home"], leg["away"], leg["date"])
                     if match is not None:
                         leg["won"] = outcome(match, leg["market"])
                         changed = True
@@ -617,6 +674,7 @@ def main() -> None:
     settle_matches = [matches]
     current_season = season_label(season_start)
     context = league_context(matches, current_season)
+    league_of = {team: "EPL" for team in context}
     h2h_history = {"EPL": matches}        # all seasons per league, for head-to-head (display only)
     for code, mode in LIVE_LEAGUES.items():
         if mode != "market":
@@ -624,7 +682,9 @@ def main() -> None:
         try:
             current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
             settle_matches.append(current)
-            context.update(league_context(current, current_season))
+            league_ctx = league_context(current, current_season)
+            context.update(league_ctx)
+            league_of.update({team: code for team in league_ctx})
             past = pd.read_parquet(paths(code).matches) if paths(code).matches.exists() else current.iloc[0:0]
             h2h_history[code] = (pd.concat([past, current], ignore_index=True)
                                  .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
@@ -647,8 +707,15 @@ def main() -> None:
             fast.append(understat_results(code, season_start))
         except Exception as error:
             print(f"Understat results unavailable for {get_league(code).name} ({error})")
-    all_matches = (pd.concat(fast + settle_matches, ignore_index=True)
-                   .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
+            continue
+        # Tables, form and head-to-head also include tonight's results (football-data lags days).
+        combined = merge_results(h2h_history.get(code, fast[-1].iloc[0:0]), fast[-1])
+        h2h_history[code] = combined
+        league_ctx = league_context(combined, current_season)
+        context.update(league_ctx)
+        league_of.update({team: code for team in league_ctx})
+    official = pd.concat(settle_matches, ignore_index=True)
+    all_matches = merge_results(official, pd.concat(fast, ignore_index=True) if fast else official.iloc[0:0])
 
     betpawa_parts = []
     for code in legs.league.unique():
@@ -696,6 +763,7 @@ def main() -> None:
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
                 "context": {"home": context.get(group.home_team.iloc[0]), "away": context.get(group.away_team.iloc[0])},
                 "head_to_head": head_to_head(h2h_history.get(group.league.iloc[0]), group.home_team.iloc[0], group.away_team.iloc[0]),
+                "best_pick": best_pick(group, blocked),
                 "day": group["day"].iloc[0],
                 "expected_goals": [round(float(group.lambda_home.iloc[0]), 2), round(float(group.lambda_away.iloc[0]), 2)],
                 "top_scorelines": json.loads(group.top_scorelines.iloc[0]),
@@ -716,6 +784,7 @@ def main() -> None:
         "value_rules": {"min_edge": VALUE_EDGE, "min_probability": VALUE_MIN_PROBABILITY},
         "history": history,
         "results": recent_results(all_matches, now),
+        "tables": league_tables(context, league_of),
     }
     for day in days:
         archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)

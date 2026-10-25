@@ -25,3 +25,12 @@ def test_event_teams_maps_espn_names_to_ours():
         {"homeAway": "away", "team": {"displayName": "Tottenham Hotspur"}},
         {"homeAway": "home", "team": {"displayName": "Chelsea"}}]}]}
     assert event_teams(event, "EPL") == ("Chelsea", "Tottenham")
+
+
+def test_last_xi_picks_the_right_team_and_needs_eleven():
+    from src.schedule import last_xi
+    summary = {"rosters": [_roster("home", "Real Betis", 11), _roster("away", "Barcelona", 11)]}
+    xi = last_xi(summary, "LALIGA", "Barcelona")
+    assert xi["formation"] == "4-3-3" and xi["starters"][0]["name"] == "Barcelona 1" and len(xi["starters"]) == 11
+    assert last_xi({"rosters": [_roster("away", "Barcelona", 10)]}, "LALIGA", "Barcelona") is None
+    assert last_xi(summary, "LALIGA", "Sevilla") is None

@@ -269,6 +269,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- Cross-check derived data with an independent source before showing it (league tables vs ESPN standings
+  exposed both football-data's lag and an Understat home/away swap, 2026-10-25).
 - Test data must be real: Codex's invented line-up hid a left/right ordering bug that the real
   Sunderland v Leeds line-ups exposed at once (2026-10-25).
 - Workflow runs must check out `main`, not the triggering commit: a queued run otherwise starts from
@@ -296,6 +298,16 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: FIX (settlement safety): Understat had Rennes v Paris SG (23 Aug 2026, ESPN: Rennes at home)
+  as Paris SG v Rennes, which double-counted it in tables and could have settled the real reverse fixture
+  later with that score. Now `merge_results` drops a same-night row matching an official match (same teams
+  within 2 days, either order) and `result_lookup` settles only results within 3 days of the match date.
+- 2026-10-25: data for the Matches redesign: `best_pick` per fixture (most likely slip-eligible market paying
+  >= 1.20, gates/monitoring respected, owner's market priority breaks ties; display only), full league
+  `tables` (P W D L GF GA GD Pts, form) including tonight's results: cross-checked with ESPN standings,
+  96/96 teams identical. `src/schedule.py` (full/final runs, ~1 min): fixtures of the next 14 days and
+  expected line-ups (each team's starting XI from its last league match, labelled as such) in
+  web/public/data/schedule.json.
 - 2026-10-25: FIX: matches already started or finished could not be opened (only upcoming ones had an id).
   The archive now keeps the full published record of each match; matches open by date and teams
   (`#matches/<day>/<home>/<away>`) on any day; Back keeps the chosen day; data files are cached in memory

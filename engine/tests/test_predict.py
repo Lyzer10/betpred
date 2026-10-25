@@ -93,7 +93,7 @@ def test_archive_keeps_pre_kickoff_prediction_and_settles(tmp_path, monkeypatch)
     assert probabilities == {"Arsenal": 0.60, "Chelsea": 0.55}
 
     matches = pd.DataFrame([{"home_team": "Arsenal", "away_team": "Everton", "season": "2026/27",
-                             "home_goals": 2, "away_goals": 0, "first_scorer": "home",
+                             "date": pd.Timestamp("2026-10-24 11:30"), "home_goals": 2, "away_goals": 0, "first_scorer": "home",
                              "home_led_at_any_point": True, "away_led_at_any_point": False}])
     index = predict.settle_archive(matches)
     assert index == [{"date": "2026-10-24", "fixtures": 2, "settled": 1}]

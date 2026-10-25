@@ -76,6 +76,12 @@ jobs:
         working-directory: engine
         run: python -m src.prices
 
+      - name: Two-week fixtures and expected line-ups (display only; never fails the run)
+        if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final'
+        continue-on-error: true
+        working-directory: engine
+        run: python -m src.schedule
+
       - name: Announced line-ups (display only; never fails the run)
         if: steps.decide.outputs.mode != 'skip' && steps.decide.outputs.mode != 'test-notify'
         continue-on-error: true
@@ -94,7 +100,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/public/data/predictions.json web/public/data/lineups.json web/public/data/archive engine/data/live
+          git add web/public/data/predictions.json web/public/data/lineups.json web/public/data/schedule.json web/public/data/archive engine/data/live
           git diff --cached --quiet && exit 0
           git commit -m "Predictions (${{ steps.decide.outputs.mode }}) $(date -u '+%F %H:%M') UTC"
           # The run also rebuilds tracked research files (e.g. matches.parquet) that are not

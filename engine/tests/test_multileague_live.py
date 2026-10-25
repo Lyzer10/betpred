@@ -69,7 +69,8 @@ def test_league_context_table_and_form():
     matches = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
     matches["date"] = pd.to_datetime(matches.date)
     ctx = predict.league_context(matches, "2026/27")
-    assert ctx["A"] == {"position": 1, "teams": 3, "played": 2, "points": 6, "gd": 3, "form": ["W", "W"]}
+    assert ctx["A"] == {"position": 1, "teams": 3, "played": 2, "won": 2, "drawn": 0, "lost": 0, "points": 6,
+                        "gd": 3, "gf": 3, "ga": 0, "form": ["W", "W"]}
     assert ctx["B"]["form"] == ["L", "D"] and ctx["B"]["points"] == 1   # last season's match ignored
     # B and C both have 1 point; C's goal difference (-1) beats B's (-2).
     assert ctx["C"]["position"] == 2 and ctx["B"]["position"] == 3
@@ -151,3 +152,45 @@ def test_load_fixtures_when_every_match_has_kicked_off(monkeypatch):
     empty = pd.DataFrame(columns=["season", "home_team", "away_team"])
     fixtures = predict.load_fixtures(pd.Timestamp("2026-10-26 12:00"), empty, "EPL")
     assert fixtures.empty and {"date", "time", "home_team", "kickoff_utc"} <= set(fixtures.columns)
+
+
+def test_best_pick_is_the_most_likely_eligible_market_paying_enough():
+    legs = pd.DataFrame({"league": "SERIEA", "market": ["over_0.5", "home_1up", "over_1.5", "home_win", "btts_yes"],
+                         "probability": [0.95, 0.74, 0.74, 0.60, 0.80], "odds": [1.04, 1.30, 1.25, 1.60, 1.30],
+                         "betpawa_odds": [1.04, 1.30, np.nan, 1.60, 1.30]})
+    pick = predict.best_pick(legs, set())
+    # over 0.5 pays under 1.20; btts is not a slip market; 1Up wins the tie with over 1.5 by priority.
+    assert (pick["market"], pick["probability"], pick["odds"], pick["odds_source"]) == ("home_1up", 0.74, 1.3, "betpawa")
+    assert predict.best_pick(legs, {("SERIEA", "home_1up")})["market"] == "over_1.5"     # blocked pairs skipped
+    assert predict.best_pick(legs[legs.market == "over_0.5"], set()) is None
+
+
+def test_league_tables_list_full_rows_in_position_order():
+    rows = [("2026/27", "2026-08-16", "A", "B", 2, 0), ("2026/27", "2026-08-23", "B", "C", 1, 1)]
+    matches = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    matches["date"] = pd.to_datetime(matches.date)
+    ctx = predict.league_context(matches, "2026/27")
+    table = predict.league_tables(ctx, {"A": "EPL", "B": "EPL", "C": "EPL"})["EPL"]
+    assert [r["team"] for r in table] == ["A", "C", "B"]
+    assert (table[0]["won"], table[0]["gf"], table[0]["ga"], table[0]["points"]) == (1, 2, 0, 3)
+
+
+def _results(rows):
+    frame = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    frame["date"] = pd.to_datetime(frame.date)
+    return frame.assign(first_scorer="none", home_led_at_any_point=False, away_led_at_any_point=False)
+
+
+def test_a_home_away_swap_in_the_fast_source_is_not_counted_twice():
+    # Real case: football-data had Rennes v Paris SG on 23 Aug 2026 (correct, ESPN agrees); Understat swapped it.
+    official = _results([("2026/27", "2026-08-23", "Rennes", "Paris SG", 2, 2)])
+    fast = _results([("2026/27", "2026-08-23 18:45", "Paris SG", "Rennes", 2, 2),
+                     ("2026/27", "2026-10-25 16:00", "Paris SG", "Lyon", 1, 0)])          # genuinely new
+    merged = predict.merge_results(official, fast)
+    assert list(zip(merged.home_team, merged.away_team)) == [("Rennes", "Paris SG"), ("Paris SG", "Lyon")]
+
+
+def test_settlement_never_uses_a_result_from_another_date():
+    find = predict.result_lookup(_results([("2026/27", "2026-08-23", "Paris SG", "Rennes", 2, 2)]))
+    assert find("Paris SG", "Rennes", "2026-08-24") is not None
+    assert find("Paris SG", "Rennes", "2027-02-14") is None       # the real reverse fixture months later

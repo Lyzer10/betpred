@@ -40,3 +40,18 @@ def test_epl_gates_use_the_live_walk_forward_blend_not_the_stored_column():
     expected, _ = blend_with_market(legs.drop(columns="live_probability"), None)
     assert column == "live_probability" and np.allclose(legs[column], expected)
     assert gate_column(legs, "market") == "market_probability"
+
+
+def test_live_legs_use_the_published_probability_of_one_league():
+    from src.market_gates import live_legs
+    fixtures = [{"league": {"code": "SERIEA"}, "kickoff_utc": "2026-10-25T11:30:00Z",
+                 "markets": [{"market": "home_1up", "probability": 0.61, "market_probability": 0.58},
+                             {"market": "btts_yes", "probability": 0.5, "market_probability": 0.5}],
+                 "result": {"outcomes": {"home_1up": True, "btts_yes": False}}},
+                {"league": {"code": "EPL"}, "kickoff_utc": "2026-10-25T14:00:00Z",
+                 "markets": [{"market": "home_1up", "probability": 0.7, "market_probability": 0.69}],
+                 "result": {"outcomes": {"home_1up": False}}}]
+    legs = live_legs("SERIEA", "market_probability", fixtures)
+    assert legs.market.tolist() == ["home_1up"]                    # slip markets of that league only
+    assert legs.market_probability.iloc[0] == 0.61 and legs.bookmaker_probability.iloc[0] == 0.58
+    assert legs.won.iloc[0] == 1

@@ -10,6 +10,8 @@ Every check guards against over-confidence only (amended 2026-10-25, see PROJECT
 wins MORE often than we said makes slips safer than shown, so it is not removed.
 Fewer than 300 legs = INSUFFICIENT (kept, flagged). Failing any of C1-C4 = FAIL: the market is
 removed from that league's slip legs. Log loss vs the bookmaker is reported with a bootstrap CI.
+Monthly re-check (same rules, more data): the backtest legs plus every settled LIVE published
+prediction since 24 Oct 2026 (the archive), with the exact probability the app published.
 Usage: python -m src.market_gates   (writes data/processed/market_gates.json and reports/market_gates.md)
 """
 from __future__ import annotations
@@ -109,6 +111,25 @@ def gate_column(legs: pd.DataFrame, mode: str) -> str:
     return "live_probability"
 
 
+def live_legs(league: str, column: str, fixtures: list[dict] | None = None) -> pd.DataFrame:
+    """Settled live predictions of one league as gate legs: the published probability in `column`,
+    the bookmaker consensus as `bookmaker_probability`."""
+    if fixtures is None:
+        from .predict import settled_predictions      # lazy: predict imports this module
+        fixtures = settled_predictions()
+    rows = []
+    for f in fixtures:
+        code = f["league"]["code"] if isinstance(f.get("league"), dict) else (f.get("league") or "EPL")
+        if code != league:
+            continue
+        for m in f["markets"]:
+            if m["market"] in SLIP_MARKETS and m["market"] in f["result"]["outcomes"]:
+                rows.append({"date": pd.Timestamp(f["kickoff_utc"]).tz_localize(None), "market": m["market"],
+                             column: m["probability"], "bookmaker_probability": m.get("market_probability"),
+                             "won": int(bool(f["result"]["outcomes"][m["market"]])), "source": "live"})
+    return pd.DataFrame(rows, columns=["date", "market", column, "bookmaker_probability", "won", "source"])
+
+
 def main() -> None:
     rng = np.random.default_rng(SEED)
     rows = []
@@ -116,6 +137,7 @@ def main() -> None:
         legs = pd.read_parquet(paths(code).accumulator_legs)
         legs["date"] = pd.to_datetime(legs.date)
         column = gate_column(legs, mode)
+        legs = pd.concat([legs.assign(source="backtest"), live_legs(code, column)], ignore_index=True)
         for market in SLIP_MARKETS:
             rows.append(evaluate(code, market, legs, column, rng))
             print(code, market, rows[-1]["status"], flush=True)
@@ -126,7 +148,8 @@ def main() -> None:
                                       "details": rows}, indent=1), encoding="utf-8")
 
     lines = ["# League x market gates", "",
-             "Rules pre-registered in PROJECT.md (task 1) before any result was computed. Test seasons 2024/25+.",
+             "Rules pre-registered in PROJECT.md (task 1) before any result was computed. Test seasons 2024/25+",
+             "plus every settled live published prediction (monthly re-check).",
              "FAIL = removed from that league's slip legs; INSUFFICIENT = fewer than 300 legs (kept, flagged).", "",
              "| League | Market | n | Status | Slope (95% CI) | Level gap (95% CI) | lowest bin z | Lifted legs / z | Log loss vs bookmaker (95% CI) |",
              "|---|---|---:|---|---|---|---:|---|---|"]

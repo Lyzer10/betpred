@@ -238,7 +238,12 @@ Claude (hard, affects predictions):
      were well calibrated (won 19.5%, predicted 19.3%); all-loss days A 198, B 197 of 402. The flaw
      was in the rule (Claude's design), not in Codex's work. Shared matches do not cause the all-loss
      days: about half of days lose every slip in all variants because each slip's chance is low.
-6. Champions League (needs a free results source), monthly automatic re-check job.
+6. Champions League (needs a free results source). Monthly automatic re-check: DONE 2026-10-25
+   (`.github/workflows/monthly-gates.yml`, 1st of each month): the gates re-run with the same rules on
+   the backtest legs plus every settled live published prediction (`market_gates.live_legs`), so a
+   removed pair returns automatically once the evidence says so. The full backtest is not rebuilt
+   monthly: one league takes ~32 min (goal timing 26.5 min) and the raw Understat history (128 MB)
+   is not in the repository; live predictions are the better new data anyway (truly out of sample).
 7. **Betpawa's own 1Up price** (PRE-REGISTERED 2026-10-25, `python -m src.betpawa_1up_study`; data
    collecting since 24 Oct, needs >= 300 evaluation legs, about two months). Settled archived home/away
    1Up predictions with a Betpawa price; first 60% of match days fit won ~ logit(ours) + logit(1/odds),
@@ -284,6 +289,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: monthly gate re-check workflow; gates include settled live predictions (same rules).
 - 2026-10-25: Betpawa 1Up price study pre-registered and scripted (reports "insufficient" until enough
   settled data); its first draft compared against our raw probability, which a useless price could
   beat by recalibration alone. Fixed before any real data: baseline fitted the same way.

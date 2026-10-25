@@ -22,7 +22,7 @@ type Tab = (typeof TABS)[number]["id"];
 
 /** Routes live in the URL hash so screens can be bookmarked and shared:
  * #matches/2026-10-25 (a day) and #matches/2026-10-25/Udinese/Milan (one match, any day). */
-type MatchTab = "insights" | "lineups" | "h2h" | "stats" | "form";
+type MatchTab = "insights" | "form" | "stats" | "lineups" | "overview" | "h2h";
 type LeagueTab = "matches" | "table" | "news";
 function readRoute(): { tab: Tab; day: string | null; match: { home: string; away: string } | null; matchTab: MatchTab; league: string | null; leagueTab: LeagueTab } {
   const parts = window.location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
@@ -31,7 +31,7 @@ function readRoute(): { tab: Tab; day: string | null; match: { home: string; awa
   const isDay = day !== undefined && /^\d{4}-\d{2}-\d{2}$/.test(day);
   const league = name === "league" ? day?.toUpperCase() ?? null : null;
   const leagueTab = (["matches", "table", "news"].includes(home) ? home : "matches") as LeagueTab;
-  const matchTab = (["insights", "lineups", "h2h", "stats", "form"].includes(parts[4]) ? parts[4] : "insights") as MatchTab;
+  const matchTab = (["insights", "form", "stats", "lineups", "overview", "h2h"].includes(parts[4]) ? parts[4] : "insights") as MatchTab;
   return { tab: league ? "matches" : tab, day: isDay ? day : null, match: isDay && home && away ? { home, away } : null, matchTab, league, leagueTab };
 }
 

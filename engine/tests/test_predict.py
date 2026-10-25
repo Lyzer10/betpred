@@ -161,3 +161,21 @@ def test_preview_slips_still_update_before_final(tmp_path, monkeypatch):
     changed["total_odds"] = 3.1
     history = predict.update_history("R1", {"safe": changed}, matches, pd.Timestamp("2026-10-24 10:00"))
     assert history[0]["total_odds"] == 3.1 and not history[0]["final"]
+
+
+def test_backfill_uses_only_what_was_known_before_the_match(tmp_path, monkeypatch):
+    monkeypatch.setattr(predict, "ARCHIVE_DIR", tmp_path)
+    fixture = {"league": {"code": "EPL"}, "date": "2026-10-24", "kickoff_utc": "2026-10-24T14:00:00Z", "home": "Arsenal",
+               "away": "Chelsea", "markets": [{"market": "home_1up", "label": "Home 1Up", "probability": 0.7, "betpawa_odds": 1.3},
+                                              {"market": "over_0.5", "label": "Over 0.5 goals", "probability": 0.95, "betpawa_odds": 1.05}],
+               "result": {"score": [2, 0]}}
+    (tmp_path / "2026-10-24.json").write_text(json.dumps({"date": "2026-10-24", "fixtures": [fixture]}))
+    rows = [("2026/27", "2026-09-01", "Arsenal", "Chelsea", 1, 1), ("2026/27", "2026-10-24 14:00", "Arsenal", "Chelsea", 2, 0)]
+    history = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    history["date"] = pd.to_datetime(history.date, format="mixed")
+    assert predict.backfill_archive({"EPL": history}, set(), pd.Timestamp("2026-10-25 12:00")) == 1
+    filled = json.loads((tmp_path / "2026-10-24.json").read_text())["fixtures"][0]
+    assert filled["context"]["home"]["played"] == 1                       # the match itself is not in its "before" table
+    assert [m["date"] for m in filled["head_to_head"]["meetings"]] == ["2026-09-01"]
+    assert filled["best_pick"]["market"] == "home_1up" and filled["best_pick"]["odds"] == 1.3
+    assert filled["result"] == {"score": [2, 0]}                          # results untouched

@@ -244,14 +244,17 @@ for (const scheme of ["light", "dark"]) {
   const predictedDay = predictedFixture?.day;
   await page.goto(`${BASE}#matches/${predictedDay}`);
   await snap("matches-list");
-  await page.locator("button:has([data-best-pick-state])", { hasText: predictedFixture.home }).filter({ hasText: predictedFixture.away }).click();
+  await page.locator("button[data-match-row]", { hasText: predictedFixture.home }).filter({ hasText: predictedFixture.away }).click();
   await page.getByText("Likeliest scores").waitFor();
   check(await page.getByRole("spinbutton").count() === 0, `[${scheme}] match has no inputs`);
-  for (const tab of ["Insights", "Line-ups", "H2H", "Stats", "Form & table"]) {
+  for (const tab of ["Insights", "Form & table", "Stats", "Line-ups"]) {
     await page.getByRole("tab", { name: tab, exact: true }).click();
     check(decodeURIComponent(await page.evaluate(() => location.hash)).endsWith(tab === "Form & table" ? "/form" : `/${tab.toLowerCase().replace("-", "")}`), `[${scheme}] ${tab} match tab opens`);
     await snap(`match-${tab.toLowerCase().replace(/[^a-z]+/g, "-")}`);
   }
+  await page.getByRole("tab", { name: "Stats", exact: true }).click();
+  check(await page.locator("[data-h2h]").count() === 1, `[${scheme}] Stats tab includes head-to-head`);
+  await page.getByRole("tab", { name: "Form & table", exact: true }).click();
   check(await page.getByRole("heading", { name: "Form & table" }).count() === 1, `[${scheme}] match shows form and table context`);
   await page.getByRole("tab", { name: "Line-ups", exact: true }).click();
   const lineupCard = page.locator("[data-lineups]");
@@ -268,7 +271,7 @@ for (const scheme of ["light", "dark"]) {
   // Every match of a day opens (upcoming, under way or finished), and Back returns to that same day.
   const routeDay = await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]);
   await page.getByText("‹ Matches").click();
-  const rows = page.locator("button:has([data-best-pick-state])");
+  const rows = page.locator("button[data-match-row]");
   const rowCount = await rows.count();
   let opened = 0;
   for (let i = 0; i < rowCount; i++) {
@@ -280,7 +283,7 @@ for (const scheme of ["light", "dark"]) {
   check(rowCount > 0 && opened === rowCount, `[${scheme}] every match of the day opens (${opened}/${rowCount})`);
   check(await page.evaluate(() => decodeURIComponent(location.hash).split("/")[1]) === routeDay, `[${scheme}] Back keeps the chosen day`);
   await page.locator("[data-date='2026-10-24']").click();
-  await page.locator("button:has([data-best-pick-state])").first().click();
+  await page.locator("button[data-match-row]").first().click();
   check(await page.getByRole("tab", { name: "Insights", exact: true }).count() === 1, `[${scheme}] a past day's match opens`);
   await page.getByText("‹ Matches").click();
 
@@ -289,7 +292,9 @@ for (const scheme of ["light", "dark"]) {
   const scheduleDays = [...new Set(scheduleFixture.matches.map((item) => new Date(item.kickoff_utc).toLocaleDateString("en-CA")))];
   const laterDay = scheduleDays.find((date) => !predictionDays.has(date));
   await page.goto(`${BASE}#matches/${laterDay}`);
-  check(await page.locator("[data-best-pick-state='later']").count() > 0, `[${scheme}] schedule-only day shows Later boxes`);
+  // Matches without predictions yet are listed with no pick and no percentages (never a placeholder box).
+  check(await page.locator("button[data-match-row]").count() > 0 && await page.locator("[data-best-pick-state]").count() === 0,
+    `[${scheme}] schedule-only day lists matches without picks or placeholders`);
   await snap("matches-later");
   await page.getByRole("button", { name: "Bets", exact: true }).click();
   check(decodeURIComponent(await page.evaluate(() => location.hash)).includes(`bets/${laterDay}`), `[${scheme}] selected date survives Matches to Bets`);
@@ -321,7 +326,7 @@ for (const scheme of ["light", "dark"]) {
     if (!fixture) { console.log(`SKIP  [${scheme}] no real archived ${wanted ? "winning" : "losing"} best_pick is published yet`); continue; }
     const date = new Date(fixture.kickoff_utc).toLocaleDateString("en-CA");
     await page.goto(`${BASE}#matches/${date}`);
-    const row = page.locator("button:has([data-best-pick-state])", { hasText: fixture.home }).filter({ hasText: fixture.away });
+    const row = page.locator("button[data-match-row]", { hasText: fixture.home }).filter({ hasText: fixture.away });
     check(await row.locator(`[data-best-pick-state='${wanted ? "won" : "lost"}']`).count() === 1, `[${scheme}] settled best pick is ${wanted ? "green" : "red"}`);
   }
 

@@ -275,11 +275,13 @@ def best_pick(legs: pd.DataFrame, blocked: set[tuple[str, str]]) -> dict | None:
             "odds": round(float(row.odds), 2), "odds_source": "betpawa" if pd.notna(row.betpawa_odds) else "estimated"}
 
 
-def head_to_head(history: pd.DataFrame | None, home: str, away: str, n: int = 6) -> dict | None:
+def head_to_head(history: pd.DataFrame | None, home: str, away: str, n: int = 6, before=None) -> dict | None:
     """Last `n` league meetings of the two teams (either venue) with a summary from this fixture's
     point of view. Display only: not a model input (untested as a predictor)."""
     if history is None or history.empty:
         return None
+    if before is not None:                       # a played match's page: only the meetings before it
+        history = history[history.date < pd.Timestamp(before).tz_localize(None)]
     pair = history[(((history.home_team == home) & (history.away_team == away))
                     | ((history.home_team == away) & (history.away_team == home))) & history.home_goals.notna()]
     if pair.empty:
@@ -296,6 +298,48 @@ def head_to_head(history: pd.DataFrame | None, home: str, away: str, n: int = 6)
         "over_2_5": int((total > 2.5).sum()), "btts": int(((recent.home_goals > 0) & (recent.away_goals > 0)).sum()),
         "since": str(history.season.min()),
     }
+
+
+BACKFILL_DAYS = 14
+
+
+def backfill_archive(history: dict[str, pd.DataFrame], blocked: set[tuple[str, str]], now: pd.Timestamp) -> int:
+    """Fill fields that archive entries saved before 25 Oct 2026 lack, for the last BACKFILL_DAYS days:
+    form and table and head-to-head as they stood BEFORE each match, and the best pick from the archived
+    Betpawa prices. Display only; probabilities and results are never touched."""
+    if not ARCHIVE_DIR.exists():
+        return 0
+    filled = 0
+    for path in sorted(ARCHIVE_DIR.glob("20*.json")):
+        if pd.Timestamp(path.stem) < now.normalize() - pd.Timedelta(days=BACKFILL_DAYS):
+            continue
+        snapshot = json.loads(path.read_text(encoding="utf-8"))
+        changed = False
+        for fixture in snapshot["fixtures"]:
+            code = fixture["league"]["code"] if isinstance(fixture.get("league"), dict) else fixture.get("league", "EPL")
+            league_history = history.get(code)
+            kickoff = pd.Timestamp(fixture["kickoff_utc"]).tz_localize(None)
+            if "context" not in fixture and league_history is not None:
+                before = league_history[league_history.date < kickoff]
+                season = season_label(current_season_start(kickoff.date()))
+                table = league_context(before, season)
+                fixture["context"] = {"home": table.get(fixture["home"]), "away": table.get(fixture["away"])}
+                changed = True
+            if "head_to_head" not in fixture and league_history is not None:
+                fixture["head_to_head"] = head_to_head(league_history, fixture["home"], fixture["away"], before=kickoff)
+                changed = True
+            if "best_pick" not in fixture:
+                markets = pd.DataFrame(fixture["markets"])
+                if not markets.empty and "betpawa_odds" in markets:
+                    markets = markets.assign(league=code, odds=markets.betpawa_odds)
+                    fixture["best_pick"] = best_pick(markets, blocked)
+                else:
+                    fixture["best_pick"] = None
+                changed = True
+            filled += changed
+        if changed:
+            path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
+    return filled
 
 
 def league_json(code: str) -> dict:
@@ -788,6 +832,7 @@ def main() -> None:
     }
     for day in days:
         archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
+    print(f"Archive backfill: {backfill_archive(h2h_history, blocked, now)} older entries completed")
     output["archive"] = settle_archive(all_matches)
     output["live_record"] = live_record()
     output["clv"] = clv_report(history)

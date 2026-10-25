@@ -299,6 +299,15 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: merged Codex `codex/matches-redesign` (shared calendar, league pages with table and ESPN
+  news, match tabs, expected line-ups) and reworked per the owner: Matches rows keep the 1/X/2
+  percentages plus one slim best-pick column (code, odds, %; same height as the boxes; won = bold light
+  blue ✓, lost = faint grey ✕; empty when no pick, no "Later" placeholders); scores beside the names;
+  short list names for the longest clubs. Match tabs: Insights, Form & table, Stats (H2H + match stats),
+  Line-ups, Overview (after kick-off: score, goals and cards with minutes, our pick's result). Played
+  matches show the line-ups actually played (stored into the archive by `src/schedule.py`, or ESPN's
+  match record). `predict.backfill_archive` completes older archive entries (last 14 days) with form,
+  table and head-to-head as they stood BEFORE each match and the best pick from archived Betpawa prices.
 - 2026-10-25: redesigned Matches around a single best-pick state, shared Bets/Matches calendar through
   the next 14 days, schedule-only "Later" rows, league fixture/table/ESPN-news pages, and URL-backed
   Insights/Line-ups/H2H/Stats/Form tabs with official or clearly labelled expected line-ups.

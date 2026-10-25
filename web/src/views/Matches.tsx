@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
 import { useEspnEvent, useLiveMatch } from "../live";
-import { type ArchiveDay, type ArchivedFixture, type ExpectedLineup, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
+import { type ArchiveDay, type ArchivedFixture, type ExpectedLineup, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, type TeamLineup, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
 type Group = "result" | "lead" | "double" | "goals";
@@ -258,19 +258,50 @@ function StarterList({ starters }: { starters: LineupPlayer[] }) {
   );
 }
 
-export function Lineups({ fixture, expected }: { fixture: Fixture; expected?: { home: ExpectedLineup; away: ExpectedLineup } | null }) {
-  const lineup = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
+/** Line-ups of a match that has started, straight from ESPN's match record (for matches no longer in
+ * lineups.json and not yet stored in the archive). */
+function usePlayedLineup(fixture: Fixture, wanted: boolean) {
+  const event = useEspnEvent(fixture.home, fixture.away);
+  const [played, setPlayed] = useState<{ home_lineup: TeamLineup; away_lineup: TeamLineup } | null>(null);
+  useEffect(() => {
+    if (!wanted || !event) return;
+    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${event.slug}/summary?event=${event.event_id}`)
+      .then((r) => r.json())
+      .then((summary) => {
+        const side = (h: string) => (summary.rosters ?? []).find((r: any) => r.homeAway === h);
+        const team = (r: any): TeamLineup | null => {
+          if (!r) return null;
+          const player = (p: any) => ({ name: p.athlete.displayName, number: p.jersey ?? null, position: p.position?.abbreviation ?? null,
+            formation_place: p.formationPlace != null ? Number(p.formationPlace) : null });
+          const starters = (r.roster ?? []).filter((p: any) => p.starter).map(player);
+          return starters.length === 11 ? { formation: r.formation ?? null, starters, subs: (r.roster ?? []).filter((p: any) => !p.starter).map(player) } : null;
+        };
+        const home = team(side("home")), away = team(side("away"));
+        if (home && away) setPlayed({ home_lineup: home, away_lineup: away });
+      })
+      .catch(() => undefined);
+  }, [wanted, event?.event_id]);
+  return played;
+}
+
+export function Lineups({ fixture, expected }: { fixture: Fixture & { lineups?: { home_lineup: TeamLineup; away_lineup: TeamLineup } }; expected?: { home: ExpectedLineup; away: ExpectedLineup } | null }) {
+  const announced = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
+  const started = Date.parse(fixture.kickoff_utc) <= Date.now();
+  const fetched = usePlayedLineup(fixture, started && !announced && !fixture.lineups);
+  // Official line-ups first (announced, stored after the match, or ESPN's match record once it has started);
+  // the "expected" XI only before kick-off.
+  const lineup = announced ?? fixture.lineups ?? fetched ?? undefined;
   const [side, setSide] = useState<"home" | "away">("home");
-  const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"] ?? expected?.[side];
+  const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"] ?? (started ? undefined : expected?.[side]);
   const lines = team ? pitchLines(team.formation, team.starters) : null;
   return (
     <Card className="overflow-hidden" data-lineups>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Line-ups</h2>
       {!team ? (
-        <p className="px-4 pb-4 text-xs text-ink-3">Line-ups appear here about an hour before kick-off, once the clubs announce them.</p>
+        <p className="px-4 pb-4 text-xs text-ink-3">{started ? "Line-ups for this match are not available." : "Line-ups appear here about an hour before kick-off, once the clubs announce them."}</p>
       ) : (
         <>
-          {!lineup && expected && <p className="mx-4 mb-3 rounded-xl bg-warning/15 px-3 py-2 text-xs font-semibold text-warning-ink">Expected: starting XI from last league match ({(team as ExpectedLineup).from_match}). Official line-ups replace this about an hour before kick-off.</p>}
+          {!lineup && !started && expected && <p className="mx-4 mb-3 rounded-xl bg-warning/15 px-3 py-2 text-xs font-semibold text-warning-ink">Expected: starting XI from last league match ({(team as ExpectedLineup).from_match}). Official line-ups replace this about an hour before kick-off.</p>}
           <div className="px-4 pb-2">
             <Segmented options={[{ id: "home", label: fixture.home }, { id: "away", label: fixture.away }]} value={side} onChange={setSide} />
           </div>

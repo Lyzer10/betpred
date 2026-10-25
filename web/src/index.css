@@ -270,8 +270,8 @@ input[type="number"] { -moz-appearance: textfield; }
   line-height: 1.15rem;
 }
 .best-pick-compact { width: 6.65rem; }
-.best-pick-won { background: color-mix(in srgb, var(--good) 22%, var(--surface)); color: var(--good-ink); border-color: color-mix(in srgb, var(--good) 45%, transparent); }
-.best-pick-lost { background: color-mix(in srgb, var(--critical) 18%, var(--surface)); color: var(--critical-ink); border-color: color-mix(in srgb, var(--critical) 42%, transparent); }
+.best-pick-won { background: color-mix(in srgb, var(--model) 25%, var(--surface)); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.best-pick-lost { background: var(--surface-2); color: var(--ink-3); border-color: transparent; opacity: 0.6; }
 .best-pick-later {
   align-items: center;
   color: var(--ink-3);

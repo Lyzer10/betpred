@@ -14,7 +14,7 @@ on:
   workflow_dispatch:             # the external timer and the "Run workflow" button
     inputs:
       mode:
-        description: "auto, full, final or prices"
+        description: "auto, full, final, prices or test-notify"
         default: auto
   push:                          # run once whenever this workflow itself changes
     branches: [main]
@@ -77,13 +77,20 @@ jobs:
         run: python -m src.prices
 
       - name: Announced line-ups (display only; never fails the run)
-        if: steps.decide.outputs.mode != 'skip'
+        if: steps.decide.outputs.mode != 'skip' && steps.decide.outputs.mode != 'test-notify'
         continue-on-error: true
         working-directory: engine
         run: python -m src.lineups
 
+      - name: Test notification
+        if: steps.decide.outputs.mode == 'test-notify'
+        env:
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          PUSH_SUBSCRIPTION: ${{ secrets.PUSH_SUBSCRIPTION }}
+        run: python scripts/notify.py --test
+
       - name: Publish
-        if: steps.decide.outputs.mode != 'skip'
+        if: steps.decide.outputs.mode != 'skip' && steps.decide.outputs.mode != 'test-notify'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

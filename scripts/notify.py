@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -48,6 +49,9 @@ def send_push(title: str, body: str) -> None:
 
 
 def main() -> None:
+    if "--test" in sys.argv:          # "Run workflow" with mode test-notify: checks the whole chain
+        send_push("BetPredz notifications are on ✓", "You will get a message when each day's slips are final.")
+        return
     built = message(json.loads(PREDICTIONS.read_text(encoding="utf-8")), datetime.now(timezone.utc))
     if not built:
         print("No final slips today: nothing to notify")

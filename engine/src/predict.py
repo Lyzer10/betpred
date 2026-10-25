@@ -37,7 +37,7 @@ from .fetch_results import current_season_start, parse_match_dates, season_label
 from .goal_timing import (
     GOALS_PATH, TIMING_MARKETS, TIMING_PATH, estimate_time_profile, fit_state_multipliers, simulate_match,
 )
-from .leagues import get_league
+from .leagues import get_league, paths
 from .market_gates import GATES_PATH
 from .prices import clv_report, log_prices
 from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
@@ -109,7 +109,8 @@ def load_fixtures(today: pd.Timestamp, played: pd.DataFrame, league="EPL") -> pd
     fixtures = fixtures[fixtures.kickoff_utc > today]
     season = season_label(current_season_start(today.date()))
     done = set(zip(played.loc[played.season == season, "home_team"], played.loc[played.season == season, "away_team"]))
-    fixtures = fixtures[[(h, a) not in done for h, a in zip(fixtures.home_team, fixtures.away_team)]]
+    # A boolean array, not a list: an empty list would select no COLUMNS (crash once every match has kicked off).
+    fixtures = fixtures[np.array([(h, a) not in done for h, a in zip(fixtures.home_team, fixtures.away_team)], dtype=bool)]
     fixtures["season"] = season
     fixtures["league"] = selected.code
     return fixtures.sort_values(["date", "time"]).reset_index(drop=True)
@@ -242,6 +243,29 @@ def league_context(matches: pd.DataFrame, season: str) -> dict[str, dict]:
     order = sorted(table, key=lambda t: (-table[t]["points"], -table[t]["gd"], -table[t]["gf"], t))
     return {team: {"position": i + 1, "teams": len(order), **{k: v for k, v in table[team].items() if k != "gf"}}
             for i, team in enumerate(order)}
+
+
+def head_to_head(history: pd.DataFrame | None, home: str, away: str, n: int = 6) -> dict | None:
+    """Last `n` league meetings of the two teams (either venue) with a summary from this fixture's
+    point of view. Display only: not a model input (untested as a predictor)."""
+    if history is None or history.empty:
+        return None
+    pair = history[(((history.home_team == home) & (history.away_team == away))
+                    | ((history.home_team == away) & (history.away_team == home))) & history.home_goals.notna()]
+    if pair.empty:
+        return None
+    recent = pair.sort_values("date", ascending=False).head(n)
+    home_goals = np.where(recent.home_team == home, recent.home_goals, recent.away_goals)
+    away_goals = np.where(recent.home_team == home, recent.away_goals, recent.home_goals)
+    total = recent.home_goals + recent.away_goals
+    return {
+        "meetings": [{"date": pd.Timestamp(m.date).date().isoformat(), "home": m.home_team, "away": m.away_team,
+                      "score": [int(m.home_goals), int(m.away_goals)]} for m in recent.itertuples()],
+        "home_wins": int((home_goals > away_goals).sum()), "draws": int((home_goals == away_goals).sum()),
+        "away_wins": int((home_goals < away_goals).sum()), "avg_goals": round(float(total.mean()), 2),
+        "over_2_5": int((total > 2.5).sum()), "btts": int(((recent.home_goals > 0) & (recent.away_goals > 0)).sum()),
+        "since": str(history.season.min()),
+    }
 
 
 def league_json(code: str) -> dict:
@@ -594,6 +618,7 @@ def main() -> None:
     settle_matches = [matches]
     current_season = season_label(season_start)
     context = league_context(matches, current_season)
+    h2h_history = {"EPL": matches}        # all seasons per league, for head-to-head (display only)
     for code, mode in LIVE_LEAGUES.items():
         if mode != "market":
             continue
@@ -601,6 +626,9 @@ def main() -> None:
             current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
             settle_matches.append(current)
             context.update(league_context(current, current_season))
+            past = pd.read_parquet(paths(code).matches) if paths(code).matches.exists() else current.iloc[0:0]
+            h2h_history[code] = (pd.concat([past, current], ignore_index=True)
+                                 .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
             league_fixtures = load_fixtures(now, current, code)
             league_fixtures.index = league_fixtures.index + next_fixture_id
             next_fixture_id += len(league_fixtures)
@@ -668,6 +696,7 @@ def main() -> None:
                 "kickoff_utc": group.kickoff_utc.iloc[0].isoformat() + "Z",
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
                 "context": {"home": context.get(group.home_team.iloc[0]), "away": context.get(group.away_team.iloc[0])},
+                "head_to_head": head_to_head(h2h_history.get(group.league.iloc[0]), group.home_team.iloc[0], group.away_team.iloc[0]),
                 "day": group["day"].iloc[0],
                 "expected_goals": [round(float(group.lambda_home.iloc[0]), 2), round(float(group.lambda_away.iloc[0]), 2)],
                 "top_scorelines": json.loads(group.top_scorelines.iloc[0]),

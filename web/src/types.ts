@@ -30,6 +30,12 @@ export interface TeamContext {
   form: FormResult[];
 }
 
+export interface HeadToHead {
+  meetings: { date: string; home: string; away: string; score: [number, number] }[];
+  home_wins: number; draws: number; away_wins: number;   // from this fixture's home / away team's view
+  avg_goals: number; over_2_5: number; btts: number; since: string;
+}
+
 export interface MatchContext {
   home: TeamContext | null;
   away: TeamContext | null;
@@ -49,7 +55,8 @@ export interface Fixture {
   top_scorelines: { score: string; probability: number }[];
   has_market_odds: boolean;
   markets: MarketPrediction[];
-  context?: MatchContext;   // absent in data files published before 24 Oct 2026
+  context?: MatchContext;
+  head_to_head?: HeadToHead | null;      // last league meetings (display only)   // absent in data files published before 24 Oct 2026
 }
 
 export interface SlipLeg {

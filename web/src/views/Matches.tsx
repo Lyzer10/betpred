@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
-import { useLiveMatch } from "../live";
+import { useEspnEvent, useLiveMatch } from "../live";
 import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
@@ -73,6 +73,89 @@ function FormAndTable({ fixture }: { fixture: Fixture }) {
         <TeamContextRow team={fixture.home} context={fixture.context?.home ?? null} />
         <TeamContextRow team={fixture.away} context={fixture.context?.away ?? null} />
       </ul>
+    </Card>
+  );
+}
+
+/** Last league meetings of the two teams (display only: head-to-head is not a model input). */
+function HeadToHeadCard({ fixture }: { fixture: Fixture }) {
+  const h2h = fixture.head_to_head;
+  return (
+    <Card className="overflow-hidden" data-h2h>
+      <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Head-to-head</h2>
+      {!h2h ? (
+        <p className="px-4 pb-4 text-xs text-ink-3">No league meetings in our data (top-flight matches since 2014/15).</p>
+      ) : (
+        <>
+          <div className="grid grid-cols-3 gap-2 px-4 pb-2 text-center">
+            {[[fixture.home, h2h.home_wins], ["Draws", h2h.draws], [fixture.away, h2h.away_wins]].map(([label, value]) => (
+              <div key={String(label)} className="rounded-xl bg-surface-2 px-2 py-2">
+                <div className="text-lg font-bold">{value}</div>
+                <div className="truncate text-[11px] text-ink-3">{label}</div>
+              </div>
+            ))}
+          </div>
+          <p className="px-4 pb-2 text-[11px] text-ink-2">
+            Last {h2h.meetings.length}: {h2h.avg_goals.toFixed(1)} goals a game · over 2.5 in {h2h.over_2_5} · both scored in {h2h.btts}
+          </p>
+          <ul className="divide-y divide-border/60 border-t border-border/60">
+            {h2h.meetings.map((m) => (
+              <li key={m.date} data-h2h-meeting className="flex items-center gap-2 px-4 py-2 text-xs">
+                <span className="w-16 shrink-0 text-ink-3">{new Date(`${m.date}T12:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "2-digit" })}</span>
+                <span className={`min-w-0 flex-1 truncate text-right ${m.score[0] > m.score[1] ? "font-bold" : ""}`}>{m.home}</span>
+                <span className="shrink-0 rounded-md bg-surface-2 px-1.5 font-bold tabular-nums">{m.score[0]}–{m.score[1]}</span>
+                <span className={`min-w-0 flex-1 truncate ${m.score[1] > m.score[0] ? "font-bold" : ""}`}>{m.away}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="px-4 py-2 text-[10px] text-ink-3">League matches since {h2h.since}. For reading only: our numbers do not use it.</p>
+        </>
+      )}
+    </Card>
+  );
+}
+
+const STATS: [string, string][] = [["possessionPct", "Possession %"], ["totalShots", "Shots"], ["shotsOnTarget", "On target"],
+  ["wonCorners", "Corners"], ["saves", "Saves"], ["foulsCommitted", "Fouls"], ["yellowCards", "Yellow cards"], ["redCards", "Red cards"], ["offsides", "Offsides"]];
+
+/** Team statistics from ESPN once the match has started (refreshed with the live feed). */
+function MatchStats({ fixture }: { fixture: Fixture }) {
+  const event = useEspnEvent(fixture.home, fixture.away);
+  const live = useLiveMatch(fixture.home, fixture.away);
+  const started = live && (live.state === "in" || live.state === "post");
+  const [stats, setStats] = useState<Record<string, [string, string]> | null>(null);
+  useEffect(() => {
+    if (!event || !started) return;
+    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${event.slug}/summary?event=${event.event_id}`)
+      .then((r) => r.json())
+      .then((summary) => {
+        const teams = summary.boxscore?.teams ?? [];
+        const side = (h: string) => teams.find((t: any) => t.homeAway === h)?.statistics ?? [];
+        const value = (list: any[], name: string) => list.find((x) => x.name === name)?.displayValue ?? "–";
+        const home = side("home"), away = side("away");
+        if (home.length && away.length) setStats(Object.fromEntries(STATS.map(([name]) => [name, [value(home, name), value(away, name)]])));
+      })
+      .catch(() => undefined);
+  }, [event?.event_id, started, live?.clock]);
+  if (!started || !stats) return null;
+  return (
+    <Card className="overflow-hidden" data-match-stats>
+      <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Match stats</h2>
+      <ul className="space-y-2.5 px-4 pb-4">
+        {STATS.map(([name, label]) => {
+          const [h, a] = stats[name].map((v) => Number(v));
+          const share = h + a > 0 ? (h / (h + a)) * 100 : 50;
+          return (
+            <li key={name} className="text-xs">
+              <div className="flex justify-between"><b className="tabular-nums">{stats[name][0]}</b><span className="text-ink-3">{label}</span><b className="tabular-nums">{stats[name][1]}</b></div>
+              <div className="mt-1 flex h-1.5 overflow-hidden rounded-full bg-surface-2">
+                <div className="bg-accent" style={{ width: `${share}%` }} /><div className="flex-1 bg-market/70" />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="px-4 pb-3 text-[10px] text-ink-3">Source: ESPN. {live?.state === "in" ? "Updates during the match." : "Full time."}</p>
     </Card>
   );
 }
@@ -261,6 +344,8 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
       </Card>
 
       <FormAndTable fixture={fixture} />
+      <HeadToHeadCard fixture={fixture} />
+      <MatchStats fixture={fixture} />
       <Lineups fixture={fixture} />
 
       <Segmented options={GROUPS.map((g) => ({ id: g.id, label: g.label }))} value={group} onChange={setGroup} />
@@ -371,6 +456,14 @@ function LeagueGroups({ fixtures, onOpen }: { fixtures: ListFixture[]; onOpen?: 
   );
 }
 
+/** A day with matches still to come; its matches already under way stay listed (from the archive). */
+function UpcomingMatches({ day, fixtures, onOpen }: { day: string; fixtures: Fixture[]; onOpen: (f: ListFixture) => void }) {
+  const archived = useArchive(day);
+  const upcoming = fixtures.filter((f) => f.day === day);
+  const started = (archived?.fixtures ?? []).filter((a) => !upcoming.some((f) => f.home === a.home && f.away === a.away));
+  return <LeagueGroups fixtures={[...started, ...upcoming]} onOpen={(f) => f.id != null && onOpen(f)} />;
+}
+
 function PastMatches({ date }: { date: string }) {
   const snapshot = useArchive(date);
   if (!snapshot) return <p className="mt-6 text-center text-sm text-ink-3">Loading…</p>;
@@ -391,7 +484,7 @@ export function Matches({ fixtures, archive, selected, onSelect }: {
     <div>
       <div className="mb-4"><DateStrip dates={dates} selected={day} onSelect={setDay} /></div>
       {day && upcomingDays.includes(day) && (
-        <LeagueGroups fixtures={fixtures.filter((f) => f.day === day)} onOpen={(f) => onSelect(f.id ?? null)} />
+        <UpcomingMatches key={day} day={day} fixtures={fixtures} onOpen={(f) => onSelect(f.id ?? null)} />
       )}
       {day && !upcomingDays.includes(day) && <PastMatches key={day} date={day} />}
       {!day && <Empty>No matches scheduled yet.</Empty>}

@@ -1,4 +1,4 @@
-import { createContext, createElement, type ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, createElement, type ReactNode, useContext, useEffect, useRef, useState } from "react";
 import type { MarketKey } from "./types";
 
 /** Live scores of the matches on the user's slips, straight from ESPN (display only: the official
@@ -93,8 +93,10 @@ export function slipLive(legs: LegLive[], need = legs.length): "won" | "lost" | 
   return legs.some((l) => l === "live" || l === "won" || l === "lost") ? "live" : "pending";
 }
 
-/** Live scores for the given matches; polls ESPN every 45 s while one of them is about to start or playing. */
-export function useLive(matches: { home: string; away: string }[]) {
+/** Live scores of every published ESPN event (our five leagues, last 18 h to next 36 h); polls ESPN every
+ * 45 s while one of them is about to start or playing, so matches under way keep their score even after
+ * they leave the upcoming list. */
+export function useLive() {
   const [events, setEvents] = useState<EspnEvent[]>([]);
   const [live, setLive] = useState<Record<string, LiveMatch>>({});
   const finished = useRef(new Set<string>());     // full time: never fetched again
@@ -104,10 +106,7 @@ export function useLive(matches: { home: string; away: string }[]) {
       .then((file) => setEvents(file.events ?? []))
       .catch(() => setEvents([]));
   }, []);
-  const wanted = useMemo(() => {
-    const keys = new Set(matches.map((m) => liveKey(m.home, m.away)));
-    return events.filter((e) => keys.has(liveKey(e.home, e.away)));
-  }, [events, matches.map((m) => liveKey(m.home, m.away)).join(",")]);
+  const wanted = events;
 
   useEffect(() => {
     if (!wanted.length) return;
@@ -143,11 +142,21 @@ export function useLive(matches: { home: string; away: string }[]) {
   return live;
 }
 
+/** ESPN event of one match (from data/lineups.json), or undefined until known. */
+export function useEspnEvent(home: string, away: string): EspnEvent | undefined {
+  const [events, setEvents] = useState<EspnEvent[]>([]);
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}data/lineups.json`, { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : { events: [] })).then((f) => setEvents(f.events ?? [])).catch(() => setEvents([]));
+  }, []);
+  return events.find((e) => e.home === home && e.away === away);
+}
+
 const LiveContext = createContext<Record<string, LiveMatch>>({});
 
-/** One live feed for the whole app (today's matches and the user's open bets). */
-export function LiveProvider({ matches, children }: { matches: { home: string; away: string }[]; children: ReactNode }) {
-  return createElement(LiveContext.Provider, { value: useLive(matches) }, children);
+/** One live feed for the whole app. */
+export function LiveProvider({ children }: { children: ReactNode }) {
+  return createElement(LiveContext.Provider, { value: useLive() }, children);
 }
 
 export const useLiveMatch = (home: string, away: string): LiveMatch | undefined => useContext(LiveContext)[liveKey(home, away)];

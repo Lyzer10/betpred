@@ -131,3 +131,23 @@ def test_realised_slips_profit_at_published_odds():
                {"tier": "safe", "status": "pending", "total_odds": 2.7, "win_probability": 0.37}]
     safe = predict.realised_slips(history)["safe"]
     assert safe == {"settled": 2, "won": 1, "predicted": 0.78, "profit": 0.5, "roi": 0.25}
+
+
+def test_head_to_head_from_this_fixtures_point_of_view():
+    rows = [("2024/25", "2024-09-01", "Arsenal", "Chelsea", 3, 1), ("2024/25", "2025-02-01", "Chelsea", "Arsenal", 2, 2),
+            ("2025/26", "2025-10-01", "Chelsea", "Arsenal", 1, 0), ("2025/26", "2025-11-01", "Arsenal", "Spurs", 4, 0)]
+    history = pd.DataFrame(rows, columns=["season", "date", "home_team", "away_team", "home_goals", "away_goals"])
+    history["date"] = pd.to_datetime(history.date)
+    h2h = predict.head_to_head(history, "Arsenal", "Chelsea")
+    assert [m["date"] for m in h2h["meetings"]] == ["2025-10-01", "2025-02-01", "2024-09-01"]     # newest first
+    assert (h2h["home_wins"], h2h["draws"], h2h["away_wins"]) == (1, 1, 1)                        # Arsenal's view
+    assert h2h["avg_goals"] == round((4 + 4 + 1) / 3, 2) and h2h["over_2_5"] == 2 and h2h["btts"] == 2
+    assert predict.head_to_head(history, "Arsenal", "Everton") is None
+
+
+def test_load_fixtures_when_every_match_has_kicked_off(monkeypatch):
+    # 25 Oct 2026: after the last EPL kick-off the filter list was empty and pandas dropped all columns.
+    monkeypatch.setattr(predict, "_FIXTURES_CSV", _csv())
+    empty = pd.DataFrame(columns=["season", "home_team", "away_team"])
+    fixtures = predict.load_fixtures(pd.Timestamp("2026-10-26 12:00"), empty, "EPL")
+    assert fixtures.empty and {"date", "time", "home_team", "kickoff_utc"} <= set(fixtures.columns)

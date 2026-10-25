@@ -296,6 +296,12 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: FIX (would have stopped Monday's runs): `load_fixtures` crashed once every match of a league
+  had kicked off (an empty list filter made pandas select no columns); now a boolean array, with a test.
+- 2026-10-25: match page: head-to-head (last 6 league meetings since 2014/15 from our own results, with a
+  summary; display only, `predict.head_to_head`) and ESPN match stats once a match has started. Today's
+  Matches list keeps matches already under way (from the archive) with live scores; the live feed follows
+  every ESPN event of our five leagues.
 - 2026-10-25: live tracking (display only; the official result still settles overnight). `src/lineups.py`
   writes ESPN event ids (`events` in lineups.json, last 18 h to next 36 h); the app (`web/src/live.ts`)
   polls ESPN scoreboards every 45 s while open and shows live minute and score on Matches, and per leg

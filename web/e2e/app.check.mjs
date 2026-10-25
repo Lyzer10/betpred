@@ -85,8 +85,12 @@ for (const scheme of ["light", "dark"]) {
   const skipShown = await page.getByText(/skip it/).count();
   check(fixedShown === 1 || skipShown === 1, `[${scheme}] fixed stake used on the Safe slip (${fixedShown ? "stake shown" : "skip"})`);
   // Why this bet: tap the first pick.
-  await page.getByRole("button", { name: /^Why / }).first().click();
-  check(await page.getByText(/expected/i).count() >= 1, `[${scheme}] why-this-bet explanation opens`);
+  // Legs whose match is already under way have no explanation any more (their fixture left the list).
+  const whyButton = page.locator('button[aria-label^="Why "]:not([disabled])').first();
+  if (await whyButton.count()) {
+    await whyButton.click();
+    check(await page.getByText(/expected/i).count() >= 1, `[${scheme}] why-this-bet explanation opens`);
+  } else console.log(`SKIP  [${scheme}] every leg already in play: why-this-bet not checked`);
   await page.getByRole("button", { name: "Money", exact: true }).click();
   await page.getByRole("tab", { name: "Smart" }).click();
 
@@ -115,12 +119,17 @@ for (const scheme of ["light", "dark"]) {
   }
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
   await noOverflow("bets today"); await snap("bets-today");
-  await page.getByRole("button", { name: "I placed this bet" }).click();
-  // Type the stake: a slip without value has no recommended stake, but you can still record a bet.
-  await page.getByLabel("Stake in TSh").fill("900");
-  check(await page.getByText(/after this bet/).count() === 1, `[${scheme}] form shows balance after the bet`);
-  await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
-  check(await page.getByRole("button", { name: "✓ Recorded in Money" }).count() === 1, `[${scheme}] safe slip recorded (stake shown: ${stakeShown > 0})`);
+  // A slip whose first match has kicked off is locked and cannot be placed any more: skip, don't fail.
+  const safeOpen = await page.getByRole("button", { name: "I placed this bet" }).count() > 0;
+  if (!safeOpen) console.log(`SKIP  [${scheme}] Safe slip already in play: placement not checked`);
+  if (safeOpen) {
+    await page.getByRole("button", { name: "I placed this bet" }).click();
+    // Type the stake: a slip without value has no recommended stake, but you can still record a bet.
+    await page.getByLabel("Stake in TSh").fill("900");
+    check(await page.getByText(/after this bet/).count() === 1, `[${scheme}] form shows balance after the bet`);
+    await page.getByRole("button", { name: /^Save: .* on (Betpawa|SportyBet)$/ }).click();
+    check(await page.getByRole("button", { name: "✓ Recorded in Money" }).count() === 1, `[${scheme}] safe slip recorded (stake shown: ${stakeShown > 0})`);
+  }
 
   // Big slip on SportyBet with Flexi.
   await page.getByRole("tab", { name: "Big" }).click();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Flag, TeamBadge } from "../badges";
 import { kickoffLabel, odds, pct, timeLabel, useArchive, useLineups } from "../lib";
-import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
+import { type ArchiveDay, type ArchivedFixture, type Fixture, type FormResult, type League, type LineupPlayer, type MarketKey, type MarketPrediction, type MatchContext, type TeamContext, PREMIER_LEAGUE } from "../types";
 import { Card, DateStrip, Empty, Legend, ProbBar, Segmented, VerdictBadge, todayIso } from "../ui";
 
 type Group = "result" | "lead" | "double" | "goals";
@@ -77,10 +77,102 @@ function FormAndTable({ fixture }: { fixture: Fixture }) {
 }
 
 /** Announced starting elevens (ESPN), shown once clubs publish them about an hour before kick-off. */
+const POSITION_LINE: Record<string, number> = {
+  G: 0, GK: 0,
+  B: 1, CB: 1, CD: 1, "CD-L": 1, "CD-R": 1, LB: 1, RB: 1, LWB: 1, RWB: 1, SW: 1,
+  M: 2, DM: 2, CM: 2, "CM-L": 2, "CM-R": 2, LM: 2, RM: 2,
+  AM: 3, "AM-L": 3, "AM-R": 3,
+  F: 4, CF: 4, ST: 4, LF: 4, RF: 4, LW: 4, RW: 4,
+};
+
+const positionLine = (position: string, lineCount: number) =>
+  position === "CF-L" || position === "CF-R" ? (lineCount >= 4 ? 3 : 4) : POSITION_LINE[position];
+
+/** Left to right across the pitch: wide left (LB, LM, ...) < inner left (CD-L, ...) < centre < inner right < wide right. */
+const sideOrder = (position: string) => {
+  if (/^(LB|LWB|LM|LW|LF)$/.test(position)) return 0;
+  if (position.endsWith("-L")) return 1;
+  if (position.endsWith("-R")) return 3;
+  if (/^(RB|RWB|RM|RW|RF)$/.test(position)) return 4;
+  return 2;
+};
+
+function pitchLines(formation: string | null, starters: LineupPlayer[]) {
+  if (!formation || starters.length !== 11) return null;
+  const counts = formation.split("-").map(Number);
+  if (!counts.length || counts.some((count) => !Number.isInteger(count) || count < 1) || counts.reduce((a, b) => a + b, 0) !== 10) return null;
+  const keepers = starters.filter((player) => positionLine(player.position ?? "", counts.length) === 0);
+  const outfield = starters.filter((player) => positionLine(player.position ?? "", counts.length) !== 0);
+  if (keepers.length !== 1 || outfield.some((player) => positionLine(player.position ?? "", counts.length) == null)) return null;
+  outfield.sort((a, b) => positionLine(a.position!, counts.length) - positionLine(b.position!, counts.length)
+    || sideOrder(a.position!) - sideOrder(b.position!)
+    || (a.formation_place ?? 99) - (b.formation_place ?? 99));
+  const lines: LineupPlayer[][] = [[keepers[0]]];
+  let offset = 0;
+  for (const count of counts) {
+    const line = outfield.slice(offset, offset + count).sort((a, b) => sideOrder(a.position!) - sideOrder(b.position!)
+      || (a.formation_place ?? 99) - (b.formation_place ?? 99));
+    lines.push(line);
+    offset += count;
+  }
+  return lines;
+}
+
+/** Family name with its particles ("Le Fée", "van Dijk", "De Bruyne"). */
+const PARTICLES = new Set(["de", "da", "di", "do", "dos", "das", "del", "della", "van", "von", "der", "den", "le", "la", "ter", "ten", "el", "al", "bin", "ben"]);
+const surname = (name: string) => {
+  const parts = name.trim().split(/\s+/);
+  let start = parts.length - 1;
+  while (start > 1 && PARTICLES.has(parts[start - 1].toLowerCase())) start -= 1;
+  const last = parts.slice(start).join(" ");
+  return last.length > 12 ? `${last.slice(0, 11)}…` : last;
+};
+
+function Pitch({ formation, starters }: { formation: string; starters: LineupPlayer[] }) {
+  const lines = pitchLines(formation, starters)!;
+  const yFor = (index: number) => 119 - index * (106 / (lines.length - 1));
+  return (
+    <svg viewBox="0 0 100 132" className="block w-full" role="img" aria-label={`Starting eleven in a ${formation} formation`} data-pitch>
+      <rect width="100" height="132" rx="3" fill="var(--pitch)" />
+      <g fill="none" stroke="var(--pitch-line)" strokeWidth="0.7">
+        <rect x="2" y="2" width="96" height="128" rx="2" />
+        <path d="M2 66h96" /><circle cx="50" cy="66" r="12" />
+        <path d="M29 2v17h42V2M39 2v8h22V2M29 130v-17h42v17M39 130v-8h22v8" />
+      </g>
+      {lines.flatMap((line, lineIndex) => line.map((player, playerIndex) => {
+        const x = 100 * (playerIndex + 1) / (line.length + 1);
+        const y = yFor(lineIndex);
+        return (
+          <g key={`${player.number}-${player.name}`} data-player-marker data-position={player.position} transform={`translate(${x} ${y})`}>
+            <circle r="4.4" fill={lineIndex === 0 ? "var(--keeper)" : "var(--player)"} stroke="var(--player-ring)" strokeWidth="0.7" />
+            <text y="1.35" textAnchor="middle" fill="var(--player-ink)" fontSize="3.6" fontWeight="700">{player.number ?? ""}</text>
+            <text y="8.1" textAnchor="middle" fill="var(--pitch-ink)" stroke="var(--pitch-label-shadow)" strokeWidth="1.2" paintOrder="stroke" fontSize="3.5" fontWeight="650">{surname(player.name)}</text>
+          </g>
+        );
+      }))}
+    </svg>
+  );
+}
+
+function StarterList({ starters }: { starters: LineupPlayer[] }) {
+  return (
+    <ol className="divide-y divide-border/60" data-lineup-fallback>
+      {starters.map((p) => (
+        <li key={`${p.number}-${p.name}`} data-starter className="flex items-center gap-3 px-4 py-2 text-sm">
+          <span className="w-6 text-right text-xs font-semibold text-ink-3">{p.number ?? ""}</span>
+          <span className="min-w-0 flex-1 truncate font-medium">{p.name}</span>
+          <span className="text-[11px] text-ink-3">{p.position ?? ""}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function Lineups({ fixture }: { fixture: Fixture }) {
   const lineup = useLineups().find((l) => l.home === fixture.home && l.away === fixture.away);
   const [side, setSide] = useState<"home" | "away">("home");
   const team = lineup?.[side === "home" ? "home_lineup" : "away_lineup"];
+  const lines = team ? pitchLines(team.formation, team.starters) : null;
   return (
     <Card className="overflow-hidden" data-lineups>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Line-ups</h2>
@@ -91,18 +183,19 @@ function Lineups({ fixture }: { fixture: Fixture }) {
           <div className="px-4 pb-2">
             <Segmented options={[{ id: "home", label: fixture.home }, { id: "away", label: fixture.away }]} value={side} onChange={setSide} />
           </div>
-          {team.formation && <div className="px-4 pb-1 text-[11px] text-ink-3">Formation {team.formation}</div>}
-          <ol className="divide-y divide-border/60">
-            {team.starters.map((p) => (
-              <li key={`${p.number}-${p.name}`} data-starter className="flex items-center gap-3 px-4 py-2 text-sm">
-                <span className="w-6 text-right text-xs font-semibold text-ink-3">{p.number ?? ""}</span>
-                <span className="min-w-0 flex-1 truncate font-medium">{p.name}</span>
-                <span className="text-[11px] text-ink-3">{p.position ?? ""}</span>
-              </li>
-            ))}
-          </ol>
+          {team.formation && <div className="px-4 pb-2 text-center text-xs font-semibold text-ink-2">Formation {team.formation}</div>}
+          {lines && team.formation ? (
+            <div className="lineup-pitch mx-3 overflow-hidden rounded-xl" data-starter-count={team.starters.length}>
+              <Pitch formation={team.formation} starters={team.starters} />
+            </div>
+          ) : <StarterList starters={team.starters} />}
           {team.subs.length > 0 && (
-            <p className="px-4 py-3 text-[11px] leading-relaxed text-ink-3">Bench: {team.subs.map((p) => p.name).join(", ")}</p>
+            <div className="px-4 py-3 text-[11px] leading-relaxed text-ink-3">
+              <span className="font-semibold text-ink-2">Bench</span>
+              <ul className="mt-1 flex flex-wrap gap-x-2 gap-y-1">
+                {team.subs.map((p) => <li key={`${p.number}-${p.name}`}>{p.number ? `${p.number} ` : ""}{p.name}</li>)}
+              </ul>
+            </div>
           )}
         </>
       )}

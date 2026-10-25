@@ -42,6 +42,14 @@
   --hero-status-good-bg: rgb(12 163 12 / 0.2);
   --hero-status-critical: #ffb9b9;
   --hero-status-critical-bg: rgb(208 59 59 / 0.2);
+  --pitch: #168449;
+  --pitch-line: rgb(255 255 255 / 0.72);
+  --pitch-ink: #ffffff;
+  --pitch-label-shadow: rgb(0 42 21 / 0.72);
+  --player: var(--logo-blue);
+  --keeper: var(--logo-gold);
+  --player-ring: #ffffff;
+  --player-ink: var(--logo-navy);
   color-scheme: light;
 }
 
@@ -76,6 +84,9 @@
     --past-slip-surface: #001339;
     --past-slip-border: rgb(13 217 254 / 0.34);
     --past-slip-ink: #f8fcff;
+    --pitch: #0c6035;
+    --pitch-line: rgb(219 255 235 / 0.62);
+    --pitch-label-shadow: rgb(0 15 8 / 0.9);
   }
 }
 
@@ -108,6 +119,9 @@
   --past-slip-surface: #001339;
   --past-slip-border: rgb(13 217 254 / 0.34);
   --past-slip-ink: #f8fcff;
+  --pitch: #0c6035;
+  --pitch-line: rgb(219 255 235 / 0.62);
+  --pitch-label-shadow: rgb(0 15 8 / 0.9);
 }
 
 @theme inline {

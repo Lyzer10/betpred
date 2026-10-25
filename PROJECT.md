@@ -123,7 +123,11 @@ the user's slips have settled**.
   - **skip**: nothing due (costs ~1 of the 2,000 free private-repo minutes a month).
   Publishing commits predictions, archive and `engine/data/live` (resets rebuilt research files, pulls, pushes).
 - Vercel serves `web/` at **https://betpredz.vercel.app**; every push redeploys.
-- Backup: `scripts/daily.sh` + `scripts/install_schedule.ps1` (Windows Task Scheduler), not installed.
+- Backup: `scripts/daily.sh` + `scripts/install_schedule.ps1` (Windows Task Scheduler). The task
+  "PL Predictor daily update" WAS installed and ran in parallel with GitHub; on 25 Oct 2026 its 18:00 run
+  collided with GitHub's data (stuck merge in the working folder). It is now DISABLED (not deleted;
+  `schtasks /change /tn "PL Predictor daily update" /enable` restores it). GitHub + the external timer
+  replace it; never run both.
 
 ### How to run locally
 ```
@@ -136,7 +140,8 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ## 5. Current status (2026-10-25)
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
-  and a four destination floating menu with past slip results on Bets.
+  a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
+  a full pitch by formation, with a safe numbered-list fallback when placement is uncertain.
 - Profitability: **not proven**. Backtest ROI used estimated odds (indicative only). Real Betpawa
   prices are archived from 24 Oct 2026 onwards: the live period is the **untouched holdout**;
   never tune any setting on it, only judge.
@@ -289,6 +294,12 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: line-ups on a full pitch by formation (Codex branch `codex/lineup-pitch`, code only; its
+  local data files were not merged). Fixes before merging: left-to-right order now has five bands (wide
+  left, inner left, centre, inner right, wide right; Codex's three bands put RB Hume inside CB-R
+  Mukiele); surnames keep particles ("Le Fée"); the test example is the REAL ESPN line-ups of Sunderland v
+  Leeds 25 Oct 2026 (Codex's example was invented). Browser check skips Flexi placement when the Big slip
+  is already in play. Recovered 576 Betpawa price rows logged only by the local backup run.
 - 2026-10-25: external timer live: cron-job.org job 8716884 "BetPredz" (owner's account), POST to the
   workflow_dispatch API every 30 min 06:00-23:30 Africa/Dar_es_Salaam with a fine-grained token (Actions
   read/write on betpred only). Phone notifications live (secret PUSH_SUBSCRIPTION; test sent OK).

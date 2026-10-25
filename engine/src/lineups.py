@@ -26,7 +26,8 @@ def _team(roster: dict) -> dict:
     players = roster.get("roster", [])
     def player(p):
         return {"name": p["athlete"]["displayName"], "number": p.get("jersey"),
-                "position": (p.get("position") or {}).get("abbreviation")}
+                "position": (p.get("position") or {}).get("abbreviation"),
+                "formation_place": int(p["formationPlace"]) if p.get("formationPlace") is not None else None}
     return {"formation": roster.get("formation"),
             "starters": [player(p) for p in players if p.get("starter")],
             "subs": [player(p) for p in players if not p.get("starter")]}

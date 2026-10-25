@@ -138,7 +138,7 @@ export interface Predictions {
   realised?: Record<TierName, RealisedTier>;
 }
 
-export interface LineupPlayer { name: string; number: string | null; position: string | null }
+export interface LineupPlayer { name: string; number: string | null; position: string | null; formation_place: number | null }
 export interface TeamLineup { formation: string | null; starters: LineupPlayer[]; subs: LineupPlayer[] }
 /** Announced line-ups (ESPN), about an hour before kick-off. Display only. */
 export interface MatchLineup { league: string; home: string; away: string; kickoff_utc: string; home_lineup: TeamLineup; away_lineup: TeamLineup }

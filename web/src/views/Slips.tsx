@@ -413,13 +413,12 @@ export function Slips({ data, ledger, day: selected, dates, schedule, markers, o
 
   return (
     <div>
-      {health && (health.status === "warning" || health.status === "watch") && (
-        <Card className={`mb-4 px-5 py-4 ${health.status === "warning" ? "bg-critical/10" : "bg-warning/15"}`}>
-          <div className={`text-sm font-semibold ${health.status === "warning" ? "text-critical-ink" : "text-warning-ink"}`}>
-            {health.status === "warning" ? "⚠ Model under review: stakes halved" : "≈ Model on watch"}
-          </div>
+      {/* Only when something needs action (stakes halved); "on watch" stays on the Record page. */}
+      {health?.status === "warning" && (
+        <Card className="mb-4 bg-critical/10 px-5 py-4">
+          <div className="text-sm font-semibold text-critical-ink">⚠ Model under review: stakes halved</div>
           <div className="mt-1 text-xs text-ink-2">
-            {health.checks.filter((c) => c.status === "warning" || c.status === "watch").map((c) => c.detail).join(" · ")}
+            {health.checks.filter((c) => c.status === "warning").map((c) => c.detail).join(" · ")}
           </div>
         </Card>
       )}

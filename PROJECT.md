@@ -299,6 +299,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-25: Bets page shows the health banner only when stakes are halved ("under review"); "on watch"
+  is shown on the Record page only (owner request).
 - 2026-10-25: merged Codex `codex/matches-redesign` (shared calendar, league pages with table and ESPN
   news, match tabs, expected line-ups) and reworked per the owner: Matches rows keep the 1/X/2
   percentages plus one slim best-pick column (code, odds, %; same height as the boxes; won = bold light

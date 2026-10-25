@@ -196,40 +196,15 @@
   {
     "round": "2026-10-25",
     "tier": "safe",
-    "generated_at": "2026-10-25T10:00:19.373553Z",
-    "total_odds": 2.51,
-    "win_probability": 0.5159,
+    "generated_at": "2026-10-25T11:01:10.824437Z",
+    "total_odds": 2.54,
+    "win_probability": 0.5098,
     "odds_source": "betpawa",
-    "expected_value": 0.2937,
-    "kelly": 0.1948,
+    "expected_value": 0.2951,
+    "kelly": 0.1916,
     "price_warning": false,
-    "flexi": [
-      {
-        "min_correct": 2,
-        "probability": 0.9015
-      }
-    ],
+    "flexi": [],
     "legs": [
-      {
-        "date": "2026-10-25",
-        "time": "20:00",
-        "kickoff_utc": "2026-10-25T20:00:00Z",
-        "league": {
-          "code": "LALIGA",
-          "name": "La Liga",
-          "country": "Spain"
-        },
-        "home": "Barcelona",
-        "away": "Real Madrid",
-        "market": "over_2.5",
-        "label": "Over 2.5 goals",
-        "probability": 0.842,
-        "estimated_odds": 1.16,
-        "betpawa_odds": 1.24,
-        "fair_odds": 1.19,
-        "price_warning": false,
-        "won": null
-      },
       {
         "date": "2026-10-25",
         "time": "17:00",
@@ -241,48 +216,48 @@
         },
         "home": "Lecce",
         "away": "Juventus",
-        "market": "away_win",
-        "label": "Away win",
-        "probability": 0.7362,
-        "estimated_odds": 1.43,
-        "betpawa_odds": 1.58,
-        "fair_odds": 1.36,
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.8057,
+        "estimated_odds": 1.23,
+        "betpawa_odds": 1.33,
+        "fair_odds": 1.24,
         "price_warning": false,
         "won": null
       },
       {
         "date": "2026-10-25",
-        "time": "16:30",
-        "kickoff_utc": "2026-10-25T16:30:00Z",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-25T19:45:00Z",
         "league": {
-          "code": "BUNDES",
-          "name": "Bundesliga",
-          "country": "Germany"
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
         },
-        "home": "Freiburg",
-        "away": "Bayern Munich",
-        "market": "away_1up",
-        "label": "Away 1Up",
-        "probability": 0.8323,
-        "estimated_odds": 1.14,
-        "betpawa_odds": 1.28,
-        "fair_odds": 1.2,
+        "home": "Udinese",
+        "away": "Milan",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.6328,
+        "estimated_odds": 1.66,
+        "betpawa_odds": 1.91,
+        "fair_odds": 1.58,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-25",
     "tier": "medium",
-    "generated_at": "2026-10-25T10:00:19.373553Z",
-    "total_odds": 3.52,
+    "generated_at": "2026-10-25T11:01:10.824437Z",
+    "total_odds": 3.53,
     "win_probability": 0.4079,
     "odds_source": "betpawa",
-    "expected_value": 0.4372,
-    "kelly": 0.1732,
+    "expected_value": 0.4401,
+    "kelly": 0.1739,
     "price_warning": false,
     "flexi": [
       {
@@ -326,7 +301,7 @@
         "label": "Away win",
         "probability": 0.6328,
         "estimated_odds": 1.66,
-        "betpawa_odds": 1.89,
+        "betpawa_odds": 1.91,
         "fair_odds": 1.58,
         "price_warning": false,
         "won": null
@@ -346,24 +321,24 @@
         "label": "Away or draw",
         "probability": 0.8755,
         "estimated_odds": 1.09,
-        "betpawa_odds": 1.18,
+        "betpawa_odds": 1.17,
         "fair_odds": 1.14,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-25",
     "tier": "big",
-    "generated_at": "2026-10-25T10:00:19.373553Z",
-    "total_odds": 8.03,
+    "generated_at": "2026-10-25T11:01:10.824437Z",
+    "total_odds": 8.05,
     "win_probability": 0.2143,
     "odds_source": "betpawa",
-    "expected_value": 0.7203,
-    "kelly": 0.1025,
+    "expected_value": 0.7249,
+    "kelly": 0.1028,
     "price_warning": false,
     "flexi": [
       {
@@ -451,7 +426,7 @@
         "label": "Away win",
         "probability": 0.6328,
         "estimated_odds": 1.66,
-        "betpawa_odds": 1.89,
+        "betpawa_odds": 1.91,
         "fair_odds": 1.58,
         "price_warning": false,
         "won": null
@@ -471,19 +446,19 @@
         "label": "Away 1Up",
         "probability": 0.8323,
         "estimated_odds": 1.14,
-        "betpawa_odds": 1.28,
+        "betpawa_odds": 1.27,
         "fair_odds": 1.2,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-26",
     "tier": "safe",
-    "generated_at": "2026-10-25T10:00:19.373553Z",
+    "generated_at": "2026-10-25T11:01:10.824437Z",
     "total_odds": 2.6,
     "win_probability": 0.3719,
     "odds_source": "betpawa",

@@ -270,6 +270,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
+- "Nothing to predict" is a normal day, not an error: every step after it (settlement, publishing) must
+  still run (2026-10-27).
 - Cross-check derived data with an independent source before showing it (league tables vs ESPN standings
   exposed both football-data's lag and an Understat home/away swap, 2026-10-25).
 - Test data must be real: Codex's invented line-up hid a left/right ordering bug that the real
@@ -299,6 +301,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-27: FIX: with no upcoming fixtures in any league (football-data had not yet posted the midweek
+  round), `predict` exited with an error, so every run failed from 07:00 and nothing was published (not even
+  the night's settlement). It now settles, updates archive/tables/monitoring and publishes without slips.
 - 2026-10-25: line-up pitch follows SofaScore (owner's reference): straight lines, players spread evenly
   across the width (back four at ~13/38/62/87, front two at a third / two thirds), lines evenly spaced from
   the goalkeeper; replaces the earlier up/down "shape" offsets.

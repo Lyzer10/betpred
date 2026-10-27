@@ -741,9 +741,11 @@ def main() -> None:
             print(f"{get_league(code).name}: {league_legs.fixture.nunique() if not league_legs.empty else 0} fixtures")
         except Exception as error:
             print(f"{get_league(code).name} skipped this run: {error}")
+    # No upcoming fixtures anywhere (e.g. football-data has not posted the midweek round yet): still settle
+    # results, update archive, tables and monitoring, and publish, just without new predictions or slips.
     if not parts:
-        raise SystemExit("No upcoming fixtures in any live league")
-    legs = pd.concat(parts, ignore_index=True)
+        print("No upcoming fixtures in any live league: settling and publishing without new slips")
+    legs = pd.concat(parts, ignore_index=True) if parts else None
     # Settle from Understat the same night; football-data rows (when they arrive days later) take over.
     fast = []
     for code in LIVE_LEAGUES:
@@ -762,7 +764,7 @@ def main() -> None:
     all_matches = merge_results(official, pd.concat(fast, ignore_index=True) if fast else official.iloc[0:0])
 
     betpawa_parts = []
-    for code in legs.league.unique():
+    for code in (legs.league.unique() if legs is not None else []):
         try:
             betpawa_parts.append(fetch_competition_odds(code))
         except Exception as error:  # Betpawa down or changed: predictions still publish.
@@ -770,10 +772,11 @@ def main() -> None:
     betpawa = (pd.concat(betpawa_parts, ignore_index=True) if betpawa_parts
                else pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]))
     print(f"Betpawa: {len(betpawa)} prices across {len(betpawa_parts)} leagues")
-    legs = attach_betpawa(legs, betpawa)
-    legs["day"] = local_day(legs.kickoff_utc)
     today = local_day(pd.Series([now])).iloc[0]
-    log_prices(legs, now)
+    if legs is not None:
+        legs = attach_betpawa(legs, betpawa)
+        legs["day"] = local_day(legs.kickoff_utc)
+        log_prices(legs, now)
     # Settle first, so the per bet type monitor sees the newest results before slips are built.
     settle_archive(all_matches)
     pairs = pair_monitor(settled_predictions(), SLIP_MARKETS, load_paused())
@@ -781,7 +784,7 @@ def main() -> None:
     save_paused(paused)
     blocked = failed_gates() | paused
     days = []
-    for day, day_legs in legs.groupby("day", sort=True):
+    for day, day_legs in (legs.groupby("day", sort=True) if legs is not None else []):
         slips = build_slips(day_legs, blocked)
         history = update_history(day, slips, all_matches, now, final=args.final and day == today)
         shown = displayed_slips(day, slips, history, now)
@@ -822,7 +825,7 @@ def main() -> None:
                     for row in group.itertuples()
                 ],
             }
-            for fixture_id, group in legs.groupby("fixture", sort=True)
+            for fixture_id, group in (legs.groupby("fixture", sort=True) if legs is not None else [])
         ],
         "days": days,
         "value_rules": {"min_edge": VALUE_EDGE, "min_probability": VALUE_MIN_PROBABILITY},

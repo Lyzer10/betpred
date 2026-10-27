@@ -194,3 +194,22 @@ def test_settlement_never_uses_a_result_from_another_date():
     find = predict.result_lookup(_results([("2026/27", "2026-08-23", "Paris SG", "Rennes", 2, 2)]))
     assert find("Paris SG", "Rennes", "2026-08-24") is not None
     assert find("Paris SG", "Rennes", "2027-02-14") is None       # the real reverse fixture months later
+
+
+def test_betpawa_fallback_adds_only_matches_football_data_lacks():
+    now = pd.Timestamp("2026-10-27 08:00")
+    prices = pd.DataFrame([
+        {"home_team": h, "away_team": a, "kickoff_utc": pd.Timestamp(k), "market": m, "betpawa_odds": o}
+        for h, a, k in (("Roma", "Cagliari", "2026-10-27 19:45"), ("Inter", "Milan", "2026-10-27 19:45"),
+                        ("Lazio", "Como", "2026-11-05 19:45"), ("Genoa", "Lecce", "2026-10-27 17:30"))
+        for m, o in (("home_win", 1.34), ("draw", 5.95), ("away_win", 9.04), ("over_2.5", 1.7), ("under_2.5", 2.1))
+        if not (h == "Genoa" and m == "draw")])                       # Genoa: incomplete prices
+    have = pd.DataFrame({"home_team": ["Inter"], "away_team": ["Milan"], "date": [pd.Timestamp("2026-10-27")], "time": ["19:45"]})
+    played = pd.DataFrame(columns=["season", "home_team", "away_team"])
+    out = predict.add_betpawa_fixtures(have, prices, now, played, "SERIEA")
+    added = out[out.odds_source == "betpawa"]
+    assert added[["home_team", "away_team"]].values.tolist() == [["Roma", "Cagliari"]]  # not Inter (has data), Lazio (too far), Genoa
+    row = added.iloc[0]
+    assert (row.odds_home, row.odds_draw, row.odds_away, row.odds_over25, row.odds_under25) == (1.34, 5.95, 9.04, 1.7, 2.1)
+    assert row.time == "19:45" and row.season == "2026/27"                                 # 19:45 UTC = 19:45 London (GMT)
+    assert out[out.home_team == "Inter"].odds_source.iloc[0] == "average"

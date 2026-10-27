@@ -79,6 +79,7 @@ export interface Fixture {
   markets: MarketPrediction[];
   context?: MatchContext;
   head_to_head?: HeadToHead | null;      // last league meetings (display only)   // absent in data files published before 24 Oct 2026
+  odds_source?: "average" | "betpawa";   // "betpawa": football-data had not posted the match yet
   best_pick?: BestPick | null;
 }
 

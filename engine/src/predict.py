@@ -116,6 +116,54 @@ def load_fixtures(today: pd.Timestamp, played: pd.DataFrame, league="EPL") -> pd
     return fixtures.sort_values(["date", "time"]).reset_index(drop=True)
 
 
+FALLBACK_HOURS = 48
+FALLBACK_MARKETS = {"home_win": "odds_home", "draw": "odds_draw", "away_win": "odds_away",
+                    "over_2.5": "odds_over25", "under_2.5": "odds_under25"}
+_BETPAWA: dict[str, pd.DataFrame] = {}
+
+
+def betpawa_prices(code: str) -> pd.DataFrame:
+    """Betpawa's current prices for one league, fetched once per run (empty if Betpawa is unavailable)."""
+    if code not in _BETPAWA:
+        try:
+            _BETPAWA[code] = fetch_competition_odds(code)
+        except Exception as error:      # Betpawa down or changed: predictions still publish without it
+            print(f"Betpawa odds unavailable for {get_league(code).name} ({error})")
+            _BETPAWA[code] = pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"])
+    return _BETPAWA[code]
+
+
+def add_betpawa_fixtures(fixtures: pd.DataFrame, prices: pd.DataFrame, now: pd.Timestamp, played: pd.DataFrame,
+                         league: str) -> pd.DataFrame:
+    """Fallback when football-data has not posted a match yet (e.g. a midweek round): matches Betpawa prices
+    with all five inputs (1X2 and over/under 2.5) and starting within FALLBACK_HOURS are added with Betpawa's
+    prices in place of the bookmaker average; the method after that is unchanged. Checked 27 Oct 2026 on 28
+    matches with both sources: no bias (mean +0.04 points), typical difference 1.9 points, log loss 0.5577
+    (Betpawa) vs 0.5621 (average). Marked `odds_source = "betpawa"`."""
+    fixtures = fixtures.assign(odds_source="average")
+    if prices.empty:
+        return fixtures
+    wanted = prices[prices.market.isin(FALLBACK_MARKETS) & (prices.kickoff_utc > now)
+                    & (prices.kickoff_utc <= now + pd.Timedelta(hours=FALLBACK_HOURS))]
+    table = wanted.pivot_table(index=["home_team", "away_team", "kickoff_utc"], columns="market",
+                               values="betpawa_odds", aggfunc="last").dropna()
+    season = season_label(current_season_start(now.date()))
+    have = set(zip(fixtures.home_team, fixtures.away_team))
+    done = set(zip(played.loc[played.season == season, "home_team"], played.loc[played.season == season, "away_team"]))
+    rows = []
+    for (home, away, kickoff), odds in table.iterrows():
+        if (home, away) in have or (home, away) in done:
+            continue
+        local = pd.Timestamp(kickoff).tz_localize("UTC").tz_convert("Europe/London")
+        rows.append({"date": local.normalize().tz_localize(None), "time": local.strftime("%H:%M"), "home_team": home,
+                     "away_team": away, **{column: float(odds[market]) for market, column in FALLBACK_MARKETS.items()},
+                     "kickoff_utc": pd.Timestamp(kickoff), "season": season, "league": league, "odds_source": "betpawa"})
+    if not rows:
+        return fixtures
+    print(f"{get_league(league).name}: {len(rows)} match(es) not yet in football-data, priced from Betpawa")
+    return pd.concat([fixtures, pd.DataFrame(rows)], ignore_index=True).sort_values(["date", "time"]).reset_index(drop=True)
+
+
 def chosen_dc_settings() -> tuple[float, float]:
     tuning = pd.read_csv(TUNING_PATH)
     best = tuning[tuning.variant == "blend"].sort_values("validation_log_loss").iloc[0]
@@ -704,7 +752,8 @@ def main() -> None:
 
     # Premier League: our blended model, exactly as validated.
     parts, model_info, model_weight = [], {}, None
-    fixtures = load_fixtures(now, matches, "EPL")
+    fixtures = add_betpawa_fixtures(load_fixtures(now, matches, "EPL"), betpawa_prices("EPL"), now, matches, "EPL")
+    fallback = {("EPL", h, a) for h, a, src in zip(fixtures.home_team, fixtures.away_team, fixtures.odds_source) if src == "betpawa"}
     if not fixtures.empty:
         model, model_info = fit_live_model(matches, fixtures, now)
         model_weight = fit_model_weight(pd.read_parquet(LEGS_PATH))
@@ -732,7 +781,9 @@ def main() -> None:
             past = pd.read_parquet(paths(code).matches) if paths(code).matches.exists() else current.iloc[0:0]
             h2h_history[code] = (pd.concat([past, current], ignore_index=True)
                                  .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
-            league_fixtures = load_fixtures(now, current, code)
+            league_fixtures = add_betpawa_fixtures(load_fixtures(now, current, code), betpawa_prices(code), now, current, code)
+            fallback |= {(code, h, a) for h, a, src in zip(league_fixtures.home_team, league_fixtures.away_team,
+                                                            league_fixtures.odds_source) if src == "betpawa"}
             league_fixtures.index = league_fixtures.index + next_fixture_id
             next_fixture_id += len(league_fixtures)
             league_legs = predict_market_fixtures(league_fixtures, code)
@@ -765,10 +816,7 @@ def main() -> None:
 
     betpawa_parts = []
     for code in (legs.league.unique() if legs is not None else []):
-        try:
-            betpawa_parts.append(fetch_competition_odds(code))
-        except Exception as error:  # Betpawa down or changed: predictions still publish.
-            print(f"Betpawa odds unavailable for {get_league(code).name} ({error}); using estimated odds")
+        betpawa_parts.append(betpawa_prices(code))      # fetched once per run (also used for the fallback)
     betpawa = (pd.concat(betpawa_parts, ignore_index=True) if betpawa_parts
                else pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]))
     print(f"Betpawa: {len(betpawa)} prices across {len(betpawa_parts)} leagues")
@@ -809,6 +857,7 @@ def main() -> None:
                 "kickoff_utc": group.kickoff_utc.iloc[0].isoformat() + "Z",
                 "home": group.home_team.iloc[0], "away": group.away_team.iloc[0],
                 "context": {"home": context.get(group.home_team.iloc[0]), "away": context.get(group.away_team.iloc[0])},
+                "odds_source": "betpawa" if (group.league.iloc[0], group.home_team.iloc[0], group.away_team.iloc[0]) in fallback else "average",
                 "head_to_head": head_to_head(h2h_history.get(group.league.iloc[0]), group.home_team.iloc[0], group.away_team.iloc[0]),
                 "best_pick": best_pick(group, blocked),
                 "day": group["day"].iloc[0],

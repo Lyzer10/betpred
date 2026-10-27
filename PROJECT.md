@@ -302,6 +302,12 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-27: Betpawa fallback (`predict.add_betpawa_fixtures`): a match football-data has not posted yet
+  (e.g. the midweek Serie A round) is priced from Betpawa's 1X2 and over/under 2.5 instead of the
+  bookmaker average, within 48 hours of kick-off; the method after that is unchanged and the match is
+  marked `odds_source: "betpawa"` (label on its Insights tab). Checked first on 28 matches with both
+  sources: mean difference +0.04 points, typical 1.9, log loss 0.5577 (Betpawa) vs 0.5621 (average).
+  Betpawa prices are fetched once per run and reused.
 - 2026-10-27: run_mode also starts a full run when football-data posts upcoming matches with odds that we
   have not published (late midweek rounds), at most about once an hour; it reads only fixtures.csv,
   so no wasted runs and no model change. Tests in test_schedule.

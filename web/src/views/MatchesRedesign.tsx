@@ -143,7 +143,7 @@ function Insights({ fixture }: { fixture: DisplayFixture }) {
   const [group, setGroup] = useState<Group>("result");
   if (!fixture.markets.length) return <Empty>Predictions appear on the morning of the match day.</Empty>;
   const active = GROUPS.find((item) => item.id === group)!;
-  return <div className="space-y-4"><BestPick fixture={fixture} /><Segmented options={GROUPS.map(({ id, label }) => ({ id, label }))} value={group} onChange={setGroup} /><div className="px-1"><Legend /></div><Card>{active.markets.map((key) => { const market = fixture.markets.find((item) => item.market === key); return market ? <MarketRow key={key} fixture={fixture} market={market} /> : null; })}</Card></div>;
+  return <div className="space-y-4">{fixture.odds_source === "betpawa" && <p data-odds-source className="rounded-xl bg-surface-2 px-3 py-2 text-xs text-ink-2">Priced from Betpawa's odds: the bookmaker average for this match was not published yet. Same method otherwise.</p>}<BestPick fixture={fixture} /><Segmented options={GROUPS.map(({ id, label }) => ({ id, label }))} value={group} onChange={setGroup} /><div className="px-1"><Legend /></div><Card>{active.markets.map((key) => { const market = fixture.markets.find((item) => item.market === key); return market ? <MarketRow key={key} fixture={fixture} market={market} /> : null; })}</Card></div>;
 }
 
 function MatchPage({ fixture, tab, expected, onBack, onTab, onLeague }: { fixture: DisplayFixture; tab: MatchTab; expected: { home: ExpectedLineup; away: ExpectedLineup } | null; onBack: () => void; onTab: (tab: MatchTab) => void; onLeague: () => void }) {

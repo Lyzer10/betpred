@@ -514,12 +514,12 @@
   {
     "round": "2026-10-27",
     "tier": "safe",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
+    "generated_at": "2026-10-27T15:01:15.490150Z",
     "total_odds": 2.58,
     "win_probability": 0.425,
     "odds_source": "betpawa",
-    "expected_value": 0.0966,
-    "kelly": 0.0612,
+    "expected_value": 0.0985,
+    "kelly": 0.0622,
     "price_warning": false,
     "flexi": [
       {
@@ -563,7 +563,7 @@
         "label": "Home or draw",
         "probability": 0.9261,
         "estimated_odds": 1.04,
-        "betpawa_odds": 1.08,
+        "betpawa_odds": 1.07,
         "fair_odds": 1.08,
         "price_warning": false,
         "won": null
@@ -583,7 +583,7 @@
         "label": "Away win",
         "probability": 0.6062,
         "estimated_odds": 1.72,
-        "betpawa_odds": 1.81,
+        "betpawa_odds": 1.83,
         "fair_odds": 1.65,
         "price_warning": false,
         "won": null
@@ -595,17 +595,17 @@
   {
     "round": "2026-10-27",
     "tier": "medium",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
-    "total_odds": 3.56,
-    "win_probability": 0.3084,
+    "generated_at": "2026-10-27T15:01:15.490150Z",
+    "total_odds": 3.53,
+    "win_probability": 0.3172,
     "odds_source": "betpawa",
-    "expected_value": 0.0988,
-    "kelly": 0.0385,
+    "expected_value": 0.1191,
+    "kelly": 0.0471,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.7572
+        "probability": 0.7693
       }
     ],
     "legs": [
@@ -620,12 +620,12 @@
         },
         "home": "Sassuolo",
         "away": "Lazio",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6903,
-        "estimated_odds": 1.41,
-        "betpawa_odds": 1.48,
-        "fair_odds": 1.45,
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.6622,
+        "estimated_odds": 1.5,
+        "betpawa_odds": 1.53,
+        "fair_odds": 1.51,
         "price_warning": false,
         "won": null
       },
@@ -640,12 +640,12 @@
         },
         "home": "Roma",
         "away": "Cagliari",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.7371,
-        "estimated_odds": 1.3,
-        "betpawa_odds": 1.33,
-        "fair_odds": 1.36,
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.7902,
+        "estimated_odds": 1.15,
+        "betpawa_odds": 1.26,
+        "fair_odds": 1.27,
         "price_warning": false,
         "won": null
       },
@@ -664,7 +664,7 @@
         "label": "Away win",
         "probability": 0.6062,
         "estimated_odds": 1.72,
-        "betpawa_odds": 1.81,
+        "betpawa_odds": 1.83,
         "fair_odds": 1.65,
         "price_warning": false,
         "won": null
@@ -676,7 +676,7 @@
   {
     "round": "2026-10-28",
     "tier": "safe",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
+    "generated_at": "2026-10-27T15:01:15.490150Z",
     "total_odds": 2.55,
     "win_probability": 0.4782,
     "odds_source": "betpawa",
@@ -732,7 +732,7 @@
   {
     "round": "2026-10-28",
     "tier": "medium",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
+    "generated_at": "2026-10-27T15:01:15.490150Z",
     "total_odds": 3.62,
     "win_probability": 0.3481,
     "odds_source": "betpawa",
@@ -813,21 +813,21 @@
   {
     "round": "2026-10-28",
     "tier": "big",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
-    "total_odds": 8.06,
-    "win_probability": 0.1625,
+    "generated_at": "2026-10-27T15:01:15.490150Z",
+    "total_odds": 8.07,
+    "win_probability": 0.1612,
     "odds_source": "betpawa",
-    "expected_value": 0.3097,
-    "kelly": 0.0439,
+    "expected_value": 0.3003,
+    "kelly": 0.0425,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 4,
-        "probability": 0.5249
+        "min_correct": 3,
+        "probability": 0.5822
       },
       {
-        "min_correct": 3,
-        "probability": 0.8389
+        "min_correct": 2,
+        "probability": 0.9047
       }
     ],
     "legs": [
@@ -842,12 +842,12 @@
         },
         "home": "Milan",
         "away": "Bologna",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.7573,
-        "estimated_odds": 1.22,
-        "betpawa_odds": 1.28,
-        "fair_odds": 1.32,
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.8471,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.18,
         "price_warning": false,
         "won": null
       },
@@ -862,12 +862,12 @@
         },
         "home": "Parma",
         "away": "Udinese",
-        "market": "double_x2",
-        "label": "Away or draw",
-        "probability": 0.714,
-        "estimated_odds": 1.38,
-        "betpawa_odds": 1.42,
-        "fair_odds": 1.4,
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.398,
+        "estimated_odds": 2.48,
+        "betpawa_odds": 2.66,
+        "fair_odds": 2.51,
         "price_warning": false,
         "won": null
       },
@@ -900,26 +900,6 @@
           "name": "Serie A",
           "country": "Italy"
         },
-        "home": "Genoa",
-        "away": "Juventus",
-        "market": "away_win",
-        "label": "Away win",
-        "probability": 0.6286,
-        "estimated_odds": 1.67,
-        "betpawa_odds": 1.74,
-        "fair_odds": 1.59,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-28",
-        "time": "19:45",
-        "kickoff_utc": "2026-10-28T19:45:00Z",
-        "league": {
-          "code": "SERIEA",
-          "name": "Serie A",
-          "country": "Italy"
-        },
         "home": "Monza",
         "away": "Napoli",
         "market": "away_win",
@@ -938,7 +918,7 @@
   {
     "round": "2026-10-29",
     "tier": "safe",
-    "generated_at": "2026-10-27T13:01:12.111009Z",
+    "generated_at": "2026-10-27T15:01:15.490150Z",
     "total_odds": 2.68,
     "win_probability": 0.4109,
     "odds_source": "betpawa",

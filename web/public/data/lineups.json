@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-10-27T17:04:07.352388Z",
+ "generated_at": "2026-10-27T19:31:12.580773Z",
  "matches": [
   {
    "league": "SERIEA",
    "home": "Sassuolo",
    "away": "Lazio",
    "home_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Stefano Turati",
@@ -39,22 +39,22 @@
       "formation_place": 2
      },
      {
-      "name": "Luca Lipani",
-      "number": "35",
-      "position": "CM",
-      "formation_place": 4
+      "name": "Kristian Thorstvedt",
+      "number": "42",
+      "position": "AM",
+      "formation_place": 10
      },
      {
       "name": "Darryl Bakola",
       "number": "50",
       "position": "LM",
-      "formation_place": 8
+      "formation_place": 4
      },
      {
-      "name": "Kristian Thorstvedt",
-      "number": "42",
+      "name": "Luca Lipani",
+      "number": "35",
       "position": "RM",
-      "formation_place": 7
+      "formation_place": 8
      },
      {
       "name": "Sebastiano Esposito",
@@ -65,14 +65,14 @@
      {
       "name": "Armand Laurienté",
       "number": "45",
-      "position": "LF",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
       "name": "Domenico Berardi",
       "number": "10",
-      "position": "RF",
-      "formation_place": 10
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [
@@ -332,6 +332,604 @@
     ]
    },
    "kickoff_utc": "2026-10-27T17:30:00Z"
+  },
+  {
+   "league": "SERIEA",
+   "home": "Roma",
+   "away": "Cagliari",
+   "home_lineup": {
+    "formation": "3-5-2",
+    "starters": [
+     {
+      "name": "Pierluigi Gollini",
+      "number": "95",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Evan Ndicka",
+      "number": "5",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Konstantinos Koulierakis",
+      "number": "3",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Gianluca Mancini",
+      "number": "23",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Niccolò Pisilli",
+      "number": "61",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Bryan Cristante",
+      "number": "4",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Marten de Roon",
+      "number": "15",
+      "position": "AM",
+      "formation_place": 11
+     },
+     {
+      "name": "Nahuel Molina",
+      "number": "20",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Emanuele Lulli",
+      "number": "77",
+      "position": "RM",
+      "formation_place": 2
+     },
+     {
+      "name": "Santiago Castro",
+      "number": "9",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Matìas Soulè",
+      "number": "18",
+      "position": "CF-R",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Alessandro Di Nunzio",
+      "number": "63",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Devis Vásquez",
+      "number": "32",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Giorgio De Marzi",
+      "number": "70",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mandjou Camara",
+      "number": "78",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Daniele Ghilardi",
+      "number": "87",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mario Hermoso",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Donyell Malen",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Leonardo Balerdi",
+      "number": "26",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Rodrigo Mora",
+      "number": "86",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Wesley",
+      "number": "43",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Devyne Rensch",
+      "number": "2",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "3-5-1-1",
+    "starters": [
+     {
+      "name": "Elia Caprile",
+      "number": "1",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Yerry Mina",
+      "number": "26",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Juan Rodríguez",
+      "number": "15",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Zé Pedro",
+      "number": "2",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Michel Adopo",
+      "number": "8",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Alessandro Romano",
+      "number": "4",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Alessandro Deiola",
+      "number": "14",
+      "position": "AM",
+      "formation_place": 11
+     },
+     {
+      "name": "Adam Obert",
+      "number": "33",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Yukinari Sugawara",
+      "number": "28",
+      "position": "RM",
+      "formation_place": 2
+     },
+     {
+      "name": "M'Bala Nzola",
+      "number": "18",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Alieu Fadera",
+      "number": "39",
+      "position": "RCF",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Raphael Kofler",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yanis Massolin",
+      "number": "79",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Boris Radunovic",
+      "number": "23",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Roberto Gagliardini",
+      "number": "21",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ivan Sulev",
+      "number": "32",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Alen Sherri",
+      "number": "12",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Joseph Liteta",
+      "number": "27",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Jacopo Fazzini",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Riccardo Ciervo",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Daniel Maldini",
+      "number": "70",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yael Trepy",
+      "number": "19",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Giuseppe Aurelio",
+      "number": "24",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Paul Mendy",
+      "number": "31",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Kevin Carlos",
+      "number": "9",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-10-27T19:45:00Z"
+  },
+  {
+   "league": "SERIEA",
+   "home": "Torino",
+   "away": "Como",
+   "home_lineup": {
+    "formation": "3-5-2",
+    "starters": [
+     {
+      "name": "Lucas Perri",
+      "number": "20",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Adrian Ismajli",
+      "number": "44",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Pietro Comuzzo",
+      "number": "15",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Saúl Coco",
+      "number": "23",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Nikola Vlasic",
+      "number": "10",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Kian Fitz-Jim",
+      "number": "28",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Daniel Bragança",
+      "number": "21",
+      "position": "AM",
+      "formation_place": 11
+     },
+     {
+      "name": "Alessio Cacciamani",
+      "number": "77",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Rafik Belghali",
+      "number": "45",
+      "position": "RM",
+      "formation_place": 2
+     },
+     {
+      "name": "Ché Adams",
+      "number": "19",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Giovanni Simeone",
+      "number": "18",
+      "position": "CF-R",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Zakaria Aboukhlal",
+      "number": "7",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Duván Zapata",
+      "number": "91",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Nathan Patterson",
+      "number": "2",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Cristiano Biraghi",
+      "number": "3",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Lapo Siviero",
+      "number": "76",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Pietro Pellegri",
+      "number": "9",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Gvidas Gineitis",
+      "number": "66",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Diego Mascardi",
+      "number": "26",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Emirhan Ilkhan",
+      "number": "6",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Sandro Kulenovic",
+      "number": "17",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Cesare Casadei",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Eray Cömert",
+      "number": "5",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Gaetano Oristanio",
+      "number": "11",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "Robert Sánchez",
+      "number": "97",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Marc-Oliver Kempf",
+      "number": "2",
+      "position": "CD-L",
+      "formation_place": 6
+     },
+     {
+      "name": "Jacobo Ramón",
+      "number": "4",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
+      "name": "Álex Valle",
+      "number": "3",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Yan Couto",
+      "number": "27",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Nico Paz",
+      "number": "10",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
+      "name": "Luis Milla",
+      "number": "6",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Máximo Perrone",
+      "number": "5",
+      "position": "RM",
+      "formation_place": 8
+     },
+     {
+      "name": "Anastasios Douvikas",
+      "number": "9",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Maxence Caqueret",
+      "number": "8",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Lucas Da Cunha",
+      "number": "7",
+      "position": "AM-R",
+      "formation_place": 7
+     }
+    ],
+    "subs": [
+     {
+      "name": "Mauro Vigorito",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Adrian Lahdo",
+      "number": "15",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Martin Baturina",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Jean Butez",
+      "number": "1",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Jayden Addai",
+      "number": "42",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Kaiki",
+      "number": "16",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Edoardo Goldaniga",
+      "number": "18",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Matteo Papaccioli",
+      "number": "54",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Samuele Ricci",
+      "number": "21",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Alberto Dossena",
+      "number": "13",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Willy Kambwala",
+      "number": "53",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-10-27T19:45:00Z"
   }
  ],
  "events": [

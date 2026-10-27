@@ -510,5 +510,429 @@
     ],
     "final": true,
     "status": "lost"
+  },
+  {
+    "round": "2026-10-27",
+    "tier": "safe",
+    "generated_at": "2026-10-27T11:47:44.630574Z",
+    "total_odds": 2.61,
+    "win_probability": 0.4189,
+    "odds_source": "betpawa",
+    "expected_value": 0.095,
+    "kelly": 0.0588,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.8675
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-27",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-27T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Sassuolo",
+        "away": "Lazio",
+        "market": "double_x2",
+        "label": "Away or draw",
+        "probability": 0.7581,
+        "estimated_odds": 1.3,
+        "betpawa_odds": 1.33,
+        "fair_odds": 1.32,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-27",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-27T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Roma",
+        "away": "Cagliari",
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.92,
+        "estimated_odds": 1.05,
+        "betpawa_odds": 1.08,
+        "fair_odds": 1.09,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-27",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-27T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Torino",
+        "away": "Como",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.6005,
+        "estimated_odds": 1.74,
+        "betpawa_odds": 1.82,
+        "fair_odds": 1.67,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-27",
+    "tier": "medium",
+    "generated_at": "2026-10-27T11:47:44.630574Z",
+    "total_odds": 3.52,
+    "win_probability": 0.3123,
+    "odds_source": "betpawa",
+    "expected_value": 0.1003,
+    "kelly": 0.0397,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.8012
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-27",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-27T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Sassuolo",
+        "away": "Lazio",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.4951,
+        "estimated_odds": 2.06,
+        "betpawa_odds": 2.16,
+        "fair_odds": 2.02,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-27",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-27T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Roma",
+        "away": "Cagliari",
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.92,
+        "estimated_odds": 1.05,
+        "betpawa_odds": 1.08,
+        "fair_odds": 1.09,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-27",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-27T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Torino",
+        "away": "Como",
+        "market": "under_3.5",
+        "label": "Under 3.5 goals",
+        "probability": 0.6857,
+        "estimated_odds": 1.42,
+        "betpawa_odds": 1.51,
+        "fair_odds": 1.46,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-28",
+    "tier": "safe",
+    "generated_at": "2026-10-27T11:47:44.630574Z",
+    "total_odds": 2.55,
+    "win_probability": 0.4695,
+    "odds_source": "betpawa",
+    "expected_value": 0.1963,
+    "kelly": 0.1268,
+    "price_warning": false,
+    "flexi": [],
+    "legs": [
+      {
+        "date": "2026-10-28",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-28T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Venezia",
+        "away": "Inter",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.7821,
+        "estimated_odds": 1.34,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.28,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-28T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Monza",
+        "away": "Napoli",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.6003,
+        "estimated_odds": 1.74,
+        "betpawa_odds": 1.82,
+        "fair_odds": 1.67,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-28",
+    "tier": "medium",
+    "generated_at": "2026-10-27T11:47:44.630574Z",
+    "total_odds": 3.58,
+    "win_probability": 0.3416,
+    "odds_source": "betpawa",
+    "expected_value": 0.2233,
+    "kelly": 0.0865,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.7885
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-28",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-28T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Venezia",
+        "away": "Inter",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.7821,
+        "estimated_odds": 1.34,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.28,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-28T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Genoa",
+        "away": "Juventus",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.63,
+        "estimated_odds": 1.66,
+        "betpawa_odds": 1.74,
+        "fair_odds": 1.59,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-28T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Monza",
+        "away": "Napoli",
+        "market": "under_3.5",
+        "label": "Under 3.5 goals",
+        "probability": 0.6933,
+        "estimated_odds": 1.4,
+        "betpawa_odds": 1.47,
+        "fair_odds": 1.44,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-28",
+    "tier": "big",
+    "generated_at": "2026-10-27T11:47:44.630574Z",
+    "total_odds": 8.0,
+    "win_probability": 0.1589,
+    "odds_source": "betpawa",
+    "expected_value": 0.2718,
+    "kelly": 0.0388,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 4,
+        "probability": 0.5184
+      },
+      {
+        "min_correct": 3,
+        "probability": 0.8346
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-28",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-28T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Milan",
+        "away": "Bologna",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.759,
+        "estimated_odds": 1.22,
+        "betpawa_odds": 1.28,
+        "fair_odds": 1.32,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-28T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Parma",
+        "away": "Udinese",
+        "market": "double_x2",
+        "label": "Away or draw",
+        "probability": 0.708,
+        "estimated_odds": 1.39,
+        "betpawa_odds": 1.41,
+        "fair_odds": 1.41,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "17:30",
+        "kickoff_utc": "2026-10-28T17:30:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Venezia",
+        "away": "Inter",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.7821,
+        "estimated_odds": 1.34,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.28,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-28T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Genoa",
+        "away": "Juventus",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.63,
+        "estimated_odds": 1.66,
+        "betpawa_odds": 1.74,
+        "fair_odds": 1.59,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-28",
+        "time": "19:45",
+        "kickoff_utc": "2026-10-28T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Monza",
+        "away": "Napoli",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.6003,
+        "estimated_odds": 1.74,
+        "betpawa_odds": 1.82,
+        "fair_odds": 1.67,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
   }
 ]

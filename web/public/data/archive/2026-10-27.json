@@ -1,0 +1,1076 @@
+{
+ "date": "2026-10-27",
+ "generated_at": "2026-10-27T11:47:44.630574Z",
+ "fixtures": [
+  {
+   "league": {
+    "code": "SERIEA",
+    "name": "Serie A",
+    "country": "Italy"
+   },
+   "mode": "market",
+   "date": "2026-10-27",
+   "time": "17:30",
+   "kickoff_utc": "2026-10-27T17:30:00Z",
+   "home": "Sassuolo",
+   "away": "Lazio",
+   "context": {
+    "home": {
+     "position": 14,
+     "teams": 20,
+     "played": 8,
+     "won": 2,
+     "drawn": 2,
+     "lost": 4,
+     "points": 8,
+     "gd": -4,
+     "gf": 12,
+     "ga": 16,
+     "form": [
+      "W",
+      "L",
+      "D",
+      "L",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 2,
+     "teams": 20,
+     "played": 8,
+     "won": 7,
+     "drawn": 1,
+     "lost": 0,
+     "points": 22,
+     "gd": 11,
+     "gf": 16,
+     "ga": 5,
+     "form": [
+      "D",
+      "W",
+      "W",
+      "W",
+      "W"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-03-09",
+      "home": "Lazio",
+      "away": "Sassuolo",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2025-09-14",
+      "home": "Sassuolo",
+      "away": "Lazio",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2024-05-26",
+      "home": "Lazio",
+      "away": "Sassuolo",
+      "score": [
+       1,
+       1
+      ]
+     },
+     {
+      "date": "2023-10-21",
+      "home": "Sassuolo",
+      "away": "Lazio",
+      "score": [
+       0,
+       2
+      ]
+     },
+     {
+      "date": "2023-05-03",
+      "home": "Lazio",
+      "away": "Sassuolo",
+      "score": [
+       2,
+       0
+      ]
+     },
+     {
+      "date": "2023-01-15",
+      "home": "Sassuolo",
+      "away": "Lazio",
+      "score": [
+       0,
+       2
+      ]
+     }
+    ],
+    "home_wins": 1,
+    "draws": 1,
+    "away_wins": 4,
+    "avg_goals": 2.0,
+    "over_2_5": 1,
+    "btts": 2,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "over_1.5",
+    "label": "Over 1.5 goals",
+    "probability": 0.7754,
+    "odds": 1.23,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-10-27",
+   "expected_goals": [
+    1.26,
+    1.64
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.1200056723480476
+    },
+    {
+     "score": "1-2",
+     "probability": 0.09324868676172811
+    },
+    {
+     "score": "0-1",
+     "probability": 0.08433343969337972
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.2397,
+     "model_probability": 0.2397,
+     "market_probability": 0.2819,
+     "fair_odds": 4.17,
+     "betpawa_odds": 3.47
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2778,
+     "model_probability": 0.2778,
+     "market_probability": 0.2651,
+     "fair_odds": 3.6,
+     "betpawa_odds": 3.69
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.4951,
+     "model_probability": 0.4951,
+     "market_probability": 0.4529,
+     "fair_odds": 2.02,
+     "betpawa_odds": 2.16
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9386,
+     "model_probability": 0.9386,
+     "market_probability": 0.9386,
+     "fair_odds": 1.07,
+     "betpawa_odds": 1.04
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7754,
+     "model_probability": 0.7754,
+     "market_probability": 0.791,
+     "fair_odds": 1.29,
+     "betpawa_odds": 1.23
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.5361,
+     "model_probability": 0.5361,
+     "market_probability": 0.5564,
+     "fair_odds": 1.87,
+     "betpawa_odds": 1.73
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.304,
+     "model_probability": 0.304,
+     "market_probability": 0.3295,
+     "fair_odds": 3.29,
+     "betpawa_odds": 2.75
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.4639,
+     "model_probability": 0.4639,
+     "market_probability": 0.4436,
+     "fair_odds": 2.16,
+     "betpawa_odds": 2.17
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.696,
+     "model_probability": 0.696,
+     "market_probability": 0.6705,
+     "fair_odds": 1.44,
+     "betpawa_odds": 1.48
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.5743,
+     "model_probability": 0.5743,
+     "market_probability": 0.5828,
+     "fair_odds": 1.74,
+     "betpawa_odds": 1.62
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.4257,
+     "model_probability": 0.4257,
+     "market_probability": 0.4172,
+     "fair_odds": 2.35,
+     "betpawa_odds": 2.32
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.4581,
+     "model_probability": 0.4581,
+     "market_probability": 0.4759,
+     "fair_odds": 2.18,
+     "betpawa_odds": 1.96
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.6617,
+     "model_probability": 0.6617,
+     "market_probability": 0.621,
+     "fair_odds": 1.51,
+     "betpawa_odds": 1.53
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.3819,
+     "model_probability": 0.3819,
+     "market_probability": 0.4072,
+     "fair_odds": 2.62,
+     "betpawa_odds": 2.32
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.5526,
+     "model_probability": 0.5526,
+     "market_probability": 0.5314,
+     "fair_odds": 1.81,
+     "betpawa_odds": 1.78
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.5055,
+     "model_probability": 0.5055,
+     "market_probability": 0.5471,
+     "fair_odds": 1.98,
+     "betpawa_odds": 1.72
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.7581,
+     "model_probability": 0.7581,
+     "market_probability": 0.7181,
+     "fair_odds": 1.32,
+     "betpawa_odds": 1.33
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7221,
+     "model_probability": 0.7221,
+     "market_probability": 0.7349,
+     "fair_odds": 1.38,
+     "betpawa_odds": 1.31
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "SERIEA",
+    "name": "Serie A",
+    "country": "Italy"
+   },
+   "mode": "market",
+   "date": "2026-10-27",
+   "time": "19:45",
+   "kickoff_utc": "2026-10-27T19:45:00Z",
+   "home": "Roma",
+   "away": "Cagliari",
+   "context": {
+    "home": {
+     "position": 3,
+     "teams": 20,
+     "played": 8,
+     "won": 5,
+     "drawn": 3,
+     "lost": 0,
+     "points": 18,
+     "gd": 13,
+     "gf": 19,
+     "ga": 6,
+     "form": [
+      "W",
+      "D",
+      "D",
+      "W",
+      "D"
+     ]
+    },
+    "away": {
+     "position": 9,
+     "teams": 20,
+     "played": 8,
+     "won": 4,
+     "drawn": 1,
+     "lost": 3,
+     "points": 13,
+     "gd": -3,
+     "gf": 6,
+     "ga": 9,
+     "form": [
+      "W",
+      "W",
+      "D",
+      "L",
+      "L"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-02-09",
+      "home": "Roma",
+      "away": "Cagliari",
+      "score": [
+       2,
+       0
+      ]
+     },
+     {
+      "date": "2025-12-07",
+      "home": "Cagliari",
+      "away": "Roma",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2025-03-16",
+      "home": "Roma",
+      "away": "Cagliari",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2024-08-18",
+      "home": "Cagliari",
+      "away": "Roma",
+      "score": [
+       0,
+       0
+      ]
+     },
+     {
+      "date": "2024-02-05",
+      "home": "Roma",
+      "away": "Cagliari",
+      "score": [
+       4,
+       0
+      ]
+     },
+     {
+      "date": "2023-10-08",
+      "home": "Cagliari",
+      "away": "Roma",
+      "score": [
+       1,
+       4
+      ]
+     }
+    ],
+    "home_wins": 4,
+    "draws": 1,
+    "away_wins": 1,
+    "avg_goals": 2.17,
+    "over_2_5": 2,
+    "btts": 1,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "over_1.5",
+    "label": "Over 1.5 goals",
+    "probability": 0.7918,
+    "odds": 1.21,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-10-27",
+   "expected_goals": [
+    2.33,
+    0.73
+   ],
+   "top_scorelines": [
+    {
+     "score": "2-0",
+     "probability": 0.1267915427673006
+    },
+    {
+     "score": "1-0",
+     "probability": 0.10467334346063477
+    },
+    {
+     "score": "3-0",
+     "probability": 0.09830682677950066
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.7447,
+     "model_probability": 0.7447,
+     "market_probability": 0.7281,
+     "fair_odds": 1.34,
+     "betpawa_odds": 1.34
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.187,
+     "model_probability": 0.187,
+     "market_probability": 0.164,
+     "fair_odds": 5.35,
+     "betpawa_odds": 5.95
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.08,
+     "model_probability": 0.08,
+     "market_probability": 0.1079,
+     "fair_odds": 12.51,
+     "betpawa_odds": 9.04
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9488,
+     "model_probability": 0.9488,
+     "market_probability": 0.9488,
+     "fair_odds": 1.05,
+     "betpawa_odds": 1.03
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7918,
+     "model_probability": 0.7918,
+     "market_probability": 0.814,
+     "fair_odds": 1.26,
+     "betpawa_odds": 1.21
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.5596,
+     "model_probability": 0.5596,
+     "market_probability": 0.5869,
+     "fair_odds": 1.79,
+     "betpawa_odds": 1.64
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3348,
+     "model_probability": 0.3348,
+     "market_probability": 0.3663,
+     "fair_odds": 2.99,
+     "betpawa_odds": 2.58
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.4404,
+     "model_probability": 0.4404,
+     "market_probability": 0.4131,
+     "fair_odds": 2.27,
+     "betpawa_odds": 2.33
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6652,
+     "model_probability": 0.6652,
+     "market_probability": 0.6337,
+     "fair_odds": 1.5,
+     "betpawa_odds": 1.53
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.4951,
+     "model_probability": 0.4951,
+     "market_probability": 0.4737,
+     "fair_odds": 2.02,
+     "betpawa_odds": 2.05
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.5049,
+     "model_probability": 0.5049,
+     "market_probability": 0.5263,
+     "fair_odds": 1.98,
+     "betpawa_odds": 1.78
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.8353,
+     "model_probability": 0.8353,
+     "market_probability": 0.8148,
+     "fair_odds": 1.2,
+     "betpawa_odds": 1.22
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.2396,
+     "model_probability": 0.2396,
+     "market_probability": 0.2558,
+     "fair_odds": 4.17,
+     "betpawa_odds": 3.39
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.7329,
+     "model_probability": 0.7329,
+     "market_probability": 0.7222,
+     "fair_odds": 1.36,
+     "betpawa_odds": 1.32
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.2161,
+     "model_probability": 0.2161,
+     "market_probability": 0.2266,
+     "fair_odds": 4.63,
+     "betpawa_odds": 4.02
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.92,
+     "model_probability": 0.92,
+     "market_probability": 0.8921,
+     "fair_odds": 1.09,
+     "betpawa_odds": 1.08
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.2575,
+     "model_probability": 0.2575,
+     "market_probability": 0.2719,
+     "fair_odds": 3.88,
+     "betpawa_odds": 3.21
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.8103,
+     "model_probability": 0.8103,
+     "market_probability": 0.836,
+     "fair_odds": 1.23,
+     "betpawa_odds": 1.16
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "SERIEA",
+    "name": "Serie A",
+    "country": "Italy"
+   },
+   "mode": "market",
+   "date": "2026-10-27",
+   "time": "19:45",
+   "kickoff_utc": "2026-10-27T19:45:00Z",
+   "home": "Torino",
+   "away": "Como",
+   "context": {
+    "home": {
+     "position": 8,
+     "teams": 20,
+     "played": 8,
+     "won": 4,
+     "drawn": 1,
+     "lost": 3,
+     "points": 13,
+     "gd": 2,
+     "gf": 13,
+     "ga": 11,
+     "form": [
+      "L",
+      "D",
+      "W",
+      "W",
+      "W"
+     ]
+    },
+    "away": {
+     "position": 5,
+     "teams": 20,
+     "played": 8,
+     "won": 5,
+     "drawn": 2,
+     "lost": 1,
+     "points": 17,
+     "gd": 7,
+     "gf": 14,
+     "ga": 7,
+     "form": [
+      "W",
+      "L",
+      "D",
+      "W",
+      "W"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-01-24",
+      "home": "Como",
+      "away": "Torino",
+      "score": [
+       6,
+       0
+      ]
+     },
+     {
+      "date": "2025-11-24",
+      "home": "Torino",
+      "away": "Como",
+      "score": [
+       1,
+       5
+      ]
+     },
+     {
+      "date": "2025-04-13",
+      "home": "Como",
+      "away": "Torino",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2024-10-25",
+      "home": "Torino",
+      "away": "Como",
+      "score": [
+       1,
+       0
+      ]
+     }
+    ],
+    "home_wins": 1,
+    "draws": 0,
+    "away_wins": 3,
+    "avg_goals": 3.5,
+    "over_2_5": 2,
+    "btts": 1,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "double_x2",
+    "label": "Away or draw",
+    "probability": 0.8271,
+    "odds": 1.22,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-10-27",
+   "expected_goals": [
+    1.11,
+    1.84
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.1124948559878766
+    },
+    {
+     "score": "1-2",
+     "probability": 0.09842587465558576
+    },
+    {
+     "score": "0-1",
+     "probability": 0.0906775934933165
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.1706,
+     "model_probability": 0.1706,
+     "market_probability": 0.2136,
+     "fair_odds": 5.86,
+     "betpawa_odds": 4.58
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2636,
+     "model_probability": 0.2636,
+     "market_probability": 0.2489,
+     "fair_odds": 3.79,
+     "betpawa_odds": 3.93
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.6005,
+     "model_probability": 0.6005,
+     "market_probability": 0.5375,
+     "fair_odds": 1.67,
+     "betpawa_odds": 1.82
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9419,
+     "model_probability": 0.9419,
+     "market_probability": 0.9419,
+     "fair_odds": 1.06,
+     "betpawa_odds": 1.04
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7812,
+     "model_probability": 0.7812,
+     "market_probability": 0.7992,
+     "fair_odds": 1.28,
+     "betpawa_odds": 1.22
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.5457,
+     "model_probability": 0.5457,
+     "market_probability": 0.5689,
+     "fair_odds": 1.83,
+     "betpawa_odds": 1.69
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3143,
+     "model_probability": 0.3143,
+     "market_probability": 0.3418,
+     "fair_odds": 3.18,
+     "betpawa_odds": 2.66
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.4543,
+     "model_probability": 0.4543,
+     "market_probability": 0.4311,
+     "fair_odds": 2.2,
+     "betpawa_odds": 2.23
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6857,
+     "model_probability": 0.6857,
+     "market_probability": 0.6582,
+     "fair_odds": 1.46,
+     "betpawa_odds": 1.51
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.5644,
+     "model_probability": 0.5644,
+     "market_probability": 0.5692,
+     "fair_odds": 1.77,
+     "betpawa_odds": 1.66
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.4356,
+     "model_probability": 0.4356,
+     "market_probability": 0.4308,
+     "fair_odds": 2.3,
+     "betpawa_odds": 2.23
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.3842,
+     "model_probability": 0.3842,
+     "market_probability": 0.4101,
+     "fair_odds": 2.6,
+     "betpawa_odds": 2.25
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.7323,
+     "model_probability": 0.7323,
+     "market_probability": 0.6859,
+     "fair_odds": 1.37,
+     "betpawa_odds": 1.4
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.3225,
+     "model_probability": 0.3225,
+     "market_probability": 0.3523,
+     "fair_odds": 3.1,
+     "betpawa_odds": 2.69
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.6161,
+     "model_probability": 0.6161,
+     "market_probability": 0.5896,
+     "fair_odds": 1.62,
+     "betpawa_odds": 1.6
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.4002,
+     "model_probability": 0.4002,
+     "market_probability": 0.4625,
+     "fair_odds": 2.5,
+     "betpawa_odds": 2.01
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.8271,
+     "model_probability": 0.8271,
+     "market_probability": 0.7864,
+     "fair_odds": 1.21,
+     "betpawa_odds": 1.22
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7358,
+     "model_probability": 0.7358,
+     "market_probability": 0.7511,
+     "fair_odds": 1.36,
+     "betpawa_odds": 1.28
+    }
+   ]
+  }
+ ],
+ "slips": {
+  "safe": {
+   "total_odds": 2.61,
+   "win_probability": 0.4189,
+   "odds_source": "betpawa",
+   "expected_value": 0.095,
+   "kelly": 0.0588,
+   "price_warning": false,
+   "flexi": [
+    {
+     "min_correct": 2,
+     "probability": 0.8675
+    }
+   ],
+   "legs": [
+    {
+     "date": "2026-10-27",
+     "time": "17:30",
+     "kickoff_utc": "2026-10-27T17:30:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Sassuolo",
+     "away": "Lazio",
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.7581,
+     "estimated_odds": 1.3,
+     "betpawa_odds": 1.33,
+     "fair_odds": 1.32,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-10-27",
+     "time": "19:45",
+     "kickoff_utc": "2026-10-27T19:45:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Roma",
+     "away": "Cagliari",
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.92,
+     "estimated_odds": 1.05,
+     "betpawa_odds": 1.08,
+     "fair_odds": 1.09,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-10-27",
+     "time": "19:45",
+     "kickoff_utc": "2026-10-27T19:45:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Torino",
+     "away": "Como",
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.6005,
+     "estimated_odds": 1.74,
+     "betpawa_odds": 1.82,
+     "fair_odds": 1.67,
+     "price_warning": false,
+     "won": null
+    }
+   ],
+   "locked": false,
+   "final": false
+  },
+  "medium": {
+   "total_odds": 3.52,
+   "win_probability": 0.3123,
+   "odds_source": "betpawa",
+   "expected_value": 0.1003,
+   "kelly": 0.0397,
+   "price_warning": false,
+   "flexi": [
+    {
+     "min_correct": 2,
+     "probability": 0.8012
+    }
+   ],
+   "legs": [
+    {
+     "date": "2026-10-27",
+     "time": "17:30",
+     "kickoff_utc": "2026-10-27T17:30:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Sassuolo",
+     "away": "Lazio",
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.4951,
+     "estimated_odds": 2.06,
+     "betpawa_odds": 2.16,
+     "fair_odds": 2.02,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-10-27",
+     "time": "19:45",
+     "kickoff_utc": "2026-10-27T19:45:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Roma",
+     "away": "Cagliari",
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.92,
+     "estimated_odds": 1.05,
+     "betpawa_odds": 1.08,
+     "fair_odds": 1.09,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-10-27",
+     "time": "19:45",
+     "kickoff_utc": "2026-10-27T19:45:00Z",
+     "league": {
+      "code": "SERIEA",
+      "name": "Serie A",
+      "country": "Italy"
+     },
+     "home": "Torino",
+     "away": "Como",
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6857,
+     "estimated_odds": 1.42,
+     "betpawa_odds": 1.51,
+     "fair_odds": 1.46,
+     "price_warning": false,
+     "won": null
+    }
+   ],
+   "locked": false,
+   "final": false
+  }
+ }
+}

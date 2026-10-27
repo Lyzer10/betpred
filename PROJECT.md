@@ -118,7 +118,8 @@ the user's slips have settled**.
   - **final**: from 55 minutes before today's first match (so after line-ups, ~25-55 min before kick-off),
     full run with `--final`: today's slips become final (never replaced or added to, even by later
     runs), then `scripts/notify.py` sends the phone notification (ntfy topic in secret `NTFY_TOPIC`).
-  - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
+  - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
+    Also when fixtures.csv shows new upcoming matches with odds not yet published (max ~hourly).
   - **prices**: a match kicks off within 35 minutes: `python -m src.prices` logs Betpawa prices only.
   - **skip**: nothing due (costs ~1 of the 2,000 free private-repo minutes a month).
   Publishing commits predictions, archive and `engine/data/live` (resets rebuilt research files, pulls, pushes).
@@ -301,6 +302,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-27: run_mode also starts a full run when football-data posts upcoming matches with odds that we
+  have not published (late midweek rounds), at most about once an hour; it reads only fixtures.csv,
+  so no wasted runs and no model change. Tests in test_schedule.
 - 2026-10-27: FIX: with no upcoming fixtures in any league (football-data had not yet posted the midweek
   round), `predict` exited with an error, so every run failed from 07:00 and nothing was published (not even
   the night's settlement). It now settles, updates archive/tables/monitoring and publishes without slips.

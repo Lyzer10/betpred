@@ -53,3 +53,24 @@ def test_notification_lists_only_final_slips():
     assert title == "Today's bets are final · first match 14:30"
     assert body == "Safe: odds 2.51 · 48% chance · 3 matches"
     assert notify.message(_published(final=False), _at("10:40")) is None
+
+
+def _csv_row(div, date, time, odds=True):
+    return {"Div": div, "Date": date, "Time": time, "AvgH": "2.1" if odds else ""}
+
+
+def test_full_run_when_football_data_posts_matches_we_have_not_published():
+    published = {"generated_at": "2026-10-25T05:00:00Z", "days": [], "fixtures": []}
+    rows = [_csv_row("I1", "25/10/2026", "18:30"), _csv_row("I1", "25/10/2026", "20:45")]
+    # 11:00 Tanzania (08:00 UTC): no fixed run due, but two Serie A matches with odds have just been posted.
+    assert run_mode.decide(published, _at("08:00"), rows) == "full"
+    # Already published, or published under an hour ago, or posted without odds: no extra run.
+    done = published | {"generated_at": "2026-10-25T07:40:00Z"}
+    assert run_mode.decide(done, _at("08:00"), rows) == "skip"
+    assert run_mode.decide(published, _at("08:00"), [_csv_row("I1", "25/10/2026", "18:30", odds=False)]) == "skip"
+    covered = published | {"fixtures": [{"league": {"code": "SERIEA"}, "kickoff_utc": t} for t in
+                                         ("2026-10-25T17:30:00Z", "2026-10-25T19:45:00Z")]}
+    assert run_mode.decide(covered, _at("08:00"), rows) == "skip"
+    # Unknown league codes and past matches do not count; no fixture list at all changes nothing.
+    assert run_mode.decide(published, _at("08:00"), [_csv_row("E1", "25/10/2026", "18:30"), _csv_row("I1", "24/10/2026", "18:30")]) == "skip"
+    assert run_mode.decide(published, _at("08:00"), None) == "skip"

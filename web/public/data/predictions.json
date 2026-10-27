@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-26T19:01:06.636532Z",
+  "generated_at": "2026-10-27T07:57:45.679116Z",
   "model": {
     "market_blend_model_weight": null,
     "retail_margin": 0.07,
@@ -32,781 +32,8 @@
     }
   },
   "time_zone": "Africa/Dar_es_Salaam",
-  "fixtures": [
-    {
-      "id": 0,
-      "league": {
-        "code": "LALIGA",
-        "name": "La Liga",
-        "country": "Spain"
-      },
-      "mode": "market",
-      "date": "2026-10-26",
-      "time": "20:00",
-      "kickoff_utc": "2026-10-26T20:00:00Z",
-      "home": "Sevilla",
-      "away": "Osasuna",
-      "context": {
-        "home": {
-          "position": 6,
-          "teams": 20,
-          "played": 9,
-          "won": 4,
-          "drawn": 2,
-          "lost": 3,
-          "points": 14,
-          "gd": -2,
-          "gf": 14,
-          "ga": 16,
-          "form": [
-            "W",
-            "W",
-            "L",
-            "D",
-            "L"
-          ]
-        },
-        "away": {
-          "position": 12,
-          "teams": 20,
-          "played": 9,
-          "won": 3,
-          "drawn": 2,
-          "lost": 4,
-          "points": 11,
-          "gd": -8,
-          "gf": 10,
-          "ga": 18,
-          "form": [
-            "L",
-            "L",
-            "D",
-            "L",
-            "W"
-          ]
-        }
-      },
-      "head_to_head": {
-        "meetings": [
-          {
-            "date": "2026-04-26",
-            "home": "Osasuna",
-            "away": "Sevilla",
-            "score": [
-              2,
-              1
-            ]
-          },
-          {
-            "date": "2025-11-08",
-            "home": "Sevilla",
-            "away": "Osasuna",
-            "score": [
-              1,
-              0
-            ]
-          },
-          {
-            "date": "2025-04-24",
-            "home": "Osasuna",
-            "away": "Sevilla",
-            "score": [
-              1,
-              0
-            ]
-          },
-          {
-            "date": "2024-12-02",
-            "home": "Sevilla",
-            "away": "Osasuna",
-            "score": [
-              1,
-              1
-            ]
-          },
-          {
-            "date": "2024-01-28",
-            "home": "Sevilla",
-            "away": "Osasuna",
-            "score": [
-              1,
-              1
-            ]
-          },
-          {
-            "date": "2023-09-23",
-            "home": "Osasuna",
-            "away": "Sevilla",
-            "score": [
-              0,
-              0
-            ]
-          }
-        ],
-        "home_wins": 1,
-        "draws": 3,
-        "away_wins": 2,
-        "avg_goals": 1.5,
-        "over_2_5": 1,
-        "btts": 3,
-        "since": "2014/15"
-      },
-      "best_pick": {
-        "market": "double_1x",
-        "label": "Home or draw",
-        "probability": 0.7978,
-        "odds": 1.24,
-        "odds_source": "betpawa"
-      },
-      "day": "2026-10-26",
-      "expected_goals": [
-        1.48,
-        0.95
-      ],
-      "top_scorelines": [
-        {
-          "score": "1-0",
-          "probability": 0.1271099760128062
-        },
-        {
-          "score": "1-1",
-          "probability": 0.12651670653149968
-        },
-        {
-          "score": "2-0",
-          "probability": 0.09603601051901078
-        }
-      ],
-      "has_market_odds": true,
-      "markets": [
-        {
-          "market": "home_win",
-          "label": "Home win",
-          "probability": 0.514,
-          "model_probability": 0.514,
-          "market_probability": 0.4875,
-          "fair_odds": 1.95,
-          "betpawa_odds": 1.98
-        },
-        {
-          "market": "draw",
-          "label": "Draw",
-          "probability": 0.2856,
-          "model_probability": 0.2856,
-          "market_probability": 0.2786,
-          "fair_odds": 3.5,
-          "betpawa_odds": 3.5
-        },
-        {
-          "market": "away_win",
-          "label": "Away win",
-          "probability": 0.2043,
-          "model_probability": 0.2043,
-          "market_probability": 0.234,
-          "fair_odds": 4.9,
-          "betpawa_odds": 4.3
-        },
-        {
-          "market": "over_0.5",
-          "label": "Over 0.5 goals",
-          "probability": 0.9096,
-          "model_probability": 0.9096,
-          "market_probability": 0.9096,
-          "fair_odds": 1.1,
-          "betpawa_odds": 1.09
-        },
-        {
-          "market": "over_1.5",
-          "label": "Over 1.5 goals",
-          "probability": 0.7047,
-          "model_probability": 0.7047,
-          "market_probability": 0.7015,
-          "fair_odds": 1.42,
-          "betpawa_odds": 1.41
-        },
-        {
-          "market": "over_2.5",
-          "label": "Over 2.5 goals",
-          "probability": 0.436,
-          "model_probability": 0.436,
-          "market_probability": 0.443,
-          "fair_odds": 2.29,
-          "betpawa_odds": 2.24
-        },
-        {
-          "market": "over_3.5",
-          "label": "Over 3.5 goals",
-          "probability": 0.2155,
-          "model_probability": 0.2155,
-          "market_probability": 0.2283,
-          "fair_odds": 4.64,
-          "betpawa_odds": 4.1
-        },
-        {
-          "market": "under_2.5",
-          "label": "Under 2.5 goals",
-          "probability": 0.564,
-          "model_probability": 0.564,
-          "market_probability": 0.557,
-          "fair_odds": 1.77,
-          "betpawa_odds": 1.69
-        },
-        {
-          "market": "under_3.5",
-          "label": "Under 3.5 goals",
-          "probability": 0.7844,
-          "model_probability": 0.7844,
-          "market_probability": 0.7717,
-          "fair_odds": 1.27,
-          "betpawa_odds": 1.26
-        },
-        {
-          "market": "btts_yes",
-          "label": "Both teams score",
-          "probability": 0.5124,
-          "model_probability": 0.5124,
-          "market_probability": 0.4775,
-          "fair_odds": 1.95,
-          "betpawa_odds": 2.03
-        },
-        {
-          "market": "btts_no",
-          "label": "Both teams score: No",
-          "probability": 0.4876,
-          "model_probability": 0.4876,
-          "market_probability": 0.5225,
-          "fair_odds": 2.05,
-          "betpawa_odds": 1.79
-        },
-        {
-          "market": "home_1up",
-          "label": "Home 1Up",
-          "probability": 0.6426,
-          "model_probability": 0.6426,
-          "market_probability": 0.6244,
-          "fair_odds": 1.56,
-          "betpawa_odds": 1.53
-        },
-        {
-          "market": "away_1up",
-          "label": "Away 1Up",
-          "probability": 0.3944,
-          "model_probability": 0.3944,
-          "market_probability": 0.402,
-          "fair_odds": 2.54,
-          "betpawa_odds": 2.36
-        },
-        {
-          "market": "home_first",
-          "label": "Home scores first",
-          "probability": 0.5588,
-          "model_probability": 0.5588,
-          "market_probability": 0.5533,
-          "fair_odds": 1.79,
-          "betpawa_odds": 1.7
-        },
-        {
-          "market": "away_first",
-          "label": "Away scores first",
-          "probability": 0.342,
-          "model_probability": 0.342,
-          "market_probability": 0.3562,
-          "fair_odds": 2.92,
-          "betpawa_odds": 2.74
-        },
-        {
-          "market": "double_1x",
-          "label": "Home or draw",
-          "probability": 0.7978,
-          "model_probability": 0.7978,
-          "market_probability": 0.766,
-          "fair_odds": 1.25,
-          "betpawa_odds": 1.24
-        },
-        {
-          "market": "double_x2",
-          "label": "Away or draw",
-          "probability": 0.4861,
-          "model_probability": 0.4861,
-          "market_probability": 0.5125,
-          "fair_odds": 2.06,
-          "betpawa_odds": 1.84
-        },
-        {
-          "market": "double_12",
-          "label": "Home or away",
-          "probability": 0.7144,
-          "model_probability": 0.7144,
-          "market_probability": 0.7214,
-          "fair_odds": 1.4,
-          "betpawa_odds": 1.33
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "league": {
-        "code": "LIGUE1",
-        "name": "Ligue 1",
-        "country": "France"
-      },
-      "mode": "market",
-      "date": "2026-10-26",
-      "time": "19:30",
-      "kickoff_utc": "2026-10-26T19:30:00Z",
-      "home": "Paris SG",
-      "away": "Lyon",
-      "context": {
-        "home": {
-          "position": 5,
-          "teams": 18,
-          "played": 7,
-          "won": 4,
-          "drawn": 2,
-          "lost": 1,
-          "points": 14,
-          "gd": 5,
-          "gf": 14,
-          "ga": 9,
-          "form": [
-            "L",
-            "W",
-            "W",
-            "W",
-            "W"
-          ]
-        },
-        "away": {
-          "position": 4,
-          "teams": 18,
-          "played": 7,
-          "won": 4,
-          "drawn": 2,
-          "lost": 1,
-          "points": 14,
-          "gd": 8,
-          "gf": 13,
-          "ga": 5,
-          "form": [
-            "W",
-            "D",
-            "W",
-            "L",
-            "W"
-          ]
-        }
-      },
-      "head_to_head": {
-        "meetings": [
-          {
-            "date": "2026-04-19",
-            "home": "Paris SG",
-            "away": "Lyon",
-            "score": [
-              1,
-              2
-            ]
-          },
-          {
-            "date": "2025-11-09",
-            "home": "Lyon",
-            "away": "Paris SG",
-            "score": [
-              2,
-              3
-            ]
-          },
-          {
-            "date": "2025-02-23",
-            "home": "Lyon",
-            "away": "Paris SG",
-            "score": [
-              2,
-              3
-            ]
-          },
-          {
-            "date": "2024-12-15",
-            "home": "Paris SG",
-            "away": "Lyon",
-            "score": [
-              3,
-              1
-            ]
-          },
-          {
-            "date": "2024-04-21",
-            "home": "Paris SG",
-            "away": "Lyon",
-            "score": [
-              4,
-              1
-            ]
-          },
-          {
-            "date": "2023-09-03",
-            "home": "Lyon",
-            "away": "Paris SG",
-            "score": [
-              1,
-              4
-            ]
-          }
-        ],
-        "home_wins": 5,
-        "draws": 0,
-        "away_wins": 1,
-        "avg_goals": 4.5,
-        "over_2_5": 6,
-        "btts": 6,
-        "since": "2014/15"
-      },
-      "best_pick": {
-        "market": "home_1up",
-        "label": "Home 1Up",
-        "probability": 0.798,
-        "odds": 1.2,
-        "odds_source": "betpawa"
-      },
-      "day": "2026-10-26",
-      "expected_goals": [
-        2.41,
-        1.11
-      ],
-      "top_scorelines": [
-        {
-          "score": "2-1",
-          "probability": 0.09547016543153962
-        },
-        {
-          "score": "2-0",
-          "probability": 0.08637032705570857
-        },
-        {
-          "score": "1-1",
-          "probability": 0.08492467807744794
-        }
-      ],
-      "has_market_odds": true,
-      "markets": [
-        {
-          "market": "home_win",
-          "label": "Home win",
-          "probability": 0.6746,
-          "model_probability": 0.6746,
-          "market_probability": 0.6562,
-          "fair_odds": 1.48,
-          "betpawa_odds": 1.35
-        },
-        {
-          "market": "draw",
-          "label": "Draw",
-          "probability": 0.1813,
-          "model_probability": 0.1813,
-          "market_probability": 0.19,
-          "fair_odds": 5.51,
-          "betpawa_odds": 6.39
-        },
-        {
-          "market": "away_win",
-          "label": "Away win",
-          "probability": 0.1486,
-          "model_probability": 0.1486,
-          "market_probability": 0.1538,
-          "fair_odds": 6.73,
-          "betpawa_odds": 7.86
-        },
-        {
-          "market": "over_0.5",
-          "label": "Over 0.5 goals",
-          "probability": 0.9646,
-          "model_probability": 0.9646,
-          "market_probability": 0.9646,
-          "fair_odds": 1.04,
-          "betpawa_odds": 1.01
-        },
-        {
-          "market": "over_1.5",
-          "label": "Over 1.5 goals",
-          "probability": 0.879,
-          "model_probability": 0.879,
-          "market_probability": 0.8713,
-          "fair_odds": 1.14,
-          "betpawa_odds": 1.12
-        },
-        {
-          "market": "over_2.5",
-          "label": "Over 2.5 goals",
-          "probability": 0.6753,
-          "model_probability": 0.6753,
-          "market_probability": 0.6814,
-          "fair_odds": 1.48,
-          "betpawa_odds": 1.38
-        },
-        {
-          "market": "over_3.5",
-          "label": "Over 3.5 goals",
-          "probability": 0.4722,
-          "model_probability": 0.4722,
-          "market_probability": 0.4665,
-          "fair_odds": 2.12,
-          "betpawa_odds": 1.95
-        },
-        {
-          "market": "under_2.5",
-          "label": "Under 2.5 goals",
-          "probability": 0.3247,
-          "model_probability": 0.3247,
-          "market_probability": 0.3186,
-          "fair_odds": 3.08,
-          "betpawa_odds": 3.16
-        },
-        {
-          "market": "under_3.5",
-          "label": "Under 3.5 goals",
-          "probability": 0.5278,
-          "model_probability": 0.5278,
-          "market_probability": 0.5335,
-          "fair_odds": 1.89,
-          "betpawa_odds": 1.9
-        },
-        {
-          "market": "btts_yes",
-          "label": "Both teams score",
-          "probability": 0.6153,
-          "model_probability": 0.6153,
-          "market_probability": 0.6145,
-          "fair_odds": 1.63,
-          "betpawa_odds": 1.66
-        },
-        {
-          "market": "btts_no",
-          "label": "Both teams score: No",
-          "probability": 0.3847,
-          "model_probability": 0.3847,
-          "market_probability": 0.3855,
-          "fair_odds": 2.6,
-          "betpawa_odds": 2.23
-        },
-        {
-          "market": "home_1up",
-          "label": "Home 1Up",
-          "probability": 0.798,
-          "model_probability": 0.798,
-          "market_probability": 0.7832,
-          "fair_odds": 1.25,
-          "betpawa_odds": 1.2
-        },
-        {
-          "market": "away_1up",
-          "label": "Away 1Up",
-          "probability": 0.3745,
-          "model_probability": 0.3745,
-          "market_probability": 0.3578,
-          "fair_odds": 2.67,
-          "betpawa_odds": 2.89
-        },
-        {
-          "market": "home_first",
-          "label": "Home scores first",
-          "probability": 0.6509,
-          "model_probability": 0.6509,
-          "market_probability": 0.6623,
-          "fair_odds": 1.54,
-          "betpawa_odds": 1.35
-        },
-        {
-          "market": "away_first",
-          "label": "Away scores first",
-          "probability": 0.3129,
-          "model_probability": 0.3129,
-          "market_probability": 0.3023,
-          "fair_odds": 3.2,
-          "betpawa_odds": 3.48
-        },
-        {
-          "market": "double_1x",
-          "label": "Home or draw",
-          "probability": 0.852,
-          "model_probability": 0.852,
-          "market_probability": 0.8462,
-          "fair_odds": 1.17,
-          "betpawa_odds": 1.1
-        },
-        {
-          "market": "double_x2",
-          "label": "Away or draw",
-          "probability": 0.3285,
-          "model_probability": 0.3285,
-          "market_probability": 0.3438,
-          "fair_odds": 3.04,
-          "betpawa_odds": 3.16
-        },
-        {
-          "market": "double_12",
-          "label": "Home or away",
-          "probability": 0.8136,
-          "model_probability": 0.8136,
-          "market_probability": 0.81,
-          "fair_odds": 1.23,
-          "betpawa_odds": 1.14
-        }
-      ]
-    }
-  ],
-  "days": [
-    {
-      "date": "2026-10-26",
-      "fixtures": [
-        0,
-        1
-      ],
-      "first_kickoff_utc": "2026-10-26T19:30:00Z",
-      "final": true,
-      "value_picks": [
-        {
-          "date": "2026-10-26",
-          "time": "19:30",
-          "kickoff_utc": "2026-10-26T19:30:00Z",
-          "league": {
-            "code": "LIGUE1",
-            "name": "Ligue 1",
-            "country": "France"
-          },
-          "home": "Paris SG",
-          "away": "Lyon",
-          "market": "away_first",
-          "label": "Away scores first",
-          "probability": 0.3129,
-          "estimated_odds": 3.09,
-          "betpawa_odds": 3.48,
-          "fair_odds": 3.2,
-          "price_warning": false,
-          "edge": 0.0889,
-          "kelly": 0.0358
-        },
-        {
-          "date": "2026-10-26",
-          "time": "19:30",
-          "kickoff_utc": "2026-10-26T19:30:00Z",
-          "league": {
-            "code": "LIGUE1",
-            "name": "Ligue 1",
-            "country": "France"
-          },
-          "home": "Paris SG",
-          "away": "Lyon",
-          "market": "away_1up",
-          "label": "Away 1Up",
-          "probability": 0.3745,
-          "estimated_odds": 2.61,
-          "betpawa_odds": 2.89,
-          "fair_odds": 2.67,
-          "price_warning": false,
-          "edge": 0.0824,
-          "kelly": 0.0436
-        },
-        {
-          "date": "2026-10-26",
-          "time": "20:00",
-          "kickoff_utc": "2026-10-26T20:00:00Z",
-          "league": {
-            "code": "LALIGA",
-            "name": "La Liga",
-            "country": "Spain"
-          },
-          "home": "Sevilla",
-          "away": "Osasuna",
-          "market": "btts_yes",
-          "label": "Both teams score",
-          "probability": 0.5124,
-          "estimated_odds": 1.96,
-          "betpawa_odds": 2.03,
-          "fair_odds": 1.95,
-          "price_warning": false,
-          "edge": 0.0402,
-          "kelly": 0.0391
-        },
-        {
-          "date": "2026-10-26",
-          "time": "19:30",
-          "kickoff_utc": "2026-10-26T19:30:00Z",
-          "league": {
-            "code": "LIGUE1",
-            "name": "Ligue 1",
-            "country": "France"
-          },
-          "home": "Paris SG",
-          "away": "Lyon",
-          "market": "double_x2",
-          "label": "Away or draw",
-          "probability": 0.3285,
-          "estimated_odds": 2.72,
-          "betpawa_odds": 3.16,
-          "fair_odds": 3.04,
-          "price_warning": true,
-          "edge": 0.0382,
-          "kelly": 0.0177
-        }
-      ],
-      "slips": {
-        "safe": {
-          "total_odds": 2.51,
-          "win_probability": 0.3832,
-          "odds_source": "betpawa",
-          "expected_value": -0.0386,
-          "kelly": 0.0,
-          "price_warning": false,
-          "flexi": [],
-          "legs": [
-            {
-              "date": "2026-10-26",
-              "time": "20:00",
-              "kickoff_utc": "2026-10-26T20:00:00Z",
-              "league": {
-                "code": "LALIGA",
-                "name": "La Liga",
-                "country": "Spain"
-              },
-              "home": "Sevilla",
-              "away": "Osasuna",
-              "market": "over_2.5",
-              "label": "Over 2.5 goals",
-              "probability": 0.436,
-              "estimated_odds": 2.11,
-              "betpawa_odds": 2.24,
-              "fair_odds": 2.29,
-              "price_warning": false,
-              "won": null
-            },
-            {
-              "date": "2026-10-26",
-              "time": "19:30",
-              "kickoff_utc": "2026-10-26T19:30:00Z",
-              "league": {
-                "code": "LIGUE1",
-                "name": "Ligue 1",
-                "country": "France"
-              },
-              "home": "Paris SG",
-              "away": "Lyon",
-              "market": "over_1.5",
-              "label": "Over 1.5 goals",
-              "probability": 0.879,
-              "estimated_odds": 1.07,
-              "betpawa_odds": 1.12,
-              "fair_odds": 1.14,
-              "price_warning": false,
-              "won": null
-            }
-          ],
-          "final": true,
-          "status": "pending",
-          "locked": false
-        }
-      }
-    }
-  ],
+  "fixtures": [],
+  "days": [],
   "value_rules": {
     "min_edge": 0.03,
     "min_probability": 0.25
@@ -1298,7 +525,7 @@
           "betpawa_odds": 2.24,
           "fair_odds": 2.29,
           "price_warning": false,
-          "won": null
+          "won": false
         },
         {
           "date": "2026-10-26",
@@ -1318,14 +545,43 @@
           "betpawa_odds": 1.12,
           "fair_odds": 1.14,
           "price_warning": false,
-          "won": null
+          "won": true
         }
       ],
       "final": true,
-      "status": "pending"
+      "status": "lost"
     }
   ],
   "results": [
+    {
+      "date": "2026-10-26",
+      "home": "Sevilla",
+      "away": "Osasuna",
+      "score": [
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
     {
       "date": "2026-10-25",
       "home": "Barcelona",
@@ -1352,6 +608,35 @@
         "away_first": true,
         "double_1x": false,
         "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-25",
+      "home": "Paris SG",
+      "away": "Lyon",
+      "score": [
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -1444,35 +729,6 @@
     },
     {
       "date": "2026-10-25",
-      "home": "Freiburg",
-      "away": "Bayern Munich",
-      "score": [
-        1,
-        3
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-25",
       "home": "Sunderland",
       "away": "Leeds",
       "score": [
@@ -1502,45 +758,16 @@
     },
     {
       "date": "2026-10-25",
-      "home": "Rennes",
-      "away": "Strasbourg",
+      "home": "Freiburg",
+      "away": "Bayern Munich",
       "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-25",
-      "home": "Marseille",
-      "away": "Le Havre",
-      "score": [
-        4,
+        1,
         3
       ],
       "outcomes": {
-        "home_win": true,
+        "home_win": false,
         "draw": false,
-        "away_win": false,
+        "away_win": true,
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
@@ -1549,12 +776,12 @@
         "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -1618,6 +845,64 @@
     },
     {
       "date": "2026-10-25",
+      "home": "Marseille",
+      "away": "Le Havre",
+      "score": [
+        4,
+        3
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-25",
+      "home": "Rennes",
+      "away": "Strasbourg",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-25",
       "home": "Celta",
       "away": "Betis",
       "score": [
@@ -1676,6 +961,35 @@
     },
     {
       "date": "2026-10-25",
+      "home": "Manchester United",
+      "away": "Bournemouth",
+      "score": [
+        0,
+        3
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-25",
       "home": "Crystal Palace",
       "away": "Newcastle",
       "score": [
@@ -1701,35 +1015,6 @@
         "double_1x": false,
         "double_x2": true,
         "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-25",
-      "home": "Atalanta",
-      "away": "Frosinone",
-      "score": [
-        4,
-        4
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
       }
     },
     {
@@ -1763,11 +1048,11 @@
     },
     {
       "date": "2026-10-25",
-      "home": "Monaco",
-      "away": "Lille",
+      "home": "Atalanta",
+      "away": "Frosinone",
       "score": [
-        1,
-        1
+        4,
+        4
       ],
       "outcomes": {
         "home_win": false,
@@ -1775,45 +1060,16 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-10-25",
-      "home": "Hull",
-      "away": "Brentford",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
         "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
         "double_1x": true,
         "double_x2": true,
         "double_12": false
@@ -1850,31 +1106,60 @@
     },
     {
       "date": "2026-10-25",
-      "home": "Manchester United",
-      "away": "Bournemouth",
+      "home": "Hull",
+      "away": "Brentford",
       "score": [
-        0,
-        3
+        1,
+        1
       ],
       "outcomes": {
         "home_win": false,
-        "draw": false,
-        "away_win": true,
+        "draw": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
+        "over_2.5": false,
         "over_3.5": false,
-        "under_2.5": false,
+        "under_2.5": true,
         "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-10-25",
+      "home": "Monaco",
+      "away": "Lille",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
         "away_first": true,
-        "double_1x": false,
+        "double_1x": true,
         "double_x2": true,
-        "double_12": true
+        "double_12": false
       }
     },
     {
@@ -2198,35 +1483,6 @@
     },
     {
       "date": "2026-10-24",
-      "home": "Coventry",
-      "away": "Fulham",
-      "score": [
-        0,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-24",
       "home": "Arsenal",
       "away": "Everton",
       "score": [
@@ -2251,6 +1507,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-24",
+      "home": "Coventry",
+      "away": "Fulham",
+      "score": [
+        0,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -2285,59 +1570,30 @@
     },
     {
       "date": "2026-10-24",
-      "home": "FC Koln",
-      "away": "Schalke 04",
+      "home": "RB Leipzig",
+      "away": "Elversberg",
       "score": [
-        0,
+        4,
         0
       ],
       "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": false,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": false,
-        "home_first": false,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-10-24",
-      "home": "Mainz",
-      "away": "Werder Bremen",
-      "score": [
-        2,
-        3
-      ],
-      "outcomes": {
-        "home_win": false,
+        "home_win": true,
         "draw": false,
-        "away_win": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
         "over_3.5": true,
         "under_2.5": false,
         "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -2372,31 +1628,60 @@
     },
     {
       "date": "2026-10-24",
-      "home": "RB Leipzig",
-      "away": "Elversberg",
+      "home": "Mainz",
+      "away": "Werder Bremen",
       "score": [
-        4,
-        0
+        2,
+        3
       ],
       "outcomes": {
-        "home_win": true,
+        "home_win": false,
         "draw": false,
-        "away_win": false,
+        "away_win": true,
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
         "over_3.5": true,
         "under_2.5": false,
         "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-24",
+      "home": "FC Koln",
+      "away": "Schalke 04",
+      "score": [
+        0,
+        0
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": true,
+        "home_1up": false,
         "away_1up": false,
-        "home_first": true,
+        "home_first": false,
         "away_first": false,
         "double_1x": true,
-        "double_x2": false,
-        "double_12": true
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -2517,35 +1802,6 @@
     },
     {
       "date": "2026-10-23",
-      "home": "Ipswich",
-      "away": "Nottingham Forest",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-10-23",
       "home": "Alaves",
       "away": "Malaga",
       "score": [
@@ -2575,31 +1831,31 @@
     },
     {
       "date": "2026-10-23",
-      "home": "Brest",
-      "away": "Nice",
+      "home": "Ipswich",
+      "away": "Nottingham Forest",
       "score": [
         1,
-        2
+        1
       ],
       "outcomes": {
         "home_win": false,
-        "draw": false,
-        "away_win": true,
+        "draw": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
+        "over_2.5": false,
         "over_3.5": false,
-        "under_2.5": false,
+        "under_2.5": true,
         "under_3.5": true,
         "btts_yes": true,
         "btts_no": false,
-        "home_1up": true,
+        "home_1up": false,
         "away_1up": true,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": false,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
         "double_x2": true,
-        "double_12": true
+        "double_12": false
       }
     },
     {
@@ -2628,6 +1884,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-23",
+      "home": "Brest",
+      "away": "Nice",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -2691,35 +1976,6 @@
     },
     {
       "date": "2026-10-19",
-      "home": "Getafe",
-      "away": "Vallecano",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-10-19",
       "home": "Tottenham",
       "away": "Coventry",
       "score": [
@@ -2745,6 +2001,35 @@
         "double_1x": true,
         "double_x2": false,
         "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-19",
+      "home": "Getafe",
+      "away": "Vallecano",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -2952,35 +2237,6 @@
     },
     {
       "date": "2026-10-18",
-      "home": "M'gladbach",
-      "away": "Hoffenheim",
-      "score": [
-        1,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-18",
       "home": "Nottingham Forest",
       "away": "Arsenal",
       "score": [
@@ -2999,6 +2255,35 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-18",
+      "home": "M'gladbach",
+      "away": "Hoffenheim",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
@@ -3155,30 +2440,30 @@
     },
     {
       "date": "2026-10-18",
-      "home": "Fiorentina",
-      "away": "Como",
+      "home": "Bournemouth",
+      "away": "Sunderland",
       "score": [
-        1,
-        3
+        2,
+        0
       ],
       "outcomes": {
-        "home_win": false,
+        "home_win": true,
         "draw": false,
-        "away_win": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -3242,6 +2527,35 @@
     },
     {
       "date": "2026-10-18",
+      "home": "Fiorentina",
+      "away": "Como",
+      "score": [
+        1,
+        3
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-18",
       "home": "Angers",
       "away": "Marseille",
       "score": [
@@ -3266,35 +2580,6 @@
         "away_first": false,
         "double_1x": false,
         "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-18",
-      "home": "Bournemouth",
-      "away": "Sunderland",
-      "score": [
-        2,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
         "double_12": true
       }
     },
@@ -3416,6 +2701,35 @@
     },
     {
       "date": "2026-10-17",
+      "home": "Troyes",
+      "away": "Lens",
+      "score": [
+        1,
+        3
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-17",
       "home": "Lille",
       "away": "Brest",
       "score": [
@@ -3445,11 +2759,11 @@
     },
     {
       "date": "2026-10-17",
-      "home": "Troyes",
-      "away": "Lens",
+      "home": "Betis",
+      "away": "Barcelona",
       "score": [
-        1,
-        3
+        2,
+        5
       ],
       "outcomes": {
         "home_win": false,
@@ -3492,35 +2806,6 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-17",
-      "home": "Betis",
-      "away": "Barcelona",
-      "score": [
-        2,
-        5
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
@@ -3648,24 +2933,24 @@
     },
     {
       "date": "2026-10-17",
-      "home": "Fulham",
-      "away": "Hull",
+      "home": "Manchester City",
+      "away": "Ipswich",
       "score": [
-        1,
-        0
+        3,
+        2
       ],
       "outcomes": {
         "home_win": true,
         "draw": false,
         "away_win": false,
         "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -3706,24 +2991,24 @@
     },
     {
       "date": "2026-10-17",
-      "home": "Manchester City",
-      "away": "Ipswich",
+      "home": "Fulham",
+      "away": "Hull",
       "score": [
-        3,
-        2
+        1,
+        0
       ],
       "outcomes": {
         "home_win": true,
         "draw": false,
         "away_win": false,
         "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -3735,17 +3020,17 @@
     },
     {
       "date": "2026-10-17",
-      "home": "Union Berlin",
-      "away": "Dortmund",
+      "home": "Schalke 04",
+      "away": "Mainz",
       "score": [
         0,
-        0
+        1
       ],
       "outcomes": {
         "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
         "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
@@ -3754,40 +3039,11 @@
         "btts_yes": false,
         "btts_no": true,
         "home_1up": false,
-        "away_1up": false,
+        "away_1up": true,
         "home_first": false,
-        "away_first": false,
-        "double_1x": true,
+        "away_first": true,
+        "double_1x": false,
         "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-10-17",
-      "home": "Elversberg",
-      "away": "Augsburg",
-      "score": [
-        4,
-        3
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
         "double_12": true
       }
     },
@@ -3822,17 +3078,17 @@
     },
     {
       "date": "2026-10-17",
-      "home": "Schalke 04",
-      "away": "Mainz",
+      "home": "Union Berlin",
+      "away": "Dortmund",
       "score": [
         0,
-        1
+        0
       ],
       "outcomes": {
         "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": false,
         "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
@@ -3841,12 +3097,12 @@
         "btts_yes": false,
         "btts_no": true,
         "home_1up": false,
-        "away_1up": true,
+        "away_1up": false,
         "home_first": false,
-        "away_first": true,
-        "double_1x": false,
+        "away_first": false,
+        "double_1x": true,
         "double_x2": true,
-        "double_12": true
+        "double_12": false
       }
     },
     {
@@ -3869,6 +3125,35 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "home": "Elversberg",
+      "away": "Augsburg",
+      "score": [
+        4,
+        3
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -4228,35 +3513,6 @@
     },
     {
       "date": "2026-10-11",
-      "home": "Troyes",
-      "away": "Marseille",
-      "score": [
-        0,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-11",
       "home": "Cagliari",
       "away": "Juventus",
       "score": [
@@ -4282,6 +3538,35 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
+      }
+    },
+    {
+      "date": "2026-10-11",
+      "home": "Troyes",
+      "away": "Marseille",
+      "score": [
+        0,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
       }
     },
     {
@@ -4489,6 +3774,35 @@
     },
     {
       "date": "2026-10-11",
+      "home": "Nice",
+      "away": "Strasbourg",
+      "score": [
+        2,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-11",
       "home": "Crystal Palace",
       "away": "Nottingham Forest",
       "score": [
@@ -4598,35 +3912,6 @@
         "away_1up": false,
         "home_first": true,
         "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-11",
-      "home": "Nice",
-      "away": "Strasbourg",
-      "score": [
-        2,
-        1
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
         "double_1x": true,
         "double_x2": false,
         "double_12": true
@@ -4750,6 +4035,35 @@
     },
     {
       "date": "2026-10-10",
+      "home": "Paris SG",
+      "away": "Le Mans",
+      "score": [
+        3,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-10",
       "home": "Lorient",
       "away": "Paris FC",
       "score": [
@@ -4808,66 +4122,8 @@
     },
     {
       "date": "2026-10-10",
-      "home": "Paris SG",
-      "away": "Le Mans",
-      "score": [
-        3,
-        1
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-10",
       "home": "Napoli",
       "away": "Frosinone",
-      "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-10",
-      "home": "Barcelona",
-      "away": "Getafe",
       "score": [
         3,
         0
@@ -4949,6 +4205,35 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "home": "Barcelona",
+      "away": "Getafe",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
       }
     },
     {
@@ -5040,35 +4325,6 @@
     },
     {
       "date": "2026-10-10",
-      "home": "Sunderland",
-      "away": "Brighton",
-      "score": [
-        0,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-10",
       "home": "Aston Villa",
       "away": "Brentford",
       "score": [
@@ -5098,30 +4354,30 @@
     },
     {
       "date": "2026-10-10",
-      "home": "Ipswich",
-      "away": "Fulham",
+      "home": "Sunderland",
+      "away": "Brighton",
       "score": [
-        2,
-        1
+        0,
+        2
       ],
       "outcomes": {
-        "home_win": true,
+        "home_win": false,
         "draw": false,
-        "away_win": false,
+        "away_win": true,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
+        "over_2.5": false,
         "over_3.5": false,
-        "under_2.5": false,
+        "under_2.5": true,
         "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
         "away_1up": true,
         "home_first": false,
         "away_first": true,
-        "double_1x": true,
-        "double_x2": false,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -5156,6 +4412,35 @@
     },
     {
       "date": "2026-10-10",
+      "home": "Ipswich",
+      "away": "Fulham",
+      "score": [
+        2,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-10",
       "home": "Hoffenheim",
       "away": "Hamburg",
       "score": [
@@ -5181,35 +4466,6 @@
         "double_1x": false,
         "double_x2": true,
         "double_12": true
-      }
-    },
-    {
-      "date": "2026-10-10",
-      "home": "Augsburg",
-      "away": "Bayern Munich",
-      "score": [
-        2,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
       }
     },
     {
@@ -5297,6 +4553,35 @@
         "double_1x": true,
         "double_x2": false,
         "double_12": true
+      }
+    },
+    {
+      "date": "2026-10-10",
+      "home": "Augsburg",
+      "away": "Bayern Munich",
+      "score": [
+        2,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -5475,35 +4760,6 @@
     },
     {
       "date": "2026-09-20",
-      "home": "Milan",
-      "away": "Lecce",
-      "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-20",
       "home": "Marseille",
       "away": "Paris SG",
       "score": [
@@ -5533,11 +4789,11 @@
     },
     {
       "date": "2026-09-20",
-      "home": "Paderborn",
-      "away": "Hoffenheim",
+      "home": "Milan",
+      "away": "Lecce",
       "score": [
         3,
-        1
+        0
       ],
       "outcomes": {
         "home_win": true,
@@ -5546,11 +4802,11 @@
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
-        "over_3.5": true,
+        "over_3.5": false,
         "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -5562,8 +4818,8 @@
     },
     {
       "date": "2026-09-20",
-      "home": "Villarreal",
-      "away": "Levante",
+      "home": "Paderborn",
+      "away": "Hoffenheim",
       "score": [
         3,
         1
@@ -5616,6 +4872,35 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
+      }
+    },
+    {
+      "date": "2026-09-20",
+      "home": "Villarreal",
+      "away": "Levante",
+      "score": [
+        3,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
       }
     },
     {
@@ -5852,11 +5137,11 @@
     },
     {
       "date": "2026-09-20",
-      "home": "Frosinone",
-      "away": "Como",
+      "home": "Manchester City",
+      "away": "Sunderland",
       "score": [
-        2,
-        0
+        5,
+        3
       ],
       "outcomes": {
         "home_win": true,
@@ -5864,12 +5149,12 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -5910,11 +5195,11 @@
     },
     {
       "date": "2026-09-20",
-      "home": "Manchester City",
-      "away": "Sunderland",
+      "home": "Frosinone",
+      "away": "Como",
       "score": [
-        5,
-        3
+        2,
+        0
       ],
       "outcomes": {
         "home_win": true,
@@ -5922,12 +5207,12 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -6055,6 +5340,35 @@
     },
     {
       "date": "2026-09-19",
+      "home": "Toulouse",
+      "away": "Le Havre",
+      "score": [
+        3,
+        2
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-19",
       "home": "Venezia",
       "away": "Lazio",
       "score": [
@@ -6113,35 +5427,6 @@
     },
     {
       "date": "2026-09-19",
-      "home": "Angers",
-      "away": "Troyes",
-      "score": [
-        2,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-19",
       "home": "Le Mans",
       "away": "Lorient",
       "score": [
@@ -6171,11 +5456,40 @@
     },
     {
       "date": "2026-09-19",
-      "home": "Toulouse",
-      "away": "Le Havre",
+      "home": "Angers",
+      "away": "Troyes",
       "score": [
-        3,
-        2
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-19",
+      "home": "Celta",
+      "away": "Santander",
+      "score": [
+        5,
+        0
       ],
       "outcomes": {
         "home_win": true,
@@ -6187,8 +5501,8 @@
         "over_3.5": true,
         "under_2.5": false,
         "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -6253,35 +5567,6 @@
         "away_first": true,
         "double_1x": false,
         "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-19",
-      "home": "Celta",
-      "away": "Santander",
-      "score": [
-        5,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
         "double_12": true
       }
     },
@@ -6374,35 +5659,6 @@
     },
     {
       "date": "2026-09-19",
-      "home": "Everton",
-      "away": "Ipswich",
-      "score": [
-        1,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-19",
       "home": "Newcastle",
       "away": "Hull",
       "score": [
@@ -6421,6 +5677,35 @@
         "under_3.5": true,
         "btts_yes": true,
         "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-19",
+      "home": "Everton",
+      "away": "Ipswich",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -6490,6 +5775,35 @@
     },
     {
       "date": "2026-09-19",
+      "home": "M'gladbach",
+      "away": "Mainz",
+      "score": [
+        3,
+        4
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-19",
       "home": "Ein Frankfurt",
       "away": "Freiburg",
       "score": [
@@ -6543,35 +5857,6 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-19",
-      "home": "M'gladbach",
-      "away": "Mainz",
-      "score": [
-        3,
-        4
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": false,
-        "double_x2": true,
         "double_12": true
       }
     },
@@ -6693,35 +5978,6 @@
     },
     {
       "date": "2026-09-18",
-      "home": "Espanol",
-      "away": "Elche",
-      "score": [
-        1,
-        3
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-18",
       "home": "Brentford",
       "away": "Chelsea",
       "score": [
@@ -6746,6 +6002,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "home": "Espanol",
+      "away": "Elche",
+      "score": [
+        1,
+        3
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -6925,35 +6210,6 @@
     },
     {
       "date": "2026-09-16",
-      "home": "Ath Madrid",
-      "away": "Osasuna",
-      "score": [
-        4,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-16",
       "home": "La Coruna",
       "away": "Sevilla",
       "score": [
@@ -6978,6 +6234,35 @@
         "away_first": true,
         "double_1x": false,
         "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-16",
+      "home": "Ath Madrid",
+      "away": "Osasuna",
+      "score": [
+        4,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -7244,35 +6529,6 @@
     },
     {
       "date": "2026-09-13",
-      "home": "Brest",
-      "away": "Paris SG",
-      "score": [
-        0,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-13",
       "home": "Sassuolo",
       "away": "Juventus",
       "score": [
@@ -7297,6 +6553,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-13",
+      "home": "Brest",
+      "away": "Paris SG",
+      "score": [
+        0,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -7360,35 +6645,6 @@
     },
     {
       "date": "2026-09-13",
-      "home": "Manchester United",
-      "away": "Manchester City",
-      "score": [
-        0,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-13",
       "home": "Elversberg",
       "away": "Bayern Munich",
       "score": [
@@ -7407,6 +6663,35 @@
         "under_3.5": true,
         "btts_yes": true,
         "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-13",
+      "home": "Manchester United",
+      "away": "Manchester City",
+      "score": [
+        0,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
@@ -7505,35 +6790,6 @@
     },
     {
       "date": "2026-09-13",
-      "home": "Coventry",
-      "away": "Brighton",
-      "score": [
-        0,
-        5
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-13",
       "home": "Lecce",
       "away": "Monza",
       "score": [
@@ -7587,6 +6843,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-13",
+      "home": "Coventry",
+      "away": "Brighton",
+      "score": [
+        0,
+        5
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -7679,35 +6964,6 @@
     },
     {
       "date": "2026-09-12",
-      "home": "Auxerre",
-      "away": "Nice",
-      "score": [
-        1,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-12",
       "home": "Le Havre",
       "away": "Angers",
       "score": [
@@ -7733,6 +6989,35 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
+      }
+    },
+    {
+      "date": "2026-09-12",
+      "home": "Auxerre",
+      "away": "Nice",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
       }
     },
     {
@@ -7998,6 +7283,64 @@
     },
     {
       "date": "2026-09-12",
+      "home": "Aston Villa",
+      "away": "Nottingham Forest",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-12",
+      "home": "Bournemouth",
+      "away": "Brentford",
+      "score": [
+        2,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-09-12",
       "home": "Chelsea",
       "away": "Hull",
       "score": [
@@ -8019,35 +7362,6 @@
         "home_1up": true,
         "away_1up": true,
         "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-09-12",
-      "home": "Liverpool",
-      "away": "Fulham",
-      "score": [
-        0,
-        0
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": false,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": false,
-        "home_first": false,
         "away_first": false,
         "double_1x": true,
         "double_x2": true,
@@ -8085,28 +7399,28 @@
     },
     {
       "date": "2026-09-12",
-      "home": "Bournemouth",
-      "away": "Brentford",
+      "home": "Liverpool",
+      "away": "Fulham",
       "score": [
-        2,
-        2
+        0,
+        0
       ],
       "outcomes": {
         "home_win": false,
         "draw": true,
         "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": false,
         "home_first": false,
-        "away_first": true,
+        "away_first": false,
         "double_1x": true,
         "double_x2": true,
         "double_12": false
@@ -8114,39 +7428,10 @@
     },
     {
       "date": "2026-09-12",
-      "home": "Aston Villa",
-      "away": "Nottingham Forest",
+      "home": "Freiburg",
+      "away": "M'gladbach",
       "score": [
-        1,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-12",
-      "home": "Dortmund",
-      "away": "Paderborn",
-      "score": [
-        3,
+        5,
         0
       ],
       "outcomes": {
@@ -8156,9 +7441,9 @@
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
-        "over_3.5": false,
+        "over_3.5": true,
         "under_2.5": false,
-        "under_3.5": true,
+        "under_3.5": false,
         "btts_yes": false,
         "btts_no": true,
         "home_1up": true,
@@ -8201,6 +7486,35 @@
     },
     {
       "date": "2026-09-12",
+      "home": "Dortmund",
+      "away": "Paderborn",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-12",
       "home": "Mainz",
       "away": "Ein Frankfurt",
       "score": [
@@ -8225,35 +7539,6 @@
         "away_first": true,
         "double_1x": false,
         "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-12",
-      "home": "Freiburg",
-      "away": "M'gladbach",
-      "score": [
-        5,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
         "double_12": true
       }
     },
@@ -8607,35 +7892,6 @@
     },
     {
       "date": "2026-09-06",
-      "home": "Juventus",
-      "away": "Milan",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-09-06",
       "home": "Marseille",
       "away": "Paris FC",
       "score": [
@@ -8661,6 +7917,35 @@
         "double_1x": false,
         "double_x2": true,
         "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "home": "Juventus",
+      "away": "Milan",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -8752,35 +8037,6 @@
     },
     {
       "date": "2026-09-06",
-      "home": "Arsenal",
-      "away": "Chelsea",
-      "score": [
-        2,
-        1
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-06",
       "home": "Ein Frankfurt",
       "away": "Augsburg",
       "score": [
@@ -8805,6 +8061,35 @@
         "away_first": false,
         "double_1x": false,
         "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "home": "Arsenal",
+      "away": "Chelsea",
+      "score": [
+        2,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -8951,6 +8236,35 @@
         "double_1x": true,
         "double_x2": false,
         "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "home": "Parma",
+      "away": "Monza",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -8983,35 +8297,6 @@
       }
     },
     {
-      "date": "2026-09-06",
-      "home": "Parma",
-      "away": "Monza",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
       "date": "2026-09-05",
       "home": "Villarreal",
       "away": "La Coruna",
@@ -9071,6 +8356,35 @@
     },
     {
       "date": "2026-09-05",
+      "home": "Roma",
+      "away": "Atalanta",
+      "score": [
+        2,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-05",
       "home": "Nice",
       "away": "Le Mans",
       "score": [
@@ -9100,31 +8414,31 @@
     },
     {
       "date": "2026-09-05",
-      "home": "Roma",
-      "away": "Atalanta",
+      "home": "Schalke 04",
+      "away": "Bayern Munich",
       "score": [
-        2,
-        1
+        0,
+        0
       ],
       "outcomes": {
-        "home_win": true,
-        "draw": false,
+        "home_win": false,
+        "draw": true,
         "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
         "over_3.5": false,
-        "under_2.5": false,
+        "under_2.5": true,
         "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": false,
         "home_first": false,
-        "away_first": true,
+        "away_first": false,
         "double_1x": true,
-        "double_x2": false,
-        "double_12": true
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -9160,35 +8474,6 @@
       "date": "2026-09-05",
       "home": "Hull",
       "away": "Aston Villa",
-      "score": [
-        0,
-        0
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": false,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": false,
-        "home_first": false,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-09-05",
-      "home": "Schalke 04",
-      "away": "Bayern Munich",
       "score": [
         0,
         0
@@ -9303,35 +8588,6 @@
     },
     {
       "date": "2026-09-05",
-      "home": "Brentford",
-      "away": "Sunderland",
-      "score": [
-        1,
-        1
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-09-05",
       "home": "Nottingham Forest",
       "away": "Tottenham",
       "score": [
@@ -9390,6 +8646,35 @@
     },
     {
       "date": "2026-09-05",
+      "home": "Brentford",
+      "away": "Sunderland",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-09-05",
       "home": "Brighton",
       "away": "Leeds",
       "score": [
@@ -9424,6 +8709,35 @@
       "score": [
         2,
         3
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-09-05",
+      "home": "M'gladbach",
+      "away": "Elversberg",
+      "score": [
+        3,
+        4
       ],
       "outcomes": {
         "home_win": false,
@@ -9528,35 +8842,6 @@
         "away_1up": true,
         "home_first": false,
         "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-09-05",
-      "home": "M'gladbach",
-      "away": "Elversberg",
-      "score": [
-        3,
-        4
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": true,
-        "away_first": false,
         "double_1x": false,
         "double_x2": true,
         "double_12": true
@@ -10057,16 +9342,16 @@
     },
     {
       "date": "2026-08-30",
-      "home": "Cagliari",
-      "away": "Inter",
+      "home": "Lazio",
+      "away": "Genoa",
       "score": [
-        0,
-        1
+        1,
+        0
       ],
       "outcomes": {
-        "home_win": false,
+        "home_win": true,
         "draw": false,
-        "away_win": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": false,
         "over_2.5": false,
@@ -10075,12 +9360,12 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -10115,16 +9400,16 @@
     },
     {
       "date": "2026-08-30",
-      "home": "Lazio",
-      "away": "Genoa",
+      "home": "Cagliari",
+      "away": "Inter",
       "score": [
-        1,
-        0
+        0,
+        1
       ],
       "outcomes": {
-        "home_win": true,
+        "home_win": false,
         "draw": false,
-        "away_win": false,
+        "away_win": true,
         "over_0.5": true,
         "over_1.5": false,
         "over_2.5": false,
@@ -10133,12 +9418,12 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -10202,35 +9487,6 @@
     },
     {
       "date": "2026-08-30",
-      "home": "Augsburg",
-      "away": "Schalke 04",
-      "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-30",
       "home": "Manchester United",
       "away": "Ipswich",
       "score": [
@@ -10253,6 +9509,35 @@
         "away_1up": true,
         "home_first": false,
         "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-30",
+      "home": "Augsburg",
+      "away": "Schalke 04",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
         "double_1x": true,
         "double_x2": false,
         "double_12": true
@@ -10347,64 +9632,6 @@
     },
     {
       "date": "2026-08-30",
-      "home": "Paris FC",
-      "away": "Nice",
-      "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-30",
-      "home": "Sunderland",
-      "away": "Fulham",
-      "score": [
-        1,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-30",
       "home": "Leeds",
       "away": "Brentford",
       "score": [
@@ -10462,6 +9689,64 @@
       }
     },
     {
+      "date": "2026-08-30",
+      "home": "Paris FC",
+      "away": "Nice",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-30",
+      "home": "Sunderland",
+      "away": "Fulham",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
       "date": "2026-08-29",
       "home": "Sevilla",
       "away": "Ath Madrid",
@@ -10492,6 +9777,35 @@
     },
     {
       "date": "2026-08-29",
+      "home": "Juventus",
+      "away": "Parma",
+      "score": [
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-29",
       "home": "Lyon",
       "away": "Le Havre",
       "score": [
@@ -10517,6 +9831,35 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
+      }
+    },
+    {
+      "date": "2026-08-29",
+      "home": "Lorient",
+      "away": "Troyes",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
       }
     },
     {
@@ -10579,16 +9922,16 @@
     },
     {
       "date": "2026-08-29",
-      "home": "Lorient",
-      "away": "Troyes",
+      "home": "Sociedad",
+      "away": "Espanol",
       "score": [
-        1,
-        2
+        2,
+        1
       ],
       "outcomes": {
-        "home_win": false,
+        "home_win": true,
         "draw": false,
-        "away_win": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
         "over_2.5": true,
@@ -10597,35 +9940,6 @@
         "under_3.5": true,
         "btts_yes": true,
         "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-29",
-      "home": "Juventus",
-      "away": "Parma",
-      "score": [
-        2,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -10637,8 +9951,37 @@
     },
     {
       "date": "2026-08-29",
-      "home": "Sociedad",
-      "away": "Espanol",
+      "home": "Tottenham",
+      "away": "Newcastle",
+      "score": [
+        0,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-29",
+      "home": "Sassuolo",
+      "away": "Torino",
       "score": [
         2,
         1
@@ -10742,64 +10085,6 @@
         "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-29",
-      "home": "Sassuolo",
-      "away": "Torino",
-      "score": [
-        2,
-        1
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-29",
-      "home": "Tottenham",
-      "away": "Newcastle",
-      "score": [
-        0,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": false,
-        "away_win": true,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
@@ -10927,64 +10212,6 @@
     },
     {
       "date": "2026-08-29",
-      "home": "FC Koln",
-      "away": "Hoffenheim",
-      "score": [
-        3,
-        2
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-29",
-      "home": "Mainz",
-      "away": "Paderborn",
-      "score": [
-        0,
-        0
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": false,
-        "over_1.5": false,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": false,
-        "away_1up": false,
-        "home_first": false,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-08-29",
       "home": "Elversberg",
       "away": "Leverkusen",
       "score": [
@@ -11007,6 +10234,35 @@
         "away_1up": false,
         "home_first": true,
         "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-29",
+      "home": "FC Koln",
+      "away": "Hoffenheim",
+      "score": [
+        3,
+        2
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
         "double_1x": true,
         "double_x2": false,
         "double_12": true
@@ -11039,6 +10295,35 @@
         "double_1x": true,
         "double_x2": false,
         "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-29",
+      "home": "Mainz",
+      "away": "Paderborn",
+      "score": [
+        0,
+        0
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": false,
+        "home_first": false,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
       }
     },
     {
@@ -11652,18 +10937,18 @@
     },
     {
       "date": "2026-08-23",
-      "home": "Frosinone",
-      "away": "Juventus",
+      "home": "Venezia",
+      "away": "Lecce",
       "score": [
         0,
-        1
+        2
       ],
       "outcomes": {
         "home_win": false,
         "draw": false,
         "away_win": true,
         "over_0.5": true,
-        "over_1.5": false,
+        "over_1.5": true,
         "over_2.5": false,
         "over_3.5": false,
         "under_2.5": true,
@@ -11681,18 +10966,18 @@
     },
     {
       "date": "2026-08-23",
-      "home": "Venezia",
-      "away": "Lecce",
+      "home": "Frosinone",
+      "away": "Juventus",
       "score": [
         0,
-        2
+        1
       ],
       "outcomes": {
         "home_win": false,
         "draw": false,
         "away_win": true,
         "over_0.5": true,
-        "over_1.5": true,
+        "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
         "under_2.5": true,
@@ -11797,30 +11082,30 @@
     },
     {
       "date": "2026-08-23",
-      "home": "Angers",
-      "away": "Lille",
+      "home": "Brighton",
+      "away": "Aston Villa",
       "score": [
-        0,
-        2
+        4,
+        0
       ],
       "outcomes": {
-        "home_win": false,
+        "home_win": true,
         "draw": false,
-        "away_win": true,
+        "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": false,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
-        "double_1x": false,
-        "double_x2": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -11855,30 +11140,30 @@
     },
     {
       "date": "2026-08-23",
-      "home": "Brighton",
-      "away": "Aston Villa",
+      "home": "Angers",
+      "away": "Lille",
       "score": [
-        4,
-        0
+        0,
+        2
       ],
       "outcomes": {
-        "home_win": true,
+        "home_win": false,
         "draw": false,
-        "away_win": false,
+        "away_win": true,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -12000,8 +11285,37 @@
     },
     {
       "date": "2026-08-22",
-      "home": "Troyes",
-      "away": "Paris FC",
+      "home": "Le Mans",
+      "away": "Brest",
+      "score": [
+        2,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-08-22",
+      "home": "Nice",
+      "away": "Lorient",
       "score": [
         0,
         0
@@ -12058,8 +11372,8 @@
     },
     {
       "date": "2026-08-22",
-      "home": "Nice",
-      "away": "Lorient",
+      "home": "Troyes",
+      "away": "Paris FC",
       "score": [
         0,
         0
@@ -12080,35 +11394,6 @@
         "away_1up": false,
         "home_first": false,
         "away_first": false,
-        "double_1x": true,
-        "double_x2": true,
-        "double_12": false
-      }
-    },
-    {
-      "date": "2026-08-22",
-      "home": "Le Mans",
-      "away": "Brest",
-      "score": [
-        2,
-        2
-      ],
-      "outcomes": {
-        "home_win": false,
-        "draw": true,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": true,
-        "under_2.5": false,
-        "under_3.5": false,
-        "btts_yes": true,
-        "btts_no": false,
-        "home_1up": true,
-        "away_1up": true,
-        "home_first": false,
-        "away_first": true,
         "double_1x": true,
         "double_x2": true,
         "double_12": false
@@ -12141,35 +11426,6 @@
         "double_1x": true,
         "double_x2": true,
         "double_12": false
-      }
-    },
-    {
-      "date": "2026-08-22",
-      "home": "Brentford",
-      "away": "Tottenham",
-      "score": [
-        3,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": true,
-        "over_3.5": false,
-        "under_2.5": false,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
       }
     },
     {
@@ -12221,6 +11477,35 @@
         "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-22",
+      "home": "Brentford",
+      "away": "Tottenham",
+      "score": [
+        3,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -12290,6 +11575,35 @@
     },
     {
       "date": "2026-08-22",
+      "home": "Everton",
+      "away": "Crystal Palace",
+      "score": [
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-22",
       "home": "Nottingham Forest",
       "away": "Leeds",
       "score": [
@@ -12348,35 +11662,6 @@
     },
     {
       "date": "2026-08-22",
-      "home": "Everton",
-      "away": "Crystal Palace",
-      "score": [
-        2,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-22",
       "home": "Hull",
       "away": "Manchester United",
       "score": [
@@ -12389,35 +11674,6 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
-        "over_2.5": false,
-        "over_3.5": false,
-        "under_2.5": true,
-        "under_3.5": true,
-        "btts_yes": false,
-        "btts_no": true,
-        "home_1up": true,
-        "away_1up": false,
-        "home_first": true,
-        "away_first": false,
-        "double_1x": true,
-        "double_x2": false,
-        "double_12": true
-      }
-    },
-    {
-      "date": "2026-08-21",
-      "home": "Betis",
-      "away": "Sociedad",
-      "score": [
-        1,
-        0
-      ],
-      "outcomes": {
-        "home_win": true,
-        "draw": false,
-        "away_win": false,
-        "over_0.5": true,
-        "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
         "under_2.5": true,
@@ -12450,6 +11706,35 @@
         "over_2.5": true,
         "over_3.5": false,
         "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-08-21",
+      "home": "Betis",
+      "away": "Sociedad",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
@@ -13177,20 +12462,20 @@
       {
         "team": "Sevilla",
         "position": 6,
-        "played": 9,
-        "won": 4,
+        "played": 10,
+        "won": 5,
         "drawn": 2,
         "lost": 3,
-        "points": 14,
-        "gd": -2,
-        "gf": 14,
+        "points": 17,
+        "gd": 0,
+        "gf": 16,
         "ga": 16,
         "form": [
           "W",
-          "W",
           "L",
           "D",
-          "L"
+          "L",
+          "W"
         ]
       },
       {
@@ -13291,20 +12576,20 @@
       {
         "team": "Osasuna",
         "position": 12,
-        "played": 9,
+        "played": 10,
         "won": 3,
         "drawn": 2,
-        "lost": 4,
+        "lost": 5,
         "points": 11,
-        "gd": -8,
+        "gd": -10,
         "gf": 10,
-        "ga": 18,
+        "ga": 20,
         "form": [
-          "L",
           "L",
           "D",
           "L",
-          "W"
+          "W",
+          "L"
         ]
       },
       {
@@ -14188,8 +13473,27 @@
     ],
     "LIGUE1": [
       {
-        "team": "Rennes",
+        "team": "Paris SG",
         "position": 1,
+        "played": 8,
+        "won": 5,
+        "drawn": 2,
+        "lost": 1,
+        "points": 17,
+        "gd": 7,
+        "gf": 16,
+        "ga": 9,
+        "form": [
+          "W",
+          "W",
+          "W",
+          "W",
+          "W"
+        ]
+      },
+      {
+        "team": "Rennes",
+        "position": 2,
         "played": 8,
         "won": 5,
         "drawn": 1,
@@ -14208,7 +13512,7 @@
       },
       {
         "team": "Lille",
-        "position": 2,
+        "position": 3,
         "played": 8,
         "won": 4,
         "drawn": 3,
@@ -14227,7 +13531,7 @@
       },
       {
         "team": "Monaco",
-        "position": 3,
+        "position": 4,
         "played": 8,
         "won": 4,
         "drawn": 3,
@@ -14246,40 +13550,21 @@
       },
       {
         "team": "Lyon",
-        "position": 4,
-        "played": 7,
+        "position": 5,
+        "played": 8,
         "won": 4,
         "drawn": 2,
-        "lost": 1,
+        "lost": 2,
         "points": 14,
-        "gd": 8,
+        "gd": 6,
         "gf": 13,
-        "ga": 5,
+        "ga": 7,
         "form": [
-          "W",
           "D",
           "W",
           "L",
-          "W"
-        ]
-      },
-      {
-        "team": "Paris SG",
-        "position": 5,
-        "played": 7,
-        "won": 4,
-        "drawn": 2,
-        "lost": 1,
-        "points": 14,
-        "gd": 5,
-        "gf": 14,
-        "ga": 9,
-        "form": [
-          "L",
           "W",
-          "W",
-          "W",
-          "W"
+          "L"
         ]
       },
       {
@@ -14535,7 +13820,7 @@
     {
       "date": "2026-10-26",
       "fixtures": 2,
-      "settled": 0
+      "settled": 2
     },
     {
       "date": "2026-10-25",
@@ -14549,20 +13834,20 @@
     }
   ],
   "live_record": {
-    "matches": 26,
-    "result_hit_rate": 0.5,
-    "log_loss": 0.9673,
-    "market_log_loss": 0.9761,
-    "confident_picks": 128,
-    "confident_hit_rate": 0.7734,
-    "value_bets": 49,
+    "matches": 28,
+    "result_hit_rate": 0.5357,
+    "log_loss": 0.936,
+    "market_log_loss": 0.947,
+    "confident_picks": 138,
+    "confident_hit_rate": 0.7899,
+    "value_bets": 53,
     "value_bets_won": 24,
-    "value_roi": -0.1549
+    "value_roi": -0.2187
   },
   "clv": {
     "legs": 12,
-    "mean_clv": 0.0041,
-    "beat_close": 0.4167,
+    "mean_clv": 0.0068,
+    "beat_close": 0.5,
     "moved_against": 0.0833,
     "league": {
       "BUNDES": {
@@ -14579,8 +13864,8 @@
       },
       "LALIGA": {
         "legs": 1,
-        "mean_clv": 0.0,
-        "beat_close": 0.0,
+        "mean_clv": 0.0323,
+        "beat_close": 1.0,
         "moved_against": 0.0
       },
       "LIGUE1": {
@@ -14629,8 +13914,8 @@
       },
       "over_2.5": {
         "legs": 1,
-        "mean_clv": 0.0,
-        "beat_close": 0.0,
+        "mean_clv": 0.0323,
+        "beat_close": 1.0,
         "moved_against": 0.0
       },
       "under_3.5": {
@@ -14655,8 +13940,8 @@
       },
       "safe": {
         "legs": 4,
-        "mean_clv": 0.004,
-        "beat_close": 0.25,
+        "mean_clv": 0.0121,
+        "beat_close": 0.5,
         "moved_against": 0.0
       }
     }
@@ -14668,18 +13953,18 @@
       {
         "name": "accuracy",
         "status": "insufficient",
-        "detail": "26 of 30 matches needed"
+        "detail": "28 of 30 matches needed"
       },
       {
         "name": "calibration",
         "status": "ok",
-        "picks": 210,
-        "detail": "145 hits vs 152.0 expected (z=-1.1)"
+        "picks": 226,
+        "detail": "160 hits vs 163.8 expected (z=-0.6)"
       },
       {
         "name": "slips",
         "status": "insufficient",
-        "detail": "6 of 20 settled slips needed"
+        "detail": "7 of 20 settled slips needed"
       }
     ],
     "pairs": [
@@ -14902,217 +14187,217 @@
       {
         "league": "LALIGA",
         "market": "away_1up",
-        "n": 4,
-        "predicted": 0.4322,
-        "actual": 0.25,
-        "z": -0.75,
+        "n": 5,
+        "predicted": 0.4246,
+        "actual": 0.2,
+        "z": -1.04,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "away_win",
-        "n": 4,
-        "predicted": 0.2217,
-        "actual": 0.25,
-        "z": 0.14,
+        "n": 5,
+        "predicted": 0.2182,
+        "actual": 0.2,
+        "z": -0.1,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_12",
-        "n": 4,
-        "predicted": 0.7783,
-        "actual": 0.75,
-        "z": -0.14,
+        "n": 5,
+        "predicted": 0.7655,
+        "actual": 0.8,
+        "z": 0.18,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_1x",
-        "n": 4,
-        "predicted": 0.7799,
-        "actual": 0.75,
-        "z": -0.15,
+        "n": 5,
+        "predicted": 0.7835,
+        "actual": 0.8,
+        "z": 0.09,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_x2",
-        "n": 4,
-        "predicted": 0.4464,
-        "actual": 0.5,
-        "z": 0.22,
+        "n": 5,
+        "predicted": 0.4543,
+        "actual": 0.4,
+        "z": -0.25,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "home_1up",
-        "n": 4,
-        "predicted": 0.6946,
-        "actual": 0.5,
-        "z": -0.87,
+        "n": 5,
+        "predicted": 0.6842,
+        "actual": 0.6,
+        "z": -0.42,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "home_win",
-        "n": 4,
-        "predicted": 0.5533,
-        "actual": 0.5,
-        "z": -0.22,
+        "n": 5,
+        "predicted": 0.5454,
+        "actual": 0.6,
+        "z": 0.25,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_0.5",
-        "n": 4,
-        "predicted": 0.943,
-        "actual": 0.75,
-        "z": -1.68,
+        "n": 5,
+        "predicted": 0.9363,
+        "actual": 0.8,
+        "z": -1.26,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_1.5",
-        "n": 4,
-        "predicted": 0.7852,
-        "actual": 0.75,
-        "z": -0.17,
+        "n": 5,
+        "predicted": 0.7691,
+        "actual": 0.8,
+        "z": 0.17,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_2.5",
-        "n": 4,
-        "predicted": 0.5977,
-        "actual": 0.75,
-        "z": 0.66,
+        "n": 5,
+        "predicted": 0.5653,
+        "actual": 0.6,
+        "z": 0.16,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "under_2.5",
-        "n": 4,
-        "predicted": 0.4023,
-        "actual": 0.25,
-        "z": -0.66,
+        "n": 5,
+        "predicted": 0.4347,
+        "actual": 0.4,
+        "z": -0.16,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "under_3.5",
-        "n": 4,
-        "predicted": 0.6226,
-        "actual": 0.75,
-        "z": 0.56,
+        "n": 5,
+        "predicted": 0.6549,
+        "actual": 0.8,
+        "z": 0.73,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "away_1up",
-        "n": 6,
-        "predicted": 0.4646,
-        "actual": 0.3333,
-        "z": -0.65,
+        "n": 7,
+        "predicted": 0.4517,
+        "actual": 0.2857,
+        "z": -0.89,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "away_win",
-        "n": 6,
-        "predicted": 0.2599,
+        "n": 7,
+        "predicted": 0.244,
         "actual": 0.0,
-        "z": -1.47,
+        "z": -1.53,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_12",
-        "n": 6,
-        "predicted": 0.7551,
-        "actual": 0.3333,
-        "z": -2.41,
+        "n": 7,
+        "predicted": 0.7634,
+        "actual": 0.4286,
+        "z": -2.09,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_1x",
-        "n": 6,
-        "predicted": 0.7407,
+        "n": 7,
+        "predicted": 0.7566,
         "actual": 1.0,
-        "z": 1.47,
+        "z": 1.53,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_x2",
-        "n": 6,
-        "predicted": 0.503,
-        "actual": 0.6667,
-        "z": 0.82,
+        "n": 7,
+        "predicted": 0.4781,
+        "actual": 0.5714,
+        "z": 0.51,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "home_1up",
-        "n": 6,
-        "predicted": 0.6394,
-        "actual": 0.3333,
-        "z": -1.6,
+        "n": 7,
+        "predicted": 0.6621,
+        "actual": 0.4286,
+        "z": -1.34,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "home_win",
-        "n": 6,
-        "predicted": 0.4968,
-        "actual": 0.3333,
-        "z": -0.82,
+        "n": 7,
+        "predicted": 0.5222,
+        "actual": 0.4286,
+        "z": -0.51,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_0.5",
-        "n": 6,
-        "predicted": 0.9396,
-        "actual": 0.6667,
-        "z": -2.81,
+        "n": 7,
+        "predicted": 0.9432,
+        "actual": 0.7143,
+        "z": -2.62,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_1.5",
-        "n": 6,
-        "predicted": 0.8039,
-        "actual": 0.6667,
-        "z": -0.85,
+        "n": 7,
+        "predicted": 0.8146,
+        "actual": 0.7143,
+        "z": -0.69,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_2.5",
-        "n": 6,
-        "predicted": 0.5726,
-        "actual": 0.3333,
-        "z": -1.19,
+        "n": 7,
+        "predicted": 0.5873,
+        "actual": 0.2857,
+        "z": -1.63,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "under_2.5",
-        "n": 6,
-        "predicted": 0.4274,
-        "actual": 0.6667,
-        "z": 1.19,
+        "n": 7,
+        "predicted": 0.4127,
+        "actual": 0.7143,
+        "z": 1.63,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "under_3.5",
-        "n": 6,
-        "predicted": 0.6476,
-        "actual": 0.8333,
-        "z": 0.96,
+        "n": 7,
+        "predicted": 0.6305,
+        "actual": 0.8571,
+        "z": 1.26,
         "status": "insufficient"
       },
       {
@@ -15289,6 +14574,24 @@
         "status": "insufficient"
       },
       {
+        "league": "LALIGA",
+        "market": "over_2.5",
+        "n": 1,
+        "predicted": 0.436,
+        "actual": 0.0,
+        "z": -0.88,
+        "status": "insufficient"
+      },
+      {
+        "league": "LIGUE1",
+        "market": "over_1.5",
+        "n": 1,
+        "predicted": 0.879,
+        "actual": 1.0,
+        "z": 0.37,
+        "status": "insufficient"
+      },
+      {
         "league": "SERIEA",
         "market": "away_1up",
         "n": 1,
@@ -15319,11 +14622,11 @@
   },
   "realised": {
     "safe": {
-      "settled": 2,
+      "settled": 3,
       "won": 1,
-      "predicted": 0.95,
-      "profit": 0.54,
-      "roi": 0.27
+      "predicted": 1.33,
+      "profit": -0.46,
+      "roi": -0.1533
     },
     "medium": {
       "settled": 2,

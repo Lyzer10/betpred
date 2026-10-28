@@ -676,12 +676,12 @@
   {
     "round": "2026-10-28",
     "tier": "safe",
-    "generated_at": "2026-10-28T15:01:16.405373Z",
-    "total_odds": 2.59,
+    "generated_at": "2026-10-28T16:42:52.517821Z",
+    "total_odds": 2.62,
     "win_probability": 0.4967,
     "odds_source": "betpawa",
-    "expected_value": 0.2885,
-    "kelly": 0.181,
+    "expected_value": 0.3003,
+    "kelly": 0.1856,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -700,7 +700,7 @@
         "label": "Away win",
         "probability": 0.7902,
         "estimated_odds": 1.32,
-        "betpawa_odds": 1.41,
+        "betpawa_odds": 1.4,
         "fair_odds": 1.27,
         "price_warning": false,
         "won": null
@@ -720,24 +720,24 @@
         "label": "Away win",
         "probability": 0.6286,
         "estimated_odds": 1.67,
-        "betpawa_odds": 1.84,
+        "betpawa_odds": 1.87,
         "fair_odds": 1.59,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-28",
     "tier": "medium",
-    "generated_at": "2026-10-28T15:01:16.405373Z",
-    "total_odds": 3.5,
+    "generated_at": "2026-10-28T16:42:52.517821Z",
+    "total_odds": 3.59,
     "win_probability": 0.3761,
     "odds_source": "betpawa",
-    "expected_value": 0.3174,
-    "kelly": 0.1268,
+    "expected_value": 0.3491,
+    "kelly": 0.135,
     "price_warning": false,
     "flexi": [
       {
@@ -761,7 +761,7 @@
         "label": "Over 1.5 goals",
         "probability": 0.7573,
         "estimated_odds": 1.22,
-        "betpawa_odds": 1.35,
+        "betpawa_odds": 1.37,
         "fair_odds": 1.32,
         "price_warning": false,
         "won": null
@@ -781,7 +781,7 @@
         "label": "Away win",
         "probability": 0.7902,
         "estimated_odds": 1.32,
-        "betpawa_odds": 1.41,
+        "betpawa_odds": 1.4,
         "fair_odds": 1.27,
         "price_warning": false,
         "won": null
@@ -801,33 +801,33 @@
         "label": "Away win",
         "probability": 0.6286,
         "estimated_odds": 1.67,
-        "betpawa_odds": 1.84,
+        "betpawa_odds": 1.87,
         "fair_odds": 1.59,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-28",
     "tier": "big",
-    "generated_at": "2026-10-28T15:01:16.405373Z",
-    "total_odds": 8.11,
-    "win_probability": 0.1818,
+    "generated_at": "2026-10-28T16:42:52.517821Z",
+    "total_odds": 8.43,
+    "win_probability": 0.1795,
     "odds_source": "betpawa",
-    "expected_value": 0.475,
-    "kelly": 0.0668,
+    "expected_value": 0.5124,
+    "kelly": 0.069,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 4,
-        "probability": 0.5617
+        "probability": 0.5559
       },
       {
         "min_correct": 3,
-        "probability": 0.8644
+        "probability": 0.8593
       }
     ],
     "legs": [
@@ -842,12 +842,12 @@
         },
         "home": "Milan",
         "away": "Bologna",
-        "market": "double_1x",
-        "label": "Home or draw",
-        "probability": 0.8471,
-        "estimated_odds": 1.14,
-        "betpawa_odds": 1.19,
-        "fair_odds": 1.18,
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.7573,
+        "estimated_odds": 1.22,
+        "betpawa_odds": 1.37,
+        "fair_odds": 1.32,
         "price_warning": false,
         "won": null
       },
@@ -862,12 +862,12 @@
         },
         "home": "Parma",
         "away": "Udinese",
-        "market": "double_x2",
-        "label": "Away or draw",
-        "probability": 0.714,
-        "estimated_odds": 1.38,
-        "betpawa_odds": 1.46,
-        "fair_odds": 1.4,
+        "market": "under_3.5",
+        "label": "Under 3.5 goals",
+        "probability": 0.7884,
+        "estimated_odds": 1.2,
+        "betpawa_odds": 1.32,
+        "fair_odds": 1.27,
         "price_warning": false,
         "won": null
       },
@@ -886,7 +886,7 @@
         "label": "Away win",
         "probability": 0.7902,
         "estimated_odds": 1.32,
-        "betpawa_odds": 1.41,
+        "betpawa_odds": 1.4,
         "fair_odds": 1.27,
         "price_warning": false,
         "won": null
@@ -906,7 +906,7 @@
         "label": "Away win",
         "probability": 0.6286,
         "estimated_odds": 1.67,
-        "betpawa_odds": 1.84,
+        "betpawa_odds": 1.87,
         "fair_odds": 1.59,
         "price_warning": false,
         "won": null
@@ -926,24 +926,24 @@
         "label": "Away win",
         "probability": 0.6052,
         "estimated_odds": 1.73,
-        "betpawa_odds": 1.8,
+        "betpawa_odds": 1.78,
         "fair_odds": 1.65,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-29",
     "tier": "safe",
-    "generated_at": "2026-10-28T15:01:16.405373Z",
-    "total_odds": 2.7,
-    "win_probability": 0.4109,
+    "generated_at": "2026-10-28T16:42:52.517821Z",
+    "total_odds": 2.52,
+    "win_probability": 0.4215,
     "odds_source": "betpawa",
-    "expected_value": 0.1075,
-    "kelly": 0.0634,
+    "expected_value": 0.0622,
+    "kelly": 0.0409,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -962,7 +962,7 @@
         "label": "Under 3.5 goals",
         "probability": 0.614,
         "estimated_odds": 1.63,
-        "betpawa_odds": 1.75,
+        "betpawa_odds": 1.8,
         "fair_odds": 1.63,
         "price_warning": false,
         "won": null
@@ -978,12 +978,12 @@
         },
         "home": "Fiorentina",
         "away": "Atalanta",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6692,
-        "estimated_odds": 1.46,
-        "betpawa_odds": 1.54,
-        "fair_odds": 1.49,
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.6865,
+        "estimated_odds": 1.36,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.46,
         "price_warning": false,
         "won": null
       }

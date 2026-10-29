@@ -272,6 +272,12 @@ Claude (hard, affects predictions):
    choice used 1X2 on 2024/25+ only). Blend weight fitted walk-forward on earlier seasons; scored
    2022/23 onwards; paired log loss market - blended, 95% CI by whole days (2,000, seed 20261029).
    Switch a league to blended only if the CI is entirely above 0.
+10. **New candidate markets: team over 0.5 / 1.5 goals, Draw No Bet** (PRE-REGISTERED 2026-10-29,
+   `python -m src.new_markets_study`; owner's request, full rules in the module docstring). Probability =
+   score matrix implied by the bookmaker average, Platt-calibrated per league x market on earlier seasons
+   only; judged by the unchanged task-1 gates (one-sided C1-C4, >= 300 legs) on 2024/25 onwards. DNB is
+   scored on non-drawn matches (draw = refund). A PASS pair may enter slips only after implementation
+   and Betpawa price logging; FAIL/INSUFFICIENT stays out.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)

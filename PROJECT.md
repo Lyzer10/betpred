@@ -443,6 +443,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Confirmed the browser replay root cause: service workers bypassed routed fixtures
+  on reload. Test contexts now block them; ALL PASSED in light/dark at 375px, including 3 real
+  schedule-only rows on 27 October. Final light/dark screenshots inspected; app unchanged.
 - 2026-10-29: Completed task 13: four leagues READY by the pre-registered rule, real historical
   CSVs and ESPN/Betpawa responses cached; no live leagues changed. Source failures during the cached
   pipeline check were caught and publication finished with health ok and zero new fixtures; generated

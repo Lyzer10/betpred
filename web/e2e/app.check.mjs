@@ -18,7 +18,7 @@ const scheduleFixture = JSON.parse(readFileSync(join(fixtureDir, "schedule.json"
 
 for (const scheme of ["light", "dark"]) {
   // A normal Android Chrome user agent: ESPN's network turns away "Headless" browsers, which real phones never are.
-  const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme,
+  const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme, serviceWorkers: "block",
     userAgent: "Mozilla/5.0 (Linux; Android 14; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36" });
   const errors = [];
   // Replay the captured responses at their real publication time, so their upcoming fixtures
@@ -295,8 +295,9 @@ for (const scheme of ["light", "dark"]) {
   const scheduleDays = [...new Set(scheduleFixture.matches.map((item) => new Date(item.kickoff_utc).toLocaleDateString("en-CA", { timeZone: "Africa/Dar_es_Salaam" })))];
   const laterDay = scheduleDays.find((date) => !predictionDays.has(date));
   await page.goto(`${BASE}#matches/${laterDay}`);
-  await page.locator("button[data-match-row]").first().waitFor();
+  await page.waitForTimeout(300);
   // Matches without predictions yet are listed with no pick and no percentages (never a placeholder box).
+  console.log(`Schedule replay: day=${laterDay}, url=${page.url()}, rows=${await page.locator("button[data-match-row]").count()}, picks=${await page.locator("[data-best-pick-state]").count()}`);
   check(await page.locator("button[data-match-row]").count() > 0 && await page.locator("[data-best-pick-state]").count() === 0,
     `[${scheme}] schedule-only day lists matches without picks or placeholders`);
   await snap("matches-later");

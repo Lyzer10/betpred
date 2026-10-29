@@ -305,15 +305,19 @@ def league_tables(context: dict[str, dict], league_of: dict[str, str]) -> dict[s
 
 
 BEST_PICK_MIN_ODDS = 1.20
-MARKET_PRIORITY = ("home_1up", "away_1up", "over_1.5", "over_2.5", "under_2.5", "under_3.5", "over_0.5",
-                   "home_win", "away_win", "double_1x", "double_x2", "double_12")
+# PROJECT.md task 11: the owner wants only over-goals markets in live slips and headline picks.
+# Keep these markets in the model and SLIP_MARKETS so the established research and gates remain unchanged.
+OWNER_EXCLUDED_MARKETS = ("under_2.5", "under_3.5")
+MARKET_PRIORITY = ("over_0.5", "over_1.5", "over_2.5", "double_1x", "double_x2", "double_12",
+                   "home_1up", "away_1up", "home_win", "away_win")
 
 
 def best_pick(legs: pd.DataFrame, blocked: set[tuple[str, str]]) -> dict | None:
     """The match's headline pick on the Matches page: the most likely slip-eligible market (gates and
     monitoring respected) that pays at least BEST_PICK_MIN_ODDS; ties go to the owner's market priority.
     Display only: it is a likelihood headline, not a value bet."""
-    pool = legs[legs.market.isin(SLIP_MARKETS) & legs.odds.notna() & (legs.odds >= BEST_PICK_MIN_ODDS)]
+    pool = legs[legs.market.isin(SLIP_MARKETS) & ~legs.market.isin(OWNER_EXCLUDED_MARKETS)
+                & legs.odds.notna() & (legs.odds >= BEST_PICK_MIN_ODDS)]
     pool = pool[[(lg, m) not in blocked for lg, m in zip(pool.league, pool.market)]] if "league" in pool else pool
     if pool.empty:
         return None
@@ -466,7 +470,8 @@ def build_slips(legs: pd.DataFrame, blocked: set[tuple[str, str]] | None = None)
     blocked = failed_gates() if blocked is None else blocked
     league = legs["league"] if "league" in legs else pd.Series("EPL", index=legs.index)
     allowed = pd.Series([(lg, m) not in blocked for lg, m in zip(league, legs.market)], index=legs.index, dtype=bool)
-    pool = legs[legs.market.isin(SLIP_MARKETS) & allowed & legs.odds.notna() & (legs.odds >= 1.05)]
+    pool = legs[legs.market.isin(SLIP_MARKETS) & ~legs.market.isin(OWNER_EXCLUDED_MARKETS)
+                & allowed & legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
     for tier in TIERS:
         picks = best_slip(pool, tier) if not pool.empty else None

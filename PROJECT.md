@@ -40,8 +40,10 @@ Last updated: 2026-10-29 (Africa/Dar_es_Salaam), by Codex.
 
 - **Accumulators only** (no singles). Tiers by total odds: **Safe 2.5-3.5 (2-4 legs)**,
   **Medium 3.5-8 (3-6 legs)**, **Big 8-12 (4-8 legs)**. One leg per match.
-- **Markets, in priority order: 1Up** (team goes 1 goal ahead at any point), **over/under goals**,
-  **team to win, double chance**. (BTTS, first scorer, draw exist in the model but are not slip legs.)
+- **Live slip markets, in priority order: over goals, double chance, 1Up** (team goes 1 goal ahead
+  at any point), then **team to win**. Under goals and BTTS remain in the model and match-page
+  probability lists but are not live slip legs or headline best picks; first scorer and draw also
+  remain model outputs rather than slip legs.
 - Each day (Tanzania time, EAT) has its own slips, built from **all live leagues together**,
   choosing the most likely combination in each tier's odds range.
 - **Betpawa** for Safe/Medium, **SportyBet** (Flexi: win if at least k of n legs win) for Big.
@@ -147,6 +149,9 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   or personal contact detail outside commit-author metadata. Both workflows avoid
   `pull_request_target`, do not print secrets, and request only `contents: write`, which their publish
   steps require. The owner still controls the actual GitHub visibility change.
+- Live slips and match-page headline picks are overs-only for goal totals (2026-10-29): under 2.5
+  and under 3.5 stay available as probability information but cannot be selected. BTTS remains out
+  of slips. Tie priority is over goals, double chance, 1Up, then team win.
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
   a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
@@ -299,11 +304,12 @@ Claude (hard, affects predictions):
      all 30; using raw instead would need its own pre-registered test, not a switch after seeing this.
      NOT LIVE: needs Betpawa parsing (market ids 5006/5003 team totals, 4703 DNB), price logging, and slip
      maths for DNB refunds (a draw turns the leg into odds 1.00).
-11. **Owner's market preference (2026-10-29): no under goals, no BTTS in slips.** Backtest (not
+11. **Owner's market preference (DONE/LIVE 2026-10-29): no under goals, no BTTS in slips.** Backtest (not
    pre-registered; owner's product rule, checked for cost): 367 days, 2024/25+, five leagues, gate FAILs
    excluded. Without under 2.5/3.5: Safe won 37.6% vs 35.7% (predicted 38.4% vs 38.6%), Medium 28.8% vs
    27.2%, Big 9.8% vs 10.2%; matched-day differences all within chance (Safe +0.019, 95% CI -0.011 to
-   +0.049). No measurable cost. NOT LIVE until the owner approves.
+   +0.049). No measurable cost. The owner approved it: live slip construction and match-page best
+   picks now exclude under 2.5/3.5, while research `SLIP_MARKETS`, model outputs and gates are unchanged.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)
@@ -318,6 +324,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Team tendencies: first-to-lead (1Up) and "market keeps misjudging a team" (2026-10-29) | no gain; season-to-season persistence r = 0.02 | rejected (`src/team_tendency_study.py`) |
 | Blended vs market, 4 leagues, 5 seasons, 12 slip markets (2026-10-29) | market better in all four (3 of 4 significant) | market kept (`src/method_retest_study.py`) |
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
+| Remove under 2.5/3.5 from live slips (owner's product rule, 2026-10-29) | no measurable cost on 367 days; Safe and Medium point estimates improved | approved; live slips and best picks are overs-only |
 
 ## 8. Lessons and pitfalls (read before changing things)
 - "Nothing to predict" is a normal day, not an error: every step after it (settlement, publishing) must
@@ -351,6 +358,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Owner-approved overs-only live rule: under 2.5/3.5 cannot enter live slips or the
+  match-page best pick, while their model probabilities and all research/gate markets remain intact.
+  BTTS remains outside slips. Best-pick tie priority is over goals, double chance, 1Up, then team win.
 - 2026-10-29: Prepared the repository documentation for public visibility after auditing all 145
   reachable commits and every workflow. No real secret was found; GitHub Secret names and the public
   cron job ID are references only. Workflow permissions were already minimal for their push steps, so

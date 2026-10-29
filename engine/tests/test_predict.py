@@ -1,4 +1,5 @@
 import json
+import sys
 
 import numpy as np
 
@@ -161,6 +162,43 @@ def test_preview_slips_still_update_before_final(tmp_path, monkeypatch):
     changed["total_odds"] = 3.1
     history = predict.update_history("R1", {"safe": changed}, matches, pd.Timestamp("2026-10-24 10:00"))
     assert history[0]["total_odds"] == 3.1 and not history[0]["final"]
+
+
+def test_pipeline_publishes_cleanly_when_there_are_no_fixtures(tmp_path, monkeypatch):
+    match_columns = ["match_id", "season", "date", "home_team", "away_team", "home_goals", "away_goals",
+                     "first_scorer", "home_led_at_any_point", "away_led_at_any_point"]
+    matches = pd.DataFrame(columns=match_columns).astype({"date": "datetime64[ns]"})
+    goals = pd.DataFrame(columns=["match_id", "minute", "team"])
+    fixture_columns = ["date", "time", "home_team", "away_team", "kickoff_utc", "odds_source"]
+
+    monkeypatch.setattr(sys, "argv", ["predict", "--no-refresh"])
+    monkeypatch.setattr(pd, "read_parquet", lambda path: matches.copy() if "matches" in str(path) else goals.copy())
+    monkeypatch.setattr(predict, "build", lambda **kwargs: (matches.copy(), goals.copy()))
+    monkeypatch.setattr(predict, "load_fixtures", lambda *args, **kwargs: pd.DataFrame(columns=fixture_columns))
+    monkeypatch.setattr(predict, "add_betpawa_fixtures", lambda fixtures, *args: fixtures)
+    monkeypatch.setattr(predict, "betpawa_prices", lambda *args: pd.DataFrame())
+    monkeypatch.setattr(predict, "understat_results", lambda *args: matches.copy())
+    monkeypatch.setattr(predict, "settle_archive", lambda *args: [])
+    monkeypatch.setattr(predict, "settled_predictions", lambda: [])
+    monkeypatch.setattr(predict, "pair_monitor", lambda *args: [])
+    monkeypatch.setattr(predict, "load_paused", set)
+    monkeypatch.setattr(predict, "save_paused", lambda *args: None)
+    monkeypatch.setattr(predict, "update_history", lambda *args, **kwargs: [])
+    monkeypatch.setattr(predict, "recent_results", lambda *args: [])
+    monkeypatch.setattr(predict, "backtest_summary", lambda: {})
+    monkeypatch.setattr(predict, "backfill_archive", lambda *args: 0)
+    monkeypatch.setattr(predict, "live_record", lambda: {"matches": 0})
+    monkeypatch.setattr(predict, "clv_report", lambda *args: {})
+    monkeypatch.setattr(predict, "health_check", lambda *args: {"status": "ok"})
+    monkeypatch.setattr(predict, "slip_leg_monitor", lambda *args: [])
+    monkeypatch.setattr(predict, "realised_slips", lambda *args: {})
+    output_path = tmp_path / "predictions.json"
+    monkeypatch.setattr(predict, "WEB_DATA_PATH", output_path)
+
+    predict.main()
+
+    output = json.loads(output_path.read_text())
+    assert output["fixtures"] == [] and output["days"] == []
 
 
 def test_backfill_uses_only_what_was_known_before_the_match(tmp_path, monkeypatch):

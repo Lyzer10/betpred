@@ -89,6 +89,18 @@ def test_failed_gates_never_enter_slips(monkeypatch):
     assert ("SERIEA", "home_win") in seen[0] and ("EPL", "home_1up") in seen[0]
 
 
+def test_live_slip_pool_excludes_unders_and_btts_but_keeps_other_markets(monkeypatch):
+    markets = ["under_2.5", "under_3.5", "btts_yes", "over_1.5", "double_1x", "home_1up", "home_win"]
+    legs = pd.DataFrame({
+        "league": "SERIEA", "market": markets, "odds": 1.6, "probability": 0.7,
+    })
+    seen = []
+    monkeypatch.setattr(predict, "best_slip", lambda pool, tier: seen.append(set(pool.market)) or None)
+    assert predict.build_slips(legs, set()) == {}
+    assert seen
+    assert all(markets == {"over_1.5", "double_1x", "home_1up", "home_win"} for markets in seen)
+
+
 def test_failed_gates_reads_only_fail_status(tmp_path, monkeypatch):
     path = tmp_path / "gates.json"
     path.write_text(json.dumps({"gates": {"EPL": {"over_2.5": "FAIL", "over_0.5": "INSUFFICIENT", "home_1up": "PASS"}}}))
@@ -155,13 +167,15 @@ def test_load_fixtures_when_every_match_has_kicked_off(monkeypatch):
 
 
 def test_best_pick_is_the_most_likely_eligible_market_paying_enough():
-    legs = pd.DataFrame({"league": "SERIEA", "market": ["over_0.5", "home_1up", "over_1.5", "home_win", "btts_yes"],
-                         "probability": [0.95, 0.74, 0.74, 0.60, 0.80], "odds": [1.04, 1.30, 1.25, 1.60, 1.30],
-                         "betpawa_odds": [1.04, 1.30, np.nan, 1.60, 1.30]})
+    legs = pd.DataFrame({"league": "SERIEA",
+                         "market": ["over_0.5", "home_1up", "over_1.5", "home_win", "btts_yes", "under_2.5"],
+                         "probability": [0.95, 0.74, 0.74, 0.60, 0.80, 0.99],
+                         "odds": [1.04, 1.30, 1.25, 1.60, 1.30, 1.40],
+                         "betpawa_odds": [1.04, 1.30, np.nan, 1.60, 1.30, 1.40]})
     pick = predict.best_pick(legs, set())
-    # over 0.5 pays under 1.20; btts is not a slip market; 1Up wins the tie with over 1.5 by priority.
-    assert (pick["market"], pick["probability"], pick["odds"], pick["odds_source"]) == ("home_1up", 0.74, 1.3, "betpawa")
-    assert predict.best_pick(legs, {("SERIEA", "home_1up")})["market"] == "over_1.5"     # blocked pairs skipped
+    # Over 0.5 pays under 1.20; BTTS is not a slip market; unders are owner-excluded; over wins the tie by priority.
+    assert (pick["market"], pick["probability"], pick["odds"], pick["odds_source"]) == ("over_1.5", 0.74, 1.25, "estimated")
+    assert predict.best_pick(legs, {("SERIEA", "over_1.5")})["market"] == "home_1up"     # blocked pairs skipped
     assert predict.best_pick(legs[legs.market == "over_0.5"], set()) is None
 
 

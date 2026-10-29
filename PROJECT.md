@@ -380,10 +380,14 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
    and M all-loss share <= A; otherwise keep A. Known-answer tests before real run:
    no shared matches => M=A; Safe/Medium intersection never enters M Big; no valid
    Big after removal => M offers none. No live change in this task.
+   Result: KEEP A. Matched return M-A -0.045543 (95% CI -0.144478 to +0.045067),
+   884 matched slips. All-loss day share A 48.01%, M 46.27%; Big offers A 265, M 194.
+   A had a match on all three tiers on 241 days. Return and CI criteria fail; live unchanged.
 
 ## 7. Studies already done (do not redo without a new reason)
 | Idea | Result | Decision |
 |---|---|---|
+| Limit a match to two slips (task 14) | matched return -4.55 points, CI -14.45 to +4.51; all-loss days slightly lower | KEEP A |
 | League table, derbies, team home strength, rest days | none lowered log loss on unseen seasons | rejected |
 | Missing players (Understat lineups; upper bound of injury news) | no improvement; team news already in prices | rejected |
 | Shots+corners "pressure" (Wheatcroft 2020, LSE paper owner sent) | no reliable gain for over/under or 1Up; paper loses at average odds | rejected (`src/pressure_study.py`, `src/pressure_1up_study.py`) |
@@ -428,6 +432,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Task 14 overlap study keeps independent tiers; limiting a match to two slips failed
+  the registered matched-return rule. Report and known-answer optimizer-state tests added.
 - 2026-10-29: Candidate market prices (home/away over 0.5/1.5 and DNB) parsed from verified real
   Betpawa event 38781890 and logged as research only in full/price snapshots. Team handicaps are
   line times four; DNB names are 1/2. Real-response parser and selection-isolation tests pass.

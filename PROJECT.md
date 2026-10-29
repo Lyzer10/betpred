@@ -144,6 +144,9 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-10-25)
+- Live integration of the four candidate leagues is in preflight on codex/new-leagues.
+  Current source IDs, team lists and all 72 ESPN logo URLs have been checked. No new league is
+  enabled; the existing five-league baseline must be captured before prediction changes.
 - Next-round research (2026-10-29): all four candidate leagues meet the registered READY rule
   (Eredivisie 7/8, Belgium 8/8, Portugal 7/8, Turkey 8/8 markets PASS), with Betpawa and ESPN
   coverage verified. None is live. Task 14 retains independent slips. Candidate market prices are
@@ -443,6 +446,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Began new-league integration preflight on a separate branch. Live Betpawa identities,
+  football-data/Betpawa/ESPN team lists and 72 logo URLs verified; integration verification report
+  records historical size evidence. No live prediction code changed.
 - 2026-10-29: Research team-total parsing logs and skips invalid handicap rows so this optional
   collection cannot disrupt existing market parsing. Final full suite: 132 passed.
 - 2026-10-29: Confirmed the browser replay root cause: service workers bypassed routed fixtures

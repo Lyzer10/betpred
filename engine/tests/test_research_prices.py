@@ -24,3 +24,16 @@ def test_research_prices_cannot_enter_live_selections_or_clv():
     assert best_pick(legs, set()) is None
     assert build_slips(legs, set()) == {}
     assert clv_report([], legs) == {"legs": 0}
+
+
+def test_monitors_ignore_research_quotes_in_real_archive():
+    from src.health import health_check, pair_monitor
+    archive = Path(__file__).resolve().parents[2] / "web" / "e2e" / "fixtures" / "archive"
+    fixtures = [fixture for path in archive.glob("20*.json")
+                for fixture in json.loads(path.read_text())["fixtures"] if fixture.get("result")]
+    quoted = json.loads((Path(__file__).parent / "fixtures" / "betpawa_research.json").read_text())
+    research = [{"market": market, "odds": price} for market, price in parse_markets(quoted).items()]
+    augmented = [{**fixture, "markets": [*fixture["markets"], *research]} for fixture in fixtures]
+    assert fixtures
+    assert health_check(augmented, [], SLIP_MARKETS) == health_check(fixtures, [], SLIP_MARKETS)
+    assert pair_monitor(augmented, SLIP_MARKETS, set()) == pair_monitor(fixtures, SLIP_MARKETS, set())

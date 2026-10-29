@@ -437,6 +437,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - 2026-10-29: Candidate market prices (home/away over 0.5/1.5 and DNB) parsed from verified real
   Betpawa event 38781890 and logged as research only in full/price snapshots. Team handicaps are
   line times four; DNB names are 1/2. Real-response parser and selection-isolation tests pass.
+  Additional monitor-isolation checks use real archive predictions; full engine suite:
+  131 passed, 1 skipped (2026-10-29).
 - 2026-10-29: Repository made public (unlimited Actions minutes). External timer (cron-job.org job 8716884)
   changed from every 30 to every 15 minutes, 06:00-23:45 EAT: final run and notification now ~40-55 min before
   the first kick-off (was ~25-55), and twice as many price snapshots before kick-offs. No code logic changed.

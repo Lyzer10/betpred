@@ -938,11 +938,11 @@
   {
     "round": "2026-10-29",
     "tier": "safe",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 2.78,
-    "win_probability": 0.3328,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 2.54,
+    "win_probability": 0.3825,
     "odds_source": "betpawa",
-    "expected_value": -0.0735,
+    "expected_value": -0.0279,
     "kelly": 0.0,
     "price_warning": false,
     "flexi": [],
@@ -962,7 +962,7 @@
         "label": "Home win",
         "probability": 0.5571,
         "estimated_odds": 1.66,
-        "betpawa_odds": 1.74,
+        "betpawa_odds": 1.79,
         "fair_odds": 1.79,
         "price_warning": false,
         "won": null
@@ -978,23 +978,23 @@
         },
         "home": "Fiorentina",
         "away": "Atalanta",
-        "market": "double_x2",
-        "label": "Away or draw",
-        "probability": 0.5973,
-        "estimated_odds": 1.64,
-        "betpawa_odds": 1.6,
-        "fair_odds": 1.67,
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.6865,
+        "estimated_odds": 1.36,
+        "betpawa_odds": 1.42,
+        "fair_odds": 1.46,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-10-30",
     "tier": "safe",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
+    "generated_at": "2026-10-29T16:46:04.822402Z",
     "total_odds": 2.53,
     "win_probability": 0.4637,
     "odds_source": "betpawa",
@@ -1075,21 +1075,21 @@
   {
     "round": "2026-10-30",
     "tier": "medium",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 3.54,
-    "win_probability": 0.3495,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 3.52,
+    "win_probability": 0.3444,
     "odds_source": "betpawa",
-    "expected_value": 0.2362,
-    "kelly": 0.0931,
+    "expected_value": 0.2112,
+    "kelly": 0.0839,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 3,
-        "probability": 0.7806
+        "probability": 0.7714
       },
       {
         "min_correct": 2,
-        "probability": 0.9659
+        "probability": 0.9611
       }
     ],
     "legs": [
@@ -1104,12 +1104,12 @@
         },
         "home": "Villarreal",
         "away": "Espanol",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.7342,
-        "estimated_odds": 1.39,
-        "betpawa_odds": 1.45,
-        "fair_odds": 1.36,
+        "market": "home_1up",
+        "label": "Home 1Up",
+        "probability": 0.8206,
+        "estimated_odds": 1.2,
+        "betpawa_odds": 1.26,
+        "fair_odds": 1.22,
         "price_warning": false,
         "won": null
       },
@@ -1124,12 +1124,12 @@
         },
         "home": "Le Havre",
         "away": "Paris SG",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8975,
-        "estimated_odds": 1.05,
-        "betpawa_odds": 1.11,
-        "fair_odds": 1.11,
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.7912,
+        "estimated_odds": 1.22,
+        "betpawa_odds": 1.27,
+        "fair_odds": 1.26,
         "price_warning": false,
         "won": null
       },
@@ -1180,21 +1180,21 @@
   {
     "round": "2026-10-30",
     "tier": "big",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 8.01,
-    "win_probability": 0.1535,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 8.17,
+    "win_probability": 0.1518,
     "odds_source": "betpawa",
-    "expected_value": 0.2297,
-    "kelly": 0.0328,
+    "expected_value": 0.2407,
+    "kelly": 0.0335,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 6,
-        "probability": 0.4914
+        "min_correct": 3,
+        "probability": 0.557
       },
       {
-        "min_correct": 5,
-        "probability": 0.7994
+        "min_correct": 2,
+        "probability": 0.8846
       }
     ],
     "legs": [
@@ -1211,30 +1211,10 @@
         "away": "Espanol",
         "market": "home_win",
         "label": "Home win",
-        "probability": 0.7342,
-        "estimated_odds": 1.39,
-        "betpawa_odds": 1.45,
-        "fair_odds": 1.36,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "18:00",
-        "kickoff_utc": "2026-10-30T18:00:00Z",
-        "league": {
-          "code": "LIGUE1",
-          "name": "Ligue 1",
-          "country": "France"
-        },
-        "home": "Le Havre",
-        "away": "Paris SG",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8975,
-        "estimated_odds": 1.05,
-        "betpawa_odds": 1.11,
-        "fair_odds": 1.11,
+        "probability": 0.7245,
+        "estimated_odds": 1.41,
+        "betpawa_odds": 1.47,
+        "fair_odds": 1.38,
         "price_warning": false,
         "won": null
       },
@@ -1249,52 +1229,12 @@
         },
         "home": "Nice",
         "away": "Rennes",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8328,
-        "estimated_odds": 1.13,
-        "betpawa_odds": 1.18,
-        "fair_odds": 1.2,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "20:05",
-        "kickoff_utc": "2026-10-30T20:05:00Z",
-        "league": {
-          "code": "LIGUE1",
-          "name": "Ligue 1",
-          "country": "France"
-        },
-        "home": "Lille",
-        "away": "Lens",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.7983,
-        "estimated_odds": 1.17,
-        "betpawa_odds": 1.23,
-        "fair_odds": 1.25,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "19:45",
-        "kickoff_utc": "2026-10-30T19:45:00Z",
-        "league": {
-          "code": "JUPILER",
-          "name": "Belgian Pro League",
-          "country": "Belgium"
-        },
-        "home": "Waregem",
-        "away": "Club Brugge",
         "market": "away_win",
         "label": "Away win",
-        "probability": 0.6608,
-        "estimated_odds": 1.49,
-        "betpawa_odds": 1.56,
-        "fair_odds": 1.51,
+        "probability": 0.395,
+        "estimated_odds": 2.42,
+        "betpawa_odds": 2.53,
+        "fair_odds": 2.53,
         "price_warning": false,
         "won": null
       },
@@ -1345,35 +1285,20 @@
   {
     "round": "2026-10-31",
     "tier": "safe",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 2.53,
-    "win_probability": 0.4042,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 2.54,
+    "win_probability": 0.4273,
     "odds_source": "betpawa",
-    "expected_value": 0.0218,
-    "kelly": 0.0142,
+    "expected_value": 0.085,
+    "kelly": 0.0552,
     "price_warning": false,
-    "flexi": [],
-    "legs": [
+    "flexi": [
       {
-        "date": "2026-10-31",
-        "time": "15:00",
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "league": {
-          "code": "EPL",
-          "name": "Premier League",
-          "country": "England"
-        },
-        "home": "Bournemouth",
-        "away": "Leeds",
-        "market": "home_1up",
-        "label": "Home 1Up",
-        "probability": 0.6222,
-        "estimated_odds": 1.55,
-        "betpawa_odds": 1.58,
-        "fair_odds": 1.61,
-        "price_warning": false,
-        "won": null
-      },
+        "min_correct": 2,
+        "probability": 0.859
+      }
+    ],
+    "legs": [
       {
         "date": "2026-10-31",
         "time": "13:00",
@@ -1393,6 +1318,46 @@
         "fair_odds": 1.54,
         "price_warning": false,
         "won": null
+      },
+      {
+        "date": "2026-10-31",
+        "time": "14:30",
+        "kickoff_utc": "2026-10-31T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Schalke 04",
+        "away": "RB Leipzig",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8643,
+        "estimated_odds": 1.09,
+        "betpawa_odds": 1.15,
+        "fair_odds": 1.16,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-31",
+        "time": "16:00",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Fenerbahce",
+        "away": "Goztep",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.761,
+        "estimated_odds": 1.32,
+        "betpawa_odds": 1.38,
+        "fair_odds": 1.31,
+        "price_warning": false,
+        "won": null
       }
     ],
     "final": false,
@@ -1401,37 +1366,41 @@
   {
     "round": "2026-10-31",
     "tier": "medium",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 3.53,
-    "win_probability": 0.2961,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 3.51,
+    "win_probability": 0.3089,
     "odds_source": "betpawa",
-    "expected_value": 0.0439,
-    "kelly": 0.0174,
+    "expected_value": 0.0826,
+    "kelly": 0.033,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 2,
-        "probability": 0.8435
+        "min_correct": 4,
+        "probability": 0.7298
+      },
+      {
+        "min_correct": 3,
+        "probability": 0.9431
       }
     ],
     "legs": [
       {
         "date": "2026-10-31",
-        "time": "15:00",
-        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "time": "13:00",
+        "kickoff_utc": "2026-10-31T13:00:00Z",
         "league": {
-          "code": "EPL",
-          "name": "Premier League",
-          "country": "England"
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
         },
-        "home": "Hull",
-        "away": "Ipswich",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.3929,
-        "estimated_odds": 2.58,
-        "betpawa_odds": 2.69,
-        "fair_odds": 2.54,
+        "home": "Levante",
+        "away": "Ath Madrid",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.6496,
+        "estimated_odds": 1.53,
+        "betpawa_odds": 1.6,
+        "fair_odds": 1.54,
         "price_warning": false,
         "won": null
       },
@@ -1464,14 +1433,54 @@
           "name": "Bundesliga",
           "country": "Germany"
         },
-        "home": "Werder Bremen",
-        "away": "Hoffenheim",
+        "home": "Schalke 04",
+        "away": "RB Leipzig",
         "market": "over_1.5",
         "label": "Over 1.5 goals",
-        "probability": 0.8775,
-        "estimated_odds": 1.07,
-        "betpawa_odds": 1.13,
-        "fair_odds": 1.14,
+        "probability": 0.8643,
+        "estimated_odds": 1.09,
+        "betpawa_odds": 1.15,
+        "fair_odds": 1.16,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-31",
+        "time": "15:30",
+        "kickoff_utc": "2026-10-31T15:30:00Z",
+        "league": {
+          "code": "EREDIV",
+          "name": "Eredivisie",
+          "country": "Netherlands"
+        },
+        "home": "Feyenoord",
+        "away": "For Sittard",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.8418,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.19,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-31",
+        "time": "16:00",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Fenerbahce",
+        "away": "Goztep",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.761,
+        "estimated_odds": 1.32,
+        "betpawa_odds": 1.38,
+        "fair_odds": 1.31,
         "price_warning": false,
         "won": null
       }
@@ -1482,21 +1491,21 @@
   {
     "round": "2026-10-31",
     "tier": "big",
-    "generated_at": "2026-10-29T15:01:34.661893Z",
-    "total_odds": 8.02,
-    "win_probability": 0.1334,
+    "generated_at": "2026-10-29T16:46:04.822402Z",
+    "total_odds": 8.03,
+    "win_probability": 0.1441,
     "odds_source": "betpawa",
-    "expected_value": 0.0704,
-    "kelly": 0.01,
+    "expected_value": 0.1568,
+    "kelly": 0.0223,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 4,
-        "probability": 0.5131
+        "min_correct": 5,
+        "probability": 0.5359
       },
       {
-        "min_correct": 3,
-        "probability": 0.8553
+        "min_correct": 4,
+        "probability": 0.864
       }
     ],
     "legs": [
@@ -1513,10 +1522,10 @@
         "away": "Ipswich",
         "market": "home_win",
         "label": "Home win",
-        "probability": 0.3929,
-        "estimated_odds": 2.58,
-        "betpawa_odds": 2.69,
-        "fair_odds": 2.54,
+        "probability": 0.3918,
+        "estimated_odds": 2.59,
+        "betpawa_odds": 2.71,
+        "fair_odds": 2.55,
         "price_warning": false,
         "won": null
       },
@@ -1549,54 +1558,74 @@
           "name": "Bundesliga",
           "country": "Germany"
         },
-        "home": "Augsburg",
-        "away": "Freiburg",
-        "market": "over_2.5",
-        "label": "Over 2.5 goals",
-        "probability": 0.661,
-        "estimated_odds": 1.46,
-        "betpawa_odds": 1.5,
-        "fair_odds": 1.51,
+        "home": "Schalke 04",
+        "away": "RB Leipzig",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8643,
+        "estimated_odds": 1.09,
+        "betpawa_odds": 1.15,
+        "fair_odds": 1.16,
         "price_warning": false,
         "won": null
       },
       {
         "date": "2026-10-31",
-        "time": "14:30",
-        "kickoff_utc": "2026-10-31T14:30:00Z",
+        "time": "15:30",
+        "kickoff_utc": "2026-10-31T15:30:00Z",
         "league": {
-          "code": "BUNDES",
-          "name": "Bundesliga",
-          "country": "Germany"
+          "code": "EREDIV",
+          "name": "Eredivisie",
+          "country": "Netherlands"
         },
-        "home": "Leverkusen",
-        "away": "Stuttgart",
+        "home": "Feyenoord",
+        "away": "For Sittard",
         "market": "over_1.5",
         "label": "Over 1.5 goals",
-        "probability": 0.9009,
-        "estimated_odds": 1.04,
-        "betpawa_odds": 1.1,
-        "fair_odds": 1.11,
+        "probability": 0.922,
+        "estimated_odds": 1.03,
+        "betpawa_odds": 1.09,
+        "fair_odds": 1.08,
         "price_warning": false,
         "won": null
       },
       {
         "date": "2026-10-31",
-        "time": "14:30",
-        "kickoff_utc": "2026-10-31T14:30:00Z",
+        "time": "15:30",
+        "kickoff_utc": "2026-10-31T15:30:00Z",
         "league": {
-          "code": "BUNDES",
-          "name": "Bundesliga",
-          "country": "Germany"
+          "code": "PRIMEIRA",
+          "name": "Primeira Liga",
+          "country": "Portugal"
         },
-        "home": "Werder Bremen",
-        "away": "Hoffenheim",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8775,
-        "estimated_odds": 1.07,
-        "betpawa_odds": 1.13,
-        "fair_odds": 1.14,
+        "home": "Moreirense",
+        "away": "Estrela",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9337,
+        "estimated_odds": 1.02,
+        "betpawa_odds": 1.07,
+        "fair_odds": 1.07,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-31",
+        "time": "16:00",
+        "kickoff_utc": "2026-10-31T16:00:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Fenerbahce",
+        "away": "Goztep",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.761,
+        "estimated_odds": 1.32,
+        "betpawa_odds": 1.38,
+        "fair_odds": 1.31,
         "price_warning": false,
         "won": null
       }

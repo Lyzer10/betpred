@@ -938,12 +938,12 @@
   {
     "round": "2026-10-29",
     "tier": "safe",
-    "generated_at": "2026-10-29T10:01:08.822029Z",
-    "total_odds": 2.6,
-    "win_probability": 0.4215,
+    "generated_at": "2026-10-29T12:09:01.145514Z",
+    "total_odds": 2.51,
+    "win_probability": 0.3825,
     "odds_source": "betpawa",
-    "expected_value": 0.0953,
-    "kelly": 0.0596,
+    "expected_value": -0.0387,
+    "kelly": 0.0,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -958,12 +958,12 @@
         },
         "home": "Frosinone",
         "away": "Lecce",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.614,
-        "estimated_odds": 1.63,
-        "betpawa_odds": 1.83,
-        "fair_odds": 1.63,
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.5571,
+        "estimated_odds": 1.66,
+        "betpawa_odds": 1.77,
+        "fair_odds": 1.79,
         "price_warning": false,
         "won": null
       },
@@ -994,183 +994,21 @@
   {
     "round": "2026-10-30",
     "tier": "safe",
-    "generated_at": "2026-10-29T10:01:08.822029Z",
-    "total_odds": 2.52,
-    "win_probability": 0.4112,
+    "generated_at": "2026-10-29T12:09:01.145514Z",
+    "total_odds": 2.55,
+    "win_probability": 0.4105,
     "odds_source": "betpawa",
-    "expected_value": 0.0358,
-    "kelly": 0.0236,
+    "expected_value": 0.047,
+    "kelly": 0.0303,
     "price_warning": false,
     "flexi": [
-      {
-        "min_correct": 2,
-        "probability": 0.8466
-      }
-    ],
-    "legs": [
-      {
-        "date": "2026-10-30",
-        "time": "20:00",
-        "kickoff_utc": "2026-10-30T20:00:00Z",
-        "league": {
-          "code": "LALIGA",
-          "name": "La Liga",
-          "country": "Spain"
-        },
-        "home": "Villarreal",
-        "away": "Espanol",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.7192,
-        "estimated_odds": 1.42,
-        "betpawa_odds": 1.48,
-        "fair_odds": 1.39,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "19:30",
-        "kickoff_utc": "2026-10-30T19:30:00Z",
-        "league": {
-          "code": "BUNDES",
-          "name": "Bundesliga",
-          "country": "Germany"
-        },
-        "home": "Elversberg",
-        "away": "Mainz",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8637,
-        "estimated_odds": 1.09,
-        "betpawa_odds": 1.15,
-        "fair_odds": 1.16,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "20:05",
-        "kickoff_utc": "2026-10-30T20:05:00Z",
-        "league": {
-          "code": "LIGUE1",
-          "name": "Ligue 1",
-          "country": "France"
-        },
-        "home": "Lille",
-        "away": "Lens",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6619,
-        "estimated_odds": 1.4,
-        "betpawa_odds": 1.48,
-        "fair_odds": 1.51,
-        "price_warning": false,
-        "won": null
-      }
-    ],
-    "final": false,
-    "status": "pending"
-  },
-  {
-    "round": "2026-10-30",
-    "tier": "medium",
-    "generated_at": "2026-10-29T10:01:08.822029Z",
-    "total_odds": 3.53,
-    "win_probability": 0.2921,
-    "odds_source": "betpawa",
-    "expected_value": 0.0305,
-    "kelly": 0.012,
-    "price_warning": false,
-    "flexi": [
-      {
-        "min_correct": 2,
-        "probability": 0.7393
-      }
-    ],
-    "legs": [
-      {
-        "date": "2026-10-30",
-        "time": "20:00",
-        "kickoff_utc": "2026-10-30T20:00:00Z",
-        "league": {
-          "code": "LALIGA",
-          "name": "La Liga",
-          "country": "Spain"
-        },
-        "home": "Villarreal",
-        "away": "Espanol",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.7192,
-        "estimated_odds": 1.42,
-        "betpawa_odds": 1.48,
-        "fair_odds": 1.39,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "19:30",
-        "kickoff_utc": "2026-10-30T19:30:00Z",
-        "league": {
-          "code": "BUNDES",
-          "name": "Bundesliga",
-          "country": "Germany"
-        },
-        "home": "Elversberg",
-        "away": "Mainz",
-        "market": "over_2.5",
-        "label": "Over 2.5 goals",
-        "probability": 0.6633,
-        "estimated_odds": 1.45,
-        "betpawa_odds": 1.49,
-        "fair_odds": 1.51,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-10-30",
-        "time": "18:00",
-        "kickoff_utc": "2026-10-30T18:00:00Z",
-        "league": {
-          "code": "LIGUE1",
-          "name": "Ligue 1",
-          "country": "France"
-        },
-        "home": "Nice",
-        "away": "Rennes",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6121,
-        "estimated_odds": 1.52,
-        "betpawa_odds": 1.6,
-        "fair_odds": 1.63,
-        "price_warning": false,
-        "won": null
-      }
-    ],
-    "final": false,
-    "status": "pending"
-  },
-  {
-    "round": "2026-10-30",
-    "tier": "big",
-    "generated_at": "2026-10-29T10:01:08.822029Z",
-    "total_odds": 8.13,
-    "win_probability": 0.1281,
-    "odds_source": "betpawa",
-    "expected_value": 0.0411,
-    "kelly": 0.0058,
-    "price_warning": false,
-    "flexi": [
-      {
-        "min_correct": 4,
-        "probability": 0.495
-      },
       {
         "min_correct": 3,
-        "probability": 0.8354
+        "probability": 0.8247
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.9752
       }
     ],
     "legs": [
@@ -1187,8 +1025,8 @@
         "away": "Espanol",
         "market": "home_win",
         "label": "Home win",
-        "probability": 0.7192,
-        "estimated_odds": 1.42,
+        "probability": 0.7207,
+        "estimated_odds": 1.41,
         "betpawa_odds": 1.48,
         "fair_odds": 1.39,
         "price_warning": false,
@@ -1245,6 +1083,172 @@
         },
         "home": "Nice",
         "away": "Rennes",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8328,
+        "estimated_odds": 1.13,
+        "betpawa_odds": 1.18,
+        "fair_odds": 1.2,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-30",
+    "tier": "medium",
+    "generated_at": "2026-10-29T12:09:01.145514Z",
+    "total_odds": 3.58,
+    "win_probability": 0.2887,
+    "odds_source": "betpawa",
+    "expected_value": 0.0336,
+    "kelly": 0.013,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.8311
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-30",
+        "time": "20:00",
+        "kickoff_utc": "2026-10-30T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Villarreal",
+        "away": "Espanol",
+        "market": "home_1up",
+        "label": "Home 1Up",
+        "probability": 0.8175,
+        "estimated_odds": 1.2,
+        "betpawa_odds": 1.27,
+        "fair_odds": 1.22,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-30",
+        "time": "18:00",
+        "kickoff_utc": "2026-10-30T18:00:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Le Havre",
+        "away": "Paris SG",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8975,
+        "estimated_odds": 1.05,
+        "betpawa_odds": 1.11,
+        "fair_odds": 1.11,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-30",
+        "time": "18:00",
+        "kickoff_utc": "2026-10-30T18:00:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Nice",
+        "away": "Rennes",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.3934,
+        "estimated_odds": 2.43,
+        "betpawa_odds": 2.54,
+        "fair_odds": 2.54,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-10-30",
+    "tier": "big",
+    "generated_at": "2026-10-29T12:09:01.145514Z",
+    "total_odds": 8.21,
+    "win_probability": 0.1264,
+    "odds_source": "betpawa",
+    "expected_value": 0.0377,
+    "kelly": 0.0052,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 3,
+        "probability": 0.5015
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.8563
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-10-30",
+        "time": "20:00",
+        "kickoff_utc": "2026-10-30T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Villarreal",
+        "away": "Espanol",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.7207,
+        "estimated_odds": 1.41,
+        "betpawa_odds": 1.48,
+        "fair_odds": 1.39,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-30",
+        "time": "18:00",
+        "kickoff_utc": "2026-10-30T18:00:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Le Havre",
+        "away": "Paris SG",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.7919,
+        "estimated_odds": 1.22,
+        "betpawa_odds": 1.27,
+        "fair_odds": 1.26,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-10-30",
+        "time": "18:00",
+        "kickoff_utc": "2026-10-30T18:00:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Nice",
+        "away": "Rennes",
         "market": "away_win",
         "label": "Away win",
         "probability": 0.3934,
@@ -1265,12 +1269,12 @@
         },
         "home": "Lille",
         "away": "Lens",
-        "market": "under_3.5",
-        "label": "Under 3.5 goals",
-        "probability": 0.6619,
-        "estimated_odds": 1.4,
-        "betpawa_odds": 1.48,
-        "fair_odds": 1.51,
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.5628,
+        "estimated_odds": 1.67,
+        "betpawa_odds": 1.72,
+        "fair_odds": 1.78,
         "price_warning": false,
         "won": null
       }

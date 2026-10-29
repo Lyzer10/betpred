@@ -144,6 +144,11 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-10-25)
+- Next-round research (2026-10-29): all four candidate leagues meet the registered READY rule
+  (Eredivisie 7/8, Belgium 8/8, Portugal 7/8, Turkey 8/8 markets PASS), with Betpawa and ESPN
+  coverage verified. None is live. Task 14 retains independent slips. Candidate market prices are
+  collected for research only. Browser checks now replay real captured data without service-worker
+  interference and pass in both themes at 375px.
 - Public-repo readiness (2026-10-29): the complete reachable history (145 commits, all branches) has
   no committed secret value, private key, webhook URL, push subscription, ntfy topic, cron-job.org key,
   or personal contact detail outside commit-author metadata. Both workflows avoid
@@ -366,6 +371,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
    Verify Betpawa competition IDs from its public API and ESPN league slugs with actual
    scores/fixtures responses; report evidence. READY only if >=6 of 8 markets PASS and
    both Betpawa and ESPN cover it; otherwise NOT READY with reason. No live league additions.
+   Result (DONE 2026-10-29, `reports/new_leagues_study.md`): all four READY. Eredivisie 7/8
+   (double_12 FAIL), Belgium 8/8, Portugal 7/8 (home_win FAIL), Turkey 8/8. Fixed rho -0.054288.
+   Betpawa IDs respectively 12125, 12128, 12124, 12182; ESPN ned.1, bel.1, por.1, tur.1 has both
+   scheduled fixtures and verified completed scores. Full per-season coverage and unchanged gate
+   details are in the report. Downloads and real responses are cached. No live integration.
 14. **At most two slips per match** (PRE-REGISTERED 2026-10-29, before results; research only).
    Module `src/overlap_study.py`, report `reports/overlap_study.md`, tests
    `tests/test_overlap_study.py`. Pool exactly `diversity_study.load_legs` (five leagues,
@@ -387,6 +397,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 ## 7. Studies already done (do not redo without a new reason)
 | Idea | Result | Decision |
 |---|---|---|
+| Four candidate leagues (task 13) | N1 7/8, B1 8/8, P1 7/8, T1 8/8 PASS; Betpawa and ESPN verified | READY for a later integration task; not live |
 | Limit a match to two slips (task 14) | matched return -4.55 points, CI -14.45 to +4.51; all-loss days slightly lower | KEEP A |
 | League table, derbies, team home strength, rest days | none lowered log loss on unseen seasons | rejected |
 | Missing players (Understat lineups; upper bound of injury news) | no improvement; team news already in prices | rejected |
@@ -432,6 +443,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Completed task 13: four leagues READY by the pre-registered rule, real historical
+  CSVs and ESPN/Betpawa responses cached; no live leagues changed. Source failures during the cached
+  pipeline check were caught and publication finished with health ok and zero new fixtures; generated
+  tracked data was restored. Browser replay now passes in both themes with service workers blocked.
 - 2026-10-29: Task 14 overlap study keeps independent tiers; limiting a match to two slips failed
   the registered matched-return rule. Report and known-answer optimizer-state tests added.
 - 2026-10-29: Candidate market prices (home/away over 0.5/1.5 and DNB) parsed from verified real
@@ -445,8 +460,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - 2026-10-29: Pre-registered research tasks 13 and 14 before any results; implementation pending.
 - 2026-10-29: Browser checks select a real fixture's badge and an available league table from the
   committed test data; schedule days use Tanzania time explicitly and replay uses the captured
-  publication time. Build passed. Schedule-only rendering remains an existing app/handbook
-  mismatch on latest main (Matches dates omit the schedule); its assertion is retained.
+  publication time. Test contexts block service workers so reloads cannot bypass response routing
+  and mix current production data with captured fixtures. The app already supports schedule-only days
+  through MatchesRedesign; the earlier diagnosis from the unused Matches component was incorrect.
 - 2026-10-29: Final-slip churn study (task 12) kept the current final selection: K improved estimated
   return by +1.14 points, but its 95% CI (-1.86 to +4.03) failed the pre-registered lower-bound rule.
   The report and synthetic known-answer tests were added; no live preview/final behavior changed.

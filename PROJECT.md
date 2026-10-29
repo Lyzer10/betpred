@@ -351,6 +351,36 @@ Claude (hard, affects predictions):
      returns compare selection rules; they do not prove profitability. No live churn behavior changed.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
+13. **Four new leagues** (PRE-REGISTERED 2026-10-29, before results; research only).
+   Module `src/new_leagues_study.py`, report `reports/new_leagues_study.md`, tests
+   `tests/test_new_leagues_study.py`. Eredivisie N1, Belgian Pro League B1, Primeira Liga P1,
+   Super Lig T1: football-data season CSVs 2014/15 through 2026/27. Use AvgH/D/A and
+   Avg>2.5/<2.5, otherwise older BbAvH/D/A and BbAv>2.5/<2.5. Verify real column names;
+   report matches and complete-odds counts per season. Drop incomplete rows without filling.
+   Raw probabilities: `accumulators.bookmaker_implied`, rho fixed to the median of
+   `market_live.league_rho` over the five live leagues; report rho. Markets: home_win,
+   away_win, double_1x, double_x2, double_12, over_0.5, over_1.5, over_2.5. No 1Up or unders.
+   Platt calibration per league/market, LogisticRegression(C=1.0) on logit(raw), fitted
+   on earlier seasons only; first season unscored. Judge 2024/25 onwards with unchanged
+   `market_gates.evaluate` (one-sided C1-C4, >=300 legs), bookmaker_probability = raw.
+   Verify Betpawa competition IDs from its public API and ESPN league slugs with actual
+   scores/fixtures responses; report evidence. READY only if >=6 of 8 markets PASS and
+   both Betpawa and ESPN cover it; otherwise NOT READY with reason. No live league additions.
+14. **At most two slips per match** (PRE-REGISTERED 2026-10-29, before results; research only).
+   Module `src/overlap_study.py`, report `reports/overlap_study.md`, tests
+   `tests/test_overlap_study.py`. Pool exactly `diversity_study.load_legs` (five leagues,
+   2024/25+, gate FAILs excluded), additionally excluding under_2.5/under_3.5.
+   A independently selects Safe/Medium/Big with best_slip. M keeps A's Safe/Medium;
+   Big uses best_slip after excluding every match appearing in BOTH Safe and Medium.
+   If no valid Big remains, M offers none. Primary: return per unit staked,
+   won * total_odds - 1, on matched day/tier pairs offered by both. M-A 95% CI from
+   2,000 whole-day bootstrap resamples, seed 20261029. Secondary: all-offered-slips-lost
+   day share, days with a match on all three under A, per-tier predicted/actual win
+   rates and Wilson CIs, Big slip counts. Adopt M only if M-A >=0, CI lower >=-0.01,
+   and M all-loss share <= A; otherwise keep A. Known-answer tests before real run:
+   no shared matches => M=A; Safe/Medium intersection never enters M Big; no valid
+   Big after removal => M offers none. No live change in this task.
+
 ## 7. Studies already done (do not redo without a new reason)
 | Idea | Result | Decision |
 |---|---|---|
@@ -401,6 +431,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - 2026-10-29: Repository made public (unlimited Actions minutes). External timer (cron-job.org job 8716884)
   changed from every 30 to every 15 minutes, 06:00-23:45 EAT: final run and notification now ~40-55 min before
   the first kick-off (was ~25-55), and twice as many price snapshots before kick-offs. No code logic changed.
+- 2026-10-29: Pre-registered research tasks 13 and 14 before any results; implementation pending.
+- 2026-10-29: Browser checks select a real fixture's badge and an available league table from the
+  committed test data; schedule days use Tanzania time explicitly. Verification pending.
 - 2026-10-29: Final-slip churn study (task 12) kept the current final selection: K improved estimated
   return by +1.14 points, but its 95% CI (-1.86 to +4.03) failed the pre-registered lower-bound rule.
   The report and synthetic known-answer tests were added; no live preview/final behavior changed.

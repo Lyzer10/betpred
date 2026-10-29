@@ -152,6 +152,9 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 - Live slips and match-page headline picks are overs-only for goal totals (2026-10-29): under 2.5
   and under 3.5 stay available as probability information but cannot be selected. BTTS remains out
   of slips. Tie priority is over goals, double chance, 1Up, then team win.
+- Final-slip churn study (task 12) is pre-registered but not yet run: it will test whether retaining
+  a preview unless the final slip is clearly better improves matched-slip return without changing
+  the live strategy before the result is known.
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
   a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
@@ -310,6 +313,36 @@ Claude (hard, affects predictions):
    27.2%, Big 9.8% vs 10.2%; matched-day differences all within chance (Safe +0.019, 95% CI -0.011 to
    +0.049). No measurable cost. The owner approved it: live slip construction and match-page best
    picks now exclude under 2.5/3.5, while research `SLIP_MARKETS`, model outputs and gates are unchanged.
+12. **Final-run preview churn** (PRE-REGISTERED 2026-10-29, before any result; research only,
+   `python -m src.final_churn_study`):
+   - Module `engine/src/final_churn_study.py`, report `engine/reports/final_churn_study.md`, tests in
+     `engine/tests/test_final_churn_study.py`.
+   - Data: five leagues (EPL, LALIGA, SERIEA, BUNDES, LIGUE1), seasons 2019/20 onwards, matches with
+     both the average odds (`avg_odds_*`) and closing odds (`close_odds_*`) for 1X2 and over/under 2.5.
+   - Probabilities: `accumulators.bookmaker_implied(odds..., league_rho(league))` with the league's rho
+     from `market_live.league_rho`. "Preview" uses the average (early) odds; "final" uses the closing
+     odds. Use the same probabilities for every variant (no calibration) so only the selection rule differs.
+   - Legs: the live slip markets after task 11 (`SLIP_MARKETS` minus under 2.5 and under 3.5), excluding
+     league x market pairs that FAIL in `engine/data/processed/market_gates.json`. Leg odds are what the
+     bettor gets at final time: `1 / (p_final * (1 + accumulators.RETAIL_MARGIN))`; legs with odds below
+     1.05 are excluded. Days are grouped by calendar date of kick-off and all leagues pooled per day,
+     as the live app does.
+   - Variants, with each Safe, Medium and Big tier selected by `accumulators.best_slip`:
+     F (current) builds from final probabilities and odds. P (never change) builds from preview
+     probabilities, then bets those legs at final odds. K (keep unless clearly better) takes P unless
+     (i) P's total final odds fall outside the tier's range, or (ii) F's product of final probabilities
+     exceeds P's product of final probabilities by more than 3% relative (`F > 1.03 * P`). If either
+     condition holds, K takes F.
+   - Primary metric: return per unit staked, `won * total_odds - 1`, per day and tier, on days and tiers
+     where F offers a slip, so all variants are matched on the same days and tiers. Report K - F and
+     P - F with 95% confidence intervals from 2,000 bootstrap resamples of whole days, seed 20261029.
+   - Secondary metrics, reported but not deciding: win rate per tier with Wilson confidence intervals,
+     predicted versus actual, share of days where K kept the preview, and number of slips.
+   - Decision: adopt K only if the K - F point estimate is at least zero AND its confidence-interval
+     lower bound is at least -0.01. Otherwise keep F (current). P is reported only.
+   - Before real data: synthetic known-answer tests must show (1) identical preview and final gives
+     identical K, P and F; (2) K takes F when F is more than 3% better; and (3) K takes F when P's
+     final odds fall outside the tier range. Report the result exactly, including if it says keep F.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)
@@ -358,6 +391,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Pre-registered task 12, the final-slip churn study, before computing any result. It
+  compares current final selection with never changing and a fixed 3%-relative "keep preview"
+  threshold on matched day/tier returns; no live preview/final behavior has changed.
 - 2026-10-29: Owner-approved overs-only live rule: under 2.5/3.5 cannot enter live slips or the
   match-page best pick, while their model probabilities and all research/gate markets remain intact.
   BTTS remains outside slips. Best-pick tie priority is over goals, double chance, 1Up, then team win.

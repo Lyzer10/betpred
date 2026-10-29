@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-10-25 (Africa/Dar_es_Salaam), by Codex.
+Last updated: 2026-10-29 (Africa/Dar_es_Salaam), by Codex.
 
 ---
 
@@ -109,7 +109,10 @@ or fixed TSh; never a stake without a 3% edge; **pilot cap: max 3% of balance pe
 the user's slips have settled**.
 
 ### Deployment
-- Repo: GitHub `Lyzer10/betpred` (private), branch `main`.
+- Repo: GitHub `Lyzer10/betpred` (public; the owner changes visibility manually), branch `main`.
+  Standard GitHub-hosted runners have unlimited Actions minutes for public repositories. Repository
+  visibility does not expose Actions secrets: notification and external-timer credentials remain in
+  GitHub Secrets and are passed only to the steps that need them.
 - GitHub Actions `.github/workflows/daily-predictions.yml`, woken every 30 minutes (06:00-23:30 EAT) by
   an external timer (cron-job.org POSTs the workflow_dispatch API with a fine-grained token limited to
   Actions on this repo), plus GitHub's own schedule at 07:07 / 13:17 / 18:17 EAT as backup (GitHub's
@@ -139,6 +142,11 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-10-25)
+- Public-repo readiness (2026-10-29): the complete reachable history (145 commits, all branches) has
+  no committed secret value, private key, webhook URL, push subscription, ntfy topic, cron-job.org key,
+  or personal contact detail outside commit-author metadata. Both workflows avoid
+  `pull_request_target`, do not print secrets, and request only `contents: write`, which their publish
+  steps require. The owner still controls the actual GitHub visibility change.
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
   a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
@@ -343,6 +351,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Prepared the repository documentation for public visibility after auditing all 145
+  reachable commits and every workflow. No real secret was found; GitHub Secret names and the public
+  cron job ID are references only. Workflow permissions were already minimal for their push steps, so
+  no workflow or schedule change was needed.
 - 2026-10-29: Studies only, no live change (tasks 8-11): team tendencies rejected; market mode re-confirmed
   for La Liga, Serie A, Bundesliga, Ligue 1; team over 0.5/1.5 and Draw No Bet pass the gates in 28 of 30
   league pairs (not live yet); dropping under goals costs nothing measurable (awaiting owner approval).

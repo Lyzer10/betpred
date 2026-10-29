@@ -118,7 +118,7 @@ the user's slips have settled**.
   - **final**: from 55 minutes before today's first match (so after line-ups, ~25-55 min before kick-off),
     full run with `--final`: today's slips become final (never replaced or added to, even by later
     runs), then `scripts/notify.py` sends the phone notification (ntfy topic in secret `NTFY_TOPIC`).
-  - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
+  - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
     Also when fixtures.csv shows new upcoming matches with odds not yet published (max ~hourly).
   - **prices**: a match kicks off within 35 minutes: `python -m src.prices` logs Betpawa prices only.
   - **skip**: nothing due (costs ~1 of the 2,000 free private-repo minutes a month).
@@ -257,6 +257,21 @@ Claude (hard, affects predictions):
    the last 40% compare it with won ~ logit(ours) fitted the same way (so a gain is Betpawa's
    information, not a recalibration of ours). Paired log loss difference, 95% CI by whole days (2,000,
    seed 20261025). Use it only if the CI is entirely above 0.
+8. **Team tendencies the prices miss** (PRE-REGISTERED 2026-10-29, before any result,
+   `python -m src.team_tendency_study`; full rules in the module docstring). Owner's ideas: teams that
+   tend to lead first (1Up), and teams the market keeps over- or underrating ("Juventus"). Two families,
+   lead (home/away 1Up) and win (home/away win). Features from each team's previous 38 league matches:
+   its own mean (outcome - bookmaker probability) and its opponents' against it. Primary: five leagues
+   pooled, seasons 2017/18+, fitted on earlier seasons only, baseline that also recalibrates the price
+   (`won ~ logit(p) + away`) vs baseline + team features; paired log loss, 95% CI by whole days (2,000,
+   seed 20261029). Secondary: the live probabilities on 2024/25+ legs, first 60% of days fit, last 40%
+   scored. USE only if the primary CI is entirely above 0 AND the secondary gain is above 0. Checked on
+   synthetic data first (`tests/test_team_tendency_study.py`: finds a planted effect, rejects none).
+9. **Blended vs market re-test with more data** (PRE-REGISTERED 2026-10-29, `python -m src.method_retest_study`):
+   La Liga, Serie A, Bundesliga, Ligue 1; validation + test seasons, all 12 slip markets (the original
+   choice used 1X2 on 2024/25+ only). Blend weight fitted walk-forward on earlier seasons; scored
+   2022/23 onwards; paired log loss market - blended, 95% CI by whole days (2,000, seed 20261029).
+   Switch a league to blended only if the CI is entirely above 0.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)

@@ -115,12 +115,12 @@ the user's slips have settled**.
   Standard GitHub-hosted runners have unlimited Actions minutes for public repositories. Repository
   visibility does not expose Actions secrets: notification and external-timer credentials remain in
   GitHub Secrets and are passed only to the steps that need them.
-- GitHub Actions `.github/workflows/daily-predictions.yml`, woken every 30 minutes (06:00-23:30 EAT) by
+- GitHub Actions `.github/workflows/daily-predictions.yml`, woken every 15 minutes (06:00-23:45 EAT; every 30 minutes until 2026-10-29) by
   an external timer (cron-job.org POSTs the workflow_dispatch API with a fine-grained token limited to
   Actions on this repo), plus GitHub's own schedule at 07:07 / 13:17 / 18:17 EAT as backup (GitHub's
   schedule started 3-4 hours late on 24 Oct 2026, so it cannot time the final run). Each wake-up runs
   `scripts/run_mode.py`, which picks one mode:
-  - **final**: from 55 minutes before today's first match (so after line-ups, ~25-55 min before kick-off),
+  - **final**: from 55 minutes before today's first match (with the 15-minute timer the run starts ~40-55 min before kick-off, around line-up time),
     full run with `--final`: today's slips become final (never replaced or added to, even by later
     runs), then `scripts/notify.py` sends the phone notification (ntfy topic in secret `NTFY_TOPIC`).
   - **full**: 07:00, 13:00, 18:00 EAT runs (tests, `src.predict`, publish); slips are "Preview" until final.
@@ -398,6 +398,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Repository made public (unlimited Actions minutes). External timer (cron-job.org job 8716884)
+  changed from every 30 to every 15 minutes, 06:00-23:45 EAT: final run and notification now ~40-55 min before
+  the first kick-off (was ~25-55), and twice as many price snapshots before kick-offs. No code logic changed.
 - 2026-10-29: Final-slip churn study (task 12) kept the current final selection: K improved estimated
   return by +1.14 points, but its 95% CI (-1.86 to +4.03) failed the pre-registered lower-bound rule.
   The report and synthetic known-answer tests were added; no live preview/final behavior changed.

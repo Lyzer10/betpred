@@ -1,7 +1,7 @@
 name: Daily predictions
 
 # Runs in GitHub's cloud (the PC is not needed).
-# Woken every 30 minutes by an external timer (cron-job.org calls the workflow_dispatch API; GitHub's
+# Woken every 15 minutes by an external timer (cron-job.org calls the workflow_dispatch API; GitHub's
 # own schedule can start hours late) plus GitHub's schedule as a backup. scripts/run_mode.py then
 # picks: final (shortly before today's first match: slips become final, phone notification), full
 # (07:00 / 13:00 / 18:00 Tanzania), prices (log Betpawa prices before kick-offs) or skip.

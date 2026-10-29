@@ -1,6 +1,6 @@
 """Decide what a scheduled wake-up should do (standard library only, runs before any install).
 
-The workflow is woken every 30 minutes by an external timer (GitHub's own schedule can start
+The workflow is woken every 15 minutes by an external timer (GitHub's own schedule can start
 hours late) and at fixed backup times. Each wake-up picks one mode:
   final  - today's first match starts within FINAL_BEFORE minutes and today is not final yet:
            full run with fresh Betpawa prices; today's slips become final; notification.

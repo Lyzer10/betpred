@@ -152,9 +152,9 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 - Live slips and match-page headline picks are overs-only for goal totals (2026-10-29): under 2.5
   and under 3.5 stay available as probability information but cannot be selected. BTTS remains out
   of slips. Tie priority is over goals, double chance, 1Up, then team win.
-- Final-slip churn study (task 12) is pre-registered but not yet run: it will test whether retaining
-  a preview unless the final slip is clearly better improves matched-slip return without changing
-  the live strategy before the result is known.
+- Final-slip churn study (task 12, 2026-10-29): **KEEP F**, the current final selection. K's return
+  improvement was +1.14 points per unit, but its whole-day 95% CI was -1.86 to +4.03 points, so the
+  lower bound failed the pre-registered -1.00-point requirement. No live preview/final behavior changed.
 - Live: five leagues, Betpawa odds for all, slips across leagues, badges for all clubs,
   pilot stake cap, health check ("insufficient data" until ~30 settled matches), glass surfaces,
   a four destination floating menu with past slip results on Bets, and announced line-ups drawn on
@@ -343,6 +343,12 @@ Claude (hard, affects predictions):
    - Before real data: synthetic known-answer tests must show (1) identical preview and final gives
      identical K, P and F; (2) K takes F when F is more than 3% better; and (3) K takes F when P's
      final odds fall outside the tier range. Report the result exactly, including if it says keep F.
+   - Result (DONE 2026-10-29, `reports/final_churn_study.md`): **KEEP F**. Across 3,106 matched slips
+     on 1,182 days, mean estimated return per unit was F -17.35%, P -13.74%, K -16.21%. P - F was
+     +3.61 points (95% whole-day bootstrap CI -5.39 to +12.81); K - F was +1.14 points (-1.86 to
+     +4.03). K kept 510 previews (16.4%) on 430 days. Its point estimate passed, but the CI lower
+     bound was below -1.00 point, so the registered adoption rule failed. These margin-based estimated
+     returns compare selection rules; they do not prove profitability. No live churn behavior changed.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)
@@ -358,6 +364,7 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Blended vs market, 4 leagues, 5 seasons, 12 slip markets (2026-10-29) | market better in all four (3 of 4 significant) | market kept (`src/method_retest_study.py`) |
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 | Remove under 2.5/3.5 from live slips (owner's product rule, 2026-10-29) | no measurable cost on 367 days; Safe and Medium point estimates improved | approved; live slips and best picks are overs-only |
+| Keep preview unless final is >3% better (2026-10-29) | K - F +1.14 return points, 95% CI -1.86 to +4.03; lower bound failed the registered -1.00 threshold | rejected; current final selection kept (`src/final_churn_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
 - "Nothing to predict" is a normal day, not an error: every step after it (settlement, publishing) must
@@ -391,6 +398,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Final-slip churn study (task 12) kept the current final selection: K improved estimated
+  return by +1.14 points, but its 95% CI (-1.86 to +4.03) failed the pre-registered lower-bound rule.
+  The report and synthetic known-answer tests were added; no live preview/final behavior changed.
 - 2026-10-29: Pre-registered task 12, the final-slip churn study, before computing any result. It
   compares current final selection with never changing and a fixed 3%-relative "keep preview"
   threshold on matched day/tier returns; no live preview/final behavior has changed.

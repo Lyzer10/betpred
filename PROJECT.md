@@ -267,17 +267,35 @@ Claude (hard, affects predictions):
    seed 20261029). Secondary: the live probabilities on 2024/25+ legs, first 60% of days fit, last 40%
    scored. USE only if the primary CI is entirely above 0 AND the secondary gain is above 0. Checked on
    synthetic data first (`tests/test_team_tendency_study.py`: finds a planted effect, rejects none).
+   - Result (DONE 2026-10-29, `reports/team_tendency_study.md`): DO NOT USE, both families. Lead: 32,910
+     legs, gain -0.00009 (95% CI -0.00018 to -0.00000), live -0.00044; win: -0.00004 (-0.00013 to
+     +0.00005), live -0.00336. A team's season residual does not carry into the next season (r = 0.016
+     lead, 0.021 win, 886 team pairs): the prices already hold what is lasting about a team.
 9. **Blended vs market re-test with more data** (PRE-REGISTERED 2026-10-29, `python -m src.method_retest_study`):
    La Liga, Serie A, Bundesliga, Ligue 1; validation + test seasons, all 12 slip markets (the original
    choice used 1X2 on 2024/25+ only). Blend weight fitted walk-forward on earlier seasons; scored
    2022/23 onwards; paired log loss market - blended, 95% CI by whole days (2,000, seed 20261029).
    Switch a league to blended only if the CI is entirely above 0.
+   - Result (DONE 2026-10-29, `reports/method_retest_study.md`): KEEP MARKET in all four. Gain (market -
+     blended log loss): La Liga -0.00183 (95% CI -0.00391 to +0.00013, 17,761 legs), Serie A -0.00166
+     (-0.00278 to -0.00055), Bundesliga -0.00286 (-0.00447 to -0.00117), Ligue 1 -0.00301 (-0.00495 to
+     -0.00114). The fitted model weight falls every season (e.g. Ligue 1 0.75 -> 0.20).
 10. **New candidate markets: team over 0.5 / 1.5 goals, Draw No Bet** (PRE-REGISTERED 2026-10-29,
    `python -m src.new_markets_study`; owner's request, full rules in the module docstring). Probability =
    score matrix implied by the bookmaker average, Platt-calibrated per league x market on earlier seasons
    only; judged by the unchanged task-1 gates (one-sided C1-C4, >= 300 legs) on 2024/25 onwards. DNB is
    scored on non-drawn matches (draw = refund). A PASS pair may enter slips only after implementation
    and Betpawa price logging; FAIL/INSUFFICIENT stays out.
+   - Result (DONE 2026-10-29, `reports/new_markets_study.md`): 28 PASS, 2 FAIL (Serie A home over 0.5:
+     said 74.7%, won 71.7%; Bundesliga DNB home: said 60.9%, won 55.7%). The raw matrix (no Platt) passed
+     all 30; using raw instead would need its own pre-registered test, not a switch after seeing this.
+     NOT LIVE: needs Betpawa parsing (market ids 5006/5003 team totals, 4703 DNB), price logging, and slip
+     maths for DNB refunds (a draw turns the leg into odds 1.00).
+11. **Owner's market preference (2026-10-29): no under goals, no BTTS in slips.** Backtest (not
+   pre-registered; owner's product rule, checked for cost): 367 days, 2024/25+, five leagues, gate FAILs
+   excluded. Without under 2.5/3.5: Safe won 37.6% vs 35.7% (predicted 38.4% vs 38.6%), Medium 28.8% vs
+   27.2%, Big 9.8% vs 10.2%; matched-day differences all within chance (Safe +0.019, 95% CI -0.011 to
+   +0.049). No measurable cost. NOT LIVE until the owner approves.
 Codex (simple): README upkeep, UI polish tasks given as prompts.
 
 ## 7. Studies already done (do not redo without a new reason)
@@ -289,6 +307,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 | Per-market model weights (EPL) | worse than one global weight (0.60164 vs 0.60147) | rejected (`src/market_weight_study.py`) |
 | Blended model for La Liga/Serie A/Bundesliga/Ligue 1 | less accurate than market mode | market mode used |
 | EPL weight from all seasons (A) vs test-era only (V, live) | log loss difference +0.00033, 95% CI -0.00166 to +0.00231 | V kept (`src/weight_study.py`) |
+| Team tendencies: first-to-lead (1Up) and "market keeps misjudging a team" (2026-10-29) | no gain; season-to-season persistence r = 0.02 | rejected (`src/team_tendency_study.py`) |
+| Blended vs market, 4 leagues, 5 seasons, 12 slip markets (2026-10-29) | market better in all four (3 of 4 significant) | market kept (`src/method_retest_study.py`) |
 | No shared matches across Safe/Medium/Big | growth gain only from betting less; ROI per stake worse (-11.6% vs -8.4%); all-loss days 197 vs 198 of 402 | rejected (`src/diversity_study.py`) |
 
 ## 8. Lessons and pitfalls (read before changing things)
@@ -323,6 +343,10 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Studies only, no live change (tasks 8-11): team tendencies rejected; market mode re-confirmed
+  for La Liga, Serie A, Bundesliga, Ligue 1; team over 0.5/1.5 and Draw No Bet pass the gates in 28 of 30
+  league pairs (not live yet); dropping under goals costs nothing measurable (awaiting owner approval).
+  Betpawa lists 107 markets per match (EPL); SportPesa's robots.txt allows reading (not used yet).
 - 2026-10-27: Betpawa fallback (`predict.add_betpawa_fixtures`): a match football-data has not posted yet
   (e.g. the midweek Serie A round) is priced from Betpawa's 1X2 and over/under 2.5 instead of the
   bookmaker average, within 48 hours of kick-off; the method after that is unchanged and the match is

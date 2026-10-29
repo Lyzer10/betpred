@@ -39,7 +39,7 @@ from .goal_timing import (
 )
 from .leagues import get_league, paths
 from .market_gates import GATES_PATH
-from .prices import clv_report, log_prices
+from .prices import clv_report, log_prices, log_research_prices
 from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
 from .team_names import canonical_team
 
@@ -821,11 +821,15 @@ def main() -> None:
 
     betpawa_parts = []
     for code in (legs.league.unique() if legs is not None else []):
-        betpawa_parts.append(betpawa_prices(code))      # fetched once per run (also used for the fallback)
+        betpawa_parts.append(betpawa_prices(code).assign(league=code))  # fetched once per run
     betpawa = (pd.concat(betpawa_parts, ignore_index=True) if betpawa_parts
                else pd.DataFrame(columns=["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]))
     print(f"Betpawa: {len(betpawa)} prices across {len(betpawa_parts)} leagues")
     today = local_day(pd.Series([now])).iloc[0]
+    try:
+        log_research_prices(betpawa, now)
+    except Exception as error:
+        print(f"Research price logging unavailable ({error})")
     if legs is not None:
         legs = attach_betpawa(legs, betpawa)
         legs["day"] = local_day(legs.kickoff_utc)

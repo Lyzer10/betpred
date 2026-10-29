@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 import pandas as pd
 
 from .accumulators import SLIP_MARKETS
-from .betpawa import fetch_competition_odds
+from .betpawa import RESEARCH_MARKETS, fetch_competition_odds
 from .calibration import ENGINE_DIR
 
 PRICES_DIR = ENGINE_DIR / "data" / "live" / "prices"
@@ -61,7 +61,8 @@ def snapshot(now: pd.Timestamp) -> int:
             print(f"{code}: Betpawa unavailable ({error})")
             continue
         for f in (f for f in soon if f["league"]["code"] == code):
-            rows = odds[(odds.home_team == f["home"]) & (odds.away_team == f["away"]) & odds.market.isin(SLIP_MARKETS)]
+            rows = odds[(odds.home_team == f["home"]) & (odds.away_team == f["away"])
+                        & odds.market.isin((*SLIP_MARKETS, *RESEARCH_MARKETS))]
             if rows.empty:
                 continue
             rows = rows.assign(snapshot_utc=now.isoformat() + "Z", league=code, home=f["home"], away=f["away"],
@@ -69,6 +70,24 @@ def snapshot(now: pd.Timestamp) -> int:
             _append(rows, f["day"])
             logged += len(rows)
     return logged
+
+
+def log_research_prices(odds: pd.DataFrame, now: pd.Timestamp) -> int:
+    """Collect candidate prices only; there are no model probabilities for these markets."""
+    if odds.empty:
+        return 0
+    rows = odds[odds.market.isin(RESEARCH_MARKETS) & odds.betpawa_odds.notna()
+                & (odds.kickoff_utc > now)].copy()
+    rows["day"] = rows.kickoff_utc.dt.tz_localize("UTC").dt.tz_convert("Africa/Dar_es_Salaam").dt.strftime("%Y-%m-%d")
+    today = now.tz_localize("UTC").tz_convert("Africa/Dar_es_Salaam").strftime("%Y-%m-%d")
+    tomorrow = (now + pd.Timedelta(days=1)).tz_localize("UTC").tz_convert("Africa/Dar_es_Salaam").strftime("%Y-%m-%d")
+    rows = rows[rows.day.isin((today, tomorrow))]
+    rows = rows.assign(snapshot_utc=now.isoformat() + "Z", home=rows.home_team, away=rows.away_team,
+                       probability=None, bookmaker_probability=None,
+                       kickoff_utc=rows.kickoff_utc.map(lambda t: t.isoformat() + "Z"))
+    for day, group in rows.groupby("day"):
+        _append(group, day)
+    return len(rows)
 
 
 def load_prices() -> pd.DataFrame:

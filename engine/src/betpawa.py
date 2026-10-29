@@ -30,6 +30,7 @@ HEADERS = {
     "User-Agent": "PL-Predictor/1.0 (personal odds research)",
 }
 PAUSE_SECONDS = 1.0
+RESEARCH_MARKETS = ("home_over_0.5", "home_over_1.5", "away_over_0.5", "away_over_1.5", "dnb_home", "dnb_away")
 
 
 def parse_markets(markets: list[dict]) -> dict[str, float]:
@@ -65,6 +66,15 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                 for name, key in (("Yes", "btts_yes"), ("No", "btts_no")):
                     if name in prices:
                         take(key, prices[name])
+            elif type_id == "4703":
+                for name, key in (("1", "dnb_home"), ("2", "dnb_away")):
+                    if name in prices:
+                        take(key, prices[name])
+            elif type_id in ("5006", "5003") and handicap is not None:
+                line = float(handicap) / 4
+                if line in (0.5, 1.5) and "Over" in prices:
+                    side = "home" if type_id == "5006" else "away"
+                    take(f"{side}_over_{line}", prices["Over"])
             elif type_id == "5000" and handicap is not None:
                 line = float(handicap) / 4
                 if line in (0.5, 1.5, 2.5, 3.5):

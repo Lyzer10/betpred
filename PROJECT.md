@@ -305,7 +305,7 @@ Claude (hard, affects predictions):
    - Result (DONE 2026-10-29, `reports/new_markets_study.md`): 28 PASS, 2 FAIL (Serie A home over 0.5:
      said 74.7%, won 71.7%; Bundesliga DNB home: said 60.9%, won 55.7%). The raw matrix (no Platt) passed
      all 30; using raw instead would need its own pre-registered test, not a switch after seeing this.
-     NOT LIVE: needs Betpawa parsing (market ids 5006/5003 team totals, 4703 DNB), price logging, and slip
+     NOT LIVE: Betpawa parsing and research price logging added 2026-10-29; still needs slip
      maths for DNB refunds (a draw turns the leg into odds 1.00).
 11. **Owner's market preference (DONE/LIVE 2026-10-29): no under goals, no BTTS in slips.** Backtest (not
    pre-registered; owner's product rule, checked for cost): 367 days, 2024/25+, five leagues, gate FAILs
@@ -428,6 +428,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Candidate market prices (home/away over 0.5/1.5 and DNB) parsed from verified real
+  Betpawa event 38781890 and logged as research only in full/price snapshots. Team handicaps are
+  line times four; DNB names are 1/2. Real-response parser and selection-isolation tests pass.
 - 2026-10-29: Repository made public (unlimited Actions minutes). External timer (cron-job.org job 8716884)
   changed from every 30 to every 15 minutes, 06:00-23:45 EAT: final run and notification now ~40-55 min before
   the first kick-off (was ~25-55), and twice as many price snapshots before kick-offs. No code logic changed.

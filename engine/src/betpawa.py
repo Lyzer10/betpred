@@ -71,7 +71,11 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                     if name in prices:
                         take(key, prices[name])
             elif type_id in ("5006", "5003") and handicap is not None:
-                line = float(handicap) / 4
+                try:
+                    line = float(handicap) / 4
+                except (TypeError, ValueError):
+                    print(f"Research market {type_id}: invalid handicap; skipping row")
+                    continue
                 if line in (0.5, 1.5) and "Over" in prices:
                     side = "home" if type_id == "5006" else "away"
                     take(f"{side}_over_{line}", prices["Over"])

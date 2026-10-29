@@ -443,6 +443,8 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Research team-total parsing logs and skips invalid handicap rows so this optional
+  collection cannot disrupt existing market parsing. Final full suite: 132 passed.
 - 2026-10-29: Confirmed the browser replay root cause: service workers bypassed routed fixtures
   on reload. Test contexts now block them; ALL PASSED in light/dark at 375px, including 3 real
   schedule-only rows on 27 October. Final light/dark screenshots inspected; app unchanged.

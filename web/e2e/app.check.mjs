@@ -21,6 +21,9 @@ for (const scheme of ["light", "dark"]) {
   const page = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme,
     userAgent: "Mozilla/5.0 (Linux; Android 14; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36" });
   const errors = [];
+  // Replay the captured responses at their real publication time, so their upcoming fixtures
+  // and expected line-ups do not become past fixtures as the wall clock advances.
+  await page.clock.setFixedTime(new Date(predictionsFixture.generated_at));
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   await page.route("**/data/predictions.json", (route) => route.fulfill({ path: join(fixtureDir, "predictions.json"), contentType: "application/json" }));
@@ -289,9 +292,10 @@ for (const scheme of ["light", "dark"]) {
 
   // Shared calendar, schedule-only rows, empty days, and league navigation.
   const predictionDays = new Set(predictionsFixture.fixtures.map((fixture) => fixture.day));
-  const scheduleDays = [...new Set(scheduleFixture.matches.map((item) => new Date(item.kickoff_utc).toLocaleDateString("en-CA")))];
+  const scheduleDays = [...new Set(scheduleFixture.matches.map((item) => new Date(item.kickoff_utc).toLocaleDateString("en-CA", { timeZone: "Africa/Dar_es_Salaam" })))];
   const laterDay = scheduleDays.find((date) => !predictionDays.has(date));
   await page.goto(`${BASE}#matches/${laterDay}`);
+  await page.locator("button[data-match-row]").first().waitFor();
   // Matches without predictions yet are listed with no pick and no percentages (never a placeholder box).
   check(await page.locator("button[data-match-row]").count() > 0 && await page.locator("[data-best-pick-state]").count() === 0,
     `[${scheme}] schedule-only day lists matches without picks or placeholders`);
@@ -305,8 +309,9 @@ for (const scheme of ["light", "dark"]) {
   await page.goto(`${BASE}#matches/${noMatchDay}`);
   check(await page.getByText("No matches", { exact: true }).count() === 1, `[${scheme}] empty calendar day says No matches`);
 
-  await page.goto(`${BASE}#league/EPL/table`);
-  const expectedRows = predictionsFixture.tables.EPL.length;
+  const tableLeague = Object.keys(predictionsFixture.tables).find((code) => predictionsFixture.tables[code].length);
+  await page.goto(`${BASE}#league/${tableLeague}/table`);
+  const expectedRows = predictionsFixture.tables[tableLeague].length;
   check(await page.locator("tbody tr").count() === expectedRows, `[${scheme}] league table has exactly ${expectedRows} rows`);
   const positions = await page.locator("tbody tr td:first-child").allTextContents();
   check(positions.every((value, index) => Number(value) === index + 1), `[${scheme}] league table is in position order`);
@@ -364,9 +369,10 @@ for (const scheme of ["light", "dark"]) {
   check(await page.evaluate(() => document.documentElement.dataset.theme) === "dark", `[${scheme}] theme remembered after reload`);
   await page.getByRole("button", { name: /^Theme:/ }).click();
   check(await page.evaluate(() => document.documentElement.dataset.theme) === undefined, `[${scheme}] back to auto`);
-  await page.getByRole("button", { name: "Matches", exact: true }).click();
-  await page.locator("img[src*='premierleague.com']").first().waitFor();
-  check(await page.locator("img[src*='premierleague.com']").count() > 0, `[${scheme}] team badges load`);
+  await page.goto(`${BASE}#matches/${predictedDay}`);
+  const badgeRow = page.locator("button[data-match-row]", { hasText: predictedFixture.home }).filter({ hasText: predictedFixture.away });
+  await badgeRow.locator("img").first().waitFor();
+  check(await badgeRow.locator("img").count() > 0, `[${scheme}] team badges load`);
 
   check(errors.length === 0, `[${scheme}] no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
   await page.close();

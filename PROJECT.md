@@ -433,7 +433,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
   the first kick-off (was ~25-55), and twice as many price snapshots before kick-offs. No code logic changed.
 - 2026-10-29: Pre-registered research tasks 13 and 14 before any results; implementation pending.
 - 2026-10-29: Browser checks select a real fixture's badge and an available league table from the
-  committed test data; schedule days use Tanzania time explicitly. Verification pending.
+  committed test data; schedule days use Tanzania time explicitly and replay uses the captured
+  publication time. Build passed. Schedule-only rendering remains an existing app/handbook
+  mismatch on latest main (Matches dates omit the schedule); its assertion is retained.
 - 2026-10-29: Final-slip churn study (task 12) kept the current final selection: K improved estimated
   return by +1.14 points, but its 95% CI (-1.86 to +4.03) failed the pre-registered lower-bound rule.
   The report and synthetic known-answer tests were added; no live preview/final behavior changed.

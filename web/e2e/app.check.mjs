@@ -297,7 +297,6 @@ for (const scheme of ["light", "dark"]) {
   await page.goto(`${BASE}#matches/${laterDay}`);
   await page.waitForTimeout(300);
   // Matches without predictions yet are listed with no pick and no percentages (never a placeholder box).
-  console.log(`Schedule replay: day=${laterDay}, url=${page.url()}, rows=${await page.locator("button[data-match-row]").count()}, picks=${await page.locator("[data-best-pick-state]").count()}`);
   check(await page.locator("button[data-match-row]").count() > 0 && await page.locator("[data-best-pick-state]").count() === 0,
     `[${scheme}] schedule-only day lists matches without picks or placeholders`);
   await snap("matches-later");

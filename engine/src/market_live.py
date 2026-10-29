@@ -16,9 +16,11 @@ from sklearn.linear_model import LogisticRegression
 
 from .accumulators import _logit, _select_market_regularization, build_validation_leg_table
 from .leagues import get_league, paths
+from .new_league_config import NEW_LEAGUES
 
 # Live mode per league, from the Phase 1b evaluation (reports/phase1_summary.md).
 LIVE_LEAGUES = {"EPL": "blended", "LALIGA": "market", "SERIEA": "market", "BUNDES": "market", "LIGUE1": "market"}
+LIVE_LEAGUES.update({code: "market" for code in NEW_LEAGUES})
 
 
 # A calibration needs enough evidence and must point the right way; otherwise the raw
@@ -79,6 +81,8 @@ def calibrate(probability: float, calibrator: dict | None) -> float:
 
 def league_rho(league) -> float:
     """Typical Dixon-Coles low-score correction for the league (used to read the market's score matrix)."""
+    if get_league(league).code in NEW_LEAGUES:
+        return float(json.loads((paths(league).processed_dir / "rho.json").read_text(encoding="utf-8"))["rho"])
     dc = pd.read_parquet(paths(league).predictions_dc)
     return float(dc.loc[dc.variant == "blend", "rho"].median())
 
@@ -86,6 +90,9 @@ def league_rho(league) -> float:
 def main() -> None:
     for code, mode in LIVE_LEAGUES.items():
         if mode != "market":
+            continue
+        if code in NEW_LEAGUES:
+            print(f"{code}: use python -m src.new_league_setup for completed-season-only setup")
             continue
         calibrators = fit_market_calibrators(code)
         calibrators_path(code).write_text(json.dumps(calibrators, indent=1), encoding="utf-8")

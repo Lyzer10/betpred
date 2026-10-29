@@ -1,6 +1,10 @@
 import type { ArchiveDay, League, ScheduledMatch } from "./types";
 
 export const LEAGUES: Record<string, League & { newsSlug: string }> = {
+  EREDIV: { code: "EREDIV", name: "Eredivisie", country: "Netherlands", newsSlug: "ned.1" },
+  JUPILER: { code: "JUPILER", name: "Belgian Pro League", country: "Belgium", newsSlug: "bel.1" },
+  PRIMEIRA: { code: "PRIMEIRA", name: "Primeira Liga", country: "Portugal", newsSlug: "por.1" },
+  SUPERLIG: { code: "SUPERLIG", name: "Super Lig", country: "Turkey", newsSlug: "tur.1" },
   EPL: { code: "EPL", name: "Premier League", country: "England", newsSlug: "eng.1" },
   LALIGA: { code: "LALIGA", name: "La Liga", country: "Spain", newsSlug: "esp.1" },
   SERIEA: { code: "SERIEA", name: "Serie A", country: "Italy", newsSlug: "ita.1" },

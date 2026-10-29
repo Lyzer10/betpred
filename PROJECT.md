@@ -144,9 +144,11 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-10-25)
-- Live integration of the four candidate leagues is in preflight on codex/new-leagues.
-  Current source IDs, team lists and all 72 ESPN logo URLs have been checked. No new league is
-  enabled; the existing five-league baseline must be captured before prediction changes.
+- Live integration is implemented only on unmerged codex/new-leagues, acceptance INCOMPLETE.
+  Existing-five replay equals baseline exactly; 149 tests pass, 4 skip; existing browser checks pass.
+  Refreshed run produces Belgium/Portugal/Turkey but no N1 fixture (none published in fixtures.csv,
+  next Betpawa game beyond the unchanged 48-hour horizon). STOP rule applied; new-league screenshots
+  and all-four-output acceptance remain incomplete. See reports/new_leagues_integration.md.
 - Next-round research (2026-10-29): all four candidate leagues meet the registered READY rule
   (Eredivisie 7/8, Belgium 8/8, Portugal 7/8, Turkey 8/8 markets PASS), with Betpawa and ESPN
   coverage verified. None is live. Task 14 retains independent slips. Candidate market prices are
@@ -379,6 +381,9 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
    Betpawa IDs respectively 12125, 12128, 12124, 12182; ESPN ned.1, bel.1, por.1, tur.1 has both
    scheduled fixtures and verified completed scores. Full per-season coverage and unchanged gate
    details are in the report. Downloads and real responses are cached. No live integration.
+   Integration follow-up: implemented on codex/new-leagues only; STOPPED with incomplete acceptance
+   because the refreshed real output has no EREDIV fixture within the existing source/horizon rules.
+   Not merged or deployed; details in reports/new_leagues_integration.md.
 14. **At most two slips per match** (PRE-REGISTERED 2026-10-29, before results; research only).
    Module `src/overlap_study.py`, report `reports/overlap_study.md`, tests
    `tests/test_overlap_study.py`. Pool exactly `diversity_study.load_legs` (five leagues,
@@ -446,6 +451,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-10-29: Four-league integration implemented on codex/new-leagues only, not merged. Saved
+  completed-season calibrators, fixed rho, strict source names, verified badges, ESPN score settlement,
+  task-13 market blocking and resilient monthly gates. Exact original-five regression passed.
+  STOPPED incomplete: no real N1 upcoming prediction at the current time; all-four acceptance and
+  new-league screenshots cannot pass honestly. Original live artifacts restored; no push or merge.
 - 2026-10-29: Began new-league integration preflight on a separate branch. Live Betpawa identities,
   football-data/Betpawa/ESPN team lists and 72 logo URLs verified; integration verification report
   records historical size evidence. No live prediction code changed.

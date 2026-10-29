@@ -37,6 +37,8 @@ def fetch_season(year: int, refresh: bool = False, league="EPL") -> tuple[list[d
     refresh re-downloads the results list; shots are only fetched for new matches.
     """
     selected = get_league(league)
+    if selected.understat_name is None:
+        raise ValueError(f"No Understat coverage for {selected.code}")
     results_path = paths(selected).understat_file(year, "results")
     shots_path = paths(selected).understat_file(year, "shots")
     # Preserve the legacy EPL cache semantics and its byte-for-byte rebuild.

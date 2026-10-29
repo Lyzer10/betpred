@@ -46,6 +46,15 @@ def build(refresh_current: bool = False, league="EPL", write: bool = True,
     only needs the current season of market-mode leagues, to settle their bets)."""
     selected = get_league(league)
     league_paths = paths(selected)
+    if selected.understat_name is None:
+        from .football_only import load_history
+        output = load_history(selected.code, start=2014 if start is None else start,
+                              refresh_current=refresh_current)
+        goals = pd.DataFrame(columns=["match_id", "minute", "team"])
+        if write:
+            league_paths.processed_dir.mkdir(parents=True, exist_ok=True)
+            output.to_parquet(league_paths.matches, index=False)
+        return output, goals
     since = {} if start is None else {"start": start}
     results = fetch_results(refresh_current=refresh_current, league=selected, **since)
     understat, raw_goals = fetch_understat(refresh_current=refresh_current, league=selected, **since)
@@ -134,6 +143,8 @@ def understat_results(league="EPL", start: int | None = None) -> pd.DataFrame:
     Never used as model training data.
     """
     selected = get_league(league)
+    if selected.understat_name is None:
+        raise ValueError(f"{selected.code} has no Understat coverage; use ESPN completed scores")
     first = current_season_start() if start is None else start
     rows = []
     for year in range(first, current_season_start() + 1):

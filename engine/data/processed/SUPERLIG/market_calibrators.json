@@ -1,0 +1,58 @@
+{
+  "home_win": {
+    "coef": 1.1946291023645026,
+    "intercept": 0.10154276174392937,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1799
+  },
+  "away_win": {
+    "coef": 1.3351817698367578,
+    "intercept": 0.1681280615430304,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1158
+  },
+  "double_1x": {
+    "coef": 1.3351817698367578,
+    "intercept": -0.1681280615430304,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1158
+  },
+  "double_x2": {
+    "coef": 1.1946291023645026,
+    "intercept": -0.10154276174392936,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1799
+  },
+  "double_12": {
+    "coef": 1.5262160240853222,
+    "intercept": -0.5634276698532273,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1020
+  },
+  "over_0.5": {
+    "coef": 1.5147490305060922,
+    "intercept": -1.3463845926585265,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 283
+  },
+  "over_1.5": {
+    "coef": 1.2161505589315413,
+    "intercept": -0.2795328209067484,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 926
+  },
+  "over_2.5": {
+    "coef": 1.3503804007880085,
+    "intercept": -0.035543142911887135,
+    "regularization": 1.0,
+    "legs": 3977,
+    "minority": 1862
+  }
+}

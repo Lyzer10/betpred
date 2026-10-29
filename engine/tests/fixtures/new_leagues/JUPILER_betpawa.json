@@ -1,0 +1,1425 @@
+{
+ "responses": [
+  {
+   "requestOrder": 0,
+   "responses": [
+    {
+     "id": "38192033",
+     "name": "SV Zulte Waregem - Club Brugge",
+     "widgets": [
+      {
+       "id": "72366414",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "14039562",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366414",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656331",
+       "name": "SV Zulte Waregem",
+       "position": 1
+      },
+      {
+       "id": "656328",
+       "name": "Club Brugge",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-10-30T19:45:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "413548316",
+         "prices": [
+          {
+           "id": "1578989052",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 5.64,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.164412,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1578989053",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.89,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.198715,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1578989054",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 1.56,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.636878,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "169",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "441",
+     "marketCounters": {
+      "totalMarketGroupCount": "104",
+      "marketGroupCountByTab": {
+       "halves": "42",
+       "all": "104",
+       "corners": "16",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38232749",
+     "name": "Yellow-Red KV Mechelen - KRC Genk",
+     "widgets": [
+      {
+       "id": "14039558",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366424",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "72366424",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656338",
+       "name": "Yellow-Red KV Mechelen",
+       "position": 1
+      },
+      {
+       "id": "656330",
+       "name": "KRC Genk",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-10-31T15:00:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "413784260",
+         "prices": [
+          {
+           "id": "1579751281",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 3.7,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.258235,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1579751282",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 3.85,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.253361,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1579751283",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 2.01,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.4884,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "162",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "352",
+     "marketCounters": {
+      "totalMarketGroupCount": "101",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "101",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38202096",
+     "name": "Standard Liege - KV Kortrijk",
+     "widgets": [
+      {
+       "id": "14039560",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366426",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "72366426",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656334",
+       "name": "Standard Liege",
+       "position": 1
+      },
+      {
+       "id": "656332",
+       "name": "KV Kortrijk",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-10-31T17:15:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "413841258",
+         "prices": [
+          {
+           "id": "1579927201",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 1.79,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.550456,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1579927202",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.08,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.237972,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1579927203",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 4.46,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.211567,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "162",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "309",
+     "marketCounters": {
+      "totalMarketGroupCount": "100",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "100",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "5",
+       "popular": "20",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38232746",
+     "name": "RSC Anderlecht - KVC Westerlo",
+     "widgets": [
+      {
+       "id": "72366416",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "14039554",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366416",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656329",
+       "name": "RSC Anderlecht",
+       "position": 1
+      },
+      {
+       "id": "656341",
+       "name": "KVC Westerlo",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-10-31T19:45:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "413876864",
+         "prices": [
+          {
+           "id": "1580004084",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 1.63,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.604184,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580004085",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.66,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.207679,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580004086",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 4.96,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.188134,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "163",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "343",
+     "marketCounters": {
+      "totalMarketGroupCount": "101",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "101",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38232747",
+     "name": "SK Beveren - Union Saint-Gilloise",
+     "widgets": [
+      {
+       "id": "14039555",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366430",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "72366430",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      }
+     ],
+     "participants": [
+      {
+       "id": "662191",
+       "name": "SK Beveren",
+       "position": 1
+      },
+      {
+       "id": "656337",
+       "name": "Union Saint-Gilloise",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-10-31T19:45:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "413876472",
+         "prices": [
+          {
+           "id": "1580003154",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 5.71,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.161696,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580003155",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.77,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.202473,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580003156",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 1.55,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.635828,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "161",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "345",
+     "marketCounters": {
+      "totalMarketGroupCount": "100",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "100",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "5",
+       "popular": "20",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38242051",
+     "name": "Cercle Brugge - Royal Antwerp FC",
+     "widgets": [
+      {
+       "id": "14039556",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366420",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "72366420",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656345",
+       "name": "Cercle Brugge",
+       "position": 1
+      },
+      {
+       "id": "656336",
+       "name": "Royal Antwerp FC",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-11-01T12:30:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "414067027",
+         "prices": [
+          {
+           "id": "1580570956",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 2.07,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.472509,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580570957",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 3.88,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.24888,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580570958",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 3.43,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.27862,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "161",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "283",
+     "marketCounters": {
+      "totalMarketGroupCount": "101",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "101",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38242047",
+     "name": "St. Truidense VV - Oud-Heverlee Leuven",
+     "widgets": [
+      {
+       "id": "72366418",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "14039561",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366418",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656342",
+       "name": "St. Truidense VV",
+       "position": 1
+      },
+      {
+       "id": "656340",
+       "name": "Oud-Heverlee Leuven",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-11-01T15:00:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "414084276",
+         "prices": [
+          {
+           "id": "1580716823",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 1.66,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.588546,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580716824",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.4,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.218285,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580716825",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 4.83,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.193168,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "163",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "257",
+     "marketCounters": {
+      "totalMarketGroupCount": "101",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "101",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38212867",
+     "name": "Lommel SK - KAA Gent",
+     "widgets": [
+      {
+       "id": "72366422",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "72366422",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "14039559",
+       "type": "GENIUSSPORTS"
+      }
+     ],
+     "participants": [
+      {
+       "id": "658982",
+       "name": "Lommel SK",
+       "position": 1
+      },
+      {
+       "id": "656333",
+       "name": "KAA Gent",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-11-01T17:30:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "414142542",
+         "prices": [
+          {
+           "id": "1580902431",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 4.12,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.230231,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580902432",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 3.73,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.258772,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580902433",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 1.91,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.510996,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "162",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "326",
+     "marketCounters": {
+      "totalMarketGroupCount": "101",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "101",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "6",
+       "popular": "21",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38212868",
+     "name": "Royal Charleroi SC - RAAL La Louviere",
+     "widgets": [
+      {
+       "id": "72366428",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "14039557",
+       "type": "GENIUSSPORTS"
+      },
+      {
+       "id": "72366428",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656344",
+       "name": "Royal Charleroi SC",
+       "position": 1
+      },
+      {
+       "id": "685014",
+       "name": "RAAL La Louviere",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-11-01T18:15:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "414144967",
+         "prices": [
+          {
+           "id": "1580909788",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 1.52,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.643434,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580909789",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 4.65,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.205758,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1580909790",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 6.06,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.150814,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "160",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "313",
+     "marketCounters": {
+      "totalMarketGroupCount": "100",
+      "marketGroupCountByTab": {
+       "halves": "39",
+       "all": "100",
+       "corners": "13",
+       "specials": "19",
+       "players": "8",
+       "combos": "5",
+       "popular": "20",
+       "goals": "42"
+      }
+     },
+     "combos": []
+    },
+    {
+     "id": "38915366",
+     "name": "KV Kortrijk - Yellow-Red KV Mechelen",
+     "widgets": [
+      {
+       "id": "75953678",
+       "type": "SPORTRADAR",
+       "retention": "PREMATCH"
+      },
+      {
+       "id": "75953678",
+       "type": "SPORTRADAR",
+       "retention": "INPLAY"
+      },
+      {
+       "id": "14613960",
+       "type": "GENIUSSPORTS"
+      }
+     ],
+     "participants": [
+      {
+       "id": "656332",
+       "name": "KV Kortrijk",
+       "position": 1
+      },
+      {
+       "id": "656338",
+       "name": "Yellow-Red KV Mechelen",
+       "position": 2
+      }
+     ],
+     "startTime": "2026-11-04T19:30:00Z",
+     "markets": [
+      {
+       "marketType": {
+        "id": "3743",
+        "name": "1X2 - FT",
+        "displayName": "1X2 | Full Time",
+        "explainer": "Pick 1 (home team), X (draw), or 2 (away team). Result is based on regular playing time only - Overtime does not count.",
+        "priority": 1,
+        "tabs": [
+         "all",
+         "popular"
+        ],
+        "handicapType": ""
+       },
+       "row": [
+        {
+         "id": "414897869",
+         "prices": [
+          {
+           "id": "1583571991",
+           "name": "1",
+           "typeId": "3744",
+           "odds": 2.69,
+           "suspended": false,
+           "displayName": "1",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.357589,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1583571992",
+           "name": "X",
+           "typeId": "3745",
+           "odds": 3.44,
+           "suspended": false,
+           "displayName": "X",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.27823,
+            "refund": 0.0
+           }
+          },
+          {
+           "id": "1583571993",
+           "name": "2",
+           "typeId": "3746",
+           "odds": 2.64,
+           "suspended": false,
+           "displayName": "2",
+           "additionalInfo": {
+            "hot": false
+           },
+           "probability": {
+            "win": 0.364181,
+            "refund": 0.0
+           }
+          }
+         ]
+        }
+       ],
+       "displayNameRows": [],
+       "displayNameColumns": [],
+       "additionalInfo": {
+        "cashoutable": true,
+        "boosted": false
+       }
+      }
+     ],
+     "comboCards": [],
+     "totalMarketCount": "3",
+     "category": {
+      "id": "2",
+      "name": "Football"
+     },
+     "region": {
+      "id": "240",
+      "name": "Belgium"
+     },
+     "competition": {
+      "id": "12128",
+      "name": "Pro League"
+     },
+     "additionalInfo": {
+      "live": false,
+      "inplayBooked": true,
+      "neutralVenue": false,
+      "inplayBookedActual": true
+     },
+     "version": "15",
+     "marketCounters": {
+      "totalMarketGroupCount": "3",
+      "marketGroupCountByTab": {
+       "all": "3",
+       "specials": "1",
+       "popular": "2"
+      }
+     },
+     "combos": []
+    }
+   ]
+  }
+ ],
+ "outrights": []
+}

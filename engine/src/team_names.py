@@ -122,6 +122,57 @@ CANONICAL_TEAM_NAMES = {
 }
 
 
+# Names observed in football-data season files 2014/15 through 2026/27, verified 2026-10-29.
+_FOOTBALL_ONLY_NAMES = (
+    "AZ Alkmaar", "Ajax", "Almere City", "Cambuur", "Den Haag", "Dordrecht", "Excelsior", "FC Emmen",
+    "Feyenoord", "For Sittard", "Go Ahead Eagles", "Graafschap", "Groningen", "Heerenveen", "Heracles",
+    "NAC Breda", "Nijmegen", "PSV Eindhoven", "Roda", "Sparta Rotterdam", "Telstar", "Twente", "Utrecht",
+    "VVV Venlo", "Vitesse", "Volendam", "Waalwijk", "Willem II", "Zwolle", "Anderlecht", "Antwerp",
+    "Beerschot VA", "Beveren", "Cercle Brugge", "Charleroi", "Club Brugge", "Dender", "Eupen", "Genk",
+    "Gent", "Kortrijk", "Lierse", "Lokeren", "Lommel SK", "Mechelen", "Mouscron", "Mouscron-Peruwelz",
+    "Oostende", "Oud-Heverlee Leuven", "RAAL La Louviere", "RWD Molenbeek", "Seraing", "St Truiden",
+    "St. Gilloise", "Standard", "Waregem", "Westerlo", "AVS", "Academica", "Academico Viseu", "Alverca",
+    "Arouca", "Aves", "Belenenses", "Benfica", "Boavista", "Casa Pia", "Chaves", "Estoril", "Estrela",
+    "Famalicao", "Farense", "Feirense", "Gil Vicente", "Guimaraes", "Maritimo", "Moreirense", "Nacional",
+    "Pacos Ferreira", "Penafiel", "Portimonense", "Porto", "Rio Ave", "Santa Clara", "Setubal", "Sp Braga",
+    "Sp Lisbon", "Tondela", "Uniao Madeira", "Vizela", "Ad. Demirspor", "Adanaspor", "Akhisar Belediyespor",
+    "Alanyaspor", "Altay", "Amedspor", "Ankaragucu", "Antalyaspor", "Balikesirspor", "Besiktas", "Bodrumspor",
+    "Bursaspor", "Buyuksehyr", "Corum", "Denizlispor", "Erciyesspor", "Erzurumspor", "Eskisehirspor",
+    "Eyupspor", "Fenerbahce", "Galatasaray", "Gaziantep", "Gaziantepspor", "Genclerbirligi", "Giresunspor",
+    "Goztep", "Hatayspor", "Istanbulspor", "Karabukspor", "Karagumruk", "Kasimpasa", "Kayserispor",
+    "Kocaelispor", "Konyaspor", "Mersin Idman Yurdu", "Osmanlispor", "Pendikspor", "Rizespor", "Samsunspor",
+    "Sivasspor", "Trabzonspor", "Umraniyespor", "Yeni Malatyaspor",
+)
+CANONICAL_TEAM_NAMES.update({name: name for name in _FOOTBALL_ONLY_NAMES})
+# Explicit aliases from the current Betpawa event lists and ESPN teams endpoints.
+CANONICAL_TEAM_NAMES.update({
+    "ADO Den Haag": "Den Haag", "Ajax Amsterdam": "Ajax", "Excelsior Rotterdam": "Excelsior",
+    "FC Groningen": "Groningen", "FC Twente Enschede": "Twente", "FC Twente": "Twente", "FC Utrecht": "Utrecht",
+    "Feyenoord Rotterdam": "Feyenoord", "Fortuna Sittard": "For Sittard", "NEC Nijmegen": "Nijmegen",
+    "PEC Zwolle": "Zwolle", "SC Cambuur": "Cambuur", "SC Heerenveen": "Heerenveen", "SC Telstar": "Telstar",
+    "Willem II Tilburg": "Willem II", "KAA Gent": "Gent", "KRC Genk": "Genk", "Racing Genk": "Genk",
+    "KV Kortrijk": "Kortrijk", "KVC Westerlo": "Westerlo", "RSC Anderlecht": "Anderlecht",
+    "Royal Antwerp FC": "Antwerp", "Royal Charleroi SC": "Charleroi", "SK Beveren": "Beveren",
+    "Waasland-Beveren": "Beveren", "SV Zulte Waregem": "Waregem", "Zulte-Waregem": "Waregem",
+    "St. Truidense VV": "St Truiden", "Sint-Truidense": "St Truiden", "Standard Liege": "Standard",
+    "Union Saint-Gilloise": "St. Gilloise", "Union St.-Gilloise": "St. Gilloise",
+    "Yellow-Red KV Mechelen": "Mechelen", "KV Mechelen": "Mechelen", "Cercle Brugge KSV": "Cercle Brugge",
+    "OH Leuven": "Oud-Heverlee Leuven", "RAAL La Louvière": "RAAL La Louviere",
+    "Academico de Viseu FC": "Academico Viseu", "Académico de Viseu": "Academico Viseu",
+    "Casa Pia Lisbon": "Casa Pia", "Estoril Praia": "Estoril", "Estrela Amadora": "Estrela",
+    "FC Alverca SAD": "Alverca", "FC Arouca": "Arouca", "FC Famalicao": "Famalicao", "FC Porto": "Porto",
+    "Gil Vicente Barcelos": "Gil Vicente", "Maritimo Madeira": "Maritimo", "Moreirense FC": "Moreirense",
+    "Nacional da Madeira": "Nacional", "C.D. Nacional": "Nacional", "Rio Ave FC": "Rio Ave",
+    "SC Braga": "Sp Braga", "Braga": "Sp Braga", "SL Benfica": "Benfica", "Santa Clara Azores": "Santa Clara",
+    "Sporting CP": "Sp Lisbon", "Vitoria SC Guimaraes": "Guimaraes", "Vitória de Guimaraes": "Guimaraes",
+    "Amed Sportif Faaliyetler": "Amedspor", "Amed SFK": "Amedspor", "Besiktas Istanbul": "Besiktas",
+    "Caykur Rizespor": "Rizespor", "Corum FK": "Corum", "Çorum FK": "Corum", "Erzurumspor FK": "Erzurumspor",
+    "Erzurum BB": "Erzurumspor", "Fenerbahce Istanbul": "Fenerbahce", "Galatasaray Istanbul": "Galatasaray",
+    "Gaziantep FK": "Gaziantep", "Genclerbirligi SK": "Genclerbirligi", "Goztepe Izmir": "Goztep",
+    "Goztepe": "Goztep", "Istanbul Basaksehir": "Buyuksehyr", "Kasimpasa Istanbul": "Kasimpasa",
+})
+
+
 def canonical_team(name: str, league="EPL") -> str:
     """Return a canonical team name, raising for unexpected source values."""
     cleaned = str(name).strip()

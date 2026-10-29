@@ -30,6 +30,7 @@ FINAL_BEFORE = timedelta(minutes=55)         # final run from 55 minutes before 
 PRICE_BEFORE = timedelta(minutes=35)         # price snapshot for matches starting within 35 minutes
 FIXTURES_URL = "https://www.football-data.co.uk/fixtures.csv"
 LEAGUE_DIVS = {"E0": "EPL", "SP1": "LALIGA", "I1": "SERIEA", "D1": "BUNDES", "F1": "LIGUE1"}
+LEAGUE_DIVS.update({"N1": "EREDIV", "B1": "JUPILER", "P1": "PRIMEIRA", "T1": "SUPERLIG"})
 NEW_FIXTURES_EVERY = timedelta(minutes=55)   # re-run for newly posted fixtures at most about once an hour
 
 

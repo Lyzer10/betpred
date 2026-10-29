@@ -22,6 +22,7 @@ import requests
 
 from .leagues import get_league
 from .team_names import canonical_team
+from .new_league_config import NEW_LEAGUES
 
 BASE_URL = "https://www.betpawa.co.tz/api/sportsbook/v4"
 PREMIER_LEAGUE_ID = "11965"
@@ -109,7 +110,13 @@ def fetch_competition_odds(league="EPL", session: requests.Session | None = None
         if not detail.ok:
             continue
         participants = sorted(event["participants"], key=lambda p: p["position"])
-        home, away = (canonical_team(p["name"], league) for p in participants[:2])
+        try:
+            home, away = (canonical_team(p["name"], league) for p in participants[:2])
+        except ValueError as error:
+            if get_league(league).code not in NEW_LEAGUES:
+                raise
+            print(f"{get_league(league).code}: Betpawa event {event['id']} skipped ({error})")
+            continue
         kickoff = pd.Timestamp(event["startTime"]).tz_convert("UTC").tz_localize(None)
         for market, price in parse_markets(detail.json().get("markets", [])).items():
             rows.append({"home_team": home, "away_team": away, "kickoff_utc": kickoff,

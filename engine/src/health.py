@@ -56,7 +56,8 @@ def _calibration(fixtures: list[dict], slip_markets: tuple[str, ...]) -> dict:
     probabilities, outcomes = [], []
     for fixture in fixtures:
         for m in fixture["markets"]:
-            if m["market"] in slip_markets and m["probability"] >= 0.5:
+            if (m["market"] in slip_markets and m["probability"] >= 0.5
+                    and fixture["result"]["outcomes"].get(m["market"]) is not None):
                 probabilities.append(m["probability"])
                 outcomes.append(bool(fixture["result"]["outcomes"][m["market"]]))
     if len(probabilities) < MIN_MATCHES:
@@ -110,7 +111,7 @@ def pair_monitor(fixtures: list[dict], slip_markets: tuple[str, ...], paused_bef
     groups: dict[tuple[str, str], tuple[list[float], list[bool]]] = {}
     for fixture in fixtures:
         for m in fixture["markets"]:
-            if m["market"] in slip_markets and m["market"] in fixture["result"]["outcomes"]:
+            if m["market"] in slip_markets and fixture["result"]["outcomes"].get(m["market"]) is not None:
                 p, o = groups.setdefault((_league_code(fixture), m["market"]), ([], []))
                 p.append(m["probability"])
                 o.append(bool(fixture["result"]["outcomes"][m["market"]]))

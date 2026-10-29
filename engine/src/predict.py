@@ -42,6 +42,8 @@ from .market_gates import GATES_PATH
 from .prices import clv_report, log_prices, log_research_prices
 from .market_live import LIVE_LEAGUES, calibrate, league_rho, load_calibrators
 from .team_names import canonical_team
+from .new_league_config import NEW_LEAGUES
+from .football_only import load_history, espn_results, score_actuals
 
 FIXTURES_URL = "https://football-data.co.uk/fixtures.csv"
 TUNING_PATH = ENGINE_DIR / "reports" / "stage2_tuning.csv"
@@ -90,6 +92,16 @@ def load_fixtures(today: pd.Timestamp, played: pd.DataFrame, league="EPL") -> pd
     selected = get_league(league)
     raw = _fixtures_csv()
     raw = raw[raw.Div == selected.football_data_code].copy()
+    if selected.code in NEW_LEAGUES:
+        keep = []
+        for index, match in raw.iterrows():
+            try:
+                canonical_team(match.HomeTeam, selected)
+                canonical_team(match.AwayTeam, selected)
+                keep.append(index)
+            except ValueError as error:
+                print(f"{selected.code}: fixture skipped ({error})")
+        raw = raw.loc[keep]
     fixtures = pd.DataFrame({
         "date": parse_match_dates(raw.Date),
         "time": raw.Time.astype(str),
@@ -459,7 +471,7 @@ def failed_gates() -> set[tuple[str, str]]:
         return set()
     gates = json.loads(GATES_PATH.read_text(encoding="utf-8"))["gates"]
     return {(league, market) for league, markets in gates.items() for market, status in markets.items()
-            if status == "FAIL"}
+            if status in ("FAIL", "NOT_VALIDATED")}
 
 
 def build_slips(legs: pd.DataFrame, blocked: set[tuple[str, str]] | None = None) -> dict:
@@ -504,12 +516,19 @@ def _leg_json(row) -> dict:
             "price_warning": bool(getattr(row, "price_warning", False))}
 
 
-def outcome(match: pd.Series, market: str) -> bool:
+def outcome(match: pd.Series, market: str) -> bool | None:
     _, actual_column = LEG_MARKETS[market]
     if actual_column.startswith(("actual_under", "actual_btts_no")):
         base = actual_column.replace("under", "over").replace("btts_no", "btts")
-        return not bool(match[base])
-    return bool(match[actual_column])
+        return None if pd.isna(match[base]) else not bool(match[base])
+    return None if pd.isna(match[actual_column]) else bool(match[actual_column])
+
+
+def settlement_actuals(matches: pd.DataFrame) -> pd.DataFrame:
+    if "league" not in matches or not matches.league.isin(NEW_LEAGUES).any():
+        return add_actuals(matches)
+    new = matches.league.isin(NEW_LEAGUES)
+    return pd.concat([add_actuals(matches[~new]), score_actuals(matches[new])]).sort_index()
 
 
 SETTLE_MAX_DAYS = 3
@@ -521,11 +540,17 @@ def result_lookup(matches: pd.DataFrame):
     The date check matters: a source that swapped home and away (Understat had Rennes v Paris SG
     23 Aug 2026 as Paris SG v Rennes) must never settle the real reverse fixture months later.
     """
-    settled = add_actuals(matches)
+    settled = settlement_actuals(matches)
     rows = {(r.home_team, r.away_team, r.season): r for _, r in settled.iterrows()}
 
     def find(home: str, away: str, date) -> pd.Series | None:
         day = pd.Timestamp(date)
+        if "league" in settled:
+            candidates = settled[(settled.home_team == home) & (settled.away_team == away)
+                                 & settled.league.isin(NEW_LEAGUES)]
+            candidates = candidates[(candidates.date - day).abs() <= pd.Timedelta(days=SETTLE_MAX_DAYS)]
+            if not candidates.empty:
+                return candidates.iloc[(candidates.date - day).abs().argmin()]
         row = rows.get((home, away, season_label(current_season_start(day.date()))))
         if row is None or abs((pd.Timestamp(row.date).normalize() - day.normalize()).days) > SETTLE_MAX_DAYS:
             return None
@@ -586,7 +611,7 @@ def _not_started(entry: dict, now: pd.Timestamp) -> bool:
 
 def recent_results(matches: pd.DataFrame, now: pd.Timestamp, days: int = 120) -> list[dict]:
     """Settled outcomes of every leg market for recent matches (the app settles saved picks)."""
-    recent = add_actuals(matches[matches.date >= now - pd.to_timedelta(days, unit="D")])
+    recent = settlement_actuals(matches[matches.date >= now - pd.to_timedelta(days, unit="D")])
     return [{"date": row.date.date().isoformat(), "home": row.home_team, "away": row.away_team,
              "score": [int(row.home_goals), int(row.away_goals)],
              "outcomes": {market: outcome(row, market) for market in LEG_MARKETS}}
@@ -708,12 +733,14 @@ def live_record() -> dict:
         markets = {m["market"]: m for m in fixture["markets"]}
         for m in fixture["markets"]:
             price = m.get("betpawa_odds")
-            if price and m["probability"] >= VALUE_MIN_PROBABILITY and m["probability"] * price - 1 >= VALUE_EDGE:
+            if (price and fixture["result"]["outcomes"].get(m["market"]) is not None
+                    and m["probability"] >= VALUE_MIN_PROBABILITY and m["probability"] * price - 1 >= VALUE_EDGE):
                 value_returns.append(price - 1 if fixture["result"]["outcomes"][m["market"]] else -1.0)
         ours.append([markets[k]["probability"] for k in keys])
         market.append([markets[k]["market_probability"] or np.nan for k in keys])
         actual.append([fixture["result"]["outcomes"][k] for k in keys])
-        confident += [fixture["result"]["outcomes"][m["market"]] for m in fixture["markets"] if m["probability"] >= 0.7]
+        confident += [fixture["result"]["outcomes"][m["market"]] for m in fixture["markets"]
+                      if m["probability"] >= 0.7 and fixture["result"]["outcomes"].get(m["market"]) is not None]
     ours, market, actual = np.array(ours), np.array(market, float), np.array(actual, float)
     has_market = ~np.isnan(market).any(axis=1)
 
@@ -778,12 +805,16 @@ def main() -> None:
         if mode != "market":
             continue
         try:
-            current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
+            if code in NEW_LEAGUES:
+                current = load_history(code, start=season_start, refresh_current=not args.no_refresh)
+            else:
+                current, _ = build(refresh_current=not args.no_refresh, league=code, write=False, start=season_start)
             settle_matches.append(current)
             league_ctx = league_context(current, current_season)
             context.update(league_ctx)
             league_of.update({team: code for team in league_ctx})
-            past = pd.read_parquet(paths(code).matches) if paths(code).matches.exists() else current.iloc[0:0]
+            past = (load_history(code, end=season_start - 1) if code in NEW_LEAGUES else
+                    pd.read_parquet(paths(code).matches) if paths(code).matches.exists() else current.iloc[0:0])
             h2h_history[code] = (pd.concat([past, current], ignore_index=True)
                                  .drop_duplicates(["season", "home_team", "away_team"], keep="last"))
             league_fixtures = add_betpawa_fixtures(load_fixtures(now, current, code), betpawa_prices(code), now, current, code)
@@ -806,9 +837,10 @@ def main() -> None:
     fast = []
     for code in LIVE_LEAGUES:
         try:
-            fast.append(understat_results(code, season_start))
+            fast.append(espn_results(code, now) if code in NEW_LEAGUES else understat_results(code, season_start))
         except Exception as error:
-            print(f"Understat results unavailable for {get_league(code).name} ({error})")
+            source = "ESPN" if code in NEW_LEAGUES else "Understat"
+            print(f"{source} results unavailable for {get_league(code).name} ({error})")
             continue
         # Tables, form and head-to-head also include tonight's results (football-data lags days).
         combined = merge_results(h2h_history.get(code, fast[-1].iloc[0:0]), fast[-1])

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from .new_league_config import NEW_LEAGUES
 
 ENGINE_DIR = Path(__file__).resolve().parents[1]
 
@@ -13,11 +14,15 @@ class League:
     name: str
     country: str
     football_data_code: str
-    understat_name: str
+    understat_name: str | None
     betpawa_competition_id: int
     teams_per_season: int
 
     def teams(self, season_start: int) -> int:
+        if self.code == "JUPILER":
+            return 18 if season_start >= 2026 or 2020 <= season_start <= 2022 else 16
+        if self.code == "SUPERLIG":
+            return {2020: 21, 2021: 20, 2022: 19, 2023: 20, 2024: 19}.get(season_start, 18)
         if self.code == "LIGUE1" and season_start >= 2023:
             return 18
         return self.teams_per_season
@@ -30,6 +35,9 @@ LEAGUES = {
     "BUNDES": League("BUNDES", "Bundesliga", "Germany", "D1", "Bundesliga", 12110, 18),
     "LIGUE1": League("LIGUE1", "Ligue 1", "France", "F1", "Ligue_1", 12127, 20),
 }
+# Counts above and here come from distinct teams in the real season CSVs, not round assumptions.
+LEAGUES.update({code: League(code, name, country, division, None, competition, 18)
+                for code, (name, country, division, competition, _) in NEW_LEAGUES.items()})
 
 
 def get_league(league: str | League = "EPL") -> League:

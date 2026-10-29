@@ -22,10 +22,11 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from .accumulators import SLIP_MARKETS, blend_with_market
+from .accumulators import LEG_MARKETS, SLIP_MARKETS, blend_with_market
 from .calibration import ENGINE_DIR
 from .leagues import get_league, paths
 from .market_live import LIVE_LEAGUES
+from .new_league_config import NEW_LEAGUES, VALIDATED_MARKETS, FAILED_MARKETS
 
 GATES_PATH = ENGINE_DIR / "data" / "processed" / "market_gates.json"
 REPORT_PATH = ENGINE_DIR / "reports" / "market_gates.md"
@@ -123,17 +124,26 @@ def live_legs(league: str, column: str, fixtures: list[dict] | None = None) -> p
         if code != league:
             continue
         for m in f["markets"]:
-            if m["market"] in SLIP_MARKETS and m["market"] in f["result"]["outcomes"]:
+            if m["market"] in SLIP_MARKETS and f["result"]["outcomes"].get(m["market"]) is not None:
                 rows.append({"date": pd.Timestamp(f["kickoff_utc"]).tz_localize(None), "market": m["market"],
                              column: m["probability"], "bookmaker_probability": m.get("market_probability"),
                              "won": int(bool(f["result"]["outcomes"][m["market"]])), "source": "live"})
     return pd.DataFrame(rows, columns=["date", "market", column, "bookmaker_probability", "won", "source"])
 
 
+def new_league_gates():
+    return {code: {market: "NOT_VALIDATED" if market not in VALIDATED_MARKETS else
+                  "FAIL" if market in FAILED_MARKETS[code] else "PASS" for market in LEG_MARKETS}
+            for code in NEW_LEAGUES}
+
+
 def main() -> None:
     rng = np.random.default_rng(SEED)
     rows = []
     for code, mode in LIVE_LEAGUES.items():
+        if code in NEW_LEAGUES:
+            print(f"{code}: retaining task-13 gates; no Understat/backtest leg table required", flush=True)
+            continue
         legs = pd.read_parquet(paths(code).accumulator_legs)
         legs["date"] = pd.to_datetime(legs.date)
         column = gate_column(legs, mode)
@@ -144,6 +154,7 @@ def main() -> None:
     gates = {}
     for r in rows:
         gates.setdefault(r["league"], {})[r["market"]] = r["status"]
+    gates.update(new_league_gates())
     GATES_PATH.write_text(json.dumps({"rules": "PROJECT.md task 1 (pre-registered 2026-10-24)", "gates": gates,
                                       "details": rows}, indent=1), encoding="utf-8")
 
@@ -164,6 +175,9 @@ def main() -> None:
             f"{r['C3_min_z']}{'' if r['C3'] else ' ✗'} | "
             f"{r['C4_lifted_legs']} / {r['C4_z'] if r['C4_z'] is not None else '-'}{'' if r['C4'] else ' ✗'} | "
             f"{r['logloss_vs_book']:+.4f} ({r['logloss_vs_book_ci'][0]:+.4f}, {r['logloss_vs_book_ci'][1]:+.4f}) |")
+    lines += ["", "## Football-data-only leagues", "", "Task-13 validation is retained unchanged; untested markets stay NOT_VALIDATED (blocked).", ""]
+    for code, markets in new_league_gates().items():
+        lines.append(f"{code}: " + ", ".join(f"{market}={status}" for market, status in markets.items()))
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {GATES_PATH} and {REPORT_PATH}")
 

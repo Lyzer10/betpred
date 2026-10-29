@@ -17,9 +17,11 @@ import requests
 
 from .calibration import ENGINE_DIR
 from .team_names import canonical_team
+from .new_league_config import NEW_LEAGUES
 
 ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer"
 SLUGS = {"EPL": "eng.1", "LALIGA": "esp.1", "SERIEA": "ita.1", "BUNDES": "ger.1", "LIGUE1": "fra.1"}
+SLUGS.update({code: fields[4] for code, fields in NEW_LEAGUES.items()})
 LINEUPS_PATH = ENGINE_DIR.parent / "web" / "public" / "data" / "lineups.json"
 HORIZON = pd.Timedelta(hours=36)
 EVENTS_BACK = pd.Timedelta(hours=18)    # finished matches keep their live FT score until the nightly settlement

@@ -8,10 +8,11 @@ from src.team_names import canonical_team
 
 
 def test_registry_fields_and_team_counts():
-    assert set(LEAGUES) == {"EPL", "LALIGA", "SERIEA", "BUNDES", "LIGUE1"}
+    assert set(LEAGUES) == {"EPL", "LALIGA", "SERIEA", "BUNDES", "LIGUE1", "EREDIV", "JUPILER", "PRIMEIRA", "SUPERLIG"}
     for league in LEAGUES.values():
         assert all((league.code, league.name, league.country, league.football_data_code,
-                    league.understat_name, league.betpawa_competition_id, league.teams_per_season))
+                    league.betpawa_competition_id, league.teams_per_season))
+        assert bool(league.understat_name) == (league.code in {"EPL", "LALIGA", "SERIEA", "BUNDES", "LIGUE1"})
     assert LEAGUES["LIGUE1"].teams(2022) == 20
     assert LEAGUES["LIGUE1"].teams(2023) == 18
 

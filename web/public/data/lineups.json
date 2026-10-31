@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T19:32:42.964727Z",
+ "generated_at": "2026-10-31T19:46:55.809343Z",
  "matches": [
   {
    "league": "EPL",
@@ -1991,45 +1991,45 @@
       "formation_place": 1
      },
      {
-      "name": "Lucas Maronnier",
-      "number": "2",
-      "position": "D",
-      "formation_place": 2
-     },
-     {
-      "name": "Paolo Gozzi Iweru",
-      "number": "5",
-      "position": "D",
-      "formation_place": 3
+      "name": "Michel Diaz",
+      "number": "4",
+      "position": "CD-L",
+      "formation_place": 6
      },
      {
       "name": "Adrien Monfray",
       "number": "6",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
      },
      {
-      "name": "Michel Diaz",
-      "number": "4",
-      "position": "D",
-      "formation_place": 6
+      "name": "Paolo Gozzi Iweru",
+      "number": "5",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Lucas Maronnier",
+      "number": "2",
+      "position": "RB",
+      "formation_place": 2
      },
      {
       "name": "Dermane Karim",
       "number": "29",
-      "position": "M",
+      "position": "CM",
       "formation_place": 4
      },
      {
       "name": "Mouhamed Diop",
       "number": "8",
-      "position": "M",
+      "position": "LM",
       "formation_place": 8
      },
      {
       "name": "Antoine Mille",
       "number": "17",
-      "position": "M",
+      "position": "RM",
       "formation_place": 7
      },
      {
@@ -2041,13 +2041,13 @@
      {
       "name": "Timothé Nkada",
       "number": "23",
-      "position": "F",
+      "position": "LF",
       "formation_place": 11
      },
      {
       "name": "Merwan Ifnaoui",
       "number": "10",
-      "position": "F",
+      "position": "RF",
       "formation_place": 10
      }
     ],
@@ -2120,61 +2120,61 @@
      {
       "name": "Samuel Yohou",
       "number": "17",
-      "position": "D",
+      "position": "CD",
       "formation_place": 4
-     },
-     {
-      "name": "Noa Boissé",
-      "number": "15",
-      "position": "D",
-      "formation_place": 5
      },
      {
       "name": "Raúl Torrente",
       "number": "16",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
+     },
+     {
+      "name": "Noa Boissé",
+      "number": "15",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
+      "name": "Alexandre Lauray",
+      "number": "8",
+      "position": "SW",
+      "formation_place": 8
      },
      {
       "name": "Lucas Bretelle",
       "number": "29",
-      "position": "M",
+      "position": "CM-L",
       "formation_place": 11
      },
      {
       "name": "Antoine Rabillard",
       "number": "9",
-      "position": "M",
+      "position": "CM-R",
       "formation_place": 7
-     },
-     {
-      "name": "Alexandre Lauray",
-      "number": "8",
-      "position": "M",
-      "formation_place": 8
-     },
-     {
-      "name": "Lucas Buades",
-      "number": "18",
-      "position": "M",
-      "formation_place": 2
      },
      {
       "name": "Lucas Calodat",
       "number": "22",
-      "position": "M",
+      "position": "LM",
       "formation_place": 3
+     },
+     {
+      "name": "Lucas Buades",
+      "number": "18",
+      "position": "RM",
+      "formation_place": 2
      },
      {
       "name": "Habib Diallo",
       "number": "13",
-      "position": "F",
+      "position": "CF-L",
       "formation_place": 10
      },
      {
       "name": "Louis Mafouta",
       "number": "14",
-      "position": "F",
+      "position": "CF-R",
       "formation_place": 9
      }
     ],
@@ -2182,55 +2182,55 @@
      {
       "name": "Brahimi Bilal",
       "number": "7",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Yasser Larouci",
       "number": "76",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "William Harhouz",
       "number": "20",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Harold Voyer",
       "number": "5",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Daouda Traoré",
       "number": "23",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Rayan Bamba",
       "number": "26",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Jean Vercruysse",
       "number": "10",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Dame Guèye",
       "number": "25",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      },
      {
       "name": "Ewan Hatfout",
       "number": "1",
-      "position": "SUB",
+      "position": null,
       "formation_place": 0
      }
     ]
@@ -3674,7 +3674,7 @@
    "home": "Anderlecht",
    "away": "Westerlo",
    "home_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Colin Coosemans",
@@ -3707,22 +3707,22 @@
       "formation_place": 2
      },
      {
-      "name": "Mario Stroeykens",
-      "number": "29",
-      "position": "CM",
-      "formation_place": 4
-     },
-     {
       "name": "Thelo Aasgaard",
       "number": "19",
-      "position": "LM",
-      "formation_place": 8
+      "position": "AM",
+      "formation_place": 10
      },
      {
       "name": "Ilias Koutsoupias",
       "number": "30",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Mario Stroeykens",
+      "number": "29",
       "position": "RM",
-      "formation_place": 7
+      "formation_place": 8
      },
      {
       "name": "Mihajlo Cvetkovic",
@@ -3733,14 +3733,14 @@
      {
       "name": "Jayden Onia-Seke",
       "number": "49",
-      "position": "LF",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
       "name": "Lukás Ambros",
       "number": "18",
-      "position": "RF",
-      "formation_place": 10
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [

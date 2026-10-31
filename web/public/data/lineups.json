@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T15:05:05.850946Z",
+ "generated_at": "2026-10-31T15:16:35.232479Z",
  "matches": [
   {
    "league": "EPL",
@@ -526,7 +526,7 @@
    "home": "Brentford",
    "away": "Nottingham Forest",
    "home_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-3",
     "starters": [
      {
       "name": "Caoimhín Kelleher",
@@ -559,22 +559,22 @@
       "formation_place": 2
      },
      {
-      "name": "Mathias Jensen",
-      "number": "8",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
       "name": "Vitaly Janelt",
       "number": "27",
-      "position": "LM",
+      "position": "CM",
       "formation_place": 4
+     },
+     {
+      "name": "Mathias Jensen",
+      "number": "8",
+      "position": "LM",
+      "formation_place": 8
      },
      {
       "name": "Mamadou Sangare",
       "number": "18",
       "position": "RM",
-      "formation_place": 8
+      "formation_place": 7
      },
      {
       "name": "Igor Thiago",
@@ -585,14 +585,14 @@
      {
       "name": "Kevin Schade",
       "number": "7",
-      "position": "AM-L",
+      "position": "LF",
       "formation_place": 11
      },
      {
       "name": "Dango Ouattara",
       "number": "11",
-      "position": "AM-R",
-      "formation_place": 7
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -2626,14 +2626,14 @@
       "formation_place": 10
      },
      {
-      "name": "Atakan Karazor",
-      "number": "16",
+      "name": "Grischa Prömel",
+      "number": "21",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Grischa Prömel",
-      "number": "21",
+      "name": "Atakan Karazor",
+      "number": "16",
       "position": "RM",
       "formation_place": 8
      },
@@ -4848,6 +4848,278 @@
     ]
    },
    "kickoff_utc": "2026-10-31T13:00:00Z"
+  },
+  {
+   "league": "SUPERLIG",
+   "home": "Fenerbahce",
+   "away": "Goztep",
+   "home_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "Ederson",
+      "number": "31",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Kojo Peprah Oppong",
+      "number": "21",
+      "position": "CD-L",
+      "formation_place": 6
+     },
+     {
+      "name": "Milan Skriniar",
+      "number": "37",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
+      "name": "Munir Mercan",
+      "number": "22",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Nélson Semedo",
+      "number": "27",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Oguz Aydin",
+      "number": "70",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
+      "name": "Matteo Guendouzi",
+      "number": "6",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "N'Golo Kanté",
+      "number": "91",
+      "position": "RM",
+      "formation_place": 8
+     },
+     {
+      "name": "Romelu Lukaku",
+      "number": "9",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Kerem Aktürkoglu",
+      "number": "7",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Irfan Can Kahveci",
+      "number": "17",
+      "position": "AM-R",
+      "formation_place": 7
+     }
+    ],
+    "subs": [
+     {
+      "name": "Mert Günok",
+      "number": "34",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ismail Yüksek",
+      "number": "5",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yigit Demir",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Nene Dorgeles",
+      "number": "45",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mert Müldür",
+      "number": "18",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mert Yandas",
+      "number": "8",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Tarik Cetin",
+      "number": "13",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ognjen Mimovic",
+      "number": "77",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Bartug Elmaz",
+      "number": "28",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Vedat Muriqi",
+      "number": "19",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "3-4-1-2",
+    "starters": [
+     {
+      "name": "Arda Ozcimen",
+      "number": "1",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Noah Sonko Sundberg",
+      "number": "19",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Malcom Bokele",
+      "number": "26",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Taha Altikardes",
+      "number": "4",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Novatus Miroshi",
+      "number": "20",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Rhaldney",
+      "number": "5",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Alexis Antunes",
+      "number": "8",
+      "position": "AM",
+      "formation_place": 9
+     },
+     {
+      "name": "Richard Akonnor",
+      "number": "12",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Arda Okan Kurtulan",
+      "number": "2",
+      "position": "RM",
+      "formation_place": 2
+     },
+     {
+      "name": "Juan",
+      "number": "9",
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Janderson",
+      "number": "39",
+      "position": "CF-R",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Efkan Bekiroglu",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ege Yildirim",
+      "number": "13",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mehmet Ozturk",
+      "number": "33",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Santos",
+      "number": "3",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Gökdeniz Bayrakdar",
+      "number": "17",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Sinclair Armstrong",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "André Henrique",
+      "number": "7",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Turaç Böke",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Alex Matos",
+      "number": "6",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Faustino Anjorin",
+      "number": "18",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-10-31T16:00:00Z"
   }
  ],
  "events": [

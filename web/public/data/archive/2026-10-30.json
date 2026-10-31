@@ -310,7 +310,301 @@
      "fair_odds": 1.26,
      "betpawa_odds": 1.22
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     4
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": null,
+     "away_1up": null,
+     "home_first": null,
+     "away_first": null,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Bahadir Han G\u00fcng\u00f6rd\u00fc",
+       "number": "13",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Chidozie Awaziem",
+       "number": "15",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Rayyan Baniya",
+       "number": "22",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Arthur Masuaku",
+       "number": "26",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Yhoan Andzouana",
+       "number": "17",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Rajmund T\u00f3th",
+       "number": "66",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Melih Ibrahimoglu",
+       "number": "77",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Marko Jevtovic",
+       "number": "8",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Jackson Muleka",
+       "number": "11",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Jean-Luc Domp\u00e9",
+       "number": "91",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Deniz Turuc",
+       "number": "9",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Arif Bosluk",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Enis Destan",
+       "number": "94",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mostafa Mohamed",
+       "number": "42",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Enis Bardhi",
+       "number": "10",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Deniz Ertas",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ebrima Colley",
+       "number": "19",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Diogo Gon\u00e7alves",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ugurcan Yazgili",
+       "number": "5",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Emir Bars",
+       "number": "45",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ahmet Oguz",
+       "number": "2",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Ugurcan \u00c7akir",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Wilfried Singo",
+       "number": "90",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Davinson S\u00e1nchez",
+       "number": "6",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Eren Elmali",
+       "number": "17",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Roland Sallai",
+       "number": "7",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Alexey Batrakov",
+       "number": "83",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Gabriel Gomes",
+       "number": "8",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Lucas Torreira",
+       "number": "34",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Victor Osimhen",
+       "number": "45",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Rafael Le\u00e3o",
+       "number": "27",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Yunus Akg\u00fcn",
+       "number": "11",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Mario Lemina",
+       "number": "99",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Renato Nhaga",
+       "number": "74",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Lesley Ugochukwu",
+       "number": "18",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "G\u00fcnay G\u00fcvenc",
+       "number": "19",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ismail Jakobs",
+       "number": "4",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Deniz G\u00fcl",
+       "number": "21",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Baris Alper Yilmaz",
+       "number": "53",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "El Chadaille Bitshiabu",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Leroy San\u00e9",
+       "number": "10",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ilkay G\u00fcndogan",
+       "number": "20",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -620,7 +914,289 @@
      "fair_odds": 1.19,
      "betpawa_odds": 1.15
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     1,
+     5
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": true,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "3-4-2-1",
+     "starters": [
+      {
+       "name": "Arnaud Bodart",
+       "number": "16",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Junior Mwanga",
+       "number": "6",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Ahmed Touba",
+       "number": "5",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Ayumu Seko",
+       "number": "15",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Amir Richardson",
+       "number": "7",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Simon Ebonog",
+       "number": "26",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Mouhamed N'Diaye",
+       "number": "97",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Djibril Ouziad",
+       "number": "20",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Josh Maja",
+       "number": "9",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Sota Nakamura",
+       "number": "30",
+       "position": "CF-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Rayan Fofana",
+       "number": "38",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Gauthier Gallon",
+       "number": "93",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Kaito Mizuta",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rassoul Ndiaye",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mbwana Samatta",
+       "number": "25",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Hakim Dongopandji",
+       "number": "33",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Guy Zohouri",
+       "number": "24",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Enzo Koffi",
+       "number": "27",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Vincent Sasso",
+       "number": "23",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Daren Mosengo",
+       "number": "78",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "4-3-3",
+     "starters": [
+      {
+       "name": "Matvei Safonov",
+       "number": "39",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Lucas Hern\u00e1ndez",
+       "number": "21",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Illia Zabarnyi",
+       "number": "6",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Lucas Digne",
+       "number": "12",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Achraf Hakimi",
+       "number": "2",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Maghnes Akliouche",
+       "number": "11",
+       "position": "CM",
+       "formation_place": 4
+      },
+      {
+       "name": "Dro Fern\u00e1ndez",
+       "number": "27",
+       "position": "LM",
+       "formation_place": 8
+      },
+      {
+       "name": "Warren Za\u00efre-Emery",
+       "number": "33",
+       "position": "RM",
+       "formation_place": 7
+      },
+      {
+       "name": "Senny Mayulu",
+       "number": "24",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Mika Godts",
+       "number": "22",
+       "position": "LF",
+       "formation_place": 11
+      },
+      {
+       "name": "Ferran Torres",
+       "number": "9",
+       "position": "RF",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Fabi\u00e1n Ruiz",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "David Boly",
+       "number": "42",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Lucas Beraldo",
+       "number": "4",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Quentin Ndjantou",
+       "number": "47",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jo\u00e3o Neves",
+       "number": "87",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Lucas Chevalier",
+       "number": "30",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Vitinha",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Willian Pacho",
+       "number": "51",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "D\u00e9sir\u00e9 Dou\u00e9",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -930,7 +1506,289 @@
      "fair_odds": 1.35,
      "betpawa_odds": 1.31
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     5,
+     2
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "3-4-2-1",
+     "starters": [
+      {
+       "name": "Yehvann Diouf",
+       "number": "23",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Youssouf Ndayishimiye",
+       "number": "55",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Xavier Junior Mandza Tsiendi",
+       "number": "35",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Mohamed Abdelmoneim",
+       "number": "5",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Hicham Boudaoui",
+       "number": "6",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Djibril Coulibaly",
+       "number": "39",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Niels Nkounkou",
+       "number": "27",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Jonathan Clauss",
+       "number": "92",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Elye Wahi",
+       "number": "11",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Mohamed Amoura",
+       "number": "9",
+       "position": "CF-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Sofiane Diop",
+       "number": "10",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Issiaga Camara",
+       "number": "22",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Djelan Morana",
+       "number": "41",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Gauthier Hein",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Morgan Sanson",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nathan N'Goumou",
+       "number": "29",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Everton Pereira",
+       "number": "87",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Teddy Boulhendi",
+       "number": "77",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Hamza Koutoune",
+       "number": "84",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Isak Jansson",
+       "number": "21",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "3-5-2",
+     "starters": [
+      {
+       "name": "Nicolas Lemaitre",
+       "number": "16",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Charlie Cresswell",
+       "number": "4",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Anthony Rouault",
+       "number": "24",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Abdelhamid A\u00eft Boudlal",
+       "number": "48",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Adrien Thomasson",
+       "number": "28",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Sebastian Szymanski",
+       "number": "17",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Valentin Rongier",
+       "number": "21",
+       "position": "AM",
+       "formation_place": 11
+      },
+      {
+       "name": "Mahamadou Nagida",
+       "number": "18",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Przemyslaw Frankowski",
+       "number": "95",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Mousa Al-Tamari",
+       "number": "11",
+       "position": "CF-L",
+       "formation_place": 9
+      },
+      {
+       "name": "Boulaye Dia",
+       "number": "22",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Eliezer Mayenda",
+       "number": "12",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Issa Soumar\u00e9",
+       "number": "90",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Bryan Reynolds",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Kilian Belazzoug",
+       "number": "60",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mahdi Camara",
+       "number": "45",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Gon\u00e7alo Oliveira",
+       "number": "5",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Quentin Merlin",
+       "number": "26",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Djaoui Ciss\u00e9",
+       "number": "6",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ludovic Blas",
+       "number": "10",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -1176,7 +2034,289 @@
      "fair_odds": 1.35,
      "betpawa_odds": 1.29
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     4,
+     1
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Nicolas Kristof",
+       "number": "20",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Maximilian Rohr",
+       "number": "31",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Lukas Finn Pinckert",
+       "number": "19",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Lasse G\u00fcnther",
+       "number": "21",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Luca Sirch",
+       "number": "26",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Francis-Ikechukwu Onyeka",
+       "number": "40",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Lukasz Poreba",
+       "number": "8",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Felix Keidel",
+       "number": "43",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "David Mokwa",
+       "number": "42",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Maurice Krattenmacher",
+       "number": "7",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Lukas Petkov",
+       "number": "25",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Raif Adam",
+       "number": "15",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Noel Futkeu",
+       "number": "9",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Tim Boss",
+       "number": "28",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Amara Conde",
+       "number": "6",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Luca Schnellbacher",
+       "number": "24",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Cole Campbell",
+       "number": "39",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Frederik Schmahl",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Florian Le Joncour",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nicholas Mickelson",
+       "number": "2",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "3-5-2",
+     "starters": [
+      {
+       "name": "Robin Zentner",
+       "number": "27",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Stefan Posch",
+       "number": "4",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Kacper Potulski",
+       "number": "48",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Danny da Costa",
+       "number": "21",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Nadiem Amiri",
+       "number": "10",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Paul Nebel",
+       "number": "8",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Kaishu Sano",
+       "number": "6",
+       "position": "AM",
+       "formation_place": 11
+      },
+      {
+       "name": "Phillipp Mwene",
+       "number": "2",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Anthony Caci",
+       "number": "19",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Phillip Tietz",
+       "number": "9",
+       "position": "CF-L",
+       "formation_place": 9
+      },
+      {
+       "name": "Sheraldo Becker",
+       "number": "23",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Lee Jae-Sung",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Benedict Hollerbach",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Fabio Gruber",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Silvan Widmer",
+       "number": "30",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Lennard Maloney",
+       "number": "15",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Alexander Schwolow",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Eric Martel",
+       "number": "5",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Stefan Bell",
+       "number": "16",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ransford-Yeboah K\u00f6nigsd\u00f6rffer",
+       "number": "11",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -1486,7 +2626,289 @@
      "fair_odds": 1.2,
      "betpawa_odds": 1.16
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     4
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": null,
+     "away_1up": null,
+     "home_first": null,
+     "away_first": null,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-3-2-1",
+     "starters": [
+      {
+       "name": "Brent Gabriel",
+       "number": "13",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Jakob Kiilerich",
+       "number": "5",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Laurent Lemoine",
+       "number": "4",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Yannick Cappelle",
+       "number": "55",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Franz Tangala",
+       "number": "49",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Enrique Lofolomo",
+       "number": "6",
+       "position": "CM",
+       "formation_place": 4
+      },
+      {
+       "name": "Marley Ak\u00e9",
+       "number": "11",
+       "position": "CM-L",
+       "formation_place": 7
+      },
+      {
+       "name": "Thomas Claes",
+       "number": "8",
+       "position": "CM-R",
+       "formation_place": 8
+      },
+      {
+       "name": "Anosike Ementa",
+       "number": "18",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Tobias Hedl",
+       "number": "20",
+       "position": "CF-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Malick Mbaye",
+       "number": "10",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Serxho Ujka",
+       "number": "36",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Akpa Chukwu Hemsley",
+       "number": "90",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ousseynou Niang",
+       "number": "22",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Tristan Panduro",
+       "number": "25",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Istv\u00e1n \u00c1trok",
+       "number": "21",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Youssoupha Mbodji",
+       "number": "15",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Benoit De Jaegere",
+       "number": "45",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nikola Mituljikic",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Louis Bostyn",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Yann Sommer",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Brandon Mechele",
+       "number": "44",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Jorne Spileers",
+       "number": "58",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Joaquin Seys",
+       "number": "65",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Kyriani Sabbe",
+       "number": "64",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Hugo Vetlesen",
+       "number": "10",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Hans Vanaken",
+       "number": "20",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Freddie Potts",
+       "number": "8",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Nicolo Tresoldi",
+       "number": "7",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Jan Virgili",
+       "number": "11",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Carlos Forbs",
+       "number": "9",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Lee Han-Beom",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Cheveyo Tsawa",
+       "number": "16",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Argus Driessche",
+       "number": "81",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Matteo Dams",
+       "number": "32",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Felix Lemarechal",
+       "number": "80",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Romeo Vermant",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Milan Robberechts",
+       "number": "39",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mamadou Diakhon",
+       "number": "67",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Hugo Siquet",
+       "number": "41",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -1796,7 +3218,313 @@
      "fair_odds": 1.19,
      "betpawa_odds": 1.17
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     1
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": false,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": false,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-4-2",
+     "starters": [
+      {
+       "name": "P\u00e9ter Gul\u00e1csi",
+       "number": "25",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Renato Veiga",
+       "number": "12",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Pau Navarro",
+       "number": "6",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Sergi Cardona",
+       "number": "23",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Santiago Mouri\u00f1o",
+       "number": "15",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Santi Comesa\u00f1a",
+       "number": "14",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Carlos Maci\u00e0",
+       "number": "16",
+       "position": "CM-R",
+       "formation_place": 4
+      },
+      {
+       "name": "Alberto Moleiro",
+       "number": "10",
+       "position": "LM",
+       "formation_place": 11
+      },
+      {
+       "name": "Tajon Buchanan",
+       "number": "17",
+       "position": "RM",
+       "formation_place": 7
+      },
+      {
+       "name": "Georges Mikautadze",
+       "number": "9",
+       "position": "CF-L",
+       "formation_place": 9
+      },
+      {
+       "name": "Gerard Moreno",
+       "number": "7",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Tani Oluwaseyi",
+       "number": "21",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ayoze P\u00e9rez",
+       "number": "22",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Cheikh Ahmad Tidiane Thiam",
+       "number": "30",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nizar El Jmili Ben Hamou",
+       "number": "27",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Luiz J\u00fanior",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Carlos Romero",
+       "number": "20",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Alex Freeman",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Logan Costa",
+       "number": "2",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rub\u00e9n G\u00f3mez",
+       "number": "13",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nicolas P\u00e9p\u00e9",
+       "number": "19",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "\u00c1ngel Fortu\u00f1o",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Leandro Cabrera",
+       "number": "6",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Vanja Drkusic",
+       "number": "16",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Roger Hinojo",
+       "number": "21",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Omar El Hilali",
+       "number": "23",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Javi Hernandez",
+       "number": "28",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Edu Exp\u00f3sito",
+       "number": "8",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Rafael Bauza",
+       "number": "26",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Roberto Fern\u00e1ndez",
+       "number": "9",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Bryan Zaragoza",
+       "number": "15",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Alejandro Santiago Vargas",
+       "number": "36",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Pere Milla",
+       "number": "11",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jos\u00e9 \u00c1ngel L\u00f3pez",
+       "number": "32",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Quilindschy Hartman",
+       "number": "3",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Pol Lozano",
+       "number": "10",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Javier Puado",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Gabriel Moscardo",
+       "number": "20",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jan Peries Duran",
+       "number": "33",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Marko Dmitrovic",
+       "number": "13",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Adama Timera",
+       "number": "27",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Unai N\u00fa\u00f1ez",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Marcos Fern\u00e1ndez",
+       "number": "18",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Tyrhys Dolan",
+       "number": "24",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -2106,7 +3834,289 @@
      "fair_odds": 1.38,
      "betpawa_odds": 1.35
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     1,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": false,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-3-3",
+     "starters": [
+      {
+       "name": "Berke \u00d6zer",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Alexsandro",
+       "number": "4",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Nathan Ngoy",
+       "number": "3",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Romain Perraud",
+       "number": "15",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Maxima Goffi",
+       "number": "38",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Nabil Bentaleb",
+       "number": "6",
+       "position": "CM",
+       "formation_place": 4
+      },
+      {
+       "name": "Benjamin Andr\u00e9",
+       "number": "21",
+       "position": "LM",
+       "formation_place": 8
+      },
+      {
+       "name": "Ngal'ayel Mukau",
+       "number": "17",
+       "position": "RM",
+       "formation_place": 7
+      },
+      {
+       "name": "H\u00e1kon Haraldsson",
+       "number": "10",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Soriba Diaoune",
+       "number": "35",
+       "position": "LF",
+       "formation_place": 11
+      },
+      {
+       "name": "Ethan Mbapp\u00e9",
+       "number": "8",
+       "position": "RF",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Gaetan Perrin",
+       "number": "28",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Maurits Kjaergaard",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Calvin Verdonk",
+       "number": "24",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Olivier Giroud",
+       "number": "9",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Basar \u00d6nal",
+       "number": "19",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Osame Sahraoui",
+       "number": "11",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Orlando Gill",
+       "number": "12",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Dilane Bakwa",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Isaac Cossier",
+       "number": "26",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "3-4-2-1",
+     "starters": [
+      {
+       "name": "Robin Risser",
+       "number": "40",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Samson Baidoo",
+       "number": "6",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Jean-Clair Todibo",
+       "number": "20",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Ruben Aguilar",
+       "number": "2",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Micha\u00ebl Cuisance",
+       "number": "27",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Amadou Haidara",
+       "number": "21",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Matthieu Udol",
+       "number": "14",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Saud Abdulhamid",
+       "number": "23",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Thorgan Hazard",
+       "number": "9",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Florian Sotoca",
+       "number": "7",
+       "position": "CF-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Florian Thauvin",
+       "number": "10",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Yassine Titraoui",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mathieu Gorgelin",
+       "number": "16",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Kyllian Antonio",
+       "number": "32",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jonathan Gradit",
+       "number": "24",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Franjo Ivanovic",
+       "number": "29",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Mezian Soares",
+       "number": "38",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Junior Kadile",
+       "number": "28",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Michal Skoras",
+       "number": "22",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Andrija Bulatovic",
+       "number": "5",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   },
   {
    "league": {
@@ -2416,7 +4426,325 @@
      "fair_odds": 1.15,
      "betpawa_odds": 1.13
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     2
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": null,
+     "away_1up": null,
+     "home_first": null,
+     "away_first": null,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Patrick Sequeira",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "David Sousa",
+       "number": "43",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Kaly",
+       "number": "3",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Pedro Rosas",
+       "number": "75",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Andr\u00e9 Geraldes",
+       "number": "18",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Jo\u00e3o R\u00eago",
+       "number": "70",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Lawrence Ofori",
+       "number": "80",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Sebasti\u00e1n P\u00e9rez",
+       "number": "24",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Henrique Ara\u00fajo",
+       "number": "9",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Benjamin Pauwels",
+       "number": "77",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Mohamed Salah El Boukammiri",
+       "number": "11",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Ivan Mandic",
+       "number": "95",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Joao Goulart",
+       "number": "4",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jeremy Livolant",
+       "number": "29",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "JP",
+       "number": "98",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Alassana Jatta",
+       "number": "20",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Kevin Prieto",
+       "number": "19",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Gabi Pereira",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Evans Maurin",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Cassiano",
+       "number": "90",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Abdu Dafe",
+       "number": "59",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Silvi Clua",
+       "number": "16",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Felipe Florencio Da Silva",
+       "number": "44",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "4-2-3-1",
+     "starters": [
+      {
+       "name": "Kaique",
+       "number": "30",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Gon\u00e7alo In\u00e1cio",
+       "number": "25",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Eduardo Quaresma",
+       "number": "72",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Maxi Ara\u00fajo",
+       "number": "20",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Iv\u00e1n Fresneda",
+       "number": "22",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Pedro Lima",
+       "number": "21",
+       "position": "AM",
+       "formation_place": 10
+      },
+      {
+       "name": "Silas Andersen",
+       "number": "4",
+       "position": "LM",
+       "formation_place": 4
+      },
+      {
+       "name": "Sergi Altimira",
+       "number": "5",
+       "position": "RM",
+       "formation_place": 8
+      },
+      {
+       "name": "Luis Su\u00e1rez",
+       "number": "97",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Nestory Irankunda",
+       "number": "19",
+       "position": "AM-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Luis Guilherme",
+       "number": "31",
+       "position": "AM-R",
+       "formation_place": 7
+      }
+     ],
+     "subs": [
+      {
+       "name": "Fl\u00e1vio Gon\u00e7alves",
+       "number": "58",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jo\u00e3o Sim\u00f5es",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Georgios Vagiannidis",
+       "number": "13",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Moncef Zekri",
+       "number": "18",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Issa Doumbia",
+       "number": "77",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Fotis Ioannidis",
+       "number": "7",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Ibrahima Ba",
+       "number": "55",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Eduardo Felic\u00edssimo",
+       "number": "73",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jesse Derry",
+       "number": "28",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rui Silva",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rafael Nel",
+       "number": "9",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Geny Catamo",
+       "number": "10",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   }
  ],
  "slips": {
@@ -2456,7 +4784,7 @@
      "betpawa_odds": 1.44,
      "fair_odds": 1.37,
      "price_warning": false,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-10-30",
@@ -2476,7 +4804,7 @@
      "betpawa_odds": 1.19,
      "fair_odds": 1.15,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2496,7 +4824,7 @@
      "betpawa_odds": 1.14,
      "fair_odds": 1.13,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2516,11 +4844,12 @@
      "betpawa_odds": 1.29,
      "fair_odds": 1.26,
      "price_warning": false,
-     "won": null
+     "won": true
     }
    ],
    "final": true,
-   "locked": false
+   "locked": false,
+   "status": "lost"
   },
   "medium": {
    "total_odds": 3.54,
@@ -2558,7 +4887,7 @@
      "betpawa_odds": 1.44,
      "fair_odds": 1.37,
      "price_warning": false,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-10-30",
@@ -2578,7 +4907,7 @@
      "betpawa_odds": 1.19,
      "fair_odds": 1.15,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2598,7 +4927,7 @@
      "betpawa_odds": 1.29,
      "fair_odds": 1.26,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2618,11 +4947,12 @@
      "betpawa_odds": 1.6,
      "fair_odds": 1.52,
      "price_warning": false,
-     "won": null
+     "won": true
     }
    ],
    "final": true,
-   "locked": false
+   "locked": false,
+   "status": "lost"
   },
   "big": {
    "total_odds": 8.16,
@@ -2660,7 +4990,7 @@
      "betpawa_odds": 1.44,
      "fair_odds": 1.37,
      "price_warning": false,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-10-30",
@@ -2680,7 +5010,7 @@
      "betpawa_odds": 1.59,
      "fair_odds": 1.5,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2700,7 +5030,7 @@
      "betpawa_odds": 1.14,
      "fair_odds": 1.13,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2720,7 +5050,7 @@
      "betpawa_odds": 1.34,
      "fair_odds": 1.33,
      "price_warning": false,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-10-30",
@@ -2740,7 +5070,7 @@
      "betpawa_odds": 1.13,
      "fair_odds": 1.12,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2760,7 +5090,7 @@
      "betpawa_odds": 1.29,
      "fair_odds": 1.26,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-10-30",
@@ -2780,11 +5110,12 @@
      "betpawa_odds": 1.6,
      "fair_odds": 1.52,
      "price_warning": false,
-     "won": null
+     "won": true
     }
    ],
    "final": true,
-   "locked": false
+   "locked": false,
+   "status": "lost"
   }
  }
 }

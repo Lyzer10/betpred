@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T20:01:04.244222Z",
+ "generated_at": "2026-11-01T20:16:01.218899Z",
  "matches": [
   {
    "league": "LALIGA",
@@ -302,7 +302,7 @@
    "home": "Ath Bilbao",
    "away": "Sociedad",
    "home_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-4-2",
     "starters": [
      {
       "name": "Unai Simón",
@@ -311,64 +311,64 @@
       "formation_place": 1
      },
      {
-      "name": "Yuri Berchiche",
-      "number": "17",
-      "position": "D",
-      "formation_place": 3
+      "name": "Aymeric Laporte",
+      "number": "14",
+      "position": "CD-L",
+      "formation_place": 6
      },
      {
       "name": "Dani Vivian",
       "number": "3",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Yuri Berchiche",
+      "number": "17",
+      "position": "LB",
+      "formation_place": 3
      },
      {
       "name": "Hugo Rincón",
       "number": "15",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Aymeric Laporte",
-      "number": "14",
-      "position": "D",
-      "formation_place": 6
      },
      {
       "name": "Beñat Gerenabarrena",
       "number": "24",
-      "position": "M",
+      "position": "CM-L",
       "formation_place": 8
-     },
-     {
-      "name": "Nico Williams",
-      "number": "10",
-      "position": "M",
-      "formation_place": 11
      },
      {
       "name": "Peio Canales",
       "number": "28",
-      "position": "M",
+      "position": "CM-R",
       "formation_place": 4
+     },
+     {
+      "name": "Nico Williams",
+      "number": "10",
+      "position": "LM",
+      "formation_place": 11
      },
      {
       "name": "Álex Berenguer",
       "number": "7",
-      "position": "M",
+      "position": "RM",
       "formation_place": 7
      },
      {
       "name": "Iñaki Williams",
       "number": "9",
-      "position": "M",
-      "formation_place": 10
+      "position": "CF-L",
+      "formation_place": 9
      },
      {
       "name": "Maroan Sannadi",
       "number": "21",
-      "position": "F",
-      "formation_place": 9
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -458,61 +458,61 @@
      {
       "name": "Mamadou Sarr",
       "number": "19",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
+     },
+     {
+      "name": "Jon Martín",
+      "number": "6",
+      "position": "CD-R",
+      "formation_place": 5
      },
      {
       "name": "Sergio Gómez",
       "number": "17",
-      "position": "D",
+      "position": "LB",
       "formation_place": 3
      },
      {
       "name": "Jon Aramburu",
       "number": "2",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Jon Martín",
-      "number": "6",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Jon Gorrotxategi",
-      "number": "4",
-      "position": "M",
-      "formation_place": 8
-     },
-     {
-      "name": "Gonçalo Guedes",
-      "number": "11",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Ander Barrenetxea",
-      "number": "7",
-      "position": "M",
-      "formation_place": 7
      },
      {
       "name": "Carlos Soler",
       "number": "18",
-      "position": "M",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Jon Gorrotxategi",
+      "number": "4",
+      "position": "CM-R",
       "formation_place": 4
      },
      {
-      "name": "Luka Sucic",
-      "number": "24",
-      "position": "F",
-      "formation_place": 9
+      "name": "Ander Barrenetxea",
+      "number": "7",
+      "position": "LM",
+      "formation_place": 11
+     },
+     {
+      "name": "Gonçalo Guedes",
+      "number": "11",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Mikel Oyarzabal",
       "number": "10",
-      "position": "F",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Luka Sucic",
+      "number": "24",
+      "position": "CF-R",
       "formation_place": 10
      }
     ],
@@ -1042,26 +1042,26 @@
       "formation_place": 2
      },
      {
-      "name": "Niko Sigur",
-      "number": "14",
+      "name": "Cristian Cásseres Jr.",
+      "number": "23",
       "position": "CM-L",
       "formation_place": 8
      },
      {
-      "name": "Cristian Cásseres Jr.",
-      "number": "23",
+      "name": "Niko Sigur",
+      "number": "14",
       "position": "CM-R",
       "formation_place": 4
      },
      {
-      "name": "Thomas Jørgensen",
-      "number": "8",
+      "name": "Aron Donnum",
+      "number": "15",
       "position": "LM",
       "formation_place": 11
      },
      {
-      "name": "Aron Donnum",
-      "number": "15",
+      "name": "Thomas Jørgensen",
+      "number": "8",
       "position": "RM",
       "formation_place": 7
      },

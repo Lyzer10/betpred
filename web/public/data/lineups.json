@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T14:31:46.396360Z",
+ "generated_at": "2026-11-01T14:46:43.758298Z",
  "matches": [
   {
    "league": "LALIGA",
@@ -1226,7 +1226,7 @@
    "home": "Union Berlin",
    "away": "FC Koln",
    "home_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "3-4-1-2",
     "starters": [
      {
       "name": "Frederik Ronnow",
@@ -1237,62 +1237,62 @@
      {
       "name": "Marvin Friedrich",
       "number": "5",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Rani Khedira",
+      "number": "8",
       "position": "CD-L",
-      "formation_place": 6
+      "formation_place": 4
      },
      {
       "name": "Zeno Van Den Bosch",
       "number": "4",
       "position": "CD-R",
-      "formation_place": 5
+      "formation_place": 6
+     },
+     {
+      "name": "Michel Aebischer",
+      "number": "20",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "András Schäfer",
+      "number": "13",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Kastriot Imeri",
+      "number": "30",
+      "position": "AM",
+      "formation_place": 9
      },
      {
       "name": "Derrick Köhn",
       "number": "17",
-      "position": "LB",
+      "position": "LM",
       "formation_place": 3
      },
      {
       "name": "Janik Haberer",
       "number": "19",
-      "position": "RB",
-      "formation_place": 2
-     },
-     {
-      "name": "Michel Aebischer",
-      "number": "20",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
-      "name": "Rani Khedira",
-      "number": "8",
-      "position": "LM",
-      "formation_place": 4
-     },
-     {
-      "name": "András Schäfer",
-      "number": "13",
       "position": "RM",
-      "formation_place": 8
-     },
-     {
-      "name": "Tim Skarke",
-      "number": "21",
-      "position": "F",
-      "formation_place": 9
-     },
-     {
-      "name": "Kastriot Imeri",
-      "number": "30",
-      "position": "AM-L",
-      "formation_place": 11
+      "formation_place": 2
      },
      {
       "name": "Livan Burcu",
       "number": "9",
-      "position": "AM-R",
-      "formation_place": 7
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Tim Skarke",
+      "number": "21",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -2816,6 +2816,284 @@
     ]
    },
    "kickoff_utc": "2026-11-01T15:00:00Z"
+  },
+  {
+   "league": "PRIMEIRA",
+   "home": "Arouca",
+   "away": "Nacional",
+   "home_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "Ignacio De Arruabarrena",
+      "number": "12",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Orest Lebedenko",
+      "number": "18",
+      "position": "D",
+      "formation_place": 3
+     },
+     {
+      "name": "José Fontán",
+      "number": "3",
+      "position": "D",
+      "formation_place": 6
+     },
+     {
+      "name": "Javi Sánchez",
+      "number": "15",
+      "position": "D",
+      "formation_place": 5
+     },
+     {
+      "name": "Tiago Esgaio",
+      "number": "28",
+      "position": "D",
+      "formation_place": 2
+     },
+     {
+      "name": "Alfonso Trezza",
+      "number": "19",
+      "position": "M",
+      "formation_place": 7
+     },
+     {
+      "name": "Taichi Fukui",
+      "number": "8",
+      "position": "M",
+      "formation_place": 10
+     },
+     {
+      "name": "Espen Van Ee",
+      "number": "6",
+      "position": "M",
+      "formation_place": 8
+     },
+     {
+      "name": "Näis Djouahra",
+      "number": "7",
+      "position": "M",
+      "formation_place": 11
+     },
+     {
+      "name": "Mateo Flores",
+      "number": "21",
+      "position": "M",
+      "formation_place": 4
+     },
+     {
+      "name": "Ivan Martínez",
+      "number": "17",
+      "position": "F",
+      "formation_place": 9
+     }
+    ],
+    "subs": [
+     {
+      "name": "Boris Popovic",
+      "number": "5",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Jakub Vinarcik",
+      "number": "1",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mamadu Balde",
+      "number": "27",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Si-Hoo Park",
+      "number": "77",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Dylan Nandín",
+      "number": "23",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mario Climent",
+      "number": "37",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Leo Shahar",
+      "number": "2",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Fally Mayulu",
+      "number": "9",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Lee Hyun-Ju",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Diogo Monteiro",
+      "number": "4",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Pablo Gozálbez",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Brian Mansilla",
+      "number": "24",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "Renato Marin",
+      "number": "1",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "William Kokolo",
+      "number": "21",
+      "position": "D",
+      "formation_place": 3
+     },
+     {
+      "name": "Markus Jensen",
+      "number": "7",
+      "position": "D",
+      "formation_place": 2
+     },
+     {
+      "name": "Francisco Gonçalves",
+      "number": "33",
+      "position": "D",
+      "formation_place": 5
+     },
+     {
+      "name": "Zé Vitor",
+      "number": "38",
+      "position": "D",
+      "formation_place": 6
+     },
+     {
+      "name": "Miguel Baeza",
+      "number": "8",
+      "position": "M",
+      "formation_place": 4
+     },
+     {
+      "name": "Chiheb Labidi",
+      "number": "15",
+      "position": "M",
+      "formation_place": 10
+     },
+     {
+      "name": "Matheus Dias",
+      "number": "6",
+      "position": "M",
+      "formation_place": 8
+     },
+     {
+      "name": "Stavros Gavriel",
+      "number": "11",
+      "position": "M",
+      "formation_place": 7
+     },
+     {
+      "name": "Song Min-Kyu",
+      "number": "12",
+      "position": "M",
+      "formation_place": 11
+     },
+     {
+      "name": "Njoya Kader",
+      "number": "29",
+      "position": "F",
+      "formation_place": 9
+     }
+    ],
+    "subs": [
+     {
+      "name": "José Gomes",
+      "number": "5",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Pablo Ruan",
+      "number": "99",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Matchoi Djoló",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "João Gonçalves",
+      "number": "13",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Danel Dongmo",
+      "number": "31",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Allen Obando",
+      "number": "9",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Deivison",
+      "number": "88",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ivanildo Fernandes",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Daniel Júnior",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-11-01T15:30:00Z"
   },
   {
    "league": "SUPERLIG",

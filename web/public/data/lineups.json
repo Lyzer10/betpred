@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T12:16:43.404954Z",
+ "generated_at": "2026-11-01T12:31:33.974849Z",
  "matches": [
   {
    "league": "LALIGA",
@@ -921,20 +921,20 @@
       "formation_place": 6
      },
      {
-      "name": "Ibrahim Diakité",
-      "number": "2",
+      "name": "Geoffrey Kondo",
+      "number": "24",
       "position": "CD-R",
       "formation_place": 5
      },
      {
-      "name": "Geoffrey Kondo",
-      "number": "24",
+      "name": "Tayo Adaramola",
+      "number": "45",
       "position": "LB",
       "formation_place": 3
      },
      {
-      "name": "Erick",
-      "number": "8",
+      "name": "Ibrahim Diakité",
+      "number": "2",
       "position": "RB",
       "formation_place": 2
      },
@@ -963,8 +963,8 @@
       "formation_place": 9
      },
      {
-      "name": "Tayo Adaramola",
-      "number": "45",
+      "name": "Erick",
+      "number": "8",
       "position": "AM-L",
       "formation_place": 11
      },
@@ -1435,6 +1435,278 @@
   },
   {
    "league": "SUPERLIG",
+   "home": "Buyuksehyr",
+   "away": "Samsunspor",
+   "home_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "Muhammed Sengezer",
+      "number": "16",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Ousseynou Ba",
+      "number": "27",
+      "position": "CD-L",
+      "formation_place": 6
+     },
+     {
+      "name": "Emin Bayram",
+      "number": "23",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
+      "name": "Saba Kharebashvili",
+      "number": "38",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Michal Karbownik",
+      "number": "33",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Eldor Shomurodov",
+      "number": "14",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
+      "name": "Jakub Kaluzinski",
+      "number": "18",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Olivier Kemen",
+      "number": "8",
+      "position": "RM",
+      "formation_place": 8
+     },
+     {
+      "name": "Davie Selke",
+      "number": "9",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Ivan Brnic",
+      "number": "77",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Andreas Skov Olsen",
+      "number": "70",
+      "position": "AM-R",
+      "formation_place": 7
+     }
+    ],
+    "subs": [
+     {
+      "name": "Onur Ergün",
+      "number": "4",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Deniz Dilmen",
+      "number": "98",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Edin Visca",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Hamza Güreler",
+      "number": "15",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Umut Günes",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yusuf Sari",
+      "number": "7",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Omer Sahiner",
+      "number": "42",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Bertug Yildirim",
+      "number": "91",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Abbosbek Fayzullaev",
+      "number": "11",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Umut Bozok",
+      "number": "17",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "3-5-2",
+    "starters": [
+     {
+      "name": "Bilal Biyazit",
+      "number": "25",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Igor Drapinski",
+      "number": "3",
+      "position": "D",
+      "formation_place": 4
+     },
+     {
+      "name": "Gabriele Guarino",
+      "number": "34",
+      "position": "D",
+      "formation_place": 5
+     },
+     {
+      "name": "Strahinja Erakovic",
+      "number": "16",
+      "position": "D",
+      "formation_place": 6
+     },
+     {
+      "name": "Celil Yuksel",
+      "number": "5",
+      "position": "M",
+      "formation_place": 8
+     },
+     {
+      "name": "Josafat Mendes",
+      "number": "2",
+      "position": "M",
+      "formation_place": 2
+     },
+     {
+      "name": "Elliot Watt",
+      "number": "4",
+      "position": "M",
+      "formation_place": 11
+     },
+     {
+      "name": "Antoine Sekongo",
+      "number": "42",
+      "position": "M",
+      "formation_place": 7
+     },
+     {
+      "name": "Logi Tomasson",
+      "number": "17",
+      "position": "M",
+      "formation_place": 3
+     },
+     {
+      "name": "Mohamed Bayo",
+      "number": "18",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Tanguy Coulibaly",
+      "number": "10",
+      "position": "F",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Saikuba Jarju",
+      "number": "30",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Elayis Tavsan",
+      "number": "7",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Oskar Øhlenschlaeger",
+      "number": "19",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Okan Kocuk",
+      "number": "1",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Samed Onur",
+      "number": "8",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Haluk Tan",
+      "number": "29",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Kouadou Assoumou",
+      "number": "15",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yusufefe Yurtsever",
+      "number": "44",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Enes Albak",
+      "number": "23",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yalcin Kayan",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-11-01T13:00:00Z"
+  },
+  {
+   "league": "SUPERLIG",
    "home": "Trabzonspor",
    "away": "Gaziantep",
    "home_lineup": {
@@ -1580,58 +1852,58 @@
       "formation_place": 1
      },
      {
-      "name": "Abakar Sylla",
-      "number": "21",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Luis Pérez",
-      "number": "2",
-      "position": "D",
-      "formation_place": 2
-     },
-     {
-      "name": "Kerim Çalhanoglu",
-      "number": "23",
-      "position": "D",
-      "formation_place": 3
-     },
-     {
       "name": "Efe Sarikaya",
       "number": "5",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
      },
      {
-      "name": "Drissa Camara",
-      "number": "3",
-      "position": "M",
-      "formation_place": 10
-     },
-     {
-      "name": "Deian Sorescu",
-      "number": "18",
-      "position": "M",
-      "formation_place": 7
+      "name": "Abakar Sylla",
+      "number": "21",
+      "position": "CD-R",
+      "formation_place": 5
      },
      {
       "name": "Juninho Bacuna",
       "number": "7",
-      "position": "M",
+      "position": "DM",
       "formation_place": 4
      },
      {
-      "name": "Kacper Kozlowski",
-      "number": "10",
-      "position": "M",
-      "formation_place": 11
+      "name": "Kerim Çalhanoglu",
+      "number": "23",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Luis Pérez",
+      "number": "2",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Drissa Camara",
+      "number": "3",
+      "position": "CM-L",
+      "formation_place": 10
      },
      {
       "name": "Victor Gidado",
       "number": "8",
-      "position": "M",
+      "position": "CM-R",
       "formation_place": 8
+     },
+     {
+      "name": "Kacper Kozlowski",
+      "number": "10",
+      "position": "LM",
+      "formation_place": 11
+     },
+     {
+      "name": "Deian Sorescu",
+      "number": "18",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Trivante Stewart",

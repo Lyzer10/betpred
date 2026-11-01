@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T13:47:06.913440Z",
+ "generated_at": "2026-11-01T14:01:39.830421Z",
  "matches": [
   {
    "league": "LALIGA",
@@ -1533,50 +1533,44 @@
      {
       "name": "Karim Coulibaly",
       "number": "31",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
-     },
-     {
-      "name": "Ismael Doukoure",
-      "number": "6",
-      "position": "D",
-      "formation_place": 2
-     },
-     {
-      "name": "Oso",
-      "number": "36",
-      "position": "D",
-      "formation_place": 3
      },
      {
       "name": "Lucas Høgsberg",
       "number": "24",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
      },
      {
-      "name": "Dário Essugo",
-      "number": "14",
-      "position": "M",
-      "formation_place": 7
+      "name": "Oso",
+      "number": "36",
+      "position": "LB",
+      "formation_place": 3
      },
      {
-      "name": "Giovanni Reyna",
-      "number": "10",
-      "position": "M",
-      "formation_place": 8
+      "name": "Ismael Doukoure",
+      "number": "6",
+      "position": "RB",
+      "formation_place": 2
      },
      {
       "name": "Samir El Mourabet",
       "number": "29",
-      "position": "M",
+      "position": "CM",
       "formation_place": 4
      },
      {
-      "name": "Gessime Yassine",
-      "number": "80",
-      "position": "F",
-      "formation_place": 10
+      "name": "Giovanni Reyna",
+      "number": "10",
+      "position": "LM",
+      "formation_place": 8
+     },
+     {
+      "name": "Dário Essugo",
+      "number": "14",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Conrad Harder",
@@ -1587,8 +1581,14 @@
      {
       "name": "Martial Godo",
       "number": "20",
-      "position": "F",
+      "position": "LF",
       "formation_place": 11
+     },
+     {
+      "name": "Gessime Yassine",
+      "number": "80",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -1649,7 +1649,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "3-4-2-1",
     "starters": [
      {
       "name": "Paul Nardi",
@@ -1660,62 +1660,62 @@
      {
       "name": "Axel Tuanzebe",
       "number": "4",
-      "position": "D",
-      "formation_place": 6
-     },
-     {
-      "name": "Christ Makosso",
-      "number": "15",
-      "position": "D",
+      "position": "CD",
       "formation_place": 5
      },
      {
       "name": "Clément Akpa",
       "number": "92",
-      "position": "D",
-      "formation_place": 3
+      "position": "CD-L",
+      "formation_place": 4
      },
      {
-      "name": "Lamine Sy",
-      "number": "27",
-      "position": "D",
-      "formation_place": 2
+      "name": "Christ Makosso",
+      "number": "15",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Kévin Danois",
+      "number": "5",
+      "position": "CM-L",
+      "formation_place": 8
      },
      {
       "name": "Naouirou Ahamada",
       "number": "8",
-      "position": "M",
-      "formation_place": 10
-     },
-     {
-      "name": "Romain Faivre",
-      "number": "21",
-      "position": "M",
+      "position": "CM-R",
       "formation_place": 7
      },
      {
       "name": "Fredrik Oppegard",
       "number": "22",
-      "position": "M",
-      "formation_place": 8
+      "position": "LM",
+      "formation_place": 3
      },
      {
-      "name": "Danny Namaso",
-      "number": "10",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Kévin Danois",
-      "number": "5",
-      "position": "M",
-      "formation_place": 4
+      "name": "Lamine Sy",
+      "number": "27",
+      "position": "RM",
+      "formation_place": 2
      },
      {
       "name": "Cameron Archer",
       "number": "9",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Danny Namaso",
+      "number": "10",
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Romain Faivre",
+      "number": "21",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -3437,15 +3437,6 @@
  "events": [
   {
    "league": "EPL",
-   "home": "Aston Villa",
-   "away": "Fulham",
-   "kickoff_utc": "2026-10-31T20:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261031",
-   "event_id": "401879250"
-  },
-  {
-   "league": "EPL",
    "home": "Liverpool",
    "away": "Arsenal",
    "kickoff_utc": "2026-11-01T16:30:00Z",
@@ -3461,15 +3452,6 @@
    "slug": "eng.1",
    "espn_date": "20261102",
    "event_id": "401878762"
-  },
-  {
-   "league": "LALIGA",
-   "home": "Barcelona",
-   "away": "Alaves",
-   "kickoff_utc": "2026-10-31T20:00:00Z",
-   "slug": "esp.1",
-   "espn_date": "20261031",
-   "event_id": "401882822"
   },
   {
    "league": "LALIGA",
@@ -3641,24 +3623,6 @@
    "slug": "fra.1",
    "espn_date": "20261102",
    "event_id": "401876419"
-  },
-  {
-   "league": "EREDIV",
-   "home": "Ajax",
-   "away": "AZ Alkmaar",
-   "kickoff_utc": "2026-10-31T20:00:00Z",
-   "slug": "ned.1",
-   "espn_date": "20261031",
-   "event_id": "401875562"
-  },
-  {
-   "league": "EREDIV",
-   "home": "Cambuur",
-   "away": "Go Ahead Eagles",
-   "kickoff_utc": "2026-10-31T20:00:00Z",
-   "slug": "ned.1",
-   "espn_date": "20261031",
-   "event_id": "401875561"
   },
   {
    "league": "EREDIV",

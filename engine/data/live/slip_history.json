@@ -1800,7 +1800,7 @@
         "betpawa_odds": 1.21,
         "fair_odds": 1.18,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -1820,7 +1820,7 @@
         "betpawa_odds": 1.24,
         "fair_odds": 1.19,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -1840,7 +1840,7 @@
         "betpawa_odds": 1.34,
         "fair_odds": 1.27,
         "price_warning": false,
-        "won": null
+        "won": true
       }
     ],
     "final": true,
@@ -1905,7 +1905,7 @@
         "betpawa_odds": 1.21,
         "fair_odds": 1.18,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -1945,7 +1945,7 @@
         "betpawa_odds": 1.74,
         "fair_odds": 1.61,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -1985,7 +1985,7 @@
         "betpawa_odds": 1.09,
         "fair_odds": 1.06,
         "price_warning": false,
-        "won": null
+        "won": true
       }
     ],
     "final": true,
@@ -2050,7 +2050,7 @@
         "betpawa_odds": 1.11,
         "fair_odds": 1.09,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -2110,7 +2110,7 @@
         "betpawa_odds": 1.74,
         "fair_odds": 1.61,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -2150,7 +2150,7 @@
         "betpawa_odds": 1.34,
         "fair_odds": 1.27,
         "price_warning": false,
-        "won": null
+        "won": true
       },
       {
         "date": "2026-11-01",
@@ -2179,23 +2179,14 @@
   {
     "round": "2026-11-02",
     "tier": "safe",
-    "generated_at": "2026-11-01T10:01:24.455302Z",
-    "total_odds": 2.52,
-    "win_probability": 0.408,
+    "generated_at": "2026-11-01T15:01:29.886259Z",
+    "total_odds": 2.59,
+    "win_probability": 0.4148,
     "odds_source": "betpawa",
-    "expected_value": 0.0288,
-    "kelly": 0.0189,
+    "expected_value": 0.0757,
+    "kelly": 0.0475,
     "price_warning": false,
-    "flexi": [
-      {
-        "min_correct": 3,
-        "probability": 0.8432
-      },
-      {
-        "min_correct": 2,
-        "probability": 0.9835
-      }
-    ],
+    "flexi": [],
     "legs": [
       {
         "date": "2026-11-02",
@@ -2208,32 +2199,12 @@
         },
         "home": "Sassuolo",
         "away": "Fiorentina",
-        "market": "away_1up",
-        "label": "Away 1Up",
-        "probability": 0.6299,
-        "estimated_odds": 1.58,
-        "betpawa_odds": 1.62,
-        "fair_odds": 1.59,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-02",
-        "time": "19:45",
-        "kickoff_utc": "2026-11-02T19:45:00Z",
-        "league": {
-          "code": "SERIEA",
-          "name": "Serie A",
-          "country": "Italy"
-        },
-        "home": "Atalanta",
-        "away": "Parma",
-        "market": "home_1up",
-        "label": "Home 1Up",
-        "probability": 0.7709,
-        "estimated_odds": 1.24,
-        "betpawa_odds": 1.31,
-        "fair_odds": 1.3,
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.4342,
+        "estimated_odds": 2.31,
+        "betpawa_odds": 2.47,
+        "fair_odds": 2.3,
         "price_warning": false,
         "won": null
       },
@@ -2248,32 +2219,12 @@
         },
         "home": "Benfica",
         "away": "Alverca",
-        "market": "double_12",
-        "label": "Home or away",
-        "probability": 0.9249,
-        "estimated_odds": 1.07,
-        "betpawa_odds": 1.09,
-        "fair_odds": 1.08,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-02",
-        "time": "20:15",
-        "kickoff_utc": "2026-11-02T20:15:00Z",
-        "league": {
-          "code": "PRIMEIRA",
-          "name": "Primeira Liga",
-          "country": "Portugal"
-        },
-        "home": "Gil Vicente",
-        "away": "Guimaraes",
-        "market": "over_0.5",
-        "label": "Over 0.5 goals",
-        "probability": 0.9085,
-        "estimated_odds": 1.04,
-        "betpawa_odds": 1.09,
-        "fair_odds": 1.1,
+        "market": "double_1x",
+        "label": "Home or draw",
+        "probability": 0.9553,
+        "estimated_odds": 1.01,
+        "betpawa_odds": 1.05,
+        "fair_odds": 1.05,
         "price_warning": false,
         "won": null
       }
@@ -2284,12 +2235,12 @@
   {
     "round": "2026-11-02",
     "tier": "medium",
-    "generated_at": "2026-11-01T10:01:24.455302Z",
-    "total_odds": 3.53,
+    "generated_at": "2026-11-01T15:01:29.886259Z",
+    "total_odds": 3.55,
     "win_probability": 0.3096,
     "odds_source": "betpawa",
-    "expected_value": 0.0918,
-    "kelly": 0.0363,
+    "expected_value": 0.1002,
+    "kelly": 0.0392,
     "price_warning": false,
     "flexi": [
       {
@@ -2333,7 +2284,7 @@
         "label": "Home 1Up",
         "probability": 0.7709,
         "estimated_odds": 1.24,
-        "betpawa_odds": 1.31,
+        "betpawa_odds": 1.32,
         "fair_odds": 1.3,
         "price_warning": false,
         "won": null
@@ -2365,12 +2316,12 @@
   {
     "round": "2026-11-02",
     "tier": "big",
-    "generated_at": "2026-11-01T10:01:24.455302Z",
-    "total_odds": 8.04,
+    "generated_at": "2026-11-01T15:01:29.886259Z",
+    "total_odds": 8.1,
     "win_probability": 0.1399,
     "odds_source": "betpawa",
-    "expected_value": 0.1253,
-    "kelly": 0.0178,
+    "expected_value": 0.1339,
+    "kelly": 0.0188,
     "price_warning": false,
     "flexi": [
       {
@@ -2438,7 +2389,7 @@
         "label": "Home 1Up",
         "probability": 0.7709,
         "estimated_odds": 1.24,
-        "betpawa_odds": 1.31,
+        "betpawa_odds": 1.32,
         "fair_odds": 1.3,
         "price_warning": false,
         "won": null

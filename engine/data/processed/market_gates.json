@@ -30,7 +30,7 @@
    "double_12": "PASS"
   },
   "SERIEA": {
-   "home_1up": "FAIL",
+   "home_1up": "PASS",
    "away_1up": "PASS",
    "over_0.5": "INSUFFICIENT",
    "over_1.5": "PASS",
@@ -68,7 +68,7 @@
    "home_win": "PASS",
    "away_win": "PASS",
    "double_1x": "PASS",
-   "double_x2": "FAIL",
+   "double_x2": "PASS",
    "double_12": "PASS"
   },
   "EREDIV": {
@@ -156,1521 +156,1521 @@
   {
    "league": "EPL",
    "market": "home_1up",
-   "n": 825,
+   "n": 838,
    "status": "PASS",
-   "C1_slope": 1.264,
+   "C1_slope": 1.254,
    "C1_ci": [
-    1.003,
-    1.525
+    0.995,
+    1.514
    ],
    "C1": true,
-   "C2_level": 0.0017,
+   "C2_level": 0.0032,
    "C2_ci": [
-    -0.0297,
-    0.0338
+    -0.0279,
+    0.0349
    ],
    "C2": true,
-   "C3_min_z": -1.48,
+   "C3_min_z": -1.37,
    "C3": true,
-   "C4_lifted_legs": 135,
-   "C4_z": 0.36,
+   "C4_lifted_legs": 137,
+   "C4_z": 0.33,
    "C4": true,
    "logloss_vs_book": -0.0004,
    "logloss_vs_book_ci": [
-    -0.0039,
+    -0.0042,
     0.0031
    ],
-   "mean_p": 0.6031,
-   "actual": 0.6048
+   "mean_p": 0.603,
+   "actual": 0.6062
   },
   {
    "league": "EPL",
    "market": "away_1up",
-   "n": 833,
+   "n": 846,
    "status": "PASS",
-   "C1_slope": 1.101,
+   "C1_slope": 1.095,
    "C1_ci": [
-    0.845,
-    1.357
+    0.84,
+    1.35
    ],
    "C1": true,
-   "C2_level": 0.0075,
+   "C2_level": 0.0044,
    "C2_ci": [
-    -0.0266,
-    0.0379
+    -0.0291,
+    0.0359
    ],
    "C2": true,
-   "C3_min_z": -0.58,
+   "C3_min_z": -0.56,
    "C3": true,
    "C4_lifted_legs": 147,
    "C4_z": -0.28,
    "C4": true,
    "logloss_vs_book": -0.0008,
    "logloss_vs_book_ci": [
-    -0.0049,
-    0.0032
+    -0.0046,
+    0.0035
    ],
    "mean_p": 0.5003,
-   "actual": 0.5078
+   "actual": 0.5047
   },
   {
    "league": "EPL",
    "market": "over_0.5",
-   "n": 5,
+   "n": 18,
    "status": "INSUFFICIENT"
   },
   {
    "league": "EPL",
    "market": "over_1.5",
-   "n": 819,
+   "n": 832,
    "status": "PASS",
-   "C1_slope": 0.705,
+   "C1_slope": 0.695,
    "C1_ci": [
-    -0.001,
-    1.411
+    -0.007,
+    1.398
    ],
    "C1": true,
-   "C2_level": -0.0053,
+   "C2_level": -0.0045,
    "C2_ci": [
-    -0.0319,
-    0.022
+    -0.0312,
+    0.0216
    ],
    "C2": true,
-   "C3_min_z": -1.78,
+   "C3_min_z": -1.71,
    "C3": true,
    "C4_lifted_legs": 17,
    "C4_z": null,
    "C4": true,
    "logloss_vs_book": 0.0003,
    "logloss_vs_book_ci": [
-    -0.0018,
+    -0.0017,
     0.0025
    ],
    "mean_p": 0.8002,
-   "actual": 0.7949
+   "actual": 0.7957
   },
   {
    "league": "EPL",
    "market": "over_2.5",
-   "n": 834,
+   "n": 847,
    "status": "FAIL",
-   "C1_slope": 0.689,
+   "C1_slope": 0.673,
    "C1_ci": [
-    0.214,
-    1.164
+    0.201,
+    1.145
    ],
    "C1": true,
-   "C2_level": -0.0161,
+   "C2_level": -0.0209,
    "C2_ci": [
-    -0.0489,
-    0.0159
+    -0.0523,
+    0.0102
    ],
    "C2": true,
-   "C3_min_z": -1.88,
+   "C3_min_z": -1.77,
    "C3": true,
    "C4_lifted_legs": 85,
    "C4_z": -2.76,
    "C4": false,
-   "logloss_vs_book": 0.0017,
+   "logloss_vs_book": 0.0015,
    "logloss_vs_book_ci": [
-    -0.0011,
-    0.0046
+    -0.0013,
+    0.0044
    ],
-   "mean_p": 0.5712,
-   "actual": 0.5552
+   "mean_p": 0.5711,
+   "actual": 0.5502
   },
   {
    "league": "EPL",
    "market": "under_2.5",
-   "n": 834,
+   "n": 847,
    "status": "PASS",
-   "C1_slope": 0.689,
+   "C1_slope": 0.673,
    "C1_ci": [
-    0.214,
-    1.164
+    0.201,
+    1.145
    ],
    "C1": true,
-   "C2_level": 0.0161,
+   "C2_level": 0.0209,
    "C2_ci": [
-    -0.0149,
-    0.049
+    -0.0106,
+    0.0517
    ],
    "C2": true,
-   "C3_min_z": -2.33,
+   "C3_min_z": -1.97,
    "C3": true,
    "C4_lifted_legs": 30,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0017,
+   "logloss_vs_book": 0.0015,
    "logloss_vs_book_ci": [
-    -0.0012,
-    0.0046
+    -0.0011,
+    0.0044
    ],
-   "mean_p": 0.4288,
-   "actual": 0.4448
+   "mean_p": 0.4289,
+   "actual": 0.4498
   },
   {
    "league": "EPL",
    "market": "under_3.5",
-   "n": 834,
+   "n": 847,
    "status": "PASS",
-   "C1_slope": 0.55,
+   "C1_slope": 0.524,
    "C1_ci": [
-    0.058,
-    1.041
+    0.035,
+    1.014
    ],
    "C1": true,
-   "C2_level": 0.038,
+   "C2_level": 0.0403,
    "C2_ci": [
-    0.0041,
-    0.0726
+    0.0085,
+    0.0715
    ],
    "C2": true,
-   "C3_min_z": -2.28,
+   "C3_min_z": -1.96,
    "C3": true,
    "C4_lifted_legs": 21,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0013,
+   "logloss_vs_book": 0.0012,
    "logloss_vs_book_ci": [
-    -0.0011,
-    0.0039
+    -0.0012,
+    0.0036
    ],
-   "mean_p": 0.6466,
-   "actual": 0.6847
+   "mean_p": 0.6469,
+   "actual": 0.6871
   },
   {
    "league": "EPL",
    "market": "home_win",
-   "n": 834,
+   "n": 847,
    "status": "PASS",
-   "C1_slope": 1.088,
+   "C1_slope": 1.09,
    "C1_ci": [
-    0.874,
-    1.301
+    0.877,
+    1.303
    ],
    "C1": true,
-   "C2_level": -0.0226,
+   "C2_level": -0.0217,
    "C2_ci": [
-    -0.0562,
-    0.0089
+    -0.0582,
+    0.0124
    ],
    "C2": true,
-   "C3_min_z": -1.59,
+   "C3_min_z": -1.64,
    "C3": true,
    "C4_lifted_legs": 67,
    "C4_z": -1.28,
    "C4": true,
-   "logloss_vs_book": -0.0004,
+   "logloss_vs_book": -0.0003,
    "logloss_vs_book_ci": [
-    -0.004,
-    0.0032
+    -0.0039,
+    0.0034
    ],
-   "mean_p": 0.4387,
-   "actual": 0.4161
+   "mean_p": 0.4384,
+   "actual": 0.4168
   },
   {
    "league": "EPL",
    "market": "away_win",
-   "n": 834,
+   "n": 847,
    "status": "PASS",
-   "C1_slope": 1.049,
+   "C1_slope": 1.042,
    "C1_ci": [
-    0.833,
-    1.265
+    0.827,
+    1.257
    ],
    "C1": true,
-   "C2_level": 0.0048,
+   "C2_level": 0.0034,
    "C2_ci": [
-    -0.0263,
-    0.0364
+    -0.0266,
+    0.0327
    ],
    "C2": true,
-   "C3_min_z": -1.11,
+   "C3_min_z": -1.02,
    "C3": true,
    "C4_lifted_legs": 87,
    "C4_z": 0.02,
    "C4": true,
-   "logloss_vs_book": -0.0026,
+   "logloss_vs_book": -0.0027,
    "logloss_vs_book_ci": [
-    -0.0065,
-    0.0014
+    -0.0069,
+    0.0012
    ],
-   "mean_p": 0.319,
-   "actual": 0.3237
+   "mean_p": 0.3189,
+   "actual": 0.3223
   },
   {
    "league": "EPL",
    "market": "double_1x",
-   "n": 775,
+   "n": 788,
    "status": "PASS",
-   "C1_slope": 1.033,
+   "C1_slope": 1.026,
    "C1_ci": [
-    0.799,
-    1.267
+    0.793,
+    1.259
    ],
    "C1": true,
-   "C2_level": -0.0062,
+   "C2_level": -0.0047,
    "C2_ci": [
-    -0.0396,
-    0.0274
+    -0.0356,
+    0.0288
    ],
    "C2": true,
-   "C3_min_z": -1.88,
+   "C3_min_z": -1.71,
    "C3": true,
-   "C4_lifted_legs": 88,
-   "C4_z": 0.8,
+   "C4_lifted_legs": 89,
+   "C4_z": 0.86,
    "C4": true,
    "logloss_vs_book": -0.003,
    "logloss_vs_book_ci": [
     -0.0072,
-    0.001
+    0.0007
    ],
-   "mean_p": 0.663,
-   "actual": 0.6568
+   "mean_p": 0.6633,
+   "actual": 0.6586
   },
   {
    "league": "EPL",
    "market": "double_x2",
-   "n": 825,
+   "n": 838,
    "status": "PASS",
-   "C1_slope": 1.073,
+   "C1_slope": 1.075,
    "C1_ci": [
-    0.857,
-    1.288
+    0.86,
+    1.29
    ],
    "C1": true,
-   "C2_level": 0.022,
+   "C2_level": 0.021,
    "C2_ci": [
-    -0.0117,
-    0.0567
+    -0.0129,
+    0.0532
    ],
    "C2": true,
-   "C3_min_z": -0.31,
+   "C3_min_z": -0.21,
    "C3": true,
-   "C4_lifted_legs": 109,
-   "C4_z": -0.24,
+   "C4_lifted_legs": 110,
+   "C4_z": -0.32,
    "C4": true,
-   "logloss_vs_book": -0.0004,
+   "logloss_vs_book": -0.0002,
    "logloss_vs_book_ci": [
-    -0.0041,
+    -0.0037,
     0.0035
    ],
-   "mean_p": 0.5574,
-   "actual": 0.5794
+   "mean_p": 0.5577,
+   "actual": 0.5788
   },
   {
    "league": "EPL",
    "market": "double_12",
-   "n": 827,
+   "n": 840,
    "status": "PASS",
-   "C1_slope": 0.75,
+   "C1_slope": 0.782,
    "C1_ci": [
-    -0.021,
-    1.521
+    0.013,
+    1.552
    ],
    "C1": true,
-   "C2_level": -0.02,
+   "C2_level": -0.0204,
    "C2_ci": [
-    -0.0496,
-    0.0083
+    -0.0491,
+    0.0099
    ],
    "C2": true,
-   "C3_min_z": -2.4,
+   "C3_min_z": -2.06,
    "C3": true,
    "C4_lifted_legs": 1,
    "C4_z": null,
    "C4": true,
    "logloss_vs_book": -0.0013,
    "logloss_vs_book_ci": [
-    -0.0033,
-    0.0009
+    -0.0032,
+    0.0006
    ],
-   "mean_p": 0.7576,
-   "actual": 0.7376
+   "mean_p": 0.7573,
+   "actual": 0.7369
   },
   {
    "league": "LALIGA",
    "market": "home_1up",
-   "n": 836,
+   "n": 846,
    "status": "PASS",
-   "C1_slope": 1.023,
+   "C1_slope": 1.014,
    "C1_ci": [
-    0.796,
-    1.251
+    0.79,
+    1.239
    ],
    "C1": true,
-   "C2_level": 0.0097,
+   "C2_level": 0.0085,
    "C2_ci": [
-    -0.0262,
-    0.0424
+    -0.0252,
+    0.0405
    ],
    "C2": true,
-   "C3_min_z": -0.78,
+   "C3_min_z": -0.88,
    "C3": true,
-   "C4_lifted_legs": 105,
-   "C4_z": 0.76,
+   "C4_lifted_legs": 111,
+   "C4_z": 0.51,
    "C4": true,
-   "logloss_vs_book": -0.0013,
+   "logloss_vs_book": -0.0012,
    "logloss_vs_book_ci": [
-    -0.0042,
-    0.0019
+    -0.0043,
+    0.0022
    ],
-   "mean_p": 0.5848,
-   "actual": 0.5945
+   "mean_p": 0.5861,
+   "actual": 0.5946
   },
   {
    "league": "LALIGA",
    "market": "away_1up",
-   "n": 848,
+   "n": 858,
    "status": "PASS",
-   "C1_slope": 0.91,
+   "C1_slope": 0.918,
    "C1_ci": [
-    0.687,
-    1.134
+    0.696,
+    1.14
    ],
    "C1": true,
-   "C2_level": -0.0132,
+   "C2_level": -0.0144,
    "C2_ci": [
-    -0.0469,
+    -0.0458,
     0.0189
    ],
    "C2": true,
-   "C3_min_z": -2.0,
+   "C3_min_z": -1.87,
    "C3": true,
    "C4_lifted_legs": 47,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0011,
+   "logloss_vs_book": 0.001,
    "logloss_vs_book_ci": [
-    -0.0011,
+    -0.0013,
     0.0035
    ],
-   "mean_p": 0.4589,
-   "actual": 0.4458
+   "mean_p": 0.4584,
+   "actual": 0.4441
   },
   {
    "league": "LALIGA",
    "market": "over_0.5",
-   "n": 150,
+   "n": 160,
    "status": "INSUFFICIENT"
   },
   {
    "league": "LALIGA",
    "market": "over_1.5",
-   "n": 826,
+   "n": 836,
    "status": "PASS",
-   "C1_slope": 1.587,
+   "C1_slope": 1.546,
    "C1_ci": [
-    0.992,
-    2.181
+    0.963,
+    2.13
    ],
    "C1": true,
-   "C2_level": 0.0352,
+   "C2_level": 0.0349,
    "C2_ci": [
-    0.0081,
-    0.0626
+    0.0073,
+    0.064
    ],
    "C2": true,
-   "C3_min_z": -1.65,
+   "C3_min_z": -1.8,
    "C3": true,
    "C4_lifted_legs": 23,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0046,
+   "logloss_vs_book": 0.0045,
    "logloss_vs_book_ci": [
-    0.0009,
-    0.0081
+    0.0007,
+    0.0079
    ],
-   "mean_p": 0.7142,
-   "actual": 0.7494
+   "mean_p": 0.7151,
+   "actual": 0.75
   },
   {
    "league": "LALIGA",
    "market": "over_2.5",
-   "n": 849,
+   "n": 859,
    "status": "PASS",
-   "C1_slope": 0.905,
+   "C1_slope": 0.903,
    "C1_ci": [
-    0.636,
-    1.174
+    0.637,
+    1.168
    ],
    "C1": true,
-   "C2_level": 0.0147,
+   "C2_level": 0.0145,
    "C2_ci": [
-    -0.0153,
-    0.045
+    -0.017,
+    0.0451
    ],
    "C2": true,
-   "C3_min_z": -0.97,
+   "C3_min_z": -0.72,
    "C3": true,
-   "C4_lifted_legs": 65,
-   "C4_z": -0.55,
+   "C4_lifted_legs": 67,
+   "C4_z": -0.45,
    "C4": true,
    "logloss_vs_book": 0.0009,
    "logloss_vs_book_ci": [
-    -0.0022,
-    0.004
+    -0.0023,
+    0.0039
    ],
-   "mean_p": 0.4858,
-   "actual": 0.5006
+   "mean_p": 0.4872,
+   "actual": 0.5017
   },
   {
    "league": "LALIGA",
    "market": "under_2.5",
-   "n": 849,
+   "n": 859,
    "status": "PASS",
-   "C1_slope": 0.905,
+   "C1_slope": 0.903,
    "C1_ci": [
-    0.636,
-    1.174
+    0.637,
+    1.168
    ],
    "C1": true,
-   "C2_level": -0.0147,
+   "C2_level": -0.0145,
    "C2_ci": [
-    -0.0466,
-    0.0179
+    -0.0437,
+    0.0161
    ],
    "C2": true,
-   "C3_min_z": -1.36,
+   "C3_min_z": -1.12,
    "C3": true,
    "C4_lifted_legs": 74,
    "C4_z": -0.31,
    "C4": true,
    "logloss_vs_book": 0.0009,
    "logloss_vs_book_ci": [
-    -0.0021,
-    0.0043
+    -0.0022,
+    0.004
    ],
-   "mean_p": 0.5142,
-   "actual": 0.4994
+   "mean_p": 0.5128,
+   "actual": 0.4983
   },
   {
    "league": "LALIGA",
    "market": "under_3.5",
-   "n": 848,
+   "n": 858,
    "status": "PASS",
-   "C1_slope": 0.996,
+   "C1_slope": 0.965,
    "C1_ci": [
-    0.719,
-    1.274
-   ],
-   "C1": true,
-   "C2_level": 0.0021,
-   "C2_ci": [
-    -0.0276,
-    0.0292
-   ],
-   "C2": true,
-   "C3_min_z": -1.2,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0001,
-   "logloss_vs_book_ci": [
-    -0.0025,
-    0.0027
-   ],
-   "mean_p": 0.735,
-   "actual": 0.737
-  },
-  {
-   "league": "LALIGA",
-   "market": "home_win",
-   "n": 848,
-   "status": "PASS",
-   "C1_slope": 1.041,
-   "C1_ci": [
-    0.852,
-    1.23
-   ],
-   "C1": true,
-   "C2_level": 0.011,
-   "C2_ci": [
-    -0.0183,
-    0.0395
-   ],
-   "C2": true,
-   "C3_min_z": -2.06,
-   "C3": true,
-   "C4_lifted_legs": 243,
-   "C4_z": 0.49,
-   "C4": true,
-   "logloss_vs_book": -0.0036,
-   "logloss_vs_book_ci": [
-    -0.0079,
-    0.0013
-   ],
-   "mean_p": 0.4524,
-   "actual": 0.4634
-  },
-  {
-   "league": "LALIGA",
-   "market": "away_win",
-   "n": 849,
-   "status": "PASS",
-   "C1_slope": 0.935,
-   "C1_ci": [
-    0.745,
-    1.126
-   ],
-   "C1": true,
-   "C2_level": -0.0017,
-   "C2_ci": [
-    -0.0314,
-    0.0278
-   ],
-   "C2": true,
-   "C3_min_z": -1.63,
-   "C3": true,
-   "C4_lifted_legs": 77,
-   "C4_z": -1.3,
-   "C4": true,
-   "logloss_vs_book": -0.0006,
-   "logloss_vs_book_ci": [
-    -0.0053,
-    0.0053
-   ],
-   "mean_p": 0.2844,
-   "actual": 0.2827
-  },
-  {
-   "league": "LALIGA",
-   "market": "double_1x",
-   "n": 766,
-   "status": "PASS",
-   "C1_slope": 0.931,
-   "C1_ci": [
-    0.721,
-    1.14
-   ],
-   "C1": true,
-   "C2_level": 0.0021,
-   "C2_ci": [
-    -0.0299,
-    0.0319
-   ],
-   "C2": true,
-   "C3_min_z": -1.32,
-   "C3": true,
-   "C4_lifted_legs": 219,
-   "C4_z": -1.71,
-   "C4": true,
-   "logloss_vs_book": -0.0004,
-   "logloss_vs_book_ci": [
-    -0.0055,
-    0.0052
-   ],
-   "mean_p": 0.6911,
-   "actual": 0.6932
-  },
-  {
-   "league": "LALIGA",
-   "market": "double_x2",
-   "n": 837,
-   "status": "PASS",
-   "C1_slope": 1.04,
-   "C1_ci": [
-    0.848,
-    1.232
-   ],
-   "C1": true,
-   "C2_level": -0.0114,
-   "C2_ci": [
-    -0.0392,
-    0.017
-   ],
-   "C2": true,
-   "C3_min_z": -1.81,
-   "C3": true,
-   "C4_lifted_legs": 94,
-   "C4_z": -0.11,
-   "C4": true,
-   "logloss_vs_book": -0.0038,
-   "logloss_vs_book_ci": [
-    -0.0087,
-    0.0014
-   ],
-   "mean_p": 0.5419,
-   "actual": 0.5305
-  },
-  {
-   "league": "LALIGA",
-   "market": "double_12",
-   "n": 840,
-   "status": "PASS",
-   "C1_slope": 1.429,
-   "C1_ci": [
-    0.901,
-    1.958
-   ],
-   "C1": true,
-   "C2_level": 0.0084,
-   "C2_ci": [
-    -0.0213,
-    0.0366
-   ],
-   "C2": true,
-   "C3_min_z": -1.35,
-   "C3": true,
-   "C4_lifted_legs": 22,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": -0.0019,
-   "logloss_vs_book_ci": [
-    -0.0037,
-    -0.0001
-   ],
-   "mean_p": 0.7356,
-   "actual": 0.744
-  },
-  {
-   "league": "SERIEA",
-   "market": "home_1up",
-   "n": 828,
-   "status": "FAIL",
-   "C1_slope": 1.062,
-   "C1_ci": [
-    0.851,
-    1.273
-   ],
-   "C1": true,
-   "C2_level": -0.035,
-   "C2_ci": [
-    -0.0678,
-    -0.0017
-   ],
-   "C2": false,
-   "C3_min_z": -1.83,
-   "C3": true,
-   "C4_lifted_legs": 47,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": -0.0003,
-   "logloss_vs_book_ci": [
-    -0.0032,
-    0.0025
-   ],
-   "mean_p": 0.5676,
-   "actual": 0.5326
-  },
-  {
-   "league": "SERIEA",
-   "market": "away_1up",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 0.925,
-   "C1_ci": [
-    0.727,
-    1.124
-   ],
-   "C1": true,
-   "C2_level": 0.0067,
-   "C2_ci": [
-    -0.0321,
-    0.0415
-   ],
-   "C2": true,
-   "C3_min_z": -0.73,
-   "C3": true,
-   "C4_lifted_legs": 262,
-   "C4_z": -0.71,
-   "C4": true,
-   "logloss_vs_book": -0.0005,
-   "logloss_vs_book_ci": [
-    -0.0046,
-    0.0037
-   ],
-   "mean_p": 0.4825,
-   "actual": 0.4892
-  },
-  {
-   "league": "SERIEA",
-   "market": "over_0.5",
-   "n": 113,
-   "status": "INSUFFICIENT"
-  },
-  {
-   "league": "SERIEA",
-   "market": "over_1.5",
-   "n": 829,
-   "status": "PASS",
-   "C1_slope": 1.112,
-   "C1_ci": [
-    0.215,
-    2.01
-   ],
-   "C1": true,
-   "C2_level": -0.0077,
-   "C2_ci": [
-    -0.0383,
-    0.024
-   ],
-   "C2": true,
-   "C3_min_z": -1.95,
-   "C3": true,
-   "C4_lifted_legs": 86,
-   "C4_z": 0.93,
-   "C4": true,
-   "logloss_vs_book": 0.0006,
-   "logloss_vs_book_ci": [
-    -0.0023,
-    0.0036
-   ],
-   "mean_p": 0.7374,
-   "actual": 0.7298
-  },
-  {
-   "league": "SERIEA",
-   "market": "over_2.5",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 0.841,
-   "C1_ci": [
-    0.221,
-    1.462
-   ],
-   "C1": true,
-   "C2_level": 0.011,
-   "C2_ci": [
-    -0.0221,
-    0.0435
-   ],
-   "C2": true,
-   "C3_min_z": -1.29,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0001,
-   "logloss_vs_book_ci": [
-    -0.0019,
-    0.002
-   ],
-   "mean_p": 0.4697,
-   "actual": 0.4807
-  },
-  {
-   "league": "SERIEA",
-   "market": "under_2.5",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 0.841,
-   "C1_ci": [
-    0.221,
-    1.462
-   ],
-   "C1": true,
-   "C2_level": -0.011,
-   "C2_ci": [
-    -0.0437,
-    0.0225
-   ],
-   "C2": true,
-   "C3_min_z": -2.5,
-   "C3": true,
-   "C4_lifted_legs": 20,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0001,
-   "logloss_vs_book_ci": [
-    -0.0019,
-    0.002
-   ],
-   "mean_p": 0.5303,
-   "actual": 0.5193
-  },
-  {
-   "league": "SERIEA",
-   "market": "under_3.5",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 1.255,
-   "C1_ci": [
-    0.64,
-    1.871
-   ],
-   "C1": true,
-   "C2_level": 0.0024,
-   "C2_ci": [
-    -0.0284,
-    0.0318
-   ],
-   "C2": true,
-   "C3_min_z": -1.91,
-   "C3": true,
-   "C4_lifted_legs": 54,
-   "C4_z": -0.24,
-   "C4": true,
-   "logloss_vs_book": 0.0005,
-   "logloss_vs_book_ci": [
-    -0.0021,
-    0.0031
-   ],
-   "mean_p": 0.7519,
-   "actual": 0.7542
-  },
-  {
-   "league": "SERIEA",
-   "market": "home_win",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 1.046,
-   "C1_ci": [
-    0.861,
-    1.23
-   ],
-   "C1": true,
-   "C2_level": 0.0002,
-   "C2_ci": [
-    -0.0274,
-    0.0291
-   ],
-   "C2": true,
-   "C3_min_z": -1.09,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": -0.0029,
-   "logloss_vs_book_ci": [
-    -0.0078,
-    0.0022
-   ],
-   "mean_p": 0.3998,
-   "actual": 0.4
-  },
-  {
-   "league": "SERIEA",
-   "market": "away_win",
-   "n": 830,
-   "status": "PASS",
-   "C1_slope": 1.024,
-   "C1_ci": [
-    0.847,
-    1.201
-   ],
-   "C1": true,
-   "C2_level": 0.0185,
-   "C2_ci": [
-    -0.012,
-    0.0476
-   ],
-   "C2": true,
-   "C3_min_z": -0.25,
-   "C3": true,
-   "C4_lifted_legs": 195,
-   "C4_z": 1.14,
-   "C4": true,
-   "logloss_vs_book": -0.0041,
-   "logloss_vs_book_ci": [
-    -0.0088,
-    0.0009
-   ],
-   "mean_p": 0.3176,
-   "actual": 0.3361
-  },
-  {
-   "league": "SERIEA",
-   "market": "double_1x",
-   "n": 752,
-   "status": "PASS",
-   "C1_slope": 0.962,
-   "C1_ci": [
-    0.774,
-    1.149
-   ],
-   "C1": true,
-   "C2_level": -0.0243,
-   "C2_ci": [
-    -0.0593,
-    0.0095
-   ],
-   "C2": true,
-   "C3_min_z": -2.61,
-   "C3": true,
-   "C4_lifted_legs": 187,
-   "C4_z": -1.48,
-   "C4": true,
-   "logloss_vs_book": -0.0027,
-   "logloss_vs_book_ci": [
-    -0.0086,
-    0.0033
-   ],
-   "mean_p": 0.6573,
-   "actual": 0.633
-  },
-  {
-   "league": "SERIEA",
-   "market": "double_x2",
-   "n": 823,
-   "status": "PASS",
-   "C1_slope": 1.046,
-   "C1_ci": [
-    0.859,
-    1.234
-   ],
-   "C1": true,
-   "C2_level": -0.0002,
-   "C2_ci": [
-    -0.0313,
-    0.0305
-   ],
-   "C2": true,
-   "C3_min_z": -1.61,
-   "C3": true,
-   "C4_lifted_legs": 425,
-   "C4_z": -0.29,
-   "C4": true,
-   "logloss_vs_book": -0.0026,
-   "logloss_vs_book_ci": [
-    -0.0071,
-    0.0018
-   ],
-   "mean_p": 0.5968,
-   "actual": 0.5966
-  },
-  {
-   "league": "SERIEA",
-   "market": "double_12",
-   "n": 829,
-   "status": "PASS",
-   "C1_slope": 1.695,
-   "C1_ci": [
-    0.791,
-    2.599
-   ],
-   "C1": true,
-   "C2_level": 0.0173,
-   "C2_ci": [
-    -0.0141,
-    0.0473
-   ],
-   "C2": true,
-   "C3_min_z": -2.06,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0022,
-   "logloss_vs_book_ci": [
-    -0.0009,
-    0.0055
-   ],
-   "mean_p": 0.7186,
-   "actual": 0.7358
-  },
-  {
-   "league": "BUNDES",
-   "market": "home_1up",
-   "n": 647,
-   "status": "FAIL",
-   "C1_slope": 0.999,
-   "C1_ci": [
-    0.742,
-    1.256
-   ],
-   "C1": true,
-   "C2_level": -0.0411,
-   "C2_ci": [
-    -0.0771,
-    -0.0035
-   ],
-   "C2": false,
-   "C3_min_z": -2.2,
-   "C3": true,
-   "C4_lifted_legs": 125,
-   "C4_z": -1.85,
-   "C4": true,
-   "logloss_vs_book": 0.0031,
-   "logloss_vs_book_ci": [
-    -0.0013,
-    0.0079
-   ],
-   "mean_p": 0.6098,
-   "actual": 0.5688
-  },
-  {
-   "league": "BUNDES",
-   "market": "away_1up",
-   "n": 662,
-   "status": "PASS",
-   "C1_slope": 0.912,
-   "C1_ci": [
-    0.667,
-    1.157
-   ],
-   "C1": true,
-   "C2_level": 0.0091,
-   "C2_ci": [
-    -0.0298,
-    0.0489
-   ],
-   "C2": true,
-   "C3_min_z": -1.95,
-   "C3": true,
-   "C4_lifted_legs": 1,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0012,
-   "logloss_vs_book_ci": [
-    -0.0019,
-    0.0044
-   ],
-   "mean_p": 0.4864,
-   "actual": 0.4955
-  },
-  {
-   "league": "BUNDES",
-   "market": "over_0.5",
-   "n": 4,
-   "status": "INSUFFICIENT"
-  },
-  {
-   "league": "BUNDES",
-   "market": "over_1.5",
-   "n": 603,
-   "status": "PASS",
-   "C1_slope": 0.947,
-   "C1_ci": [
-    0.233,
-    1.661
-   ],
-   "C1": true,
-   "C2_level": -0.02,
-   "C2_ci": [
-    -0.0511,
-    0.0094
-   ],
-   "C2": true,
-   "C3_min_z": -1.75,
-   "C3": true,
-   "C4_lifted_legs": 30,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0028,
-   "logloss_vs_book_ci": [
-    -0.0008,
-    0.0065
-   ],
-   "mean_p": 0.8309,
-   "actual": 0.8109
-  },
-  {
-   "league": "BUNDES",
-   "market": "over_2.5",
-   "n": 666,
-   "status": "PASS",
-   "C1_slope": 1.45,
-   "C1_ci": [
-    0.918,
-    1.981
-   ],
-   "C1": true,
-   "C2_level": 0.0127,
-   "C2_ci": [
-    -0.0238,
-    0.0518
-   ],
-   "C2": true,
-   "C3_min_z": -1.06,
-   "C3": true,
-   "C4_lifted_legs": 27,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0004,
-   "logloss_vs_book_ci": [
-    -0.0024,
-    0.003
-   ],
-   "mean_p": 0.6149,
-   "actual": 0.6276
-  },
-  {
-   "league": "BUNDES",
-   "market": "under_2.5",
-   "n": 666,
-   "status": "PASS",
-   "C1_slope": 1.45,
-   "C1_ci": [
-    0.918,
-    1.981
-   ],
-   "C1": true,
-   "C2_level": -0.0127,
-   "C2_ci": [
-    -0.05,
-    0.023
-   ],
-   "C2": true,
-   "C3_min_z": -2.2,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0004,
-   "logloss_vs_book_ci": [
-    -0.0025,
-    0.0031
-   ],
-   "mean_p": 0.3851,
-   "actual": 0.3724
-  },
-  {
-   "league": "BUNDES",
-   "market": "under_3.5",
-   "n": 666,
-   "status": "PASS",
-   "C1_slope": 1.52,
-   "C1_ci": [
-    1.028,
-    2.013
-   ],
-   "C1": true,
-   "C2_level": -0.0275,
-   "C2_ci": [
-    -0.0651,
-    0.0086
-   ],
-   "C2": true,
-   "C3_min_z": -1.74,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": -0.0028,
-   "logloss_vs_book_ci": [
-    -0.0075,
-    0.0016
-   ],
-   "mean_p": 0.589,
-   "actual": 0.5616
-  },
-  {
-   "league": "BUNDES",
-   "market": "home_win",
-   "n": 664,
-   "status": "PASS",
-   "C1_slope": 1.282,
-   "C1_ci": [
-    1.024,
-    1.541
-   ],
-   "C1": true,
-   "C2_level": -0.0284,
-   "C2_ci": [
-    -0.0652,
-    0.0091
-   ],
-   "C2": true,
-   "C3_min_z": -1.99,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0009,
-   "logloss_vs_book_ci": [
-    -0.0005,
-    0.0025
-   ],
-   "mean_p": 0.4471,
-   "actual": 0.4187
-  },
-  {
-   "league": "BUNDES",
-   "market": "away_win",
-   "n": 666,
-   "status": "PASS",
-   "C1_slope": 0.981,
-   "C1_ci": [
-    0.752,
-    1.211
-   ],
-   "C1": true,
-   "C2_level": 0.0317,
-   "C2_ci": [
-    -0.0018,
-    0.067
-   ],
-   "C2": true,
-   "C3_min_z": -0.87,
-   "C3": true,
-   "C4_lifted_legs": 0,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": 0.0035,
-   "logloss_vs_book_ci": [
-    -0.0003,
-    0.0071
-   ],
-   "mean_p": 0.3031,
-   "actual": 0.3348
-  },
-  {
-   "league": "BUNDES",
-   "market": "double_1x",
-   "n": 615,
-   "status": "FAIL",
-   "C1_slope": 0.976,
-   "C1_ci": [
-    0.722,
-    1.229
-   ],
-   "C1": true,
-   "C2_level": -0.0341,
-   "C2_ci": [
-    -0.0715,
-    -0.0004
-   ],
-   "C2": false,
-   "C3_min_z": -2.58,
-   "C3": true,
-   "C4_lifted_legs": 60,
-   "C4_z": -1.7,
-   "C4": true,
-   "logloss_vs_book": 0.0037,
-   "logloss_vs_book_ci": [
-    -0.0002,
-    0.0078
-   ],
-   "mean_p": 0.6763,
-   "actual": 0.6423
-  },
-  {
-   "league": "BUNDES",
-   "market": "double_x2",
-   "n": 651,
-   "status": "PASS",
-   "C1_slope": 1.202,
-   "C1_ci": [
-    0.952,
-    1.452
-   ],
-   "C1": true,
-   "C2_level": 0.0252,
-   "C2_ci": [
-    -0.0125,
-    0.0621
-   ],
-   "C2": true,
-   "C3_min_z": -0.48,
-   "C3": true,
-   "C4_lifted_legs": 4,
-   "C4_z": null,
-   "C4": true,
-   "logloss_vs_book": -0.0004,
-   "logloss_vs_book_ci": [
-    -0.0027,
-    0.0017
-   ],
-   "mean_p": 0.5447,
-   "actual": 0.5699
-  },
-  {
-   "league": "BUNDES",
-   "market": "double_12",
-   "n": 645,
-   "status": "PASS",
-   "C1_slope": 0.883,
-   "C1_ci": [
-    -0.053,
-    1.819
+    0.693,
+    1.238
    ],
    "C1": true,
    "C2_level": 0.0041,
    "C2_ci": [
-    -0.0285,
-    0.0347
+    -0.0246,
+    0.0284
    ],
    "C2": true,
-   "C3_min_z": -1.04,
+   "C3_min_z": -0.98,
    "C3": true,
    "C4_lifted_legs": 0,
    "C4_z": null,
    "C4": true,
    "logloss_vs_book": 0.0002,
    "logloss_vs_book_ci": [
-    -0.0028,
-    0.0033
+    -0.0021,
+    0.003
    ],
-   "mean_p": 0.7463,
-   "actual": 0.7504
+   "mean_p": 0.7336,
+   "actual": 0.7378
   },
   {
-   "league": "LIGUE1",
-   "market": "home_1up",
-   "n": 669,
+   "league": "LALIGA",
+   "market": "home_win",
+   "n": 858,
    "status": "PASS",
-   "C1_slope": 0.992,
+   "C1_slope": 1.041,
    "C1_ci": [
-    0.758,
-    1.225
+    0.854,
+    1.229
    ],
    "C1": true,
-   "C2_level": -0.0246,
+   "C2_level": 0.0113,
    "C2_ci": [
-    -0.0673,
-    0.0178
+    -0.0174,
+    0.0409
+   ],
+   "C2": true,
+   "C3_min_z": -1.79,
+   "C3": true,
+   "C4_lifted_legs": 249,
+   "C4_z": 0.43,
+   "C4": true,
+   "logloss_vs_book": -0.0037,
+   "logloss_vs_book_ci": [
+    -0.0084,
+    0.0012
+   ],
+   "mean_p": 0.4538,
+   "actual": 0.465
+  },
+  {
+   "league": "LALIGA",
+   "market": "away_win",
+   "n": 859,
+   "status": "PASS",
+   "C1_slope": 0.93,
+   "C1_ci": [
+    0.742,
+    1.119
+   ],
+   "C1": true,
+   "C2_level": -0.0008,
+   "C2_ci": [
+    -0.0298,
+    0.0272
+   ],
+   "C2": true,
+   "C3_min_z": -1.92,
+   "C3": true,
+   "C4_lifted_legs": 78,
+   "C4_z": -1.21,
+   "C4": true,
+   "logloss_vs_book": -0.0004,
+   "logloss_vs_book_ci": [
+    -0.0054,
+    0.005
+   ],
+   "mean_p": 0.2837,
+   "actual": 0.2829
+  },
+  {
+   "league": "LALIGA",
+   "market": "double_1x",
+   "n": 776,
+   "status": "PASS",
+   "C1_slope": 0.924,
+   "C1_ci": [
+    0.717,
+    1.131
+   ],
+   "C1": true,
+   "C2_level": 0.0011,
+   "C2_ci": [
+    -0.0303,
+    0.0331
+   ],
+   "C2": true,
+   "C3_min_z": -1.21,
+   "C3": true,
+   "C4_lifted_legs": 225,
+   "C4_z": -1.9,
+   "C4": true,
+   "logloss_vs_book": -0.0002,
+   "logloss_vs_book_ci": [
+    -0.0054,
+    0.0053
+   ],
+   "mean_p": 0.6922,
+   "actual": 0.6933
+  },
+  {
+   "league": "LALIGA",
+   "market": "double_x2",
+   "n": 847,
+   "status": "PASS",
+   "C1_slope": 1.04,
+   "C1_ci": [
+    0.85,
+    1.23
+   ],
+   "C1": true,
+   "C2_level": -0.0116,
+   "C2_ci": [
+    -0.0422,
+    0.0193
+   ],
+   "C2": true,
+   "C3_min_z": -1.82,
+   "C3": true,
+   "C4_lifted_legs": 95,
+   "C4_z": -0.06,
+   "C4": true,
+   "logloss_vs_book": -0.0039,
+   "logloss_vs_book_ci": [
+    -0.0088,
+    0.001
+   ],
+   "mean_p": 0.5406,
+   "actual": 0.5289
+  },
+  {
+   "league": "LALIGA",
+   "market": "double_12",
+   "n": 850,
+   "status": "PASS",
+   "C1_slope": 1.462,
+   "C1_ci": [
+    0.935,
+    1.99
+   ],
+   "C1": true,
+   "C2_level": 0.0095,
+   "C2_ci": [
+    -0.0214,
+    0.0369
+   ],
+   "C2": true,
+   "C3_min_z": -1.05,
+   "C3": true,
+   "C4_lifted_legs": 25,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": -0.0021,
+   "logloss_vs_book_ci": [
+    -0.004,
+    -0.0003
+   ],
+   "mean_p": 0.7364,
+   "actual": 0.7459
+  },
+  {
+   "league": "SERIEA",
+   "market": "home_1up",
+   "n": 846,
+   "status": "PASS",
+   "C1_slope": 1.08,
+   "C1_ci": [
+    0.87,
+    1.29
+   ],
+   "C1": true,
+   "C2_level": -0.0324,
+   "C2_ci": [
+    -0.0659,
+    0.001
+   ],
+   "C2": true,
+   "C3_min_z": -2.18,
+   "C3": true,
+   "C4_lifted_legs": 47,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": -0.0006,
+   "logloss_vs_book_ci": [
+    -0.0034,
+    0.0023
+   ],
+   "mean_p": 0.5667,
+   "actual": 0.5343
+  },
+  {
+   "league": "SERIEA",
+   "market": "away_1up",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 0.914,
+   "C1_ci": [
+    0.719,
+    1.109
+   ],
+   "C1": true,
+   "C2_level": 0.0095,
+   "C2_ci": [
+    -0.0259,
+    0.0446
+   ],
+   "C2": true,
+   "C3_min_z": -0.85,
+   "C3": true,
+   "C4_lifted_legs": 271,
+   "C4_z": -0.66,
+   "C4": true,
+   "logloss_vs_book": -0.0005,
+   "logloss_vs_book_ci": [
+    -0.0047,
+    0.0038
+   ],
+   "mean_p": 0.4846,
+   "actual": 0.4941
+  },
+  {
+   "league": "SERIEA",
+   "market": "over_0.5",
+   "n": 131,
+   "status": "INSUFFICIENT"
+  },
+  {
+   "league": "SERIEA",
+   "market": "over_1.5",
+   "n": 847,
+   "status": "PASS",
+   "C1_slope": 1.3,
+   "C1_ci": [
+    0.419,
+    2.18
+   ],
+   "C1": true,
+   "C2_level": -0.0052,
+   "C2_ci": [
+    -0.0352,
+    0.0235
+   ],
+   "C2": true,
+   "C3_min_z": -2.07,
+   "C3": true,
+   "C4_lifted_legs": 86,
+   "C4_z": 0.93,
+   "C4": true,
+   "logloss_vs_book": 0.0011,
+   "logloss_vs_book_ci": [
+    -0.002,
+    0.0041
+   ],
+   "mean_p": 0.7383,
+   "actual": 0.7332
+  },
+  {
+   "league": "SERIEA",
+   "market": "over_2.5",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 0.966,
+   "C1_ci": [
+    0.362,
+    1.571
+   ],
+   "C1": true,
+   "C2_level": 0.0134,
+   "C2_ci": [
+    -0.0181,
+    0.0463
+   ],
+   "C2": true,
+   "C3_min_z": -1.44,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0005,
+   "logloss_vs_book_ci": [
+    -0.0015,
+    0.0027
+   ],
+   "mean_p": 0.4713,
+   "actual": 0.4847
+  },
+  {
+   "league": "SERIEA",
+   "market": "under_2.5",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 0.966,
+   "C1_ci": [
+    0.362,
+    1.571
+   ],
+   "C1": true,
+   "C2_level": -0.0134,
+   "C2_ci": [
+    -0.048,
+    0.0221
+   ],
+   "C2": true,
+   "C3_min_z": -2.74,
+   "C3": true,
+   "C4_lifted_legs": 24,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0005,
+   "logloss_vs_book_ci": [
+    -0.0015,
+    0.0026
+   ],
+   "mean_p": 0.5287,
+   "actual": 0.5153
+  },
+  {
+   "league": "SERIEA",
+   "market": "under_3.5",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 1.405,
+   "C1_ci": [
+    0.81,
+    2.0
+   ],
+   "C1": true,
+   "C2_level": -0.0028,
+   "C2_ci": [
+    -0.0324,
+    0.0247
+   ],
+   "C2": true,
+   "C3_min_z": -2.41,
+   "C3": true,
+   "C4_lifted_legs": 62,
+   "C4_z": -1.03,
+   "C4": true,
+   "logloss_vs_book": 0.0012,
+   "logloss_vs_book_ci": [
+    -0.0014,
+    0.004
+   ],
+   "mean_p": 0.7504,
+   "actual": 0.7476
+  },
+  {
+   "league": "SERIEA",
+   "market": "home_win",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 1.047,
+   "C1_ci": [
+    0.865,
+    1.229
+   ],
+   "C1": true,
+   "C2_level": 0.0012,
+   "C2_ci": [
+    -0.0263,
+    0.0296
+   ],
+   "C2": true,
+   "C3_min_z": -1.12,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": -0.0029,
+   "logloss_vs_book_ci": [
+    -0.0075,
+    0.0022
+   ],
+   "mean_p": 0.3985,
+   "actual": 0.3998
+  },
+  {
+   "league": "SERIEA",
+   "market": "away_win",
+   "n": 848,
+   "status": "PASS",
+   "C1_slope": 1.035,
+   "C1_ci": [
+    0.86,
+    1.211
+   ],
+   "C1": true,
+   "C2_level": 0.0186,
+   "C2_ci": [
+    -0.0087,
+    0.0477
+   ],
+   "C2": true,
+   "C3_min_z": -0.32,
+   "C3": true,
+   "C4_lifted_legs": 204,
+   "C4_z": 1.31,
+   "C4": true,
+   "logloss_vs_book": -0.0046,
+   "logloss_vs_book_ci": [
+    -0.0097,
+    0.0007
+   ],
+   "mean_p": 0.3199,
+   "actual": 0.3384
+  },
+  {
+   "league": "SERIEA",
+   "market": "double_1x",
+   "n": 770,
+   "status": "PASS",
+   "C1_slope": 0.976,
+   "C1_ci": [
+    0.791,
+    1.161
+   ],
+   "C1": true,
+   "C2_level": -0.0242,
+   "C2_ci": [
+    -0.0587,
+    0.0079
+   ],
+   "C2": true,
+   "C3_min_z": -2.58,
+   "C3": true,
+   "C4_lifted_legs": 187,
+   "C4_z": -1.48,
+   "C4": true,
+   "logloss_vs_book": -0.0033,
+   "logloss_vs_book_ci": [
+    -0.0087,
+    0.0028
+   ],
+   "mean_p": 0.6554,
+   "actual": 0.6312
+  },
+  {
+   "league": "SERIEA",
+   "market": "double_x2",
+   "n": 841,
+   "status": "PASS",
+   "C1_slope": 1.048,
+   "C1_ci": [
+    0.863,
+    1.233
+   ],
+   "C1": true,
+   "C2_level": -0.0012,
+   "C2_ci": [
+    -0.0308,
+    0.0264
+   ],
+   "C2": true,
+   "C3_min_z": -1.75,
+   "C3": true,
+   "C4_lifted_legs": 435,
+   "C4_z": -0.32,
+   "C4": true,
+   "logloss_vs_book": -0.0025,
+   "logloss_vs_book_ci": [
+    -0.0071,
+    0.0025
+   ],
+   "mean_p": 0.5981,
+   "actual": 0.5969
+  },
+  {
+   "league": "SERIEA",
+   "market": "double_12",
+   "n": 847,
+   "status": "PASS",
+   "C1_slope": 1.775,
+   "C1_ci": [
+    0.876,
+    2.674
+   ],
+   "C1": true,
+   "C2_level": 0.0187,
+   "C2_ci": [
+    -0.0099,
+    0.0494
+   ],
+   "C2": true,
+   "C3_min_z": -1.89,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0024,
+   "logloss_vs_book_ci": [
+    -0.0008,
+    0.0058
+   ],
+   "mean_p": 0.7192,
+   "actual": 0.7379
+  },
+  {
+   "league": "BUNDES",
+   "market": "home_1up",
+   "n": 656,
+   "status": "FAIL",
+   "C1_slope": 0.994,
+   "C1_ci": [
+    0.739,
+    1.249
+   ],
+   "C1": true,
+   "C2_level": -0.0408,
+   "C2_ci": [
+    -0.0787,
+    -0.0026
+   ],
+   "C2": false,
+   "C3_min_z": -2.04,
+   "C3": true,
+   "C4_lifted_legs": 125,
+   "C4_z": -1.85,
+   "C4": true,
+   "logloss_vs_book": 0.0031,
+   "logloss_vs_book_ci": [
+    -0.0011,
+    0.0078
+   ],
+   "mean_p": 0.6094,
+   "actual": 0.5686
+  },
+  {
+   "league": "BUNDES",
+   "market": "away_1up",
+   "n": 671,
+   "status": "PASS",
+   "C1_slope": 0.911,
+   "C1_ci": [
+    0.668,
+    1.154
+   ],
+   "C1": true,
+   "C2_level": 0.007,
+   "C2_ci": [
+    -0.0319,
+    0.044
+   ],
+   "C2": true,
+   "C3_min_z": -2.05,
+   "C3": true,
+   "C4_lifted_legs": 1,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0012,
+   "logloss_vs_book_ci": [
+    -0.002,
+    0.0044
+   ],
+   "mean_p": 0.4877,
+   "actual": 0.4948
+  },
+  {
+   "league": "BUNDES",
+   "market": "over_0.5",
+   "n": 13,
+   "status": "INSUFFICIENT"
+  },
+  {
+   "league": "BUNDES",
+   "market": "over_1.5",
+   "n": 612,
+   "status": "PASS",
+   "C1_slope": 0.984,
+   "C1_ci": [
+    0.28,
+    1.687
+   ],
+   "C1": true,
+   "C2_level": -0.0196,
+   "C2_ci": [
+    -0.0488,
+    0.0079
+   ],
+   "C2": true,
+   "C3_min_z": -1.68,
+   "C3": true,
+   "C4_lifted_legs": 30,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0028,
+   "logloss_vs_book_ci": [
+    -0.0005,
+    0.0065
+   ],
+   "mean_p": 0.8317,
+   "actual": 0.8121
+  },
+  {
+   "league": "BUNDES",
+   "market": "over_2.5",
+   "n": 675,
+   "status": "PASS",
+   "C1_slope": 1.45,
+   "C1_ci": [
+    0.926,
+    1.974
+   ],
+   "C1": true,
+   "C2_level": 0.012,
+   "C2_ci": [
+    -0.0232,
+    0.0506
+   ],
+   "C2": true,
+   "C3_min_z": -1.33,
+   "C3": true,
+   "C4_lifted_legs": 27,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0004,
+   "logloss_vs_book_ci": [
+    -0.0026,
+    0.0031
+   ],
+   "mean_p": 0.6161,
+   "actual": 0.6281
+  },
+  {
+   "league": "BUNDES",
+   "market": "under_2.5",
+   "n": 675,
+   "status": "PASS",
+   "C1_slope": 1.45,
+   "C1_ci": [
+    0.926,
+    1.974
+   ],
+   "C1": true,
+   "C2_level": -0.012,
+   "C2_ci": [
+    -0.0476,
+    0.0251
+   ],
+   "C2": true,
+   "C3_min_z": -1.64,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0004,
+   "logloss_vs_book_ci": [
+    -0.0025,
+    0.0031
+   ],
+   "mean_p": 0.3839,
+   "actual": 0.3719
+  },
+  {
+   "league": "BUNDES",
+   "market": "under_3.5",
+   "n": 675,
+   "status": "PASS",
+   "C1_slope": 1.519,
+   "C1_ci": [
+    1.034,
+    2.004
+   ],
+   "C1": true,
+   "C2_level": -0.0262,
+   "C2_ci": [
+    -0.0638,
+    0.0082
    ],
    "C2": true,
    "C3_min_z": -1.69,
    "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": -0.0027,
+   "logloss_vs_book_ci": [
+    -0.0069,
+    0.0017
+   ],
+   "mean_p": 0.5876,
+   "actual": 0.5615
+  },
+  {
+   "league": "BUNDES",
+   "market": "home_win",
+   "n": 673,
+   "status": "PASS",
+   "C1_slope": 1.25,
+   "C1_ci": [
+    0.997,
+    1.504
+   ],
+   "C1": true,
+   "C2_level": -0.0285,
+   "C2_ci": [
+    -0.0647,
+    0.008
+   ],
+   "C2": true,
+   "C3_min_z": -2.22,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.001,
+   "logloss_vs_book_ci": [
+    -0.0004,
+    0.0025
+   ],
+   "mean_p": 0.446,
+   "actual": 0.4175
+  },
+  {
+   "league": "BUNDES",
+   "market": "away_win",
+   "n": 675,
+   "status": "PASS",
+   "C1_slope": 0.987,
+   "C1_ci": [
+    0.759,
+    1.215
+   ],
+   "C1": true,
+   "C2_level": 0.0321,
+   "C2_ci": [
+    -0.0011,
+    0.0668
+   ],
+   "C2": true,
+   "C3_min_z": -0.89,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0035,
+   "logloss_vs_book_ci": [
+    -0.0004,
+    0.0073
+   ],
+   "mean_p": 0.3042,
+   "actual": 0.3363
+  },
+  {
+   "league": "BUNDES",
+   "market": "double_1x",
+   "n": 624,
+   "status": "FAIL",
+   "C1_slope": 0.982,
+   "C1_ci": [
+    0.731,
+    1.234
+   ],
+   "C1": true,
+   "C2_level": -0.0344,
+   "C2_ci": [
+    -0.0745,
+    -0.0001
+   ],
+   "C2": false,
+   "C3_min_z": -2.02,
+   "C3": true,
+   "C4_lifted_legs": 60,
+   "C4_z": -1.7,
+   "C4": true,
+   "logloss_vs_book": 0.0037,
+   "logloss_vs_book_ci": [
+    0.0003,
+    0.0071
+   ],
+   "mean_p": 0.6754,
+   "actual": 0.641
+  },
+  {
+   "league": "BUNDES",
+   "market": "double_x2",
+   "n": 660,
+   "status": "PASS",
+   "C1_slope": 1.172,
+   "C1_ci": [
+    0.927,
+    1.417
+   ],
+   "C1": true,
+   "C2_level": 0.0253,
+   "C2_ci": [
+    -0.013,
+    0.0632
+   ],
+   "C2": true,
+   "C3_min_z": -0.34,
+   "C3": true,
+   "C4_lifted_legs": 4,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": -0.0002,
+   "logloss_vs_book_ci": [
+    -0.0022,
+    0.0018
+   ],
+   "mean_p": 0.5459,
+   "actual": 0.5712
+  },
+  {
+   "league": "BUNDES",
+   "market": "double_12",
+   "n": 654,
+   "status": "PASS",
+   "C1_slope": 0.826,
+   "C1_ci": [
+    -0.099,
+    1.752
+   ],
+   "C1": true,
+   "C2_level": 0.0043,
+   "C2_ci": [
+    -0.0267,
+    0.0365
+   ],
+   "C2": true,
+   "C3_min_z": -0.95,
+   "C3": true,
+   "C4_lifted_legs": 0,
+   "C4_z": null,
+   "C4": true,
+   "logloss_vs_book": 0.0001,
+   "logloss_vs_book_ci": [
+    -0.0028,
+    0.003
+   ],
+   "mean_p": 0.7465,
+   "actual": 0.7508
+  },
+  {
+   "league": "LIGUE1",
+   "market": "home_1up",
+   "n": 680,
+   "status": "PASS",
+   "C1_slope": 0.974,
+   "C1_ci": [
+    0.743,
+    1.205
+   ],
+   "C1": true,
+   "C2_level": -0.0233,
+   "C2_ci": [
+    -0.0663,
+    0.019
+   ],
+   "C2": true,
+   "C3_min_z": -1.85,
+   "C3": true,
    "C4_lifted_legs": 37,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": -0.003,
+   "logloss_vs_book": -0.0026,
    "logloss_vs_book_ci": [
-    -0.0082,
-    0.0027
+    -0.0077,
+    0.0023
    ],
-   "mean_p": 0.5746,
-   "actual": 0.5501
+   "mean_p": 0.5748,
+   "actual": 0.5515
   },
   {
    "league": "LIGUE1",
    "market": "away_1up",
-   "n": 674,
+   "n": 685,
    "status": "FAIL",
-   "C1_slope": 0.937,
+   "C1_slope": 0.947,
    "C1_ci": [
-    0.67,
-    1.204
+    0.681,
+    1.213
    ],
    "C1": true,
-   "C2_level": -0.0522,
+   "C2_level": -0.0552,
    "C2_ci": [
-    -0.0962,
-    -0.0141
+    -0.0956,
+    -0.0158
    ],
    "C2": false,
-   "C3_min_z": -2.53,
+   "C3_min_z": -2.47,
    "C3": true,
    "C4_lifted_legs": 265,
    "C4_z": -1.24,
    "C4": true,
-   "logloss_vs_book": 0.0049,
+   "logloss_vs_book": 0.005,
    "logloss_vs_book_ci": [
-    -0.0006,
-    0.0101
+    0.0001,
+    0.0103
    ],
-   "mean_p": 0.5166,
-   "actual": 0.4644
+   "mean_p": 0.5165,
+   "actual": 0.4613
   },
   {
    "league": "LIGUE1",
    "market": "over_0.5",
-   "n": 1,
+   "n": 12,
    "status": "INSUFFICIENT"
   },
   {
    "league": "LIGUE1",
    "market": "over_1.5",
-   "n": 663,
+   "n": 674,
    "status": "PASS",
-   "C1_slope": 0.745,
+   "C1_slope": 0.789,
    "C1_ci": [
-    0.174,
-    1.317
+    0.222,
+    1.355
    ],
    "C1": true,
-   "C2_level": -0.0053,
+   "C2_level": -0.0066,
    "C2_ci": [
-    -0.0447,
-    0.0296
+    -0.043,
+    0.0267
    ],
    "C2": true,
-   "C3_min_z": -1.31,
+   "C3_min_z": -0.94,
    "C3": true,
    "C4_lifted_legs": 0,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0011,
+   "logloss_vs_book": 0.001,
    "logloss_vs_book_ci": [
-    -0.0006,
-    0.003
+    -0.0007,
+    0.0028
    ],
-   "mean_p": 0.7805,
-   "actual": 0.7753
+   "mean_p": 0.781,
+   "actual": 0.7745
   },
   {
    "league": "LIGUE1",
    "market": "over_2.5",
-   "n": 675,
+   "n": 686,
    "status": "PASS",
-   "C1_slope": 1.681,
+   "C1_slope": 1.697,
    "C1_ci": [
-    1.017,
-    2.345
+    1.04,
+    2.353
    ],
    "C1": true,
-   "C2_level": -0.0012,
+   "C2_level": -0.0047,
    "C2_ci": [
-    -0.0403,
-    0.0379
+    -0.0432,
+    0.0358
    ],
    "C2": true,
-   "C3_min_z": -1.52,
+   "C3_min_z": -1.63,
    "C3": true,
    "C4_lifted_legs": 17,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0023,
+   "logloss_vs_book": 0.0024,
    "logloss_vs_book_ci": [
-    -0.0001,
-    0.0045
+    -0.0,
+    0.0046
    ],
-   "mean_p": 0.5508,
-   "actual": 0.5496
+   "mean_p": 0.5513,
+   "actual": 0.5466
   },
   {
    "league": "LIGUE1",
    "market": "under_2.5",
-   "n": 675,
+   "n": 686,
    "status": "PASS",
-   "C1_slope": 1.681,
+   "C1_slope": 1.697,
    "C1_ci": [
-    1.017,
-    2.345
+    1.04,
+    2.353
    ],
    "C1": true,
-   "C2_level": 0.0012,
+   "C2_level": 0.0047,
    "C2_ci": [
-    -0.0401,
-    0.0371
+    -0.0315,
+    0.0441
    ],
    "C2": true,
-   "C3_min_z": -1.57,
+   "C3_min_z": -1.86,
    "C3": true,
    "C4_lifted_legs": 10,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0023,
+   "logloss_vs_book": 0.0024,
    "logloss_vs_book_ci": [
-    -0.0001,
+    0.0001,
     0.0045
    ],
-   "mean_p": 0.4492,
-   "actual": 0.4504
+   "mean_p": 0.4487,
+   "actual": 0.4534
   },
   {
    "league": "LIGUE1",
    "market": "under_3.5",
-   "n": 675,
+   "n": 686,
    "status": "PASS",
-   "C1_slope": 0.909,
+   "C1_slope": 0.922,
    "C1_ci": [
-    0.431,
-    1.388
+    0.448,
+    1.397
    ],
    "C1": true,
-   "C2_level": -0.0172,
+   "C2_level": -0.0154,
    "C2_ci": [
     -0.0495,
-    0.019
+    0.0198
    ],
    "C2": true,
-   "C3_min_z": -2.33,
+   "C3_min_z": -2.5,
    "C3": true,
    "C4_lifted_legs": 0,
    "C4_z": null,
@@ -1680,27 +1680,27 @@
     0.0004,
     0.0014
    ],
-   "mean_p": 0.6735,
-   "actual": 0.6563
+   "mean_p": 0.6728,
+   "actual": 0.6574
   },
   {
    "league": "LIGUE1",
    "market": "home_win",
-   "n": 675,
+   "n": 686,
    "status": "PASS",
-   "C1_slope": 0.923,
+   "C1_slope": 0.925,
    "C1_ci": [
-    0.72,
-    1.126
+    0.723,
+    1.128
    ],
    "C1": true,
-   "C2_level": 0.0336,
+   "C2_level": 0.0347,
    "C2_ci": [
-    -0.0011,
-    0.0709
+    -0.0007,
+    0.0707
    ],
    "C2": true,
-   "C3_min_z": -1.14,
+   "C3_min_z": -1.04,
    "C3": true,
    "C4_lifted_legs": 7,
    "C4_z": null,
@@ -1708,130 +1708,130 @@
    "logloss_vs_book": 0.0022,
    "logloss_vs_book_ci": [
     -0.0013,
-    0.0058
+    0.0057
    ],
-   "mean_p": 0.4287,
-   "actual": 0.4622
+   "mean_p": 0.4288,
+   "actual": 0.4636
   },
   {
    "league": "LIGUE1",
    "market": "away_win",
-   "n": 675,
+   "n": 686,
    "status": "PASS",
-   "C1_slope": 1.017,
+   "C1_slope": 1.032,
    "C1_ci": [
-    0.787,
-    1.247
+    0.801,
+    1.262
    ],
    "C1": true,
-   "C2_level": -0.0156,
+   "C2_level": -0.0191,
    "C2_ci": [
-    -0.0498,
-    0.0208
+    -0.0492,
+    0.0147
    ],
    "C2": true,
-   "C3_min_z": -1.26,
+   "C3_min_z": -1.33,
    "C3": true,
    "C4_lifted_legs": 19,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0009,
+   "logloss_vs_book": 0.0008,
    "logloss_vs_book_ci": [
-    -0.0014,
-    0.0034
+    -0.0013,
+    0.003
    ],
-   "mean_p": 0.3282,
-   "actual": 0.3126
+   "mean_p": 0.3281,
+   "actual": 0.309
   },
   {
    "league": "LIGUE1",
    "market": "double_1x",
-   "n": 635,
+   "n": 646,
    "status": "PASS",
-   "C1_slope": 1.057,
+   "C1_slope": 1.076,
    "C1_ci": [
-    0.807,
-    1.307
+    0.826,
+    1.326
    ],
    "C1": true,
-   "C2_level": 0.0182,
+   "C2_level": 0.0218,
    "C2_ci": [
-    -0.0193,
-    0.054
+    -0.0142,
+    0.0549
    ],
    "C2": true,
-   "C3_min_z": -1.74,
+   "C3_min_z": -1.56,
    "C3": true,
    "C4_lifted_legs": 0,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0008,
+   "logloss_vs_book": 0.0007,
    "logloss_vs_book_ci": [
-    -0.0014,
-    0.003
+    -0.0015,
+    0.0031
    ],
-   "mean_p": 0.6558,
-   "actual": 0.674
+   "mean_p": 0.6562,
+   "actual": 0.678
   },
   {
    "league": "LIGUE1",
    "market": "double_x2",
-   "n": 665,
-   "status": "FAIL",
-   "C1_slope": 0.911,
+   "n": 676,
+   "status": "PASS",
+   "C1_slope": 0.913,
    "C1_ci": [
-    0.701,
-    1.12
+    0.705,
+    1.122
    ],
    "C1": true,
-   "C2_level": -0.0345,
+   "C2_level": -0.0356,
    "C2_ci": [
-    -0.0704,
-    -0.0012
+    -0.0727,
+    0.001
    ],
-   "C2": false,
-   "C3_min_z": -2.03,
+   "C2": true,
+   "C3_min_z": -1.94,
    "C3": true,
    "C4_lifted_legs": 44,
    "C4_z": null,
    "C4": true,
-   "logloss_vs_book": 0.0024,
+   "logloss_vs_book": 0.0023,
    "logloss_vs_book_ci": [
     -0.0009,
-    0.0057
+    0.0056
    ],
-   "mean_p": 0.5653,
-   "actual": 0.5308
+   "mean_p": 0.5652,
+   "actual": 0.5296
   },
   {
    "league": "LIGUE1",
    "market": "double_12",
-   "n": 668,
+   "n": 679,
    "status": "PASS",
-   "C1_slope": 1.258,
+   "C1_slope": 1.315,
    "C1_ci": [
-    0.345,
-    2.171
+    0.408,
+    2.222
    ],
    "C1": true,
-   "C2_level": 0.0183,
+   "C2_level": 0.016,
    "C2_ci": [
-    -0.013,
-    0.0514
+    -0.0164,
+    0.0492
    ],
    "C2": true,
-   "C3_min_z": -0.72,
+   "C3_min_z": -0.64,
    "C3": true,
    "C4_lifted_legs": 0,
    "C4_z": null,
    "C4": true,
    "logloss_vs_book": 0.0009,
    "logloss_vs_book_ci": [
-    -0.0002,
-    0.0021
+    -0.0003,
+    0.002
    ],
-   "mean_p": 0.7542,
-   "actual": 0.7725
+   "mean_p": 0.7543,
+   "actual": 0.7703
   }
  ]
 }

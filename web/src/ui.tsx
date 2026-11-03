@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { useLayoutEffect, useRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import { TeamBadge } from "./badges";
 import { type Verdict, edge, odds as fmtOdds, pct, verdict } from "./lib";
 import type { TierName } from "./types";
@@ -141,8 +141,19 @@ export function DateStrip({ dates, selected, onSelect, markers }: {
   dates: string[]; selected?: string; onSelect: (date: string) => void; markers?: Record<string, DateMarker>;
 }) {
   const today = todayIso();
+  const stripRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const focusIndex = dates.indexOf(selected && dates.includes(selected) ? selected : today);
+    if (focusIndex < 0) return;
+    const buttons = strip.querySelectorAll<HTMLElement>("[data-date]");
+    const rightmost = buttons[Math.min(focusIndex + 2, buttons.length - 1)];
+    if (!rightmost) return;
+    strip.scrollLeft = Math.max(0, rightmost.offsetLeft + rightmost.offsetWidth - strip.clientWidth);
+  }, [dates, selected, today]);
   return (
-    <div className="no-scrollbar -mx-4 flex overflow-x-auto border-b border-border/70 px-2" role="tablist">
+    <div ref={stripRef} className="no-scrollbar -mx-4 flex overflow-x-auto border-b border-border/70 px-2" role="tablist">
       {dates.map((d) => {
         const date = new Date(`${d}T12:00:00`);
         const active = d === selected;

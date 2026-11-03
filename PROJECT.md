@@ -144,6 +144,11 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-03)
+- Date strips now open with the selected day positioned so the following two days are visible; on
+  the default route this keeps Today plus the next two days in view instead of starting at 24 October.
+  This is UI-only. Understat remained unavailable on 3 November, so original-five Sunday/Monday
+  settlement is pending until its existing same-night result source responds; no settlement or
+  prediction source was changed.
 - Daily Action reliability fix is ready on `codex/fix-daily-action-reliability`: a full/final run
   retries the unchanged live refresh three times after transient source failures, then publishes from
   the latest cached data if all retries fail. This addresses repeated Understat connection timeouts
@@ -456,6 +461,9 @@ implemented on `codex/fix-daily-action-reliability`, pending review/merge and a 
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-03: Date strips initially position the selected day with two later days visible, keeping
+  Today near the right side on the default Bets and Matches screens. Added a phone-width browser
+  assertion. No prediction, settlement, or data-processing behavior changed.
 - 2026-11-03: Daily predictions now retries the normal refreshed prediction three times when an
   external source fails, then uses the existing `--no-refresh` cached-data path so a prolonged
   Understat timeout does not prevent settlement/publication. Prediction and processing methods are

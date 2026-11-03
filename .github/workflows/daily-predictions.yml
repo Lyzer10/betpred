@@ -69,7 +69,19 @@ jobs:
       - name: Predict upcoming fixtures
         if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final'
         working-directory: engine
-        run: python -m src.predict ${{ steps.decide.outputs.mode == 'final' && '--final' || '' }}
+        run: |
+          final_arg="${{ steps.decide.outputs.mode == 'final' && '--final' || '' }}"
+          for attempt in 1 2 3; do
+            if python -m src.predict $final_arg; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "Prediction refresh failed (attempt $attempt/3); retrying in 15 seconds."
+              sleep 15
+            fi
+          done
+          echo "::warning::Live data refresh failed three times; publishing from the latest cached data."
+          python -m src.predict --no-refresh $final_arg
 
       - name: Log Betpawa prices before kick-off
         if: steps.decide.outputs.mode == 'prices'

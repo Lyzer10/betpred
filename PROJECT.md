@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-10-29 (Africa/Dar_es_Salaam), by Codex.
+Last updated: 2026-11-03 (Africa/Dar_es_Salaam), by Codex.
 
 ---
 
@@ -139,11 +139,15 @@ the user's slips have settled**.
 ```
 cd engine; .venv\Scripts\python.exe -m pytest -q          # 79+ tests
 .venv\Scripts\python.exe -m src.predict --no-refresh       # full pipeline on cached data
-cd ..\web; npm run dev                                     # http://localhost:5173
+cd ..\web; npm ci; npm run dev                             # install exactly from the lockfile; http://localhost:5173
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-10-25)
+## 5. Current status (2026-11-03)
+- Daily Action reliability fix is ready on `codex/fix-daily-action-reliability`: a full/final run
+  retries the unchanged live refresh three times after transient source failures, then publishes from
+  the latest cached data if all retries fail. This addresses repeated Understat connection timeouts
+  without changing models, calibration, data transformation, market gates or slip selection.
 - Live integration is implemented only on unmerged codex/new-leagues, acceptance INCOMPLETE.
   Existing-five replay equals baseline exactly; 149 tests pass, 4 skip; existing browser checks pass.
   Refreshed run produces Belgium/Portugal/Turkey but no N1 fixture (none published in fixtures.csv,
@@ -359,7 +363,8 @@ Claude (hard, affects predictions):
      +4.03). K kept 510 previews (16.4%) on 430 days. Its point estimate passed, but the CI lower
      bound was below -1.00 point, so the registered adoption rule failed. These margin-based estimated
      returns compare selection rules; they do not prove profitability. No live churn behavior changed.
-Codex (simple): README upkeep, UI polish tasks given as prompts.
+Codex (simple): README upkeep, UI polish tasks given as prompts. Daily Action timeout resilience is
+implemented on `codex/fix-daily-action-reliability`, pending review/merge and a successful live run.
 
 13. **Four new leagues** (PRE-REGISTERED 2026-10-29, before results; research only).
    Module `src/new_leagues_study.py`, report `reports/new_leagues_study.md`, tests
@@ -451,6 +456,11 @@ Codex (simple): README upkeep, UI polish tasks given as prompts.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-03: Daily predictions now retries the normal refreshed prediction three times when an
+  external source fails, then uses the existing `--no-refresh` cached-data path so a prolonged
+  Understat timeout does not prevent settlement/publication. Prediction and processing methods are
+  unchanged. Local frontend setup is documented as `cd web; npm ci`; the repository root is not an
+  npm package.
 - 2026-10-29: Four-league integration implemented on codex/new-leagues only, not merged. Saved
   completed-season calibrators, fixed rho, strict source names, verified badges, ESPN score settlement,
   task-13 market blocking and resilient monthly gates. Exact original-five regression passed.

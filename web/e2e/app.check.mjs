@@ -72,6 +72,22 @@ for (const scheme of ["light", "dark"]) {
   // First visit: Bets asks for balances; set them in Money.
   await page.goto(`${BASE}#history`);
   await page.locator("main[data-page='bets']").waitFor();
+  await page.waitForTimeout(100);
+  const todayAndNextTwoVisible = await page.evaluate(() => {
+    const today = document.querySelector("[data-date] div:first-child")?.textContent === "TODAY"
+      ? document.querySelector("[data-date]")
+      : Array.from(document.querySelectorAll("[data-date]")).find((button) => button.querySelector("div")?.textContent === "TODAY");
+    if (!today?.parentElement) return false;
+    const days = Array.from(today.parentElement.querySelectorAll("[data-date]"));
+    const index = days.indexOf(today);
+    const visible = days.slice(index, index + 3);
+    const strip = today.parentElement.getBoundingClientRect();
+    return visible.length === 3 && visible.every((day) => {
+      const rect = day.getBoundingClientRect();
+      return rect.left >= strip.left - 1 && rect.right <= strip.right + 1;
+    });
+  });
+  check(todayAndNextTwoVisible, `[${scheme}] Bets: today and the next two days are visible initially`);
   check(await page.getByRole("navigation", { name: "Primary" }).getByRole("button").count() === 4,
     `[${scheme}] floating menu has exactly four destinations`);
   check(await page.getByRole("button", { name: "History", exact: true }).count() === 0 && await page.locator("main[data-page='bets']").count() === 1,

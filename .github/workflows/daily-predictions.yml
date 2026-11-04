@@ -83,6 +83,11 @@ jobs:
           echo "::warning::Live data refresh failed three times; publishing from the latest cached data."
           python -m src.predict --no-refresh $final_arg
 
+      - name: Repair pending results from completed ESPN matches (settlement only)
+        if: steps.decide.outputs.mode == 'full' || steps.decide.outputs.mode == 'final' || steps.decide.outputs.mode == 'prices'
+        working-directory: engine
+        run: python -m src.settle_results
+
       - name: Log Betpawa prices before kick-off
         if: steps.decide.outputs.mode == 'prices'
         working-directory: engine

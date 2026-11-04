@@ -598,7 +598,11 @@ def update_history(round_id: str | None, slips: dict, matches: pd.DataFrame, now
     for entry in history:
         for leg in entry["legs"]:
             match = find(leg["home"], leg["away"], leg["date"])
-            leg["won"] = None if match is None else outcome(match, leg["market"])
+            if match is not None:
+                known = outcome(match, leg["market"])
+                if known is not None:
+                    leg["won"] = known
+            leg.setdefault("won", None)  # a source outage must not undo a verified settlement
         results = [leg["won"] for leg in entry["legs"]]
         entry["status"] = ("lost" if False in results else "pending" if None in results else "won")
     HISTORY_PATH.write_text(json.dumps(history, indent=2), encoding="utf-8")

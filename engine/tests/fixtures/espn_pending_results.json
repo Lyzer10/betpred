@@ -1,0 +1,46 @@
+{
+  "source": "ESPN scoreboards, eng.1 and ger.1, 20261101, captured 2026-11-04. Only parser fields retained; no values changed.",
+  "events": [
+    {
+      "id": "401879246", "date": "2026-11-01T16:30Z",
+      "status": {"type": {"name": "STATUS_FULL_TIME", "state": "post", "completed": true}},
+      "competitions": [{
+        "competitors": [
+          {"homeAway": "home", "score": "0", "team": {"id": "364", "displayName": "Liverpool"}},
+          {"homeAway": "away", "score": "1", "team": {"id": "359", "displayName": "Arsenal"}}
+        ],
+        "details": [{"clock": {"value": 930.0, "displayValue": "16'"}, "team": {"id": "359"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false}]
+      }]
+    },
+    {
+      "id": "401884750", "date": "2026-11-01T14:30Z",
+      "status": {"type": {"name": "STATUS_FULL_TIME", "state": "post", "completed": true}},
+      "competitions": [{
+        "competitors": [
+          {"homeAway": "home", "score": "1", "team": {"id": "598", "displayName": "1. FC Union Berlin"}},
+          {"homeAway": "away", "score": "1", "team": {"id": "122", "displayName": "FC Cologne"}}
+        ],
+        "details": [
+          {"clock": {"value": 594.0, "displayValue": "10'"}, "team": {"id": "598"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false},
+          {"clock": {"value": 4734.0, "displayValue": "79'"}, "team": {"id": "122"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false}
+        ]
+      }]
+    },
+    {
+      "id": "401884752", "date": "2026-11-01T16:30Z",
+      "status": {"type": {"name": "STATUS_FULL_TIME", "state": "post", "completed": true}},
+      "competitions": [{
+        "competitors": [
+          {"homeAway": "home", "score": "3", "team": {"id": "125", "displayName": "Eintracht Frankfurt"}},
+          {"homeAway": "away", "score": "1", "team": {"id": "127", "displayName": "Hamburg SV"}}
+        ],
+        "details": [
+          {"clock": {"value": 587.0, "displayValue": "10'"}, "team": {"id": "125"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": true, "shootout": false},
+          {"clock": {"value": 833.0, "displayValue": "14'"}, "team": {"id": "127"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false},
+          {"clock": {"value": 2788.0, "displayValue": "47'"}, "team": {"id": "125"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false},
+          {"clock": {"value": 4101.0, "displayValue": "69'"}, "team": {"id": "125"}, "scoreValue": 1, "scoringPlay": true, "ownGoal": false, "shootout": false}
+        ]
+      }]
+    }
+  ]
+}

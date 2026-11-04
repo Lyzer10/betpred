@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-11-03 (Africa/Dar_es_Salaam), by Codex.
+Last updated: 2026-11-04 (Africa/Dar_es_Salaam), by Codex.
 
 ---
 
@@ -61,6 +61,7 @@ Last updated: 2026-11-03 (Africa/Dar_es_Salaam), by Codex.
 |---|---|---|
 | football-data.co.uk | results, shots, corners, odds (opening/closing/average), upcoming `fixtures.csv` | per league: E0, SP1, I1, D1, F1 |
 | Understat (understatapi) | xG, goal minutes (first scorer / led-at-any-point for 1Up), rosters | polite 1-2 s between requests |
+| ESPN public scoreboards | fallback settlement of completed published matches | exact league, UTC day and canonical teams; goal sequence must reconcile before timing markets settle; never training data |
 | Betpawa Tanzania public API | live odds for all modelled markets incl. 1Up | `engine/src/betpawa.py`, identified requests, 1 s apart |
 
 Raw downloads are cached in `engine/data/raw/` (completed EPL seasons committed; current season
@@ -128,6 +129,9 @@ the user's slips have settled**.
   - **prices**: a match kicks off within 35 minutes: `python -m src.prices` logs Betpawa prices only.
   - **skip**: nothing due (costs ~1 of the 2,000 free private-repo minutes a month).
   Publishing commits predictions, archive and `engine/data/live` (resets rebuilt research files, pulls, pushes).
+  Full, final and price runs also execute `python -m src.settle_results`: fill missing archive scores,
+  slip outcomes and the app's saved-bet results from ESPN, independently of Understat. Verified
+  outcomes survive later source outages. This step never fits models or selects/reprices slips.
 - Vercel serves `web/` at **https://betpredz.vercel.app**; every push redeploys.
 - Backup: `scripts/daily.sh` + `scripts/install_schedule.ps1` (Windows Task Scheduler). The task
   "PL Predictor daily update" WAS installed and ran in parallel with GitHub; on 25 Oct 2026 its 18:00 run
@@ -139,16 +143,22 @@ the user's slips have settled**.
 ```
 cd engine; .venv\Scripts\python.exe -m pytest -q          # 79+ tests
 .venv\Scripts\python.exe -m src.predict --no-refresh       # full pipeline on cached data
+.venv\Scripts\python.exe -m src.settle_results             # results only, no prediction rebuild
 cd ..\web; npm ci; npm run dev                             # install exactly from the lockfile; http://localhost:5173
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-11-03)
+## 5. Current status (2026-11-04)
+- Results repair: the Understat results endpoint returned HTML instead of JSON. The independent
+  ESPN settlement step repaired 20 missing original-five results from 1 and 2 November, with all
+  timing outcomes verified against complete goal sequences. All 21 scores checked independently
+  against football-data agree. Predictions, chosen slips and stake settings are unchanged.
+  The owner explicitly authorized merging and publishing this repair, an exception for this task
+  only. Tests: 162 passed, 4 skipped. Build and Chrome browser assertions passed in both themes.
 - Date strips now open with the selected day positioned so the following two days are visible; on
   the default route this keeps Today plus the next two days in view instead of starting at 24 October.
-  This is UI-only. Understat remained unavailable on 3 November, so original-five Sunday/Monday
-  settlement is pending until its existing same-night result source responds; no settlement or
-  prediction source was changed.
+  This is UI-only. Sunday/Monday settlement, previously blocked by Understat, is now repaired by
+  the independent results fallback described above.
 - Daily Action reliability fix is ready on `codex/fix-daily-action-reliability`: a full/final run
   retries the unchanged live refresh three times after transient source failures, then publishes from
   the latest cached data if all retries fail. This addresses repeated Understat connection timeouts
@@ -370,6 +380,8 @@ Claude (hard, affects predictions):
      returns compare selection rules; they do not prove profitability. No live churn behavior changed.
 Codex (simple): README upkeep, UI polish tasks given as prompts. Daily Action timeout resilience is
 implemented on `codex/fix-daily-action-reliability`, pending review/merge and a successful live run.
+Results availability repair (4 November): completed with regression tests and verified archive
+backfill. ESPN is a settlement fallback only; no prediction strategy change or new study.
 
 13. **Four new leagues** (PRE-REGISTERED 2026-10-29, before results; research only).
    Module `src/new_leagues_study.py`, report `reports/new_leagues_study.md`, tests
@@ -413,6 +425,9 @@ implemented on `codex/fix-daily-action-reliability`, pending review/merge and a 
    A had a match on all three tiers on 241 days. Return and CI criteria fail; live unchanged.
 
 ## 7. Studies already done (do not redo without a new reason)
+Operational note (4 November): the results fallback is not a modelling study. It fills verified
+outcomes for already published picks without changing any study decision below.
+
 | Idea | Result | Decision |
 |---|---|---|
 | Four candidate leagues (task 13) | N1 7/8, B1 8/8, P1 7/8, T1 8/8 PASS; Betpawa and ESPN verified | READY for a later integration task; not live |
@@ -441,6 +456,8 @@ implemented on `codex/fix-daily-action-reliability`, pending review/merge and a 
 - When comparing strategies that bet different amounts, compare per unit staked or on matched days:
   with negative-EV backtest odds, the variant that bets least always "grows" most (2026-10-25).
 - Settlement must not wait for football-data.co.uk (results lag days); Understat is same-night.
+  Understat itself can fail or return HTML: `src.settle_results` independently repairs pending
+  published outcomes from ESPN, and a missing source must never reset a known outcome to pending.
 - 24 Oct 2026: one result (Chelsea 0-2 Tottenham) lost all three slips: the same match was in every
   tier. Evidence for open task 5 (tier diversification).
 - GitHub's scheduled runs can start hours late: never rely on them for timing (use the external timer).
@@ -461,6 +478,11 @@ implemented on `codex/fix-daily-action-reliability`, pending review/merge and a 
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-04: Owner-authorized results repair and merge. Added independent ESPN settlement after
+  full/final/price runs, complete-goal verification for 1Up/first scorer, exact competition/team/date
+  matching, cached responses and outage-safe history. Backfilled 20 missing November results;
+  every original prediction, chosen leg, odds and staking setting checked unchanged. 162 tests
+  passed, 4 skipped; build and phone browser checks passed in Chrome (Edge failed to launch).
 - 2026-11-03: Date strips initially position the selected day with two later days visible, keeping
   Today near the right side on the default Bets and Matches screens. Added a phone-width browser
   assertion. No prediction, settlement, or data-processing behavior changed.

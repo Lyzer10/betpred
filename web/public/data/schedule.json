@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-04T10:05:37.071707Z",
+ "generated_at": "2026-11-04T15:05:34.416010Z",
  "matches": [
   {
    "league": "JUPILER",
@@ -226,14 +226,6 @@
    "slug": "tur.1"
   },
   {
-   "league": "LIGUE1",
-   "home": "Auxerre",
-   "away": "Paris FC",
-   "kickoff_utc": "2026-11-07T16:15:00Z",
-   "event_id": "401876411",
-   "slug": "fra.1"
-  },
-  {
    "league": "SERIEA",
    "home": "Parma",
    "away": "Bologna",
@@ -282,6 +274,14 @@
    "slug": "ned.1"
   },
   {
+   "league": "LIGUE1",
+   "home": "Auxerre",
+   "away": "Paris FC",
+   "kickoff_utc": "2026-11-07T18:00:00Z",
+   "event_id": "401876411",
+   "slug": "fra.1"
+  },
+  {
    "league": "PRIMEIRA",
    "home": "Alverca",
    "away": "Casa Pia",
@@ -296,14 +296,6 @@
    "kickoff_utc": "2026-11-07T19:45:00Z",
    "event_id": "401874803",
    "slug": "ita.1"
-  },
-  {
-   "league": "LIGUE1",
-   "home": "Paris SG",
-   "away": "Troyes",
-   "kickoff_utc": "2026-11-07T19:45:00Z",
-   "event_id": "401876407",
-   "slug": "fra.1"
   },
   {
    "league": "JUPILER",
@@ -336,6 +328,14 @@
    "kickoff_utc": "2026-11-07T20:00:00Z",
    "event_id": "401875554",
    "slug": "ned.1"
+  },
+  {
+   "league": "LIGUE1",
+   "home": "Paris SG",
+   "away": "Troyes",
+   "kickoff_utc": "2026-11-07T20:05:00Z",
+   "event_id": "401876407",
+   "slug": "fra.1"
   },
   {
    "league": "PRIMEIRA",
@@ -683,6 +683,646 @@
   }
  ],
  "expected_lineups": {
+  "Augsburg": {
+   "formation": "3-4-2-1",
+   "starters": [
+    {
+     "name": "Finn Dahmen",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Jeffrey Gouweleeuw",
+     "number": "6",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Chrislain Matsima",
+     "number": "5",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Yannik Keitel",
+     "number": "14",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Fabian Rieder",
+     "number": "32",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Han-Noah Massengo",
+     "number": "4",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Hennes Behrens",
+     "number": "16",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Robin Fellhauer",
+     "number": "19",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Michael Gregoritsch",
+     "number": "11",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Arijon Ibrahimovic",
+     "number": "21",
+     "position": "CF-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Anton Kade",
+     "number": "30",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Rodrigo Ribeiro",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Seol Young-Woo",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Nediljko Labrovic",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alexis Claude-Maurice",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tim Schnitzer",
+     "number": "37",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Marius Wolf",
+     "number": "27",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Loris Husic",
+     "number": "38",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Uchenna Ogundu",
+     "number": "39",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mert Kömür",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Augsburg v Freiburg, 2026-10-31"
+  },
+  "Bayern Munich": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Jonas Urbig",
+     "number": "40",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Kim Min-Jae",
+     "number": "3",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Dayot Upamecano",
+     "number": "2",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Alphonso Davies",
+     "number": "19",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Konrad Laimer",
+     "number": "27",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Ismael Saibari",
+     "number": "34",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Aleksandar Pavlovic",
+     "number": "45",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Joshua Kimmich",
+     "number": "6",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Harry Kane",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Serge Gnabry",
+     "number": "7",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Michael Olise",
+     "number": "17",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Nathaniel Brown",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tom Bischof",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Hiroki Ito",
+     "number": "21",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sacha Boey",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jonathan Tah",
+     "number": "4",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Lennart Karl",
+     "number": "42",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Josip Stanisic",
+     "number": "44",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tim Binder",
+     "number": "46",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sven Ulreich",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Bayern Munich v Dortmund, 2026-10-31"
+  },
+  "Dortmund": {
+   "formation": "3-4-2-1",
+   "starters": [
+    {
+     "name": "Gregor Kobel",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Waldemar Anton",
+     "number": "3",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Nico Schlotterbeck",
+     "number": "4",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Kouakou Gadou",
+     "number": "22",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Felix Nmecha",
+     "number": "8",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Joey Veerman",
+     "number": "25",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Daniel Svensson",
+     "number": "24",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Maximilian Beier",
+     "number": "14",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Serhou Guirassy",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Carney Chukwuemeka",
+     "number": "17",
+     "position": "CF-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Jobe Bellingham",
+     "number": "7",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Samuele Inácio",
+     "number": "40",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alexander Meyer",
+     "number": "33",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Konstantinos Karetsas",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ethan Nwaneri",
+     "number": "18",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Marcel Sabitzer",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Fábio Silva",
+     "number": "21",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Filippo Mané",
+     "number": "39",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Julian Ryerson",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ramy Bensebaini",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Bayern Munich v Dortmund, 2026-10-31"
+  },
+  "Ein Frankfurt": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Noah Atubolu",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Lilian Brassier",
+     "number": "3",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Robin Koch",
+     "number": "4",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Keita Kosugi",
+     "number": "26",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Elias Baum",
+     "number": "2",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Can Uzun",
+     "number": "42",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Noël Aséko",
+     "number": "15",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Raphael Onyedika",
+     "number": "25",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Younes Ebnoutalib",
+     "number": "11",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Farès Chaïbi",
+     "number": "8",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Ritsu Doan",
+     "number": "20",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Nnamdi Collins",
+     "number": "34",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Niko Iličević",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Timothy Chandler",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ayoube Amaimouni",
+     "number": "29",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kauã Santos",
+     "number": "40",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ansgar Knauff",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jonathan Burkardt",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mario Götze",
+     "number": "27",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jeremiaha Maluze",
+     "number": "37",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Ein Frankfurt v Hamburg, 2026-11-01"
+  },
+  "Elversberg": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Nicolas Kristof",
+     "number": "20",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Maximilian Rohr",
+     "number": "31",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Lukas Finn Pinckert",
+     "number": "19",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Lasse Günther",
+     "number": "21",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Luca Sirch",
+     "number": "26",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Francis-Ikechukwu Onyeka",
+     "number": "40",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Lukasz Poreba",
+     "number": "8",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Felix Keidel",
+     "number": "43",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "David Mokwa",
+     "number": "42",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Maurice Krattenmacher",
+     "number": "7",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Lukas Petkov",
+     "number": "25",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Raif Adam",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Noel Futkeu",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tim Boss",
+     "number": "28",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Amara Conde",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Luca Schnellbacher",
+     "number": "24",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Cole Campbell",
+     "number": "39",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Frederik Schmahl",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Florian Le Joncour",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Nicholas Mickelson",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Elversberg v Mainz, 2026-10-30"
+  },
   "Hamburg": {
    "formation": "3-4-2-1",
    "starters": [
@@ -939,6 +1579,518 @@
    ],
    "from_match": "M'gladbach v Paderborn, 2026-10-31"
   },
+  "Mainz": {
+   "formation": "3-5-2",
+   "starters": [
+    {
+     "name": "Robin Zentner",
+     "number": "27",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Stefan Posch",
+     "number": "4",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Kacper Potulski",
+     "number": "48",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Danny da Costa",
+     "number": "21",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Nadiem Amiri",
+     "number": "10",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Paul Nebel",
+     "number": "8",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Kaishu Sano",
+     "number": "6",
+     "position": "AM",
+     "formation_place": 11
+    },
+    {
+     "name": "Phillipp Mwene",
+     "number": "2",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Anthony Caci",
+     "number": "19",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Phillip Tietz",
+     "number": "9",
+     "position": "CF-L",
+     "formation_place": 9
+    },
+    {
+     "name": "Sheraldo Becker",
+     "number": "23",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Lee Jae-Sung",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Benedict Hollerbach",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Fabio Gruber",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Silvan Widmer",
+     "number": "30",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Lennard Maloney",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alexander Schwolow",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Eric Martel",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Stefan Bell",
+     "number": "16",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ransford-Yeboah Königsdörffer",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Elversberg v Mainz, 2026-10-30"
+  },
+  "Paderborn": {
+   "formation": "3-1-4-2",
+   "starters": [
+    {
+     "name": "Nahuel Nicolas Noll",
+     "number": "15",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Tjark Scheller",
+     "number": "25",
+     "position": "CD",
+     "formation_place": 4
+    },
+    {
+     "name": "Mattes Hansen",
+     "number": "22",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Jano Horst",
+     "number": "21",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Santiago Castaneda",
+     "number": "5",
+     "position": "SW",
+     "formation_place": 8
+    },
+    {
+     "name": "Gabriel Vidovic",
+     "number": "40",
+     "position": "CM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Tom Baack",
+     "number": "6",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Raphael Obermair",
+     "number": "23",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Laurin Curda",
+     "number": "17",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Stefano Marino",
+     "number": "30",
+     "position": "CF-L",
+     "formation_place": 10
+    },
+    {
+     "name": "Marvin Pieringer",
+     "number": "18",
+     "position": "CF-R",
+     "formation_place": 9
+    }
+   ],
+   "subs": [
+    {
+     "name": "Felix Götze",
+     "number": "20",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Laurin Ulrich",
+     "number": "28",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Ruben Müller",
+     "number": "2",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Steffen Tigges",
+     "number": "27",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Markus Schubert",
+     "number": "1",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Deniz Zeitler",
+     "number": "38",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Rayan Philippe",
+     "number": "9",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Jonah Sticker",
+     "number": "3",
+     "position": null,
+     "formation_place": 0
+    },
+    {
+     "name": "Clemens Lippmann",
+     "number": "29",
+     "position": null,
+     "formation_place": 0
+    }
+   ],
+   "from_match": "M'gladbach v Paderborn, 2026-10-31"
+  },
+  "RB Leipzig": {
+   "formation": "4-5-1",
+   "starters": [
+    {
+     "name": "Maarten Vandevoordt",
+     "number": "26",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Castello Lukeba",
+     "number": "23",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Willi Orbán",
+     "number": "4",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "David Raum",
+     "number": "22",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Benjamin Henrichs",
+     "number": "39",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Ezechiel Banzuzi",
+     "number": "6",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Rocco Reitz",
+     "number": "20",
+     "position": "CM-R",
+     "formation_place": 4
+    },
+    {
+     "name": "Neil El Aynaoui",
+     "number": "21",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Antonio Nusa",
+     "number": "7",
+     "position": "LM",
+     "formation_place": 11
+    },
+    {
+     "name": "Brajan Gruda",
+     "number": "10",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Rômulo",
+     "number": "40",
+     "position": "F",
+     "formation_place": 9
+    }
+   ],
+   "subs": [
+    {
+     "name": "Johan Bakayoko",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Abdoul Koné",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Max Finkgrafe",
+     "number": "35",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ridle Baku",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Christopher Nkunku",
+     "number": "28",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Christoph Baumgartner",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tidiam Gomis",
+     "number": "27",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ørjan Nyland",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Nicolas Seiwald",
+     "number": "13",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Schalke 04 v RB Leipzig, 2026-10-31"
+  },
+  "Arsenal": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "David Raya",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Gabriel Magalhães",
+     "number": "6",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Ezri Konsa",
+     "number": "15",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Riccardo Calafiori",
+     "number": "33",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Jurriën Timber",
+     "number": "12",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Martin Ødegaard",
+     "number": "8",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Bruno Guimarães",
+     "number": "39",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Declan Rice",
+     "number": "41",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Kai Havertz",
+     "number": "29",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Christos Tzolis",
+     "number": "17",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Noni Madueke",
+     "number": "20",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Kepa Arrizabalaga",
+     "number": "13",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Piero Hincapié",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Viktor Gyökeres",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ben White",
+     "number": "4",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Martín Zubimendi",
+     "number": "36",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Myles Lewis-Skelly",
+     "number": "49",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mikel Merino",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Eberechi Eze",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Cristhian Mosquera",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Liverpool v Arsenal, 2026-11-01"
+  },
   "Coventry": {
    "formation": "4-2-3-1",
    "starters": [
@@ -1194,6 +2346,646 @@
     }
    ],
    "from_match": "Newcastle v Everton, 2026-11-02"
+  },
+  "Fulham": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Bernd Leno",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Calvin Bassey",
+     "number": "3",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "David Affengruber",
+     "number": "22",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Antonee Robinson",
+     "number": "33",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Timothy Castagne",
+     "number": "21",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Josh King",
+     "number": "24",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Shea Charles",
+     "number": "19",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Sander Berge",
+     "number": "16",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Gonzalo García",
+     "number": "7",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Alex Iwobi",
+     "number": "17",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Oscar Bobb",
+     "number": "14",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Rodrigo Muniz",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "César Palacios",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kevin",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kenny Tete",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Joachim Andersen",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Benjamin Lecomte",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Hugo Larsson",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tom Cairney",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Manuel Ángel",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Aston Villa v Fulham, 2026-10-31"
+  },
+  "Hull": {
+   "formation": "5-4-1",
+   "starters": [
+    {
+     "name": "Konstantinos Tzolakis",
+     "number": "19",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "John Egan",
+     "number": "15",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Nobel Mendy",
+     "number": "32",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Semi Ajayi",
+     "number": "6",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Ryan Giles",
+     "number": "3",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Lewie Coyle",
+     "number": "2",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Regan Slater",
+     "number": "27",
+     "position": "CM-L",
+     "formation_place": 10
+    },
+    {
+     "name": "Tim Iroegbunam",
+     "number": "42",
+     "position": "CM-R",
+     "formation_place": 8
+    },
+    {
+     "name": "Elliot Stroud",
+     "number": "21",
+     "position": "LM",
+     "formation_place": 11
+    },
+    {
+     "name": "Mohamed Belloumi",
+     "number": "10",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Oliver McBurnie",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    }
+   ],
+   "subs": [
+    {
+     "name": "Hidemasa Morita",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Christos Mouzakitis",
+     "number": "36",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Brooke Norton-Cuffy",
+     "number": "18",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Matt Crooks",
+     "number": "25",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mohamed-Ali Cho",
+     "number": "50",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Paddy McNair",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Dillon Phillips",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Lucas Herrington",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Joe Gelhardt",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Hull v Ipswich, 2026-10-31"
+  },
+  "Leeds": {
+   "formation": "3-4-2-1",
+   "starters": [
+    {
+     "name": "James Trafford",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Nico Elvedi",
+     "number": "30",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Tarik Muharemovic",
+     "number": "5",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "James Justin",
+     "number": "24",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Ao Tanaka",
+     "number": "22",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Ethan Ampadu",
+     "number": "4",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Gabriel Gudmundsson",
+     "number": "3",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Jayden Bogle",
+     "number": "2",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Dominic Calvert-Lewin",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Daniel James",
+     "number": "7",
+     "position": "CF-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Harry Wilson",
+     "number": "10",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Lukas Nmecha",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sean Longstaff",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Michael Zetterer",
+     "number": "16",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ilia Gruev",
+     "number": "44",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Melvin Bard",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Brenden Aaronson",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Anton Stach",
+     "number": "18",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jaka Bijol",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jean-Mattéo Bahoya",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Bournemouth v Leeds, 2026-10-31"
+  },
+  "Newcastle": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Lukás Hornícek",
+     "number": "21",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Dan Burn",
+     "number": "33",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Fabian Schär",
+     "number": "5",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Lewis Hall",
+     "number": "3",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Amar Dedic",
+     "number": "37",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Joe Willock",
+     "number": "28",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Nico González",
+     "number": "6",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Joelinton",
+     "number": "7",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "William Osula",
+     "number": "10",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Harvey Barnes",
+     "number": "11",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Anthony Elanga",
+     "number": "19",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Aladji Bamba",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Malick Thiaw",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Nick Pope",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Bazoumana Touré",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sven Botman",
+     "number": "4",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sean Steur",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jacob Ramsey",
+     "number": "41",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yoane Wissa",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jacob Murphy",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Newcastle v Everton, 2026-11-02"
+  },
+  "Tottenham": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Antonín Kinsky",
+     "number": "31",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Micky van de Ven",
+     "number": "37",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Jan Paul van Hecke",
+     "number": "6",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Andy Robertson",
+     "number": "3",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Archie Gray",
+     "number": "14",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Omar Marmoush",
+     "number": "22",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Mateus Fernandes",
+     "number": "18",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Sandro Tonali",
+     "number": "16",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Dominic Solanke",
+     "number": "19",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Mathys Tel",
+     "number": "11",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Mohammed Kudus",
+     "number": "20",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Ben Davies",
+     "number": "33",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Martin Dúbravka",
+     "number": "39",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Marcos Senesi",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Pedro Porro",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Dejan Kulusevski",
+     "number": "21",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "James Maddison",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Luca Williams-Barnett",
+     "number": "68",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Destiny Udogie",
+     "number": "13",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Conor Gallagher",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Tottenham v Crystal Palace, 2026-10-31"
   },
   "Willem II": {
    "formation": "4-4-1-1",
@@ -1615,6 +3407,134 @@
    ],
    "from_match": "Beveren v St. Gilloise, 2026-10-31"
   },
+  "Charleroi": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Mohamed Koné",
+     "number": "30",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Cheick Keita",
+     "number": "95",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Aiham Ousou",
+     "number": "4",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Triston Rowe",
+     "number": "2",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Kevin Guiton",
+     "number": "3",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Jakob Romsaas",
+     "number": "8",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Amine Boukamir",
+     "number": "6",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Yassine Khalifi",
+     "number": "18",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Aurelien Scheidler",
+     "number": "21",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Freddy Mbemba",
+     "number": "20",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Patrick Pflücke",
+     "number": "14",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Boubakar Dembaga",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mory Kera",
+     "number": "51",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Noah Solheid",
+     "number": "33",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Gaku Nawata",
+     "number": "13",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Rafaël Teugels",
+     "number": "65",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ahmed Mulumba",
+     "number": "83",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Antoine Colassin",
+     "number": "25",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Martin Delavalée",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Isaac Cissé",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Charleroi v RAAL La Louviere, 2026-11-01"
+  },
   "Kortrijk": {
    "formation": "5-4-1",
    "starters": [
@@ -1999,6 +3919,134 @@
    ],
    "from_match": "Standard v Kortrijk, 2026-10-31"
   },
+  "Westerlo": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Andreas Jungdal",
+     "number": "99",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Amando Lapage",
+     "number": "4",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Seiji Kimura",
+     "number": "5",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Fabio Ferraro",
+     "number": "88",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Lasse Flö",
+     "number": "2",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Issai Sakamoto",
+     "number": "13",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Cisse Sandra",
+     "number": "14",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Ibrahima Fofana",
+     "number": "45",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Norman Bassette",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Shunsuke Saito",
+     "number": "7",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Cameron Congreve",
+     "number": "20",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Botond Balogh",
+     "number": "40",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Nikola Storm",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Reno Munz",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Bill Lathouwers",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yang Min-Hyeok",
+     "number": "47",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Lucas Mbamba-Muanda",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Thomas Van Den Keybus",
+     "number": "39",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Emmanuel Tsimba",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Pape Diong",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Anderlecht v Westerlo, 2026-10-31"
+  },
   "Alaves": {
    "formation": "4-5-1",
    "starters": [
@@ -2144,6 +4192,292 @@
     }
    ],
    "from_match": "Barcelona v Alaves, 2026-10-31"
+  },
+  "Malaga": {
+   "formation": "4-1-4-1",
+   "starters": [
+    {
+     "name": "Alfonso Herrero",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Einar Galilea",
+     "number": "4",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Fernando Calero",
+     "number": "20",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Ramón Enríquez",
+     "number": "6",
+     "position": "DM",
+     "formation_place": 4
+    },
+    {
+     "name": "Rafa Garrido",
+     "number": "31",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Carlos Puga",
+     "number": "3",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Daniel Lorenzo",
+     "number": "22",
+     "position": "CM-L",
+     "formation_place": 10
+    },
+    {
+     "name": "Carlos Dotor",
+     "number": "8",
+     "position": "CM-R",
+     "formation_place": 8
+    },
+    {
+     "name": "Adam Aznou",
+     "number": "39",
+     "position": "LM",
+     "formation_place": 11
+    },
+    {
+     "name": "David Larrubia",
+     "number": "10",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Adrián Niño",
+     "number": "21",
+     "position": "F",
+     "formation_place": 9
+    }
+   ],
+   "subs": [
+    {
+     "name": "Izan Merino",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Eneko Jauregui",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Juan Berrocal",
+     "number": "25",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Rafa Rodríguez",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Jens Cajuste",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Haitam Abaida",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Chupete",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Andres Cespedes",
+     "number": "30",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Álex Pastor",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Juani",
+     "number": "32",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Carlos López",
+     "number": "13",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "José Salinas",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Betis v Malaga, 2026-10-31"
+  },
+  "Santander": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Julen Agirrezabala",
+     "number": "13",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Jeanuël Belocian",
+     "number": "24",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Pablo Ramon",
+     "number": "5",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Aarón Martín",
+     "number": "3",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Alvaro Mantilla",
+     "number": "2",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Sergio Canales",
+     "number": "20",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Matteo Prati",
+     "number": "18",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Iván Martín",
+     "number": "23",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Yassir Zabiri",
+     "number": "21",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Iñigo Vicente",
+     "number": "10",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Iker Luque",
+     "number": "19",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "André Almeida",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Facundo González",
+     "number": "16",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Juan Carlos Arana",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Maguette Gueye",
+     "number": "14",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Asier Villalibre",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Manu",
+     "number": "4",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Pablo García",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Pedro Felipe",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Giorgi Guliashvili",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Íñigo Sainz",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Simon Eriksson",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Santander v Real Madrid, 2026-11-01"
   },
   "Sevilla": {
    "formation": "4-4-2",
@@ -2839,6 +5173,620 @@
    ],
    "from_match": "Sp Braga v Famalicao, 2026-11-01"
   },
+  "Cagliari": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Elia Caprile",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Juan Rodríguez",
+     "number": "15",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Alessandro Deiola",
+     "number": "14",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Adam Obert",
+     "number": "33",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Zé Pedro",
+     "number": "2",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Daniel Maldini",
+     "number": "70",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Alessandro Romano",
+     "number": "4",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Michel Adopo",
+     "number": "8",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "M'Bala Nzola",
+     "number": "18",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Jacopo Fazzini",
+     "number": "10",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Alieu Fadera",
+     "number": "39",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Roberto Gagliardini",
+     "number": "21",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ivan Sulev",
+     "number": "32",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yael Trepy",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Joseph Liteta",
+     "number": "27",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yukinari Sugawara",
+     "number": "28",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Raphael Kofler",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Giuseppe Aurelio",
+     "number": "24",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Riccardo Ciervo",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yanis Massolin",
+     "number": "79",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Boris Radunovic",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yerry Mina",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Paul Mendy",
+     "number": "31",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alen Sherri",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Harry Winks",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kevin Carlos",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Lazio v Cagliari, 2026-11-01"
+  },
+  "Frosinone": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Lorenzo Palmisani",
+     "number": "22",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Ilario Monterisi",
+     "number": "30",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Gabriele Calvani",
+     "number": "3",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Gabriele Bracaglia",
+     "number": "79",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Enzo Tchato",
+     "number": "90",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Romano Schmid",
+     "number": "10",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Giacomo Calo",
+     "number": "14",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Patrizio Masini",
+     "number": "73",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Antonio Raimondo",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Giorgi Kvernadze",
+     "number": "17",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Farès Ghedjemis",
+     "number": "7",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Anthony Oyono",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kevin Akpoguma",
+     "number": "25",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tomas Bobcek",
+     "number": "89",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Aleksa Terzic",
+     "number": "71",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Matteo Pisseri",
+     "number": "12",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Luis Hasa",
+     "number": "70",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Daniel Birligea",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Wisdom Amey",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alessio Zerbin",
+     "number": "24",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Matteo Cichella",
+     "number": "16",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Seydou Fini",
+     "number": "40",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sebastiano Desplanches",
+     "number": "91",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Omar Fayed",
+     "number": "74",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Giorgio Cittadini",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Anouar El Azzouzi",
+     "number": "34",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Frosinone v Torino, 2026-11-01"
+  },
+  "Lecce": {
+   "formation": "4-3-3",
+   "starters": [
+    {
+     "name": "Wladimiro Falcone",
+     "number": "30",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Tiago Gabriel",
+     "number": "44",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Jamil Siebert",
+     "number": "5",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Antonino Gallo",
+     "number": "25",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Danilo Veiga",
+     "number": "17",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Oumar Ngom",
+     "number": "79",
+     "position": "CM",
+     "formation_place": 4
+    },
+    {
+     "name": "Youssef Maleh",
+     "number": "14",
+     "position": "LM",
+     "formation_place": 8
+    },
+    {
+     "name": "Olaf Gorter",
+     "number": "28",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Nikola Stulic",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Joel Monteiro",
+     "number": "99",
+     "position": "LF",
+     "formation_place": 11
+    },
+    {
+     "name": "Konan N’Dri",
+     "number": "11",
+     "position": "RF",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Corrie Ndaba",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Elijah Scott",
+     "number": "31",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sadik Fofana",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mohamed Kaba",
+     "number": "77",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Francisco Esteban Sánchez",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Amar Ahmed",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Omri Gandelman",
+     "number": "16",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Alexandru Borbei",
+     "number": "32",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Marco Bleve",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Gaby Jean",
+     "number": "18",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ali Dembélé",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Lecce v Genoa, 2026-11-01"
+  },
+  "Torino": {
+   "formation": "3-5-2",
+   "starters": [
+    {
+     "name": "Lucas Perri",
+     "number": "20",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Adrian Ismajli",
+     "number": "44",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Pietro Comuzzo",
+     "number": "15",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Saúl Coco",
+     "number": "23",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Gvidas Gineitis",
+     "number": "66",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Nikola Vlasic",
+     "number": "10",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Daniel Bragança",
+     "number": "21",
+     "position": "AM",
+     "formation_place": 11
+    },
+    {
+     "name": "Zakaria Aboukhlal",
+     "number": "7",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Rafik Belghali",
+     "number": "45",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Giovanni Simeone",
+     "number": "18",
+     "position": "CF-L",
+     "formation_place": 9
+    },
+    {
+     "name": "Ché Adams",
+     "number": "19",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Nathan Patterson",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Gaetano Oristanio",
+     "number": "11",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Pietro Pellegri",
+     "number": "9",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Sandro Kulenovic",
+     "number": "17",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Diego Mascardi",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kian Fitz-Jim",
+     "number": "28",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Eray Cömert",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Duván Zapata",
+     "number": "91",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Manuel Carrascosa Moreno",
+     "number": "63",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Lapo Siviero",
+     "number": "76",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Cesare Casadei",
+     "number": "22",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Emirhan Ilkhan",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Frosinone v Torino, 2026-11-01"
+  },
   "Udinese": {
    "formation": "3-4-2-1",
    "starters": [
@@ -3149,6 +6097,140 @@
    ],
    "from_match": "Como v Venezia, 2026-11-01"
   },
+  "Eyupspor": {
+   "formation": "4-1-4-1",
+   "starters": [
+    {
+     "name": "Emre Bilgin",
+     "number": "1",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Zak Jules",
+     "number": "33",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Jawad El Yamiq",
+     "number": "5",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Chandrel Géraud Massanga",
+     "number": "88",
+     "position": "DM",
+     "formation_place": 4
+    },
+    {
+     "name": "Mete Demir",
+     "number": "70",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Talha Ülvan",
+     "number": "7",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Charles-Andre Raux Yao",
+     "number": "15",
+     "position": "CM-L",
+     "formation_place": 10
+    },
+    {
+     "name": "David Costa",
+     "number": "8",
+     "position": "CM-R",
+     "formation_place": 8
+    },
+    {
+     "name": "Lenny Pintor",
+     "number": "11",
+     "position": "LM",
+     "formation_place": 11
+    },
+    {
+     "name": "Bilal Boutobba",
+     "number": "98",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Yusuf Barasi",
+     "number": "9",
+     "position": "F",
+     "formation_place": 9
+    }
+   ],
+   "subs": [
+    {
+     "name": "Anil Yasar",
+     "number": "4",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Arda Yavuz",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Umut Keseci",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Horatiu Moldovan",
+     "number": "31",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Abdelhamid Sabiri",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ahmed Abdullahi",
+     "number": "29",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Konrad Michalak",
+     "number": "77",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Berhan Satli",
+     "number": "42",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ömer Ceyhan",
+     "number": "44",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Hamza Akman",
+     "number": "18",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Amedspor v Eyupspor, 2026-11-01"
+  },
   "Gaziantep": {
    "formation": "4-2-3-1",
    "starters": [
@@ -3416,6 +6498,408 @@
     }
    ],
    "from_match": "Kasimpasa v Besiktas, 2026-11-01"
+  },
+  "Kocaelispor": {
+   "formation": "4-3-3",
+   "starters": [
+    {
+     "name": "Serhat Öztasdelen",
+     "number": "83",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Emir Ortakaya",
+     "number": "5",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Anfernee Dijksteel",
+     "number": "2",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Rigoberto Rivas",
+     "number": "99",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Ugur Kaan Yildiz",
+     "number": "22",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Show",
+     "number": "14",
+     "position": "CM",
+     "formation_place": 4
+    },
+    {
+     "name": "Mahamadou Susoho",
+     "number": "20",
+     "position": "LM",
+     "formation_place": 8
+    },
+    {
+     "name": "Berkan Kutlu",
+     "number": "10",
+     "position": "RM",
+     "formation_place": 7
+    },
+    {
+     "name": "Florian Ayé",
+     "number": "97",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Makana Baku",
+     "number": "32",
+     "position": "LF",
+     "formation_place": 11
+    },
+    {
+     "name": "Gonçalo Santos Sousa",
+     "number": "11",
+     "position": "RF",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Tayfur Bingöl",
+     "number": "75",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Tobias Gulliksen",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Onur Öztonga",
+     "number": "41",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ege Bilim",
+     "number": "27",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Muharrem Cinan",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Daniel Agyei",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Matej Maglica",
+     "number": "6",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Metehan Altunbas",
+     "number": "26",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Onurcan Piri",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Haydar Karatas",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Kocaelispor v Rizespor, 2026-10-31"
+  },
+  "Konyaspor": {
+   "formation": "4-2-3-1",
+   "starters": [
+    {
+     "name": "Bahadir Han Güngördü",
+     "number": "13",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Chidozie Awaziem",
+     "number": "15",
+     "position": "CD-L",
+     "formation_place": 6
+    },
+    {
+     "name": "Rayyan Baniya",
+     "number": "22",
+     "position": "CD-R",
+     "formation_place": 5
+    },
+    {
+     "name": "Arthur Masuaku",
+     "number": "26",
+     "position": "LB",
+     "formation_place": 3
+    },
+    {
+     "name": "Yhoan Andzouana",
+     "number": "17",
+     "position": "RB",
+     "formation_place": 2
+    },
+    {
+     "name": "Rajmund Tóth",
+     "number": "66",
+     "position": "AM",
+     "formation_place": 10
+    },
+    {
+     "name": "Melih Ibrahimoglu",
+     "number": "77",
+     "position": "LM",
+     "formation_place": 4
+    },
+    {
+     "name": "Marko Jevtovic",
+     "number": "8",
+     "position": "RM",
+     "formation_place": 8
+    },
+    {
+     "name": "Jackson Muleka",
+     "number": "11",
+     "position": "F",
+     "formation_place": 9
+    },
+    {
+     "name": "Jean-Luc Dompé",
+     "number": "91",
+     "position": "AM-L",
+     "formation_place": 11
+    },
+    {
+     "name": "Deniz Turuc",
+     "number": "9",
+     "position": "AM-R",
+     "formation_place": 7
+    }
+   ],
+   "subs": [
+    {
+     "name": "Arif Bosluk",
+     "number": "3",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Enis Destan",
+     "number": "94",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Mostafa Mohamed",
+     "number": "42",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Enis Bardhi",
+     "number": "10",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Deniz Ertas",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ebrima Colley",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Diogo Gonçalves",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ugurcan Yazgili",
+     "number": "5",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Emir Bars",
+     "number": "45",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Ahmet Oguz",
+     "number": "2",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Konyaspor v Galatasaray, 2026-10-30"
+  },
+  "Samsunspor": {
+   "formation": "3-5-2",
+   "starters": [
+    {
+     "name": "Bilal Biyazit",
+     "number": "25",
+     "position": "G",
+     "formation_place": 1
+    },
+    {
+     "name": "Gabriele Guarino",
+     "number": "34",
+     "position": "CD",
+     "formation_place": 5
+    },
+    {
+     "name": "Igor Drapinski",
+     "number": "3",
+     "position": "CD-L",
+     "formation_place": 4
+    },
+    {
+     "name": "Strahinja Erakovic",
+     "number": "16",
+     "position": "CD-R",
+     "formation_place": 6
+    },
+    {
+     "name": "Antoine Sekongo",
+     "number": "42",
+     "position": "CM-L",
+     "formation_place": 8
+    },
+    {
+     "name": "Celil Yuksel",
+     "number": "5",
+     "position": "CM-R",
+     "formation_place": 7
+    },
+    {
+     "name": "Elliot Watt",
+     "number": "4",
+     "position": "AM",
+     "formation_place": 11
+    },
+    {
+     "name": "Logi Tomasson",
+     "number": "17",
+     "position": "LM",
+     "formation_place": 3
+    },
+    {
+     "name": "Josafat Mendes",
+     "number": "2",
+     "position": "RM",
+     "formation_place": 2
+    },
+    {
+     "name": "Mohamed Bayo",
+     "number": "18",
+     "position": "CF-L",
+     "formation_place": 9
+    },
+    {
+     "name": "Tanguy Coulibaly",
+     "number": "10",
+     "position": "CF-R",
+     "formation_place": 10
+    }
+   ],
+   "subs": [
+    {
+     "name": "Saikuba Jarju",
+     "number": "30",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Elayis Tavsan",
+     "number": "7",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Oskar Øhlenschlaeger",
+     "number": "19",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Okan Kocuk",
+     "number": "1",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Samed Onur",
+     "number": "8",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Haluk Tan",
+     "number": "29",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Kouadou Assoumou",
+     "number": "15",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yusufefe Yurtsever",
+     "number": "44",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Enes Albak",
+     "number": "23",
+     "position": "SUB",
+     "formation_place": 0
+    },
+    {
+     "name": "Yalcin Kayan",
+     "number": "20",
+     "position": "SUB",
+     "formation_place": 0
+    }
+   ],
+   "from_match": "Buyuksehyr v Samsunspor, 2026-11-01"
   }
  }
 }

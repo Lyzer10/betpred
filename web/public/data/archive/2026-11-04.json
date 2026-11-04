@@ -1,6 +1,6 @@
 {
  "date": "2026-11-04",
- "generated_at": "2026-11-03T15:03:58.538187Z",
+ "generated_at": "2026-11-04T04:01:58.841345Z",
  "fixtures": [
   {
    "league": {
@@ -18,38 +18,38 @@
     "home": {
      "position": 18,
      "teams": 18,
-     "played": 9,
+     "played": 8,
      "won": 1,
-     "drawn": 1,
+     "drawn": 0,
      "lost": 7,
-     "points": 4,
+     "points": 3,
      "gd": -16,
-     "gf": 3,
-     "ga": 19,
+     "gf": 2,
+     "ga": 18,
      "form": [
       "L",
       "L",
-      "W",
       "L",
-      "D"
+      "W",
+      "L"
      ]
     },
     "away": {
-     "position": 13,
+     "position": 16,
      "teams": 18,
-     "played": 9,
-     "won": 2,
+     "played": 8,
+     "won": 1,
      "drawn": 3,
      "lost": 4,
-     "points": 9,
-     "gd": -7,
-     "gf": 10,
+     "points": 6,
+     "gd": -8,
+     "gf": 9,
      "ga": 17,
      "form": [
+      "D",
       "L",
       "L",
       "D",
-      "W",
       "W"
      ]
     }
@@ -135,15 +135,15 @@
    "top_scorelines": [
     {
      "score": "1-1",
-     "probability": 0.12669864810609888
+     "probability": 0.12669864812078557
     },
     {
      "score": "1-2",
-     "probability": 0.08370832024448016
+     "probability": 0.08370832023551242
     },
     {
      "score": "2-1",
-     "probability": 0.08277212597815242
+     "probability": 0.08277212598155664
     }
    ],
    "has_market_odds": true,

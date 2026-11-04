@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-04T15:02:05.865641Z",
+  "generated_at": "2026-11-04T19:29:19.191938Z",
   "model": {
     "market_blend_model_weight": null,
     "retail_margin": 0.07,
@@ -160,8 +160,8 @@
         "market": "over_1.5",
         "label": "Over 1.5 goals",
         "probability": 0.7645,
-        "odds": 1.24,
-        "odds_source": "betpawa"
+        "odds": 1.21,
+        "odds_source": "estimated"
       },
       "day": "2026-11-04",
       "expected_goals": [
@@ -191,7 +191,7 @@
           "model_probability": 0.3519,
           "market_probability": 0.36,
           "fair_odds": 2.84,
-          "betpawa_odds": 2.43
+          "betpawa_odds": null
         },
         {
           "market": "draw",
@@ -200,7 +200,7 @@
           "model_probability": 0.2729,
           "market_probability": 0.2729,
           "fair_odds": 3.66,
-          "betpawa_odds": 3.54
+          "betpawa_odds": null
         },
         {
           "market": "away_win",
@@ -209,7 +209,7 @@
           "model_probability": 0.3722,
           "market_probability": 0.3671,
           "fair_odds": 2.69,
-          "betpawa_odds": 3.07
+          "betpawa_odds": null
         },
         {
           "market": "over_0.5",
@@ -218,7 +218,7 @@
           "model_probability": 0.9306,
           "market_probability": 0.9309,
           "fair_odds": 1.07,
-          "betpawa_odds": 1.05
+          "betpawa_odds": null
         },
         {
           "market": "over_1.5",
@@ -227,7 +227,7 @@
           "model_probability": 0.7645,
           "market_probability": 0.7704,
           "fair_odds": 1.31,
-          "betpawa_odds": 1.24
+          "betpawa_odds": null
         },
         {
           "market": "over_2.5",
@@ -236,7 +236,7 @@
           "model_probability": 0.5213,
           "market_probability": 0.5255,
           "fair_odds": 1.92,
-          "betpawa_odds": 1.76
+          "betpawa_odds": null
         },
         {
           "market": "over_3.5",
@@ -245,7 +245,7 @@
           "model_probability": 0.3015,
           "market_probability": 0.3015,
           "fair_odds": 3.32,
-          "betpawa_odds": 2.83
+          "betpawa_odds": null
         },
         {
           "market": "under_2.5",
@@ -254,7 +254,7 @@
           "model_probability": 0.4745,
           "market_probability": 0.4745,
           "fair_odds": 2.11,
-          "betpawa_odds": 2.12
+          "betpawa_odds": null
         },
         {
           "market": "under_3.5",
@@ -263,7 +263,7 @@
           "model_probability": 0.6985,
           "market_probability": 0.6985,
           "fair_odds": 1.43,
-          "betpawa_odds": 1.46
+          "betpawa_odds": null
         },
         {
           "market": "btts_yes",
@@ -272,7 +272,7 @@
           "model_probability": 0.5686,
           "market_probability": 0.5686,
           "fair_odds": 1.76,
-          "betpawa_odds": 1.62
+          "betpawa_odds": null
         },
         {
           "market": "btts_no",
@@ -281,7 +281,7 @@
           "model_probability": 0.4314,
           "market_probability": 0.4314,
           "fair_odds": 2.32,
-          "betpawa_odds": 2.32
+          "betpawa_odds": null
         },
         {
           "market": "home_1up",
@@ -290,7 +290,7 @@
           "model_probability": 0.538,
           "market_probability": 0.538,
           "fair_odds": 1.86,
-          "betpawa_odds": 1.63
+          "betpawa_odds": null
         },
         {
           "market": "away_1up",
@@ -299,7 +299,7 @@
           "model_probability": 0.5441,
           "market_probability": 0.5441,
           "fair_odds": 1.84,
-          "betpawa_odds": 1.83
+          "betpawa_odds": null
         },
         {
           "market": "home_first",
@@ -308,7 +308,7 @@
           "model_probability": 0.4628,
           "market_probability": 0.4628,
           "fair_odds": 2.16,
-          "betpawa_odds": 1.9
+          "betpawa_odds": null
         },
         {
           "market": "away_first",
@@ -317,7 +317,7 @@
           "model_probability": 0.4681,
           "market_probability": 0.4681,
           "fair_odds": 2.14,
-          "betpawa_odds": 2.16
+          "betpawa_odds": null
         },
         {
           "market": "double_1x",
@@ -326,7 +326,7 @@
           "model_probability": 0.6278,
           "market_probability": 0.6329,
           "fair_odds": 1.59,
-          "betpawa_odds": 1.4
+          "betpawa_odds": null
         },
         {
           "market": "double_x2",
@@ -335,7 +335,7 @@
           "model_probability": 0.6481,
           "market_probability": 0.64,
           "fair_odds": 1.54,
-          "betpawa_odds": 1.58
+          "betpawa_odds": null
         },
         {
           "market": "double_12",
@@ -344,6 +344,317 @@
           "model_probability": 0.7207,
           "market_probability": 0.7271,
           "fair_odds": 1.39,
+          "betpawa_odds": null
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "league": {
+        "code": "SUPERLIG",
+        "name": "Super Lig",
+        "country": "Turkey"
+      },
+      "mode": "market",
+      "date": "2026-11-06",
+      "time": "17:00",
+      "kickoff_utc": "2026-11-06T17:00:00Z",
+      "home": "Gaziantep",
+      "away": "Kasimpasa",
+      "context": {
+        "home": {
+          "position": 16,
+          "teams": 18,
+          "played": 10,
+          "won": 2,
+          "drawn": 2,
+          "lost": 6,
+          "points": 8,
+          "gd": -8,
+          "gf": 9,
+          "ga": 17,
+          "form": [
+            "L",
+            "L",
+            "L",
+            "L",
+            "L"
+          ]
+        },
+        "away": {
+          "position": 5,
+          "teams": 18,
+          "played": 10,
+          "won": 4,
+          "drawn": 5,
+          "lost": 1,
+          "points": 17,
+          "gd": 4,
+          "gf": 15,
+          "ga": 11,
+          "form": [
+            "D",
+            "L",
+            "W",
+            "W",
+            "D"
+          ]
+        }
+      },
+      "odds_source": "betpawa",
+      "head_to_head": {
+        "meetings": [
+          {
+            "date": "2026-02-09",
+            "home": "Gaziantep",
+            "away": "Kasimpasa",
+            "score": [
+              2,
+              1
+            ]
+          },
+          {
+            "date": "2025-08-30",
+            "home": "Kasimpasa",
+            "away": "Gaziantep",
+            "score": [
+              2,
+              3
+            ]
+          },
+          {
+            "date": "2025-05-24",
+            "home": "Gaziantep",
+            "away": "Kasimpasa",
+            "score": [
+              2,
+              2
+            ]
+          },
+          {
+            "date": "2025-01-05",
+            "home": "Kasimpasa",
+            "away": "Gaziantep",
+            "score": [
+              2,
+              2
+            ]
+          },
+          {
+            "date": "2024-04-21",
+            "home": "Gaziantep",
+            "away": "Kasimpasa",
+            "score": [
+              2,
+              0
+            ]
+          },
+          {
+            "date": "2023-12-03",
+            "home": "Kasimpasa",
+            "away": "Gaziantep",
+            "score": [
+              4,
+              2
+            ]
+          }
+        ],
+        "home_wins": 3,
+        "draws": 2,
+        "away_wins": 1,
+        "avg_goals": 4.0,
+        "over_2_5": 5,
+        "btts": 5,
+        "since": "2014/15"
+      },
+      "best_pick": {
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.7487,
+        "odds": 1.29,
+        "odds_source": "betpawa"
+      },
+      "day": "2026-11-06",
+      "expected_goals": [
+        1.38,
+        1.31
+      ],
+      "top_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.12951839888696495
+        },
+        {
+          "score": "1-0",
+          "probability": 0.08730557775277652
+        },
+        {
+          "score": "2-1",
+          "probability": 0.08466674939350688
+        }
+      ],
+      "has_market_odds": true,
+      "markets": [
+        {
+          "market": "home_win",
+          "label": "Home win",
+          "probability": 0.3782,
+          "model_probability": 0.3782,
+          "market_probability": 0.3772,
+          "fair_odds": 2.64,
+          "betpawa_odds": 2.6
+        },
+        {
+          "market": "draw",
+          "label": "Draw",
+          "probability": 0.2786,
+          "model_probability": 0.2786,
+          "market_probability": 0.2786,
+          "fair_odds": 3.59,
+          "betpawa_odds": 3.52
+        },
+        {
+          "market": "away_win",
+          "label": "Away win",
+          "probability": 0.3334,
+          "model_probability": 0.3334,
+          "market_probability": 0.3441,
+          "fair_odds": 3.0,
+          "betpawa_odds": 2.85
+        },
+        {
+          "market": "over_0.5",
+          "label": "Over 0.5 goals",
+          "probability": 0.9215,
+          "model_probability": 0.9215,
+          "market_probability": 0.9252,
+          "fair_odds": 1.09,
+          "betpawa_odds": 1.06
+        },
+        {
+          "market": "over_1.5",
+          "label": "Over 1.5 goals",
+          "probability": 0.7487,
+          "model_probability": 0.7487,
+          "market_probability": 0.7554,
+          "fair_odds": 1.34,
+          "betpawa_odds": 1.29
+        },
+        {
+          "market": "over_2.5",
+          "label": "Over 2.5 goals",
+          "probability": 0.4981,
+          "model_probability": 0.4981,
+          "market_probability": 0.5052,
+          "fair_odds": 2.01,
+          "betpawa_odds": 1.9
+        },
+        {
+          "market": "over_3.5",
+          "label": "Over 3.5 goals",
+          "probability": 0.2827,
+          "model_probability": 0.2827,
+          "market_probability": 0.2827,
+          "fair_odds": 3.54,
+          "betpawa_odds": 3.22
+        },
+        {
+          "market": "under_2.5",
+          "label": "Under 2.5 goals",
+          "probability": 0.4948,
+          "model_probability": 0.4948,
+          "market_probability": 0.4948,
+          "fair_odds": 2.02,
+          "betpawa_odds": 1.94
+        },
+        {
+          "market": "under_3.5",
+          "label": "Under 3.5 goals",
+          "probability": 0.7173,
+          "model_probability": 0.7173,
+          "market_probability": 0.7173,
+          "fair_odds": 1.39,
+          "betpawa_odds": 1.37
+        },
+        {
+          "market": "btts_yes",
+          "label": "Both teams score",
+          "probability": 0.5523,
+          "model_probability": 0.5523,
+          "market_probability": 0.5523,
+          "fair_odds": 1.81,
+          "betpawa_odds": 1.72
+        },
+        {
+          "market": "btts_no",
+          "label": "Both teams score: No",
+          "probability": 0.4477,
+          "model_probability": 0.4477,
+          "market_probability": 0.4477,
+          "fair_odds": 2.23,
+          "betpawa_odds": 2.14
+        },
+        {
+          "market": "home_1up",
+          "label": "Home 1Up",
+          "probability": 0.5489,
+          "model_probability": 0.5489,
+          "market_probability": 0.5489,
+          "fair_odds": 1.82,
+          "betpawa_odds": 1.72
+        },
+        {
+          "market": "away_1up",
+          "label": "Away 1Up",
+          "probability": 0.5204,
+          "model_probability": 0.5204,
+          "market_probability": 0.5204,
+          "fair_odds": 1.92,
+          "betpawa_odds": 1.82
+        },
+        {
+          "market": "home_first",
+          "label": "Home scores first",
+          "probability": 0.4749,
+          "model_probability": 0.4749,
+          "market_probability": 0.4749,
+          "fair_odds": 2.11,
+          "betpawa_odds": 1.99
+        },
+        {
+          "market": "away_first",
+          "label": "Away scores first",
+          "probability": 0.4502,
+          "model_probability": 0.4502,
+          "market_probability": 0.4502,
+          "fair_odds": 2.22,
+          "betpawa_odds": 2.1
+        },
+        {
+          "market": "double_1x",
+          "label": "Home or draw",
+          "probability": 0.6666,
+          "model_probability": 0.6666,
+          "market_probability": 0.6559,
+          "fair_odds": 1.5,
+          "betpawa_odds": 1.45
+        },
+        {
+          "market": "double_x2",
+          "label": "Away or draw",
+          "probability": 0.6218,
+          "model_probability": 0.6218,
+          "market_probability": 0.6228,
+          "fair_odds": 1.61,
+          "betpawa_odds": 1.52
+        },
+        {
+          "market": "double_12",
+          "label": "Home or away",
+          "probability": 0.7086,
+          "model_probability": 0.7086,
+          "market_probability": 0.7214,
+          "fair_odds": 1.41,
           "betpawa_odds": 1.33
         }
       ]
@@ -357,29 +668,17 @@
       ],
       "first_kickoff_utc": "2026-11-04T19:30:00Z",
       "final": false,
-      "value_picks": [
-        {
-          "date": "2026-11-04",
-          "time": "19:30",
-          "kickoff_utc": "2026-11-04T19:30:00Z",
-          "league": {
-            "code": "JUPILER",
-            "name": "Belgian Pro League",
-            "country": "Belgium"
-          },
-          "home": "Kortrijk",
-          "away": "Mechelen",
-          "market": "away_win",
-          "label": "Away win",
-          "probability": 0.3722,
-          "estimated_odds": 2.55,
-          "betpawa_odds": 3.07,
-          "fair_odds": 2.69,
-          "price_warning": true,
-          "edge": 0.1427,
-          "kelly": 0.0689
-        }
+      "value_picks": [],
+      "slips": {}
+    },
+    {
+      "date": "2026-11-06",
+      "fixtures": [
+        1
       ],
+      "first_kickoff_utc": "2026-11-06T17:00:00Z",
+      "final": false,
+      "value_picks": [],
       "slips": {}
     }
   ],
@@ -29862,6 +30161,11 @@
   },
   "archive": [
     {
+      "date": "2026-11-06",
+      "fixtures": 1,
+      "settled": 0
+    },
+    {
       "date": "2026-11-04",
       "fixtures": 1,
       "settled": 0
@@ -29918,15 +30222,15 @@
     }
   ],
   "live_record": {
-    "matches": 102,
-    "result_hit_rate": 0.5588,
-    "log_loss": 0.9176,
-    "market_log_loss": 0.9221,
-    "confident_picks": 485,
-    "confident_hit_rate": 0.8206,
-    "value_bets": 162,
-    "value_bets_won": 73,
-    "value_roi": -0.1828
+    "matches": 122,
+    "result_hit_rate": 0.582,
+    "log_loss": 0.9136,
+    "market_log_loss": 0.9163,
+    "confident_picks": 569,
+    "confident_hit_rate": 0.8313,
+    "value_bets": 194,
+    "value_bets_won": 90,
+    "value_roi": -0.1319
   },
   "clv": {
     "legs": 78,
@@ -30080,235 +30384,236 @@
         "name": "accuracy",
         "status": "ok",
         "matches": 60,
-        "detail": "log loss worse than bookmakers by 0.000 (t=0.0)"
+        "detail": "log loss better than bookmakers by 0.001 (t=-0.1)"
       },
       {
         "name": "calibration",
         "status": "ok",
-        "picks": 443,
-        "detail": "321 hits vs 329.0 expected (z=-0.9)"
+        "picks": 452,
+        "detail": "342 hits vs 333.7 expected (z=0.9)"
       },
       {
         "name": "slips",
-        "status": "insufficient",
-        "detail": "18 of 20 settled slips needed"
+        "status": "ok",
+        "slips": 25,
+        "detail": "7 won vs 8.4 expected (z=-0.6)"
       }
     ],
     "pairs": [
       {
         "league": "BUNDES",
         "market": "away_1up",
-        "n": 9,
-        "predicted": 0.5892,
-        "actual": 0.4444,
-        "z": -0.92,
+        "n": 11,
+        "predicted": 0.5672,
+        "actual": 0.3636,
+        "z": -1.42,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "away_win",
-        "n": 9,
-        "predicted": 0.3891,
-        "actual": 0.4444,
-        "z": 0.36,
+        "n": 11,
+        "predicted": 0.3672,
+        "actual": 0.3636,
+        "z": -0.03,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "double_12",
-        "n": 9,
-        "predicted": 0.7585,
-        "actual": 0.7778,
-        "z": 0.14,
+        "n": 11,
+        "predicted": 0.7566,
+        "actual": 0.7273,
+        "z": -0.23,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "double_1x",
-        "n": 9,
-        "predicted": 0.6104,
-        "actual": 0.5556,
-        "z": -0.36,
+        "n": 11,
+        "predicted": 0.6321,
+        "actual": 0.6364,
+        "z": 0.03,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "double_x2",
-        "n": 9,
-        "predicted": 0.6324,
-        "actual": 0.6667,
-        "z": 0.23,
+        "n": 11,
+        "predicted": 0.6121,
+        "actual": 0.6364,
+        "z": 0.18,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "home_1up",
-        "n": 9,
-        "predicted": 0.5744,
-        "actual": 0.5556,
-        "z": -0.12,
+        "n": 11,
+        "predicted": 0.5898,
+        "actual": 0.6364,
+        "z": 0.33,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "home_win",
-        "n": 9,
-        "predicted": 0.3701,
-        "actual": 0.3333,
-        "z": -0.24,
+        "n": 11,
+        "predicted": 0.39,
+        "actual": 0.3636,
+        "z": -0.19,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "over_0.5",
-        "n": 9,
-        "predicted": 0.9604,
-        "actual": 0.8889,
-        "z": -1.1,
+        "n": 11,
+        "predicted": 0.9581,
+        "actual": 0.9091,
+        "z": -0.81,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "over_1.5",
-        "n": 9,
-        "predicted": 0.8845,
-        "actual": 0.8889,
-        "z": 0.04,
+        "n": 11,
+        "predicted": 0.8788,
+        "actual": 0.9091,
+        "z": 0.31,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "over_2.5",
-        "n": 9,
-        "predicted": 0.7064,
-        "actual": 0.6667,
-        "z": -0.26,
+        "n": 11,
+        "predicted": 0.6949,
+        "actual": 0.6364,
+        "z": -0.42,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "under_2.5",
-        "n": 9,
-        "predicted": 0.2936,
-        "actual": 0.3333,
-        "z": 0.26,
+        "n": 11,
+        "predicted": 0.3051,
+        "actual": 0.3636,
+        "z": 0.42,
         "status": "insufficient"
       },
       {
         "league": "BUNDES",
         "market": "under_3.5",
-        "n": 9,
-        "predicted": 0.4841,
-        "actual": 0.5556,
-        "z": 0.43,
+        "n": 11,
+        "predicted": 0.4976,
+        "actual": 0.5455,
+        "z": 0.32,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "away_1up",
-        "n": 17,
-        "predicted": 0.5004,
-        "actual": 0.3529,
-        "z": -1.24,
+        "n": 19,
+        "predicted": 0.5046,
+        "actual": 0.4211,
+        "z": -0.74,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "away_win",
-        "n": 17,
-        "predicted": 0.3151,
-        "actual": 0.2941,
-        "z": -0.19,
+        "n": 19,
+        "predicted": 0.3199,
+        "actual": 0.3684,
+        "z": 0.47,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "double_12",
-        "n": 17,
-        "predicted": 0.7433,
-        "actual": 0.7647,
-        "z": 0.2,
+        "n": 19,
+        "predicted": 0.7411,
+        "actual": 0.7895,
+        "z": 0.48,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "double_1x",
-        "n": 17,
-        "predicted": 0.6849,
-        "actual": 0.7059,
-        "z": 0.19,
+        "n": 19,
+        "predicted": 0.6801,
+        "actual": 0.6316,
+        "z": -0.47,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "double_x2",
-        "n": 17,
-        "predicted": 0.573,
-        "actual": 0.5294,
-        "z": -0.37,
+        "n": 19,
+        "predicted": 0.5798,
+        "actual": 0.5789,
+        "z": -0.01,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "home_1up",
-        "n": 17,
-        "predicted": 0.5987,
-        "actual": 0.6471,
-        "z": 0.42,
+        "n": 19,
+        "predicted": 0.5923,
+        "actual": 0.5789,
+        "z": -0.12,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "home_win",
-        "n": 17,
-        "predicted": 0.427,
-        "actual": 0.4706,
-        "z": 0.37,
+        "n": 19,
+        "predicted": 0.4202,
+        "actual": 0.4211,
+        "z": 0.01,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "over_0.5",
-        "n": 17,
-        "predicted": 0.9376,
-        "actual": 0.9412,
-        "z": 0.06,
+        "n": 19,
+        "predicted": 0.9367,
+        "actual": 0.9474,
+        "z": 0.19,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "over_1.5",
-        "n": 17,
-        "predicted": 0.8009,
-        "actual": 0.8235,
-        "z": 0.23,
+        "n": 19,
+        "predicted": 0.7991,
+        "actual": 0.7368,
+        "z": -0.68,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "over_2.5",
-        "n": 17,
-        "predicted": 0.5615,
-        "actual": 0.2353,
-        "z": -2.72,
+        "n": 19,
+        "predicted": 0.5581,
+        "actual": 0.2105,
+        "z": -3.07,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "under_2.5",
-        "n": 17,
-        "predicted": 0.4385,
-        "actual": 0.7647,
-        "z": 2.72,
+        "n": 19,
+        "predicted": 0.4419,
+        "actual": 0.7895,
+        "z": 3.07,
         "status": "insufficient"
       },
       {
         "league": "EPL",
         "market": "under_3.5",
-        "n": 17,
-        "predicted": 0.6598,
-        "actual": 0.8824,
-        "z": 1.95,
+        "n": 19,
+        "predicted": 0.663,
+        "actual": 0.8947,
+        "z": 2.15,
         "status": "insufficient"
       },
       {
@@ -30494,217 +30799,217 @@
       {
         "league": "LALIGA",
         "market": "away_1up",
-        "n": 10,
-        "predicted": 0.4154,
-        "actual": 0.3,
-        "z": -0.78,
+        "n": 15,
+        "predicted": 0.4654,
+        "actual": 0.4667,
+        "z": 0.01,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "away_win",
-        "n": 10,
-        "predicted": 0.2264,
-        "actual": 0.3,
-        "z": 0.61,
+        "n": 15,
+        "predicted": 0.2855,
+        "actual": 0.3333,
+        "z": 0.46,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_12",
-        "n": 10,
-        "predicted": 0.7982,
-        "actual": 0.9,
-        "z": 0.82,
+        "n": 15,
+        "predicted": 0.7799,
+        "actual": 0.9333,
+        "z": 1.46,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_1x",
-        "n": 10,
-        "predicted": 0.7748,
-        "actual": 0.7,
-        "z": -0.62,
+        "n": 15,
+        "predicted": 0.7152,
+        "actual": 0.6667,
+        "z": -0.47,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "double_x2",
-        "n": 10,
-        "predicted": 0.431,
+        "n": 15,
+        "predicted": 0.5096,
         "actual": 0.4,
-        "z": -0.22,
+        "z": -0.95,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "home_1up",
-        "n": 10,
-        "predicted": 0.6936,
+        "n": 15,
+        "predicted": 0.6275,
         "actual": 0.6,
-        "z": -0.69,
+        "z": -0.24,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "home_win",
-        "n": 10,
-        "predicted": 0.5688,
+        "n": 15,
+        "predicted": 0.4906,
         "actual": 0.6,
-        "z": 0.22,
+        "z": 0.95,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_0.5",
-        "n": 10,
-        "predicted": 0.9454,
-        "actual": 0.9,
-        "z": -0.64,
+        "n": 15,
+        "predicted": 0.9387,
+        "actual": 0.9333,
+        "z": -0.09,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_1.5",
-        "n": 10,
-        "predicted": 0.7888,
+        "n": 15,
+        "predicted": 0.7752,
         "actual": 0.8,
-        "z": 0.09,
+        "z": 0.23,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "over_2.5",
-        "n": 10,
-        "predicted": 0.6049,
-        "actual": 0.6,
-        "z": -0.03,
+        "n": 15,
+        "predicted": 0.5791,
+        "actual": 0.6667,
+        "z": 0.72,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "under_2.5",
-        "n": 10,
-        "predicted": 0.3951,
-        "actual": 0.4,
-        "z": 0.03,
+        "n": 15,
+        "predicted": 0.4209,
+        "actual": 0.3333,
+        "z": -0.72,
         "status": "insufficient"
       },
       {
         "league": "LALIGA",
         "market": "under_3.5",
-        "n": 10,
-        "predicted": 0.6199,
+        "n": 15,
+        "predicted": 0.6426,
         "actual": 0.8,
-        "z": 1.24,
+        "z": 1.35,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "away_1up",
-        "n": 11,
-        "predicted": 0.5129,
-        "actual": 0.2727,
-        "z": -1.64,
+        "n": 16,
+        "predicted": 0.4962,
+        "actual": 0.25,
+        "z": -2.02,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "away_win",
-        "n": 11,
-        "predicted": 0.3222,
-        "actual": 0.0909,
-        "z": -1.74,
+        "n": 16,
+        "predicted": 0.302,
+        "actual": 0.125,
+        "z": -1.62,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_12",
-        "n": 11,
-        "predicted": 0.762,
-        "actual": 0.6364,
-        "z": -0.98,
+        "n": 16,
+        "predicted": 0.76,
+        "actual": 0.75,
+        "z": -0.09,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_1x",
-        "n": 11,
-        "predicted": 0.6782,
-        "actual": 0.9091,
-        "z": 1.74,
+        "n": 16,
+        "predicted": 0.6985,
+        "actual": 0.875,
+        "z": 1.62,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "double_x2",
-        "n": 11,
-        "predicted": 0.5585,
-        "actual": 0.4545,
-        "z": -0.73,
+        "n": 16,
+        "predicted": 0.5403,
+        "actual": 0.375,
+        "z": -1.39,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "home_1up",
-        "n": 11,
-        "predicted": 0.5851,
-        "actual": 0.6364,
-        "z": 0.36,
+        "n": 16,
+        "predicted": 0.6024,
+        "actual": 0.6875,
+        "z": 0.73,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "home_win",
-        "n": 11,
-        "predicted": 0.4406,
-        "actual": 0.5455,
-        "z": 0.74,
+        "n": 16,
+        "predicted": 0.4591,
+        "actual": 0.625,
+        "z": 1.39,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_0.5",
-        "n": 11,
-        "predicted": 0.9421,
-        "actual": 0.8182,
-        "z": -1.76,
+        "n": 16,
+        "predicted": 0.941,
+        "actual": 0.875,
+        "z": -1.12,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_1.5",
-        "n": 11,
-        "predicted": 0.8114,
-        "actual": 0.7273,
-        "z": -0.72,
+        "n": 16,
+        "predicted": 0.8082,
+        "actual": 0.8125,
+        "z": 0.04,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "over_2.5",
-        "n": 11,
-        "predicted": 0.5832,
-        "actual": 0.3636,
-        "z": -1.49,
+        "n": 16,
+        "predicted": 0.5787,
+        "actual": 0.375,
+        "z": -1.66,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "under_2.5",
-        "n": 11,
-        "predicted": 0.4168,
-        "actual": 0.6364,
-        "z": 1.49,
+        "n": 16,
+        "predicted": 0.4213,
+        "actual": 0.625,
+        "z": 1.66,
         "status": "insufficient"
       },
       {
         "league": "LIGUE1",
         "market": "under_3.5",
-        "n": 11,
-        "predicted": 0.6348,
-        "actual": 0.7273,
-        "z": 0.64,
+        "n": 16,
+        "predicted": 0.6402,
+        "actual": 0.6875,
+        "z": 0.4,
         "status": "insufficient"
       },
       {
@@ -30800,109 +31105,109 @@
       {
         "league": "SERIEA",
         "market": "away_1up",
-        "n": 19,
-        "predicted": 0.5674,
-        "actual": 0.6842,
-        "z": 1.12,
+        "n": 25,
+        "predicted": 0.546,
+        "actual": 0.68,
+        "z": 1.45,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "away_win",
-        "n": 19,
-        "predicted": 0.4042,
-        "actual": 0.4211,
-        "z": 0.17,
+        "n": 25,
+        "predicted": 0.3752,
+        "actual": 0.44,
+        "z": 0.75,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "double_12",
-        "n": 19,
-        "predicted": 0.7503,
-        "actual": 0.8421,
-        "z": 0.93,
+        "n": 25,
+        "predicted": 0.7458,
+        "actual": 0.88,
+        "z": 1.55,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "double_1x",
-        "n": 19,
-        "predicted": 0.5962,
-        "actual": 0.5789,
-        "z": -0.18,
+        "n": 25,
+        "predicted": 0.6251,
+        "actual": 0.56,
+        "z": -0.76,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "double_x2",
-        "n": 19,
-        "predicted": 0.6359,
-        "actual": 0.5789,
-        "z": -0.58,
+        "n": 25,
+        "predicted": 0.6171,
+        "actual": 0.56,
+        "z": -0.65,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "home_1up",
-        "n": 19,
-        "predicted": 0.539,
-        "actual": 0.6316,
-        "z": 0.88,
+        "n": 25,
+        "predicted": 0.5583,
+        "actual": 0.64,
+        "z": 0.89,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "home_win",
-        "n": 19,
-        "predicted": 0.3633,
-        "actual": 0.4211,
-        "z": 0.59,
+        "n": 25,
+        "predicted": 0.3822,
+        "actual": 0.44,
+        "z": 0.66,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "over_0.5",
-        "n": 19,
-        "predicted": 0.9413,
-        "actual": 0.9474,
-        "z": 0.11,
+        "n": 25,
+        "predicted": 0.9393,
+        "actual": 0.96,
+        "z": 0.43,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "over_1.5",
-        "n": 19,
-        "predicted": 0.7824,
-        "actual": 0.8421,
-        "z": 0.63,
+        "n": 25,
+        "predicted": 0.7789,
+        "actual": 0.88,
+        "z": 1.22,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "over_2.5",
-        "n": 19,
-        "predicted": 0.5486,
-        "actual": 0.6316,
-        "z": 0.73,
+        "n": 25,
+        "predicted": 0.5433,
+        "actual": 0.64,
+        "z": 0.98,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "under_2.5",
-        "n": 19,
-        "predicted": 0.4514,
-        "actual": 0.3684,
-        "z": -0.73,
+        "n": 25,
+        "predicted": 0.4567,
+        "actual": 0.36,
+        "z": -0.98,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "under_3.5",
-        "n": 19,
-        "predicted": 0.6781,
-        "actual": 0.4737,
-        "z": -1.93,
+        "n": 25,
+        "predicted": 0.6837,
+        "actual": 0.56,
+        "z": -1.34,
         "status": "insufficient"
       },
       {
@@ -31079,12 +31384,21 @@
         "status": "insufficient"
       },
       {
+        "league": "EREDIV",
+        "market": "over_2.5",
+        "n": 2,
+        "predicted": 0.8824,
+        "actual": 1.0,
+        "z": 0.52,
+        "status": "insufficient"
+      },
+      {
         "league": "JUPILER",
         "market": "over_1.5",
-        "n": 1,
-        "predicted": 0.84,
+        "n": 2,
+        "predicted": 0.8644,
         "actual": 1.0,
-        "z": 0.44,
+        "z": 0.56,
         "status": "insufficient"
       },
       {
@@ -31098,11 +31412,20 @@
       },
       {
         "league": "LALIGA",
+        "market": "away_win",
+        "n": 3,
+        "predicted": 0.8288,
+        "actual": 1.0,
+        "z": 0.79,
+        "status": "insufficient"
+      },
+      {
+        "league": "LALIGA",
         "market": "home_win",
-        "n": 7,
-        "predicted": 0.8153,
-        "actual": 0.5714,
-        "z": -1.71,
+        "n": 8,
+        "predicted": 0.7699,
+        "actual": 0.625,
+        "z": -1.04,
         "status": "insufficient"
       },
       {
@@ -31116,11 +31439,29 @@
       },
       {
         "league": "LIGUE1",
+        "market": "home_1up",
+        "n": 1,
+        "predicted": 0.8,
+        "actual": 1.0,
+        "z": 0.5,
+        "status": "insufficient"
+      },
+      {
+        "league": "LIGUE1",
         "market": "over_1.5",
         "n": 4,
         "predicted": 0.8496,
         "actual": 0.75,
         "z": -0.56,
+        "status": "insufficient"
+      },
+      {
+        "league": "PRIMEIRA",
+        "market": "away_win",
+        "n": 3,
+        "predicted": 0.7914,
+        "actual": 1.0,
+        "z": 0.89,
         "status": "insufficient"
       },
       {
@@ -31144,10 +31485,10 @@
       {
         "league": "PRIMEIRA",
         "market": "over_0.5",
-        "n": 2,
-        "predicted": 0.9443,
+        "n": 3,
+        "predicted": 0.9414,
         "actual": 1.0,
-        "z": 0.34,
+        "z": 0.43,
         "status": "insufficient"
       },
       {
@@ -31162,28 +31503,28 @@
       {
         "league": "SERIEA",
         "market": "away_win",
-        "n": 17,
-        "predicted": 0.6727,
-        "actual": 0.7647,
-        "z": 0.82,
+        "n": 20,
+        "predicted": 0.637,
+        "actual": 0.8,
+        "z": 1.56,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "double_1x",
-        "n": 3,
-        "predicted": 0.8446,
+        "n": 5,
+        "predicted": 0.8654,
         "actual": 1.0,
-        "z": 0.78,
+        "z": 0.91,
         "status": "insufficient"
       },
       {
         "league": "SERIEA",
         "market": "home_1up",
-        "n": 2,
-        "predicted": 0.8497,
-        "actual": 1.0,
-        "z": 0.59,
+        "n": 4,
+        "predicted": 0.8103,
+        "actual": 0.5,
+        "z": -1.59,
         "status": "insufficient"
       },
       {
@@ -31216,10 +31557,10 @@
       {
         "league": "SUPERLIG",
         "market": "away_win",
-        "n": 1,
-        "predicted": 0.6583,
-        "actual": 0.0,
-        "z": -1.39,
+        "n": 3,
+        "predicted": 0.6585,
+        "actual": 0.6667,
+        "z": 0.03,
         "status": "insufficient"
       },
       {
@@ -31234,34 +31575,34 @@
       {
         "league": "SUPERLIG",
         "market": "home_win",
-        "n": 2,
-        "predicted": 0.7843,
-        "actual": 1.0,
-        "z": 0.74,
+        "n": 4,
+        "predicted": 0.77,
+        "actual": 0.5,
+        "z": -1.28,
         "status": "insufficient"
       }
     ]
   },
   "realised": {
     "safe": {
-      "settled": 7,
-      "won": 2,
-      "predicted": 3.09,
-      "profit": -1.92,
-      "roi": -0.2743
+      "settled": 10,
+      "won": 5,
+      "predicted": 4.45,
+      "profit": 2.74,
+      "roi": 0.274
     },
     "medium": {
-      "settled": 5,
-      "won": 1,
-      "predicted": 1.76,
-      "profit": -1.47,
-      "roi": -0.294
+      "settled": 8,
+      "won": 2,
+      "predicted": 2.79,
+      "profit": -0.95,
+      "roi": -0.1188
     },
     "big": {
-      "settled": 6,
+      "settled": 7,
       "won": 0,
-      "predicted": 1.05,
-      "profit": -6,
+      "predicted": 1.19,
+      "profit": -7,
       "roi": -1.0
     }
   }

@@ -310,7 +310,289 @@
      "fair_odds": 1.39,
      "betpawa_odds": null
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     1,
+     3
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": false,
+     "away_win": true,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": null,
+     "away_1up": null,
+     "home_first": null,
+     "away_first": null,
+     "double_1x": false,
+     "double_x2": true,
+     "double_12": true
+    }
+   },
+   "lineups": {
+    "home_lineup": {
+     "formation": "4-3-3",
+     "starters": [
+      {
+       "name": "Marko Ilic",
+       "number": "31",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "James Willy Ndjeungoue",
+       "number": "5",
+       "position": "CD-L",
+       "formation_place": 6
+      },
+      {
+       "name": "Axel Drouhin",
+       "number": "21",
+       "position": "CD-R",
+       "formation_place": 5
+      },
+      {
+       "name": "Matthew Anderson",
+       "number": "3",
+       "position": "LB",
+       "formation_place": 3
+      },
+      {
+       "name": "Mohamed Fofana",
+       "number": "15",
+       "position": "RB",
+       "formation_place": 2
+      },
+      {
+       "name": "Harrison Murray-Campbell",
+       "number": "4",
+       "position": "CM",
+       "formation_place": 4
+      },
+      {
+       "name": "Anthony Philips",
+       "number": "70",
+       "position": "LM",
+       "formation_place": 8
+      },
+      {
+       "name": "Brecht Dejaegere",
+       "number": "19",
+       "position": "RM",
+       "formation_place": 7
+      },
+      {
+       "name": "Goduine Koyalipou",
+       "number": "10",
+       "position": "F",
+       "formation_place": 9
+      },
+      {
+       "name": "Thierry Ambrose",
+       "number": "68",
+       "position": "LF",
+       "formation_place": 11
+      },
+      {
+       "name": "Shandre Campbell",
+       "number": "11",
+       "position": "RF",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Gilles Ruyssen",
+       "number": "22",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Sixtus Ogbuehi",
+       "number": "90",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rudy Kohon",
+       "number": "36",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nayel Mehssatou Sep\u00falveda",
+       "number": "8",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Lenn De Smet",
+       "number": "14",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Boris Lambert",
+       "number": "35",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Jellert Van Landschoot",
+       "number": "18",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Patrik Gunnarsson",
+       "number": "1",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Rok Storman",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    },
+    "away_lineup": {
+     "formation": "3-4-1-2",
+     "starters": [
+      {
+       "name": "Ortwin De Wolf",
+       "number": "1",
+       "position": "G",
+       "formation_place": 1
+      },
+      {
+       "name": "Mike Eerdhuijzen",
+       "number": "44",
+       "position": "CD",
+       "formation_place": 5
+      },
+      {
+       "name": "Jos\u00e9 Mars\u00e0",
+       "number": "3",
+       "position": "CD-L",
+       "formation_place": 4
+      },
+      {
+       "name": "Kobe Corbanie",
+       "number": "20",
+       "position": "CD-R",
+       "formation_place": 6
+      },
+      {
+       "name": "Marco Decherf",
+       "number": "30",
+       "position": "CM-L",
+       "formation_place": 8
+      },
+      {
+       "name": "Fredrik Hammar",
+       "number": "6",
+       "position": "CM-R",
+       "formation_place": 7
+      },
+      {
+       "name": "Myron van Brederode",
+       "number": "9",
+       "position": "AM",
+       "formation_place": 9
+      },
+      {
+       "name": "Th\u00e9rence Koudou",
+       "number": "7",
+       "position": "LM",
+       "formation_place": 3
+      },
+      {
+       "name": "Simion Michez",
+       "number": "23",
+       "position": "RM",
+       "formation_place": 2
+      },
+      {
+       "name": "Malcolm Bendele Lohunanu-Mbasi",
+       "number": "19",
+       "position": "CF-L",
+       "formation_place": 11
+      },
+      {
+       "name": "Benito Raman",
+       "number": "14",
+       "position": "CF-R",
+       "formation_place": 10
+      }
+     ],
+     "subs": [
+      {
+       "name": "Luc Marijnissen",
+       "number": "2",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Dennis Praet",
+       "number": "26",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Gora Diouf",
+       "number": "4",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Bill Antonio",
+       "number": "29",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Nacho Miras",
+       "number": "13",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Bilal Bafdili",
+       "number": "11",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Halil \u00d6zdemir",
+       "number": "21",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Cedric Jan Van Meirvenne",
+       "number": "17",
+       "position": "SUB",
+       "formation_place": 0
+      },
+      {
+       "name": "Massimo Decoene",
+       "number": "39",
+       "position": "SUB",
+       "formation_place": 0
+      }
+     ]
+    }
+   }
   }
  ],
  "slips": {}

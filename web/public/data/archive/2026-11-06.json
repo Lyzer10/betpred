@@ -1,6 +1,6 @@
 {
  "date": "2026-11-06",
- "generated_at": "2026-11-04T19:29:19.191938Z",
+ "generated_at": "2026-11-05T04:02:17.241988Z",
  "fixtures": [
   {
    "league": {
@@ -18,16 +18,16 @@
     "home": {
      "position": 16,
      "teams": 18,
-     "played": 10,
+     "played": 9,
      "won": 2,
      "drawn": 2,
-     "lost": 6,
+     "lost": 5,
      "points": 8,
-     "gd": -8,
+     "gd": -6,
      "gf": 9,
-     "ga": 17,
+     "ga": 15,
      "form": [
-      "L",
+      "D",
       "L",
       "L",
       "L",
@@ -35,22 +35,22 @@
      ]
     },
     "away": {
-     "position": 5,
+     "position": 6,
      "teams": 18,
-     "played": 10,
+     "played": 9,
      "won": 4,
-     "drawn": 5,
+     "drawn": 4,
      "lost": 1,
-     "points": 17,
+     "points": 16,
      "gd": 4,
-     "gf": 15,
-     "ga": 11,
+     "gf": 13,
+     "ga": 9,
      "form": [
+      "W",
       "D",
       "L",
       "W",
-      "W",
-      "D"
+      "W"
      ]
     }
    },
@@ -135,15 +135,15 @@
    "top_scorelines": [
     {
      "score": "1-1",
-     "probability": 0.12951839888696495
+     "probability": 0.12951839890579034
     },
     {
      "score": "1-0",
-     "probability": 0.08730557775277652
+     "probability": 0.08730557778345488
     },
     {
      "score": "2-1",
-     "probability": 0.08466674939350688
+     "probability": 0.08466674938645018
     }
    ],
    "has_market_odds": true,
@@ -311,7 +311,2687 @@
      "betpawa_odds": 1.33
     }
    ]
+  },
+  {
+   "league": {
+    "code": "EREDIV",
+    "name": "Eredivisie",
+    "country": "Netherlands"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "19:00",
+   "kickoff_utc": "2026-11-06T19:00:00Z",
+   "home": "Willem II",
+   "away": "Zwolle",
+   "context": {
+    "home": {
+     "position": 18,
+     "teams": 18,
+     "played": 10,
+     "won": 0,
+     "drawn": 2,
+     "lost": 8,
+     "points": 2,
+     "gd": -22,
+     "gf": 10,
+     "ga": 32,
+     "form": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 15,
+     "teams": 18,
+     "played": 10,
+     "won": 2,
+     "drawn": 2,
+     "lost": 6,
+     "points": 8,
+     "gd": -12,
+     "gf": 11,
+     "ga": 23,
+     "form": [
+      "L",
+      "L",
+      "L",
+      "W",
+      "D"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2025-05-14",
+      "home": "Willem II",
+      "away": "Zwolle",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2024-12-13",
+      "home": "Zwolle",
+      "away": "Willem II",
+      "score": [
+       0,
+       1
+      ]
+     },
+     {
+      "date": "2022-01-14",
+      "home": "Zwolle",
+      "away": "Willem II",
+      "score": [
+       2,
+       0
+      ]
+     },
+     {
+      "date": "2021-08-28",
+      "home": "Willem II",
+      "away": "Zwolle",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2021-01-22",
+      "home": "Willem II",
+      "away": "Zwolle",
+      "score": [
+       1,
+       3
+      ]
+     },
+     {
+      "date": "2020-10-24",
+      "home": "Zwolle",
+      "away": "Willem II",
+      "score": [
+       0,
+       0
+      ]
+     }
+    ],
+    "home_wins": 2,
+    "draws": 1,
+    "away_wins": 3,
+    "avg_goals": 1.83,
+    "over_2_5": 2,
+    "btts": 2,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "double_x2",
+    "label": "Away or draw",
+    "probability": 0.6817,
+    "odds": 1.42,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.47,
+    1.66
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.11224458438869091
+    },
+    {
+     "score": "1-2",
+     "probability": 0.0885187171102788
+    },
+    {
+     "score": "2-1",
+     "probability": 0.0783977007153314
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.3183,
+     "model_probability": 0.3183,
+     "market_probability": 0.3314,
+     "fair_odds": 3.14,
+     "betpawa_odds": 2.96
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2548,
+     "model_probability": 0.2548,
+     "market_probability": 0.2548,
+     "fair_odds": 3.93,
+     "betpawa_odds": 3.85
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.4125,
+     "model_probability": 0.4125,
+     "market_probability": 0.4139,
+     "fair_odds": 2.42,
+     "betpawa_odds": 2.37
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9556,
+     "model_probability": 0.9556,
+     "market_probability": 0.9507,
+     "fair_odds": 1.05,
+     "betpawa_odds": 1.03
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8395,
+     "model_probability": 0.8395,
+     "market_probability": 0.826,
+     "fair_odds": 1.19,
+     "betpawa_odds": 1.18
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.6122,
+     "model_probability": 0.6122,
+     "market_probability": 0.6089,
+     "fair_odds": 1.63,
+     "betpawa_odds": 1.58
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3831,
+     "model_probability": 0.3831,
+     "market_probability": 0.3831,
+     "fair_odds": 2.61,
+     "betpawa_odds": 2.39
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.3911,
+     "model_probability": 0.3911,
+     "market_probability": 0.3911,
+     "fair_odds": 2.56,
+     "betpawa_odds": 2.46
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6169,
+     "model_probability": 0.6169,
+     "market_probability": 0.6169,
+     "fair_odds": 1.62,
+     "betpawa_odds": 1.61
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.6304,
+     "model_probability": 0.6304,
+     "market_probability": 0.6304,
+     "fair_odds": 1.59,
+     "betpawa_odds": 1.5
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.3696,
+     "model_probability": 0.3696,
+     "market_probability": 0.3696,
+     "fair_odds": 2.71,
+     "betpawa_odds": 2.61
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.5311,
+     "model_probability": 0.5311,
+     "market_probability": 0.5311,
+     "fair_odds": 1.88,
+     "betpawa_odds": 1.77
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.6,
+     "model_probability": 0.6,
+     "market_probability": 0.6,
+     "fair_odds": 1.67,
+     "betpawa_odds": 1.59
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.4464,
+     "model_probability": 0.4464,
+     "market_probability": 0.4464,
+     "fair_odds": 2.24,
+     "betpawa_odds": 2.11
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.5044,
+     "model_probability": 0.5044,
+     "market_probability": 0.5044,
+     "fair_odds": 1.98,
+     "betpawa_odds": 1.87
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.5875,
+     "model_probability": 0.5875,
+     "market_probability": 0.5861,
+     "fair_odds": 1.7,
+     "betpawa_odds": 1.61
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.6817,
+     "model_probability": 0.6817,
+     "market_probability": 0.6686,
+     "fair_odds": 1.47,
+     "betpawa_odds": 1.42
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7352,
+     "model_probability": 0.7352,
+     "market_probability": 0.7452,
+     "fair_odds": 1.36,
+     "betpawa_odds": 1.29
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "BUNDES",
+    "name": "Bundesliga",
+    "country": "Germany"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "19:30",
+   "kickoff_utc": "2026-11-06T19:30:00Z",
+   "home": "Hamburg",
+   "away": "M'gladbach",
+   "context": {
+    "home": {
+     "position": 13,
+     "teams": 18,
+     "played": 7,
+     "won": 3,
+     "drawn": 0,
+     "lost": 4,
+     "points": 9,
+     "gd": -10,
+     "gf": 6,
+     "ga": 16,
+     "form": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 18,
+     "teams": 18,
+     "played": 8,
+     "won": 1,
+     "drawn": 1,
+     "lost": 6,
+     "points": 4,
+     "gd": -11,
+     "gf": 11,
+     "ga": 22,
+     "form": [
+      "L",
+      "L",
+      "L",
+      "W",
+      "D"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-01-17",
+      "home": "Hamburg",
+      "away": "M'gladbach",
+      "score": [
+       0,
+       0
+      ]
+     },
+     {
+      "date": "2025-08-24",
+      "home": "M'gladbach",
+      "away": "Hamburg",
+      "score": [
+       0,
+       0
+      ]
+     },
+     {
+      "date": "2018-05-12",
+      "home": "Hamburg",
+      "away": "M'gladbach",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2017-12-15",
+      "home": "M'gladbach",
+      "away": "Hamburg",
+      "score": [
+       3,
+       1
+      ]
+     },
+     {
+      "date": "2017-03-12",
+      "home": "Hamburg",
+      "away": "M'gladbach",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2016-10-15",
+      "home": "M'gladbach",
+      "away": "Hamburg",
+      "score": [
+       0,
+       0
+      ]
+     }
+    ],
+    "home_wins": 2,
+    "draws": 3,
+    "away_wins": 1,
+    "avg_goals": 1.67,
+    "over_2_5": 3,
+    "btts": 3,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "over_1.5",
+    "label": "Over 1.5 goals",
+    "probability": 0.8321,
+    "odds": 1.2,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.56,
+    1.48
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.12428431630588208
+    },
+    {
+     "score": "2-1",
+     "probability": 0.08621251404905579
+    },
+    {
+     "score": "1-2",
+     "probability": 0.0816562197635114
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.3762,
+     "model_probability": 0.3762,
+     "market_probability": 0.3861,
+     "fair_odds": 2.66,
+     "betpawa_odds": 2.54
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2705,
+     "model_probability": 0.2705,
+     "market_probability": 0.2636,
+     "fair_odds": 3.7,
+     "betpawa_odds": 3.72
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.3386,
+     "model_probability": 0.3386,
+     "market_probability": 0.3503,
+     "fair_odds": 2.95,
+     "betpawa_odds": 2.8
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9383,
+     "model_probability": 0.9383,
+     "market_probability": 0.9383,
+     "fair_odds": 1.07,
+     "betpawa_odds": 1.04
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8321,
+     "model_probability": 0.8321,
+     "market_probability": 0.8201,
+     "fair_odds": 1.2,
+     "betpawa_odds": 1.2
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.6042,
+     "model_probability": 0.6042,
+     "market_probability": 0.5833,
+     "fair_odds": 1.65,
+     "betpawa_odds": 1.65
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3963,
+     "model_probability": 0.3963,
+     "market_probability": 0.3612,
+     "fair_odds": 2.52,
+     "betpawa_odds": 2.56
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.3958,
+     "model_probability": 0.3958,
+     "market_probability": 0.4167,
+     "fair_odds": 2.53,
+     "betpawa_odds": 2.31
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6037,
+     "model_probability": 0.6037,
+     "market_probability": 0.6388,
+     "fair_odds": 1.66,
+     "betpawa_odds": 1.54
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.6514,
+     "model_probability": 0.6514,
+     "market_probability": 0.6234,
+     "fair_odds": 1.54,
+     "betpawa_odds": 1.54
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.3486,
+     "model_probability": 0.3486,
+     "market_probability": 0.3766,
+     "fair_odds": 2.87,
+     "betpawa_odds": 2.48
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.5733,
+     "model_probability": 0.5733,
+     "market_probability": 0.5709,
+     "fair_odds": 1.74,
+     "betpawa_odds": 1.65
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.537,
+     "model_probability": 0.537,
+     "market_probability": 0.5404,
+     "fair_odds": 1.86,
+     "betpawa_odds": 1.74
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.4817,
+     "model_probability": 0.4817,
+     "market_probability": 0.4821,
+     "fair_odds": 2.08,
+     "betpawa_odds": 1.94
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.4457,
+     "model_probability": 0.4457,
+     "market_probability": 0.4562,
+     "fair_odds": 2.24,
+     "betpawa_odds": 2.05
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.6605,
+     "model_probability": 0.6605,
+     "market_probability": 0.6497,
+     "fair_odds": 1.51,
+     "betpawa_odds": 1.46
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.6268,
+     "model_probability": 0.6268,
+     "market_probability": 0.6139,
+     "fair_odds": 1.6,
+     "betpawa_odds": 1.54
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.723,
+     "model_probability": 0.723,
+     "market_probability": 0.7364,
+     "fair_odds": 1.38,
+     "betpawa_odds": 1.31
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "SERIEA",
+    "name": "Serie A",
+    "country": "Italy"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "19:45",
+   "kickoff_utc": "2026-11-06T19:45:00Z",
+   "home": "Venezia",
+   "away": "Udinese",
+   "context": {
+    "home": {
+     "position": 20,
+     "teams": 20,
+     "played": 10,
+     "won": 1,
+     "drawn": 0,
+     "lost": 9,
+     "points": 3,
+     "gd": -14,
+     "gf": 6,
+     "ga": 20,
+     "form": [
+      "L",
+      "W",
+      "L",
+      "L",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 19,
+     "teams": 20,
+     "played": 10,
+     "won": 1,
+     "drawn": 2,
+     "lost": 7,
+     "points": 5,
+     "gd": -12,
+     "gf": 11,
+     "ga": 23,
+     "form": [
+      "L",
+      "L",
+      "L",
+      "D",
+      "L"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2025-02-01",
+      "home": "Udinese",
+      "away": "Venezia",
+      "score": [
+       3,
+       2
+      ]
+     },
+     {
+      "date": "2024-10-30",
+      "home": "Venezia",
+      "away": "Udinese",
+      "score": [
+       3,
+       2
+      ]
+     },
+     {
+      "date": "2022-04-10",
+      "home": "Venezia",
+      "away": "Udinese",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2021-08-27",
+      "home": "Udinese",
+      "away": "Venezia",
+      "score": [
+       3,
+       0
+      ]
+     }
+    ],
+    "home_wins": 1,
+    "draws": 0,
+    "away_wins": 3,
+    "avg_goals": 4.0,
+    "over_2_5": 4,
+    "btts": 3,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "over_1.5",
+    "label": "Over 1.5 goals",
+    "probability": 0.7634,
+    "odds": 1.26,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.52,
+    1.27
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.12495006754029152
+    },
+    {
+     "score": "2-1",
+     "probability": 0.09030834631071538
+    },
+    {
+     "score": "1-0",
+     "probability": 0.08721089343333183
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.3938,
+     "model_probability": 0.3938,
+     "market_probability": 0.4228,
+     "fair_odds": 2.54,
+     "betpawa_odds": 2.32
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2841,
+     "model_probability": 0.2841,
+     "market_probability": 0.2725,
+     "fair_odds": 3.52,
+     "betpawa_odds": 3.6
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.3055,
+     "model_probability": 0.3055,
+     "market_probability": 0.3047,
+     "fair_odds": 3.27,
+     "betpawa_odds": 3.22
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9321,
+     "model_probability": 0.9321,
+     "market_probability": 0.9321,
+     "fair_odds": 1.07,
+     "betpawa_odds": 1.05
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7634,
+     "model_probability": 0.7634,
+     "market_probability": 0.7736,
+     "fair_odds": 1.31,
+     "betpawa_odds": 1.26
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.5168,
+     "model_probability": 0.5168,
+     "market_probability": 0.5311,
+     "fair_odds": 1.94,
+     "betpawa_odds": 1.81
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.284,
+     "model_probability": 0.284,
+     "market_probability": 0.3057,
+     "fair_odds": 3.52,
+     "betpawa_odds": 2.96
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.4832,
+     "model_probability": 0.4832,
+     "market_probability": 0.4689,
+     "fair_odds": 2.07,
+     "betpawa_odds": 2.05
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.716,
+     "model_probability": 0.716,
+     "market_probability": 0.6943,
+     "fair_odds": 1.4,
+     "betpawa_odds": 1.42
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.5635,
+     "model_probability": 0.5635,
+     "market_probability": 0.568,
+     "fair_odds": 1.77,
+     "betpawa_odds": 1.66
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.4365,
+     "model_probability": 0.4365,
+     "market_probability": 0.432,
+     "fair_odds": 2.29,
+     "betpawa_odds": 2.23
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.5903,
+     "model_probability": 0.5903,
+     "market_probability": 0.5922,
+     "fair_odds": 1.69,
+     "betpawa_odds": 1.61
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.5131,
+     "model_probability": 0.5131,
+     "market_probability": 0.4913,
+     "fair_odds": 1.95,
+     "betpawa_odds": 1.9
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.4955,
+     "model_probability": 0.4955,
+     "market_probability": 0.5095,
+     "fair_odds": 2.02,
+     "betpawa_odds": 1.86
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.4319,
+     "model_probability": 0.4319,
+     "market_probability": 0.4226,
+     "fair_odds": 2.32,
+     "betpawa_odds": 2.23
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.6949,
+     "model_probability": 0.6949,
+     "market_probability": 0.6953,
+     "fair_odds": 1.44,
+     "betpawa_odds": 1.37
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.6052,
+     "model_probability": 0.6052,
+     "market_probability": 0.5772,
+     "fair_odds": 1.65,
+     "betpawa_odds": 1.63
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7159,
+     "model_probability": 0.7159,
+     "market_probability": 0.7275,
+     "fair_odds": 1.4,
+     "betpawa_odds": 1.32
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "LIGUE1",
+    "name": "Ligue 1",
+    "country": "France"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "19:45",
+   "kickoff_utc": "2026-11-06T19:45:00Z",
+   "home": "Toulouse",
+   "away": "Strasbourg",
+   "context": {
+    "home": {
+     "position": 11,
+     "teams": 18,
+     "played": 8,
+     "won": 2,
+     "drawn": 4,
+     "lost": 2,
+     "points": 10,
+     "gd": 1,
+     "gf": 12,
+     "ga": 11,
+     "form": [
+      "D",
+      "W",
+      "D",
+      "W",
+      "D"
+     ]
+    },
+    "away": {
+     "position": 16,
+     "teams": 18,
+     "played": 8,
+     "won": 2,
+     "drawn": 1,
+     "lost": 5,
+     "points": 7,
+     "gd": -6,
+     "gf": 12,
+     "ga": 18,
+     "form": [
+      "D",
+      "L",
+      "L",
+      "L",
+      "L"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-05-03",
+      "home": "Strasbourg",
+      "away": "Toulouse",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2025-12-06",
+      "home": "Toulouse",
+      "away": "Strasbourg",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2025-03-16",
+      "home": "Strasbourg",
+      "away": "Toulouse",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2025-01-12",
+      "home": "Toulouse",
+      "away": "Strasbourg",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2024-04-07",
+      "home": "Toulouse",
+      "away": "Strasbourg",
+      "score": [
+       0,
+       0
+      ]
+     },
+     {
+      "date": "2023-08-27",
+      "home": "Strasbourg",
+      "away": "Toulouse",
+      "score": [
+       2,
+       0
+      ]
+     }
+    ],
+    "home_wins": 2,
+    "draws": 1,
+    "away_wins": 3,
+    "avg_goals": 2.0,
+    "over_2_5": 3,
+    "btts": 3,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "double_12",
+    "label": "Home or away",
+    "probability": 0.7463,
+    "odds": 1.29,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.74,
+    1.35
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.11434213917901732
+    },
+    {
+     "score": "2-1",
+     "probability": 0.09289040950365357
+    },
+    {
+     "score": "1-2",
+     "probability": 0.07227527527116949
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.4556,
+     "model_probability": 0.4556,
+     "market_probability": 0.4562,
+     "fair_odds": 2.19,
+     "betpawa_odds": 2.15
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2533,
+     "model_probability": 0.2533,
+     "market_probability": 0.2554,
+     "fair_odds": 3.95,
+     "betpawa_odds": 3.84
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.2901,
+     "model_probability": 0.2901,
+     "market_probability": 0.2884,
+     "fair_odds": 3.45,
+     "betpawa_odds": 3.4
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9471,
+     "model_probability": 0.9471,
+     "market_probability": 0.9471,
+     "fair_odds": 1.06,
+     "betpawa_odds": 1.03
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8268,
+     "model_probability": 0.8268,
+     "market_probability": 0.8224,
+     "fair_odds": 1.21,
+     "betpawa_odds": 1.19
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.6004,
+     "model_probability": 0.6004,
+     "market_probability": 0.6,
+     "fair_odds": 1.67,
+     "betpawa_odds": 1.6
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3788,
+     "model_probability": 0.3788,
+     "market_probability": 0.3743,
+     "fair_odds": 2.64,
+     "betpawa_odds": 2.45
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.3996,
+     "model_probability": 0.3996,
+     "market_probability": 0.4,
+     "fair_odds": 2.5,
+     "betpawa_odds": 2.4
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6212,
+     "model_probability": 0.6212,
+     "market_probability": 0.6257,
+     "fair_odds": 1.61,
+     "betpawa_odds": 1.58
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.6192,
+     "model_probability": 0.6192,
+     "market_probability": 0.6196,
+     "fair_odds": 1.61,
+     "betpawa_odds": 1.53
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.3808,
+     "model_probability": 0.3808,
+     "market_probability": 0.3804,
+     "fair_odds": 2.63,
+     "betpawa_odds": 2.51
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.6188,
+     "model_probability": 0.6188,
+     "market_probability": 0.6314,
+     "fair_odds": 1.62,
+     "betpawa_odds": 1.52
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.5054,
+     "model_probability": 0.5054,
+     "market_probability": 0.4904,
+     "fair_odds": 1.98,
+     "betpawa_odds": 1.9
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.4988,
+     "model_probability": 0.4988,
+     "market_probability": 0.5331,
+     "fair_odds": 2.0,
+     "betpawa_odds": 1.77
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.4291,
+     "model_probability": 0.4291,
+     "market_probability": 0.414,
+     "fair_odds": 2.33,
+     "betpawa_odds": 2.27
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.7105,
+     "model_probability": 0.7105,
+     "market_probability": 0.7116,
+     "fair_odds": 1.41,
+     "betpawa_odds": 1.34
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.5434,
+     "model_probability": 0.5434,
+     "market_probability": 0.5438,
+     "fair_odds": 1.84,
+     "betpawa_odds": 1.72
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7463,
+     "model_probability": 0.7463,
+     "market_probability": 0.7446,
+     "fair_odds": 1.34,
+     "betpawa_odds": 1.29
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "JUPILER",
+    "name": "Belgian Pro League",
+    "country": "Belgium"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "19:45",
+   "kickoff_utc": "2026-11-06T19:45:00Z",
+   "home": "Standard",
+   "away": "Beveren",
+   "context": {
+    "home": {
+     "position": 9,
+     "teams": 18,
+     "played": 9,
+     "won": 3,
+     "drawn": 2,
+     "lost": 4,
+     "points": 11,
+     "gd": -1,
+     "gf": 14,
+     "ga": 15,
+     "form": [
+      "W",
+      "L",
+      "L",
+      "L",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 12,
+     "teams": 18,
+     "played": 9,
+     "won": 3,
+     "drawn": 1,
+     "lost": 5,
+     "points": 10,
+     "gd": -6,
+     "gf": 12,
+     "ga": 18,
+     "form": [
+      "W",
+      "W",
+      "L",
+      "L",
+      "D"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2021-01-11",
+      "home": "Standard",
+      "away": "Beveren",
+      "score": [
+       3,
+       1
+      ]
+     },
+     {
+      "date": "2020-08-17",
+      "home": "Beveren",
+      "away": "Standard",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2019-12-21",
+      "home": "Beveren",
+      "away": "Standard",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2019-10-30",
+      "home": "Standard",
+      "away": "Beveren",
+      "score": [
+       2,
+       0
+      ]
+     },
+     {
+      "date": "2019-03-17",
+      "home": "Standard",
+      "away": "Beveren",
+      "score": [
+       4,
+       3
+      ]
+     },
+     {
+      "date": "2018-08-03",
+      "home": "Beveren",
+      "away": "Standard",
+      "score": [
+       0,
+       0
+      ]
+     }
+    ],
+    "home_wins": 4,
+    "draws": 1,
+    "away_wins": 1,
+    "avg_goals": 3.17,
+    "over_2_5": 4,
+    "btts": 4,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "over_1.5",
+    "label": "Over 1.5 goals",
+    "probability": 0.8084,
+    "odds": 1.22,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.8,
+    1.16
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.11413065576166576
+    },
+    {
+     "score": "2-1",
+     "probability": 0.09734324687798888
+    },
+    {
+     "score": "1-0",
+     "probability": 0.08733756611545083
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.5231,
+     "model_probability": 0.5231,
+     "market_probability": 0.5158,
+     "fair_odds": 1.91,
+     "betpawa_odds": 1.9
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2469,
+     "model_probability": 0.2469,
+     "market_probability": 0.2469,
+     "fair_odds": 4.05,
+     "betpawa_odds": 3.97
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.2279,
+     "model_probability": 0.2279,
+     "market_probability": 0.2373,
+     "fair_odds": 4.39,
+     "betpawa_odds": 4.13
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9453,
+     "model_probability": 0.9453,
+     "market_probability": 0.9423,
+     "fair_odds": 1.06,
+     "betpawa_odds": 1.04
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8084,
+     "model_probability": 0.8084,
+     "market_probability": 0.8006,
+     "fair_odds": 1.24,
+     "betpawa_odds": 1.22
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.5777,
+     "model_probability": 0.5777,
+     "market_probability": 0.5689,
+     "fair_odds": 1.73,
+     "betpawa_odds": 1.69
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3438,
+     "model_probability": 0.3438,
+     "market_probability": 0.3438,
+     "fair_odds": 2.91,
+     "betpawa_odds": 2.67
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.4311,
+     "model_probability": 0.4311,
+     "market_probability": 0.4311,
+     "fair_odds": 2.32,
+     "betpawa_odds": 2.23
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6562,
+     "model_probability": 0.6562,
+     "market_probability": 0.6562,
+     "fair_odds": 1.52,
+     "betpawa_odds": 1.5
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.5791,
+     "model_probability": 0.5791,
+     "market_probability": 0.5791,
+     "fair_odds": 1.73,
+     "betpawa_odds": 1.64
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.4209,
+     "model_probability": 0.4209,
+     "market_probability": 0.4209,
+     "fair_odds": 2.38,
+     "betpawa_odds": 2.27
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.6691,
+     "model_probability": 0.6691,
+     "market_probability": 0.6691,
+     "fair_odds": 1.49,
+     "betpawa_odds": 1.45
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.4311,
+     "model_probability": 0.4311,
+     "market_probability": 0.4311,
+     "fair_odds": 2.32,
+     "betpawa_odds": 2.13
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.5732,
+     "model_probability": 0.5732,
+     "market_probability": 0.5732,
+     "fair_odds": 1.74,
+     "betpawa_odds": 1.66
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.3691,
+     "model_probability": 0.3691,
+     "market_probability": 0.3691,
+     "fair_odds": 2.71,
+     "betpawa_odds": 2.53
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.7721,
+     "model_probability": 0.7721,
+     "market_probability": 0.7627,
+     "fair_odds": 1.3,
+     "betpawa_odds": 1.26
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.4769,
+     "model_probability": 0.4769,
+     "market_probability": 0.4842,
+     "fair_odds": 2.1,
+     "betpawa_odds": 1.91
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7549,
+     "model_probability": 0.7549,
+     "market_probability": 0.7531,
+     "fair_odds": 1.32,
+     "betpawa_odds": 1.28
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "EPL",
+    "name": "Premier League",
+    "country": "England"
+   },
+   "mode": "blended",
+   "date": "2026-11-06",
+   "time": "20:00",
+   "kickoff_utc": "2026-11-06T20:00:00Z",
+   "home": "Everton",
+   "away": "Coventry",
+   "context": {
+    "home": {
+     "position": 14,
+     "teams": 20,
+     "played": 8,
+     "won": 2,
+     "drawn": 4,
+     "lost": 2,
+     "points": 10,
+     "gd": -1,
+     "gf": 8,
+     "ga": 9,
+     "form": [
+      "D",
+      "W",
+      "D",
+      "L",
+      "L"
+     ]
+    },
+    "away": {
+     "position": 16,
+     "teams": 20,
+     "played": 9,
+     "won": 3,
+     "drawn": 0,
+     "lost": 6,
+     "points": 9,
+     "gd": -7,
+     "gf": 9,
+     "ga": 16,
+     "form": [
+      "W",
+      "W",
+      "L",
+      "L",
+      "W"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": null,
+   "best_pick": {
+    "market": "double_1x",
+    "label": "Home or draw",
+    "probability": 0.7944,
+    "odds": 1.21,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.49,
+    0.93
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.1340248910799653
+    },
+    {
+     "score": "1-0",
+     "probability": 0.12259157139250354
+    },
+    {
+     "score": "0-0",
+     "probability": 0.1003673870592794
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.5437,
+     "model_probability": 0.506,
+     "market_probability": 0.5562,
+     "fair_odds": 1.84,
+     "betpawa_odds": 1.76
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2502,
+     "model_probability": 0.2885,
+     "market_probability": 0.2382,
+     "fair_odds": 4.0,
+     "betpawa_odds": 4.11
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.2056,
+     "model_probability": 0.2055,
+     "market_probability": 0.2056,
+     "fair_odds": 4.86,
+     "betpawa_odds": 4.76
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9355,
+     "model_probability": 0.9295,
+     "market_probability": 0.9374,
+     "fair_odds": 1.07,
+     "betpawa_odds": 1.04
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7899,
+     "model_probability": 0.7607,
+     "market_probability": 0.799,
+     "fair_odds": 1.27,
+     "betpawa_odds": 1.23
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.541,
+     "model_probability": 0.4865,
+     "market_probability": 0.559,
+     "fair_odds": 1.85,
+     "betpawa_odds": 1.72
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.3203,
+     "model_probability": 0.2738,
+     "market_probability": 0.3367,
+     "fair_odds": 3.12,
+     "betpawa_odds": 2.75
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.459,
+     "model_probability": 0.5135,
+     "market_probability": 0.441,
+     "fair_odds": 2.18,
+     "betpawa_odds": 2.18
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.6797,
+     "model_probability": 0.7262,
+     "market_probability": 0.6633,
+     "fair_odds": 1.47,
+     "betpawa_odds": 1.48
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.5506,
+     "model_probability": 0.5185,
+     "market_probability": 0.5613,
+     "fair_odds": 1.82,
+     "betpawa_odds": 1.71
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.4494,
+     "model_probability": 0.4815,
+     "market_probability": 0.4387,
+     "fair_odds": 2.23,
+     "betpawa_odds": 2.15
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.6906,
+     "model_probability": 0.6745,
+     "market_probability": 0.6958,
+     "fair_odds": 1.45,
+     "betpawa_odds": 1.4
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.3901,
+     "model_probability": 0.3869,
+     "market_probability": 0.3912,
+     "fair_odds": 2.56,
+     "betpawa_odds": 2.3
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.5939,
+     "model_probability": 0.575,
+     "market_probability": 0.6002,
+     "fair_odds": 1.68,
+     "betpawa_odds": 1.59
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.3357,
+     "model_probability": 0.3314,
+     "market_probability": 0.3372,
+     "fair_odds": 2.98,
+     "betpawa_odds": 2.74
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.7944,
+     "model_probability": 0.7945,
+     "market_probability": 0.7944,
+     "fair_odds": 1.26,
+     "betpawa_odds": 1.21
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.4563,
+     "model_probability": 0.494,
+     "market_probability": 0.4438,
+     "fair_odds": 2.19,
+     "betpawa_odds": 2.06
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7498,
+     "model_probability": 0.7115,
+     "market_probability": 0.7618,
+     "fair_odds": 1.33,
+     "betpawa_odds": 1.26
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "LALIGA",
+    "name": "La Liga",
+    "country": "Spain"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "20:00",
+   "kickoff_utc": "2026-11-06T20:00:00Z",
+   "home": "Sevilla",
+   "away": "Alaves",
+   "context": {
+    "home": {
+     "position": 6,
+     "teams": 20,
+     "played": 10,
+     "won": 5,
+     "drawn": 2,
+     "lost": 3,
+     "points": 17,
+     "gd": 0,
+     "gf": 16,
+     "ga": 16,
+     "form": [
+      "W",
+      "L",
+      "D",
+      "L",
+      "W"
+     ]
+    },
+    "away": {
+     "position": 10,
+     "teams": 20,
+     "played": 11,
+     "won": 3,
+     "drawn": 3,
+     "lost": 5,
+     "points": 12,
+     "gd": -2,
+     "gf": 15,
+     "ga": 17,
+     "form": [
+      "D",
+      "L",
+      "L",
+      "D",
+      "L"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-02-14",
+      "home": "Sevilla",
+      "away": "Alaves",
+      "score": [
+       1,
+       1
+      ]
+     },
+     {
+      "date": "2025-09-20",
+      "home": "Alaves",
+      "away": "Sevilla",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2025-04-20",
+      "home": "Sevilla",
+      "away": "Alaves",
+      "score": [
+       1,
+       1
+      ]
+     },
+     {
+      "date": "2024-09-20",
+      "home": "Alaves",
+      "away": "Sevilla",
+      "score": [
+       2,
+       1
+      ]
+     },
+     {
+      "date": "2024-01-12",
+      "home": "Sevilla",
+      "away": "Alaves",
+      "score": [
+       2,
+       3
+      ]
+     },
+     {
+      "date": "2023-08-21",
+      "home": "Alaves",
+      "away": "Sevilla",
+      "score": [
+       4,
+       3
+      ]
+     }
+    ],
+    "home_wins": 1,
+    "draws": 2,
+    "away_wins": 3,
+    "avg_goals": 3.67,
+    "over_2_5": 4,
+    "btts": 6,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "double_1x",
+    "label": "Home or draw",
+    "probability": 0.8004,
+    "odds": 1.25,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.46,
+    0.92
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-0",
+     "probability": 0.13187154252076771
+    },
+    {
+     "score": "1-1",
+     "probability": 0.12716585049905124
+    },
+    {
+     "score": "2-0",
+     "probability": 0.09809222103954729
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.517,
+     "model_probability": 0.517,
+     "market_probability": 0.49,
+     "fair_odds": 1.93,
+     "betpawa_odds": 2.0
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.2854,
+     "model_probability": 0.2854,
+     "market_probability": 0.2784,
+     "fair_odds": 3.5,
+     "betpawa_odds": 3.52
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.2017,
+     "model_probability": 0.2017,
+     "market_probability": 0.2317,
+     "fair_odds": 4.96,
+     "betpawa_odds": 4.23
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.905,
+     "model_probability": 0.905,
+     "market_probability": 0.905,
+     "fair_odds": 1.11,
+     "betpawa_odds": 1.09
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.6961,
+     "model_probability": 0.6961,
+     "market_probability": 0.6904,
+     "fair_odds": 1.44,
+     "betpawa_odds": 1.41
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.4191,
+     "model_probability": 0.4191,
+     "market_probability": 0.4286,
+     "fair_odds": 2.39,
+     "betpawa_odds": 2.24
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.2041,
+     "model_probability": 0.2041,
+     "market_probability": 0.2176,
+     "fair_odds": 4.9,
+     "betpawa_odds": 4.13
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.5809,
+     "model_probability": 0.5809,
+     "market_probability": 0.5714,
+     "fair_odds": 1.72,
+     "betpawa_odds": 1.68
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.7958,
+     "model_probability": 0.7958,
+     "market_probability": 0.7824,
+     "fair_odds": 1.26,
+     "betpawa_odds": 1.25
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.4985,
+     "model_probability": 0.4985,
+     "market_probability": 0.4656,
+     "fair_odds": 2.01,
+     "betpawa_odds": 2.03
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.5015,
+     "model_probability": 0.5015,
+     "market_probability": 0.5344,
+     "fair_odds": 1.99,
+     "betpawa_odds": 1.79
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.6407,
+     "model_probability": 0.6407,
+     "market_probability": 0.6228,
+     "fair_odds": 1.56,
+     "betpawa_odds": 1.55
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.3863,
+     "model_probability": 0.3863,
+     "market_probability": 0.3946,
+     "fair_odds": 2.59,
+     "betpawa_odds": 2.32
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.5596,
+     "model_probability": 0.5596,
+     "market_probability": 0.554,
+     "fair_odds": 1.79,
+     "betpawa_odds": 1.72
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.3363,
+     "model_probability": 0.3363,
+     "market_probability": 0.351,
+     "fair_odds": 2.97,
+     "betpawa_odds": 2.69
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.8004,
+     "model_probability": 0.8004,
+     "market_probability": 0.7683,
+     "fair_odds": 1.25,
+     "betpawa_odds": 1.25
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.483,
+     "model_probability": 0.483,
+     "market_probability": 0.51,
+     "fair_odds": 2.07,
+     "betpawa_odds": 1.82
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7147,
+     "model_probability": 0.7147,
+     "market_probability": 0.7216,
+     "fair_odds": 1.4,
+     "betpawa_odds": 1.33
+    }
+   ]
+  },
+  {
+   "league": {
+    "code": "PRIMEIRA",
+    "name": "Primeira Liga",
+    "country": "Portugal"
+   },
+   "mode": "market",
+   "date": "2026-11-06",
+   "time": "20:45",
+   "kickoff_utc": "2026-11-06T20:45:00Z",
+   "home": "Famalicao",
+   "away": "Arouca",
+   "context": {
+    "home": {
+     "position": 11,
+     "teams": 18,
+     "played": 9,
+     "won": 2,
+     "drawn": 4,
+     "lost": 3,
+     "points": 10,
+     "gd": 3,
+     "gf": 14,
+     "ga": 11,
+     "form": [
+      "D",
+      "D",
+      "W",
+      "L",
+      "W"
+     ]
+    },
+    "away": {
+     "position": 5,
+     "teams": 18,
+     "played": 9,
+     "won": 5,
+     "drawn": 2,
+     "lost": 2,
+     "points": 17,
+     "gd": 5,
+     "gf": 12,
+     "ga": 7,
+     "form": [
+      "D",
+      "L",
+      "D",
+      "W",
+      "W"
+     ]
+    }
+   },
+   "odds_source": "betpawa",
+   "head_to_head": {
+    "meetings": [
+     {
+      "date": "2026-03-06",
+      "home": "Famalicao",
+      "away": "Arouca",
+      "score": [
+       1,
+       0
+      ]
+     },
+     {
+      "date": "2025-10-05",
+      "home": "Arouca",
+      "away": "Famalicao",
+      "score": [
+       1,
+       1
+      ]
+     },
+     {
+      "date": "2025-04-05",
+      "home": "Arouca",
+      "away": "Famalicao",
+      "score": [
+       1,
+       2
+      ]
+     },
+     {
+      "date": "2024-11-09",
+      "home": "Famalicao",
+      "away": "Arouca",
+      "score": [
+       0,
+       0
+      ]
+     },
+     {
+      "date": "2024-02-23",
+      "home": "Arouca",
+      "away": "Famalicao",
+      "score": [
+       3,
+       2
+      ]
+     },
+     {
+      "date": "2023-09-22",
+      "home": "Famalicao",
+      "away": "Arouca",
+      "score": [
+       1,
+       0
+      ]
+     }
+    ],
+    "home_wins": 3,
+    "draws": 2,
+    "away_wins": 1,
+    "avg_goals": 2.0,
+    "over_2_5": 2,
+    "btts": 3,
+    "since": "2014/15"
+   },
+   "best_pick": {
+    "market": "double_1x",
+    "label": "Home or draw",
+    "probability": 0.7454,
+    "odds": 1.32,
+    "odds_source": "betpawa"
+   },
+   "day": "2026-11-06",
+   "expected_goals": [
+    1.49,
+    1.11
+   ],
+   "top_scorelines": [
+    {
+     "score": "1-1",
+     "probability": 0.12972471507066152
+    },
+    {
+     "score": "1-0",
+     "probability": 0.10431569614472012
+    },
+    {
+     "score": "2-1",
+     "probability": 0.09138412343883164
+    }
+   ],
+   "has_market_odds": true,
+   "markets": [
+    {
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.4659,
+     "model_probability": 0.4659,
+     "market_probability": 0.4498,
+     "fair_odds": 2.15,
+     "betpawa_odds": 2.18
+    },
+    {
+     "market": "draw",
+     "label": "Draw",
+     "probability": 0.277,
+     "model_probability": 0.277,
+     "market_probability": 0.277,
+     "fair_odds": 3.61,
+     "betpawa_odds": 3.54
+    },
+    {
+     "market": "away_win",
+     "label": "Away win",
+     "probability": 0.2546,
+     "model_probability": 0.2546,
+     "market_probability": 0.2732,
+     "fair_odds": 3.93,
+     "betpawa_odds": 3.59
+    },
+    {
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9346,
+     "model_probability": 0.9346,
+     "market_probability": 0.9186,
+     "fair_odds": 1.07,
+     "betpawa_odds": 1.07
+    },
+    {
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.7314,
+     "model_probability": 0.7314,
+     "market_probability": 0.7381,
+     "fair_odds": 1.37,
+     "betpawa_odds": 1.32
+    },
+    {
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.4905,
+     "model_probability": 0.4905,
+     "market_probability": 0.4819,
+     "fair_odds": 2.04,
+     "betpawa_odds": 2.0
+    },
+    {
+     "market": "over_3.5",
+     "label": "Over 3.5 goals",
+     "probability": 0.2627,
+     "model_probability": 0.2627,
+     "market_probability": 0.2627,
+     "fair_odds": 3.81,
+     "betpawa_odds": 3.46
+    },
+    {
+     "market": "under_2.5",
+     "label": "Under 2.5 goals",
+     "probability": 0.5181,
+     "model_probability": 0.5181,
+     "market_probability": 0.5181,
+     "fair_odds": 1.93,
+     "betpawa_odds": 1.86
+    },
+    {
+     "market": "under_3.5",
+     "label": "Under 3.5 goals",
+     "probability": 0.7373,
+     "model_probability": 0.7373,
+     "market_probability": 0.7373,
+     "fair_odds": 1.36,
+     "betpawa_odds": 1.33
+    },
+    {
+     "market": "btts_yes",
+     "label": "Both teams score",
+     "probability": 0.525,
+     "model_probability": 0.525,
+     "market_probability": 0.525,
+     "fair_odds": 1.9,
+     "betpawa_odds": 1.81
+    },
+    {
+     "market": "btts_no",
+     "label": "Both teams score: No",
+     "probability": 0.475,
+     "model_probability": 0.475,
+     "market_probability": 0.475,
+     "fair_odds": 2.11,
+     "betpawa_odds": 2.01
+    },
+    {
+     "market": "home_1up",
+     "label": "Home 1Up",
+     "probability": 0.6029,
+     "model_probability": 0.6029,
+     "market_probability": 0.6029,
+     "fair_odds": 1.66,
+     "betpawa_odds": 1.58
+    },
+    {
+     "market": "away_1up",
+     "label": "Away 1Up",
+     "probability": 0.4491,
+     "model_probability": 0.4491,
+     "market_probability": 0.4491,
+     "fair_odds": 2.23,
+     "betpawa_odds": 2.06
+    },
+    {
+     "market": "home_first",
+     "label": "Home scores first",
+     "probability": 0.5265,
+     "model_probability": 0.5265,
+     "market_probability": 0.5265,
+     "fair_odds": 1.9,
+     "betpawa_odds": 1.8
+    },
+    {
+     "market": "away_first",
+     "label": "Away scores first",
+     "probability": 0.3921,
+     "model_probability": 0.3921,
+     "market_probability": 0.3921,
+     "fair_odds": 2.55,
+     "betpawa_odds": 2.4
+    },
+    {
+     "market": "double_1x",
+     "label": "Home or draw",
+     "probability": 0.7454,
+     "model_probability": 0.7454,
+     "market_probability": 0.7268,
+     "fair_odds": 1.34,
+     "betpawa_odds": 1.32
+    },
+    {
+     "market": "double_x2",
+     "label": "Away or draw",
+     "probability": 0.5341,
+     "model_probability": 0.5341,
+     "market_probability": 0.5502,
+     "fair_odds": 1.87,
+     "betpawa_odds": 1.7
+    },
+    {
+     "market": "double_12",
+     "label": "Home or away",
+     "probability": 0.7217,
+     "model_probability": 0.7217,
+     "market_probability": 0.723,
+     "fair_odds": 1.39,
+     "betpawa_odds": 1.33
+    }
+   ]
   }
  ],
- "slips": {}
+ "slips": {
+  "safe": {
+   "total_odds": 2.53,
+   "win_probability": 0.4057,
+   "odds_source": "betpawa",
+   "expected_value": 0.0244,
+   "kelly": 0.016,
+   "price_warning": false,
+   "flexi": [
+    {
+     "min_correct": 2,
+     "probability": 0.8905
+    }
+   ],
+   "legs": [
+    {
+     "date": "2026-11-06",
+     "time": "20:00",
+     "kickoff_utc": "2026-11-06T20:00:00Z",
+     "league": {
+      "code": "LALIGA",
+      "name": "La Liga",
+      "country": "Spain"
+     },
+     "home": "Sevilla",
+     "away": "Alaves",
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.517,
+     "estimated_odds": 1.91,
+     "betpawa_odds": 2.0,
+     "fair_odds": 1.93,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "19:00",
+     "kickoff_utc": "2026-11-06T19:00:00Z",
+     "league": {
+      "code": "EREDIV",
+      "name": "Eredivisie",
+      "country": "Netherlands"
+     },
+     "home": "Willem II",
+     "away": "Zwolle",
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8395,
+     "estimated_odds": 1.13,
+     "betpawa_odds": 1.18,
+     "fair_odds": 1.19,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "20:45",
+     "kickoff_utc": "2026-11-06T20:45:00Z",
+     "league": {
+      "code": "PRIMEIRA",
+      "name": "Primeira Liga",
+      "country": "Portugal"
+     },
+     "home": "Famalicao",
+     "away": "Arouca",
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9346,
+     "estimated_odds": 1.02,
+     "betpawa_odds": 1.07,
+     "fair_odds": 1.07,
+     "price_warning": false,
+     "won": null
+    }
+   ],
+   "locked": false,
+   "final": false,
+   "status": "pending"
+  },
+  "medium": {
+   "total_odds": 3.53,
+   "win_probability": 0.292,
+   "odds_source": "betpawa",
+   "expected_value": 0.0311,
+   "kelly": 0.0123,
+   "price_warning": false,
+   "flexi": [
+    {
+     "min_correct": 2,
+     "probability": 0.7764
+    }
+   ],
+   "legs": [
+    {
+     "date": "2026-11-06",
+     "time": "20:00",
+     "kickoff_utc": "2026-11-06T20:00:00Z",
+     "league": {
+      "code": "LALIGA",
+      "name": "La Liga",
+      "country": "Spain"
+     },
+     "home": "Sevilla",
+     "away": "Alaves",
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.517,
+     "estimated_odds": 1.91,
+     "betpawa_odds": 2.0,
+     "fair_odds": 1.93,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "19:30",
+     "kickoff_utc": "2026-11-06T19:30:00Z",
+     "league": {
+      "code": "BUNDES",
+      "name": "Bundesliga",
+      "country": "Germany"
+     },
+     "home": "Hamburg",
+     "away": "M'gladbach",
+     "market": "over_2.5",
+     "label": "Over 2.5 goals",
+     "probability": 0.6042,
+     "estimated_odds": 1.6,
+     "betpawa_odds": 1.65,
+     "fair_odds": 1.65,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "20:45",
+     "kickoff_utc": "2026-11-06T20:45:00Z",
+     "league": {
+      "code": "PRIMEIRA",
+      "name": "Primeira Liga",
+      "country": "Portugal"
+     },
+     "home": "Famalicao",
+     "away": "Arouca",
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9346,
+     "estimated_odds": 1.02,
+     "betpawa_odds": 1.07,
+     "fair_odds": 1.07,
+     "price_warning": false,
+     "won": null
+    }
+   ],
+   "locked": false,
+   "final": false,
+   "status": "pending"
+  },
+  "big": {
+   "total_odds": 8.01,
+   "win_probability": 0.124,
+   "odds_source": "betpawa",
+   "expected_value": -0.0066,
+   "kelly": 0.0,
+   "price_warning": false,
+   "flexi": [
+    {
+     "min_correct": 4,
+     "probability": 0.5056
+    },
+    {
+     "min_correct": 3,
+     "probability": 0.8647
+    }
+   ],
+   "legs": [
+    {
+     "date": "2026-11-06",
+     "time": "20:00",
+     "kickoff_utc": "2026-11-06T20:00:00Z",
+     "league": {
+      "code": "LALIGA",
+      "name": "La Liga",
+      "country": "Spain"
+     },
+     "home": "Sevilla",
+     "away": "Alaves",
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.517,
+     "estimated_odds": 1.91,
+     "betpawa_odds": 2.0,
+     "fair_odds": 1.93,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "19:00",
+     "kickoff_utc": "2026-11-06T19:00:00Z",
+     "league": {
+      "code": "EREDIV",
+      "name": "Eredivisie",
+      "country": "Netherlands"
+     },
+     "home": "Willem II",
+     "away": "Zwolle",
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8395,
+     "estimated_odds": 1.13,
+     "betpawa_odds": 1.18,
+     "fair_odds": 1.19,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "19:45",
+     "kickoff_utc": "2026-11-06T19:45:00Z",
+     "league": {
+      "code": "JUPILER",
+      "name": "Belgian Pro League",
+      "country": "Belgium"
+     },
+     "home": "Standard",
+     "away": "Beveren",
+     "market": "over_1.5",
+     "label": "Over 1.5 goals",
+     "probability": 0.8084,
+     "estimated_odds": 1.17,
+     "betpawa_odds": 1.22,
+     "fair_odds": 1.24,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "20:45",
+     "kickoff_utc": "2026-11-06T20:45:00Z",
+     "league": {
+      "code": "PRIMEIRA",
+      "name": "Primeira Liga",
+      "country": "Portugal"
+     },
+     "home": "Famalicao",
+     "away": "Arouca",
+     "market": "over_0.5",
+     "label": "Over 0.5 goals",
+     "probability": 0.9346,
+     "estimated_odds": 1.02,
+     "betpawa_odds": 1.07,
+     "fair_odds": 1.07,
+     "price_warning": false,
+     "won": null
+    },
+    {
+     "date": "2026-11-06",
+     "time": "17:00",
+     "kickoff_utc": "2026-11-06T17:00:00Z",
+     "league": {
+      "code": "SUPERLIG",
+      "name": "Super Lig",
+      "country": "Turkey"
+     },
+     "home": "Gaziantep",
+     "away": "Kasimpasa",
+     "market": "home_win",
+     "label": "Home win",
+     "probability": 0.3782,
+     "estimated_odds": 2.48,
+     "betpawa_odds": 2.6,
+     "fair_odds": 2.64,
+     "price_warning": false,
+     "won": null
+    }
+   ],
+   "locked": false,
+   "final": false,
+   "status": "pending"
+  }
+ }
 }

@@ -2421,17 +2421,17 @@
   {
     "round": "2026-11-06",
     "tier": "safe",
-    "generated_at": "2026-11-05T04:02:17.241988Z",
-    "total_odds": 2.53,
-    "win_probability": 0.4057,
+    "generated_at": "2026-11-05T10:02:11.391615Z",
+    "total_odds": 2.55,
+    "win_probability": 0.403,
     "odds_source": "betpawa",
-    "expected_value": 0.0244,
-    "kelly": 0.016,
+    "expected_value": 0.0262,
+    "kelly": 0.0169,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.8905
+        "probability": 0.8877
       }
     ],
     "legs": [
@@ -2468,10 +2468,10 @@
         "away": "Zwolle",
         "market": "over_1.5",
         "label": "Over 1.5 goals",
-        "probability": 0.8395,
-        "estimated_odds": 1.13,
-        "betpawa_odds": 1.18,
-        "fair_odds": 1.19,
+        "probability": 0.8365,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.2,
         "price_warning": false,
         "won": null
       },
@@ -2488,7 +2488,7 @@
         "away": "Arouca",
         "market": "over_0.5",
         "label": "Over 0.5 goals",
-        "probability": 0.9346,
+        "probability": 0.9317,
         "estimated_odds": 1.02,
         "betpawa_odds": 1.07,
         "fair_odds": 1.07,
@@ -2502,17 +2502,17 @@
   {
     "round": "2026-11-06",
     "tier": "medium",
-    "generated_at": "2026-11-05T04:02:17.241988Z",
+    "generated_at": "2026-11-05T10:02:11.391615Z",
     "total_odds": 3.53,
-    "win_probability": 0.292,
+    "win_probability": 0.2911,
     "odds_source": "betpawa",
-    "expected_value": 0.0311,
-    "kelly": 0.0123,
+    "expected_value": 0.0278,
+    "kelly": 0.011,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.7764
+        "probability": 0.775
       }
     ],
     "legs": [
@@ -2569,7 +2569,7 @@
         "away": "Arouca",
         "market": "over_0.5",
         "label": "Over 0.5 goals",
-        "probability": 0.9346,
+        "probability": 0.9317,
         "estimated_odds": 1.02,
         "betpawa_odds": 1.07,
         "fair_odds": 1.07,
@@ -2583,21 +2583,21 @@
   {
     "round": "2026-11-06",
     "tier": "big",
-    "generated_at": "2026-11-05T04:02:17.241988Z",
-    "total_odds": 8.01,
-    "win_probability": 0.124,
+    "generated_at": "2026-11-05T10:02:11.391615Z",
+    "total_odds": 8.17,
+    "win_probability": 0.1235,
     "odds_source": "betpawa",
-    "expected_value": -0.0066,
-    "kelly": 0.0,
+    "expected_value": 0.0093,
+    "kelly": 0.0013,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 4,
-        "probability": 0.5056
+        "min_correct": 3,
+        "probability": 0.5515
       },
       {
-        "min_correct": 3,
-        "probability": 0.8647
+        "min_correct": 2,
+        "probability": 0.9204
       }
     ],
     "legs": [
@@ -2623,6 +2623,26 @@
       },
       {
         "date": "2026-11-06",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-06T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Venezia",
+        "away": "Udinese",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.3064,
+        "estimated_odds": 3.06,
+        "betpawa_odds": 3.21,
+        "fair_odds": 3.26,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-06",
         "time": "19:00",
         "kickoff_utc": "2026-11-06T19:00:00Z",
         "league": {
@@ -2634,30 +2654,10 @@
         "away": "Zwolle",
         "market": "over_1.5",
         "label": "Over 1.5 goals",
-        "probability": 0.8395,
-        "estimated_odds": 1.13,
-        "betpawa_odds": 1.18,
-        "fair_odds": 1.19,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-06",
-        "time": "19:45",
-        "kickoff_utc": "2026-11-06T19:45:00Z",
-        "league": {
-          "code": "JUPILER",
-          "name": "Belgian Pro League",
-          "country": "Belgium"
-        },
-        "home": "Standard",
-        "away": "Beveren",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8084,
-        "estimated_odds": 1.17,
-        "betpawa_odds": 1.22,
-        "fair_odds": 1.24,
+        "probability": 0.8365,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.2,
         "price_warning": false,
         "won": null
       },
@@ -2674,30 +2674,10 @@
         "away": "Arouca",
         "market": "over_0.5",
         "label": "Over 0.5 goals",
-        "probability": 0.9346,
+        "probability": 0.9317,
         "estimated_odds": 1.02,
         "betpawa_odds": 1.07,
         "fair_odds": 1.07,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-06",
-        "time": "17:00",
-        "kickoff_utc": "2026-11-06T17:00:00Z",
-        "league": {
-          "code": "SUPERLIG",
-          "name": "Super Lig",
-          "country": "Turkey"
-        },
-        "home": "Gaziantep",
-        "away": "Kasimpasa",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.3782,
-        "estimated_odds": 2.48,
-        "betpawa_odds": 2.6,
-        "fair_odds": 2.64,
         "price_warning": false,
         "won": null
       }

@@ -2421,17 +2421,17 @@
   {
     "round": "2026-11-06",
     "tier": "safe",
-    "generated_at": "2026-11-05T10:02:11.391615Z",
-    "total_odds": 2.55,
-    "win_probability": 0.403,
+    "generated_at": "2026-11-05T15:02:21.185474Z",
+    "total_odds": 2.52,
+    "win_probability": 0.4007,
     "odds_source": "betpawa",
-    "expected_value": 0.0262,
-    "kelly": 0.0169,
+    "expected_value": 0.0098,
+    "kelly": 0.0064,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.8877
+        "probability": 0.8854
       }
     ],
     "legs": [
@@ -2457,41 +2457,41 @@
       },
       {
         "date": "2026-11-06",
-        "time": "19:00",
-        "kickoff_utc": "2026-11-06T19:00:00Z",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-06T19:45:00Z",
         "league": {
-          "code": "EREDIV",
-          "name": "Eredivisie",
-          "country": "Netherlands"
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
         },
-        "home": "Willem II",
-        "away": "Zwolle",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8365,
-        "estimated_odds": 1.14,
-        "betpawa_odds": 1.19,
-        "fair_odds": 1.2,
+        "home": "Venezia",
+        "away": "Udinese",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9314,
+        "estimated_odds": 1.0,
+        "betpawa_odds": 1.05,
+        "fair_odds": 1.07,
         "price_warning": false,
         "won": null
       },
       {
         "date": "2026-11-06",
-        "time": "20:45",
-        "kickoff_utc": "2026-11-06T20:45:00Z",
+        "time": "19:30",
+        "kickoff_utc": "2026-11-06T19:30:00Z",
         "league": {
-          "code": "PRIMEIRA",
-          "name": "Primeira Liga",
-          "country": "Portugal"
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
         },
-        "home": "Famalicao",
-        "away": "Arouca",
-        "market": "over_0.5",
-        "label": "Over 0.5 goals",
-        "probability": 0.9317,
-        "estimated_odds": 1.02,
-        "betpawa_odds": 1.07,
-        "fair_odds": 1.07,
+        "home": "Hamburg",
+        "away": "M'gladbach",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8321,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.2,
+        "fair_odds": 1.2,
         "price_warning": false,
         "won": null
       }
@@ -2502,17 +2502,17 @@
   {
     "round": "2026-11-06",
     "tier": "medium",
-    "generated_at": "2026-11-05T10:02:11.391615Z",
+    "generated_at": "2026-11-05T15:02:21.185474Z",
     "total_odds": 3.53,
-    "win_probability": 0.2911,
+    "win_probability": 0.2891,
     "odds_source": "betpawa",
-    "expected_value": 0.0278,
-    "kelly": 0.011,
+    "expected_value": 0.0207,
+    "kelly": 0.0082,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.775
+        "probability": 0.7718
       }
     ],
     "legs": [
@@ -2569,10 +2569,10 @@
         "away": "Arouca",
         "market": "over_0.5",
         "label": "Over 0.5 goals",
-        "probability": 0.9317,
+        "probability": 0.9253,
         "estimated_odds": 1.02,
         "betpawa_odds": 1.07,
-        "fair_odds": 1.07,
+        "fair_odds": 1.08,
         "price_warning": false,
         "won": null
       }
@@ -2583,21 +2583,21 @@
   {
     "round": "2026-11-06",
     "tier": "big",
-    "generated_at": "2026-11-05T10:02:11.391615Z",
+    "generated_at": "2026-11-05T15:02:21.185474Z",
     "total_odds": 8.17,
-    "win_probability": 0.1235,
+    "win_probability": 0.1226,
     "odds_source": "betpawa",
-    "expected_value": 0.0093,
-    "kelly": 0.0013,
+    "expected_value": 0.0024,
+    "kelly": 0.0003,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 3,
-        "probability": 0.5515
+        "probability": 0.5486
       },
       {
         "min_correct": 2,
-        "probability": 0.9204
+        "probability": 0.9181
       }
     ],
     "legs": [
@@ -2674,10 +2674,297 @@
         "away": "Arouca",
         "market": "over_0.5",
         "label": "Over 0.5 goals",
-        "probability": 0.9317,
+        "probability": 0.9253,
         "estimated_odds": 1.02,
         "betpawa_odds": 1.07,
-        "fair_odds": 1.07,
+        "fair_odds": 1.08,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-07",
+    "tier": "safe",
+    "generated_at": "2026-11-05T15:02:21.185474Z",
+    "total_odds": 2.52,
+    "win_probability": 0.4089,
+    "odds_source": "betpawa",
+    "expected_value": 0.0287,
+    "kelly": 0.0189,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.9016
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-07",
+        "time": "14:30",
+        "kickoff_utc": "2026-11-07T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Mainz",
+        "away": "Bayern Munich",
+        "market": "double_x2",
+        "label": "Away or draw",
+        "probability": 0.8884,
+        "estimated_odds": 1.08,
+        "betpawa_odds": 1.12,
+        "fair_odds": 1.13,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "14:30",
+        "kickoff_utc": "2026-11-07T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "RB Leipzig",
+        "away": "Augsburg",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.9135,
+        "estimated_odds": 1.02,
+        "betpawa_odds": 1.08,
+        "fair_odds": 1.09,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "10:30",
+        "kickoff_utc": "2026-11-07T10:30:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Eyupspor",
+        "away": "Kocaelispor",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.5038,
+        "estimated_odds": 1.98,
+        "betpawa_odds": 2.08,
+        "fair_odds": 1.98,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-07",
+    "tier": "medium",
+    "generated_at": "2026-11-05T15:02:21.185474Z",
+    "total_odds": 3.53,
+    "win_probability": 0.3086,
+    "odds_source": "betpawa",
+    "expected_value": 0.09,
+    "kelly": 0.0356,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 2,
+        "probability": 0.867
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-07",
+        "time": "12:30",
+        "kickoff_utc": "2026-11-07T12:30:00Z",
+        "league": {
+          "code": "EPL",
+          "name": "Premier League",
+          "country": "England"
+        },
+        "home": "Leeds",
+        "away": "Tottenham",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.3914,
+        "estimated_odds": 2.67,
+        "betpawa_odds": 2.8,
+        "fair_odds": 2.56,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "14:00",
+        "kickoff_utc": "2026-11-07T14:00:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Torino",
+        "away": "Lecce",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9247,
+        "estimated_odds": 1.01,
+        "betpawa_odds": 1.06,
+        "fair_odds": 1.08,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "14:30",
+        "kickoff_utc": "2026-11-07T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Mainz",
+        "away": "Bayern Munich",
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.8527,
+        "estimated_odds": 1.12,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.17,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-07",
+    "tier": "big",
+    "generated_at": "2026-11-05T15:02:21.185474Z",
+    "total_odds": 8.01,
+    "win_probability": 0.1399,
+    "odds_source": "betpawa",
+    "expected_value": 0.1208,
+    "kelly": 0.0172,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 4,
+        "probability": 0.5465
+      },
+      {
+        "min_correct": 3,
+        "probability": 0.8964
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-07",
+        "time": "12:30",
+        "kickoff_utc": "2026-11-07T12:30:00Z",
+        "league": {
+          "code": "EPL",
+          "name": "Premier League",
+          "country": "England"
+        },
+        "home": "Leeds",
+        "away": "Tottenham",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.3914,
+        "estimated_odds": 2.67,
+        "betpawa_odds": 2.8,
+        "fair_odds": 2.56,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "14:30",
+        "kickoff_utc": "2026-11-07T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Mainz",
+        "away": "Bayern Munich",
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.8527,
+        "estimated_odds": 1.12,
+        "betpawa_odds": 1.19,
+        "fair_odds": 1.17,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "14:30",
+        "kickoff_utc": "2026-11-07T14:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "RB Leipzig",
+        "away": "Augsburg",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.9135,
+        "estimated_odds": 1.02,
+        "betpawa_odds": 1.08,
+        "fair_odds": 1.09,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "10:30",
+        "kickoff_utc": "2026-11-07T10:30:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Eyupspor",
+        "away": "Kocaelispor",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.5038,
+        "estimated_odds": 1.98,
+        "betpawa_odds": 2.08,
+        "fair_odds": 1.98,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-07",
+        "time": "13:00",
+        "kickoff_utc": "2026-11-07T13:00:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Samsunspor",
+        "away": "Konyaspor",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9111,
+        "estimated_odds": 1.02,
+        "betpawa_odds": 1.07,
+        "fair_odds": 1.1,
         "price_warning": false,
         "won": null
       }

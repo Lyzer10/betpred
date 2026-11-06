@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-06T19:32:48.231116Z",
+ "generated_at": "2026-11-06T19:46:54.542705Z",
  "matches": [
   {
    "league": "EPL",
@@ -571,64 +571,64 @@
       "formation_place": 1
      },
      {
+      "name": "Matías Moreno",
+      "number": "2",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
       "name": "Juan Jesus",
       "number": "15",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 4
      },
      {
       "name": "Redouane Halhal",
       "number": "25",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 6
-     },
-     {
-      "name": "Matías Moreno",
-      "number": "2",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Pasquale Mazzocchi",
-      "number": "70",
-      "position": "M",
-      "formation_place": 3
-     },
-     {
-      "name": "Simon Sohm",
-      "number": "19",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Enrique Perez",
-      "number": "71",
-      "position": "M",
-      "formation_place": 7
      },
      {
       "name": "Toma Basic",
       "number": "26",
-      "position": "M",
+      "position": "CM-L",
       "formation_place": 8
+     },
+     {
+      "name": "Enrique Perez",
+      "number": "71",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Simon Sohm",
+      "number": "19",
+      "position": "AM",
+      "formation_place": 11
+     },
+     {
+      "name": "Pasquale Mazzocchi",
+      "number": "70",
+      "position": "LM",
+      "formation_place": 3
      },
      {
       "name": "Antoine Hainaut",
       "number": "18",
-      "position": "M",
+      "position": "RM",
       "formation_place": 2
-     },
-     {
-      "name": "John Yeboah",
-      "number": "10",
-      "position": "F",
-      "formation_place": 10
      },
      {
       "name": "Akor Adams",
       "number": "45",
-      "position": "F",
+      "position": "CF-L",
       "formation_place": 9
+     },
+     {
+      "name": "John Yeboah",
+      "number": "10",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -1024,8 +1024,8 @@
       "formation_place": 1
      },
      {
-      "name": "Kou Itakura",
-      "number": "6",
+      "name": "Philipp Sander",
+      "number": "16",
       "position": "CD",
       "formation_place": 5
      },
@@ -1036,8 +1036,8 @@
       "formation_place": 4
      },
      {
-      "name": "Philipp Sander",
-      "number": "16",
+      "name": "Kou Itakura",
+      "number": "6",
       "position": "CD-R",
       "formation_place": 6
      },
@@ -1153,68 +1153,68 @@
      {
       "name": "Guillaume Restes",
       "number": "16",
-      "position": "SUB",
+      "position": "G",
       "formation_place": 1
      },
      {
-      "name": "Christ Tapé",
-      "number": "12",
-      "position": "SUB",
-      "formation_place": 3
-     },
-     {
-      "name": "Thomas Jørgensen",
-      "number": "8",
-      "position": "SUB",
-      "formation_place": 7
+      "name": "Rasmus Nicolaisen",
+      "number": "2",
+      "position": "CD-L",
+      "formation_place": 6
      },
      {
       "name": "Mark McKenzie",
       "number": "3",
-      "position": "SUB",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Christ Tapé",
+      "number": "12",
+      "position": "LB",
+      "formation_place": 3
      },
      {
       "name": "Ismail Diallo",
       "number": "94",
-      "position": "SUB",
+      "position": "RB",
       "formation_place": 2
      },
      {
       "name": "Cristian Cásseres Jr.",
       "number": "23",
-      "position": "SUB",
+      "position": "CM-L",
       "formation_place": 8
-     },
-     {
-      "name": "Santiago Hidalgo",
-      "number": "9",
-      "position": "SUB",
-      "formation_place": 10
-     },
-     {
-      "name": "Casper Tengstedt",
-      "number": "20",
-      "position": "SUB",
-      "formation_place": 9
-     },
-     {
-      "name": "Rasmus Nicolaisen",
-      "number": "2",
-      "position": "SUB",
-      "formation_place": 6
-     },
-     {
-      "name": "Sion Oppong",
-      "number": "11",
-      "position": "SUB",
-      "formation_place": 11
      },
      {
       "name": "Niko Sigur",
       "number": "14",
-      "position": "SUB",
+      "position": "CM-R",
       "formation_place": 4
+     },
+     {
+      "name": "Sion Oppong",
+      "number": "11",
+      "position": "LM",
+      "formation_place": 11
+     },
+     {
+      "name": "Thomas Jørgensen",
+      "number": "8",
+      "position": "RM",
+      "formation_place": 7
+     },
+     {
+      "name": "Casper Tengstedt",
+      "number": "20",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Santiago Hidalgo",
+      "number": "9",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -1286,50 +1286,44 @@
      {
       "name": "Karim Coulibaly",
       "number": "31",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
-     },
-     {
-      "name": "Lucas Høgsberg",
-      "number": "24",
-      "position": "D",
-      "formation_place": 2
      },
      {
       "name": "Ismael Doukoure",
       "number": "6",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
      },
      {
       "name": "Oso",
       "number": "36",
-      "position": "D",
+      "position": "LB",
       "formation_place": 3
      },
      {
-      "name": "Dário Essugo",
-      "number": "14",
-      "position": "M",
-      "formation_place": 7
-     },
-     {
-      "name": "Giovanni Reyna",
-      "number": "10",
-      "position": "M",
-      "formation_place": 8
+      "name": "Lucas Høgsberg",
+      "number": "24",
+      "position": "RB",
+      "formation_place": 2
      },
      {
       "name": "Samir El Mourabet",
       "number": "29",
-      "position": "M",
+      "position": "CM",
       "formation_place": 4
      },
      {
-      "name": "Gessime Yassine",
-      "number": "80",
-      "position": "F",
-      "formation_place": 10
+      "name": "Giovanni Reyna",
+      "number": "10",
+      "position": "LM",
+      "formation_place": 8
+     },
+     {
+      "name": "Dário Essugo",
+      "number": "14",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Conrad Harder",
@@ -1340,8 +1334,14 @@
      {
       "name": "Martial Godo",
       "number": "20",
-      "position": "F",
+      "position": "LF",
       "formation_place": 11
+     },
+     {
+      "name": "Gessime Yassine",
+      "number": "80",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [

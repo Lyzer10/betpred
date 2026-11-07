@@ -683,6 +683,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      `logit(raw)`, judged with `market_gates.evaluate` unchanged, seed 20261029).
    - Report `PASS`/`FAIL` per pair across both periods (`2024/25+` and `2019/20-2023/24`); `"Strong
      candidate"` = `PASS` in both periods. Do not change the earlier reports' numbers. No live change.
+   - Result (DONE 2026-11-07, `reports/tasks_16_17_replication.md`):
+     - **Task 16 replication** (9 leagues x 6 half markets = 54 pairs): Primary `2024/25+` **49 PASS /
+       5 FAIL**; Replication `2019/20-2023/24` **48 PASS / 6 FAIL** (`LALIGA sh_over_1.5`,
+       `LALIGA home_win_either_half`, `PRIMEIRA fh_over_0.5`, `PRIMEIRA fh_over_1.5`,
+       `SUPERLIG fh_over_0.5`, `SUPERLIG fh_over_1.5`); **44 / 54 Strong candidates** (`PASS` in both
+       periods, pending real Betpawa prices).
+     - **Task 17 replication** (5 main leagues x 5 UP markets = 25 pairs): Primary `2024/25+` **24 PASS /
+       1 FAIL** (`EPL home_2up`); Replication `2019/20-2023/24` **25 PASS / 0 FAIL**; **24 / 25 Strong
+       candidates** (`PASS` in both periods, pending real Betpawa prices).
+     - **Combined**: **68 / 79 Strong candidates** (`PASS` in both periods), **11 stay out**. Earlier
+       reports (`reports/half_markets_study.md`, `reports/up_markets_study.md`) unchanged.
 22. **Simulated Betpawa-price value check** (PRE-REGISTERED 2026-11-07, before results; clearly
    labelled `SIMULATED`, never `"real prices"`, `python -m src.simulated_value_study`):
    - Module `engine/src/simulated_value_study.py`, report `engine/reports/simulated_value_study.md`,
@@ -757,6 +768,11 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 21 (`src/replicate_tasks_16_17.py`,
+  `reports/tasks_16_17_replication.md`, `tests/test_replicate_tasks_16_17.py`): replicated Tasks 16
+  (54 pairs) and 17 (25 pairs) on `2019/20-2023/24` with identical rules and `market_gates.evaluate`
+  (`SEED = 20261029`). Found 44/54 Task-16 and 24/25 Task-17 Strong candidates (68/79 combined `PASS` in
+  both `2024/25+` and `2019/20-2023/24`). Earlier reports unchanged. No live change.
 - 2026-11-07: Completed task 20 (`src/timing_half_markets_study.py`,
   `reports/timing_half_markets_study.md`, `tests/test_timing_half_markets_study.py`): ran synthetic
   known-answer tests before real data, then evaluated 5 timing markets across 5 main leagues (25 pairs)

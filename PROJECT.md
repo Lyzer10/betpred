@@ -429,6 +429,75 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
    Result: KEEP A. Matched return M-A -0.045543 (95% CI -0.144478 to +0.045067),
    884 matched slips. All-loss day share A 48.01%, M 46.27%; Big offers A 265, M 194.
    A had a match on all three tiers on 241 days. Return and CI criteria fail; live unchanged.
+15. **Team goals and Draw No Bet with real Betpawa prices** (PRE-REGISTERED 2026-11-07, before results;
+   report only, `python -m src.team_goals_dnb_live_study`):
+   - Module `engine/src/team_goals_dnb_live_study.py`, report `engine/reports/team_goals_dnb_live_study.md`,
+     tests in `engine/tests/test_team_goals_dnb_live_study.py`.
+   - Data: every settled archived match (`web/public/data/archive`, `predict.settled_predictions`) with
+     logged Betpawa prices (`engine/data/live/prices`, last price logged before kick-off) for
+     `home_over_0.5`, `away_over_0.5`, `home_over_1.5`, `away_over_1.5`, `dnb_home`, `dnb_away`.
+   - Probability: rebuild the score matrix from the archived fair `home_win`, `draw`, `away_win`,
+     `over_2.5` and `under_2.5` probabilities (`market_probability` in the archived fixture) with
+     `accumulators.bookmaker_implied` and the league's rho (`market_live.league_rho`), then apply the
+     task-10 method (`new_markets_study.py`) with Platt (`LogisticRegression(C=1.0)` on logit(raw))
+     fitted per league x market on seasons before 2026/27 only. DNB is scored on non-drawn matches
+     (draw = refund).
+   - Report per market: legs, our mean probability vs actual win rate (Wilson 95% CI), Betpawa's mean
+     implied probability (`1 / odds`) and margin, and the return per unit staked (`won * odds - 1`) if
+     every leg with `probability * betpawa_odds - 1 >= 0.03` had been backed.
+   - Decision rule: none yet; a market may enter slips only when it has >= 300 settled priced legs and
+     its one-sided level check (actual - predicted, 95% CI upper bound >= 0) passes. State plainly how
+     many legs are still needed. No live change.
+16. **Goals by half and win either half** (PRE-REGISTERED 2026-11-07, before results; research backtest
+   only, `python -m src.half_markets_study`):
+   - Module `engine/src/half_markets_study.py`, report `engine/reports/half_markets_study.md`, tests in
+     `engine/tests/test_half_markets_study.py`.
+   - Data: all nine live leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`, `EREDIV`, `JUPILER`,
+     `PRIMEIRA`, `SUPERLIG`), football-data season files 2014/15 onwards (`FTHG`/`FTAG`/`HTHG`/`HTAG`
+     and the average odds as in `new_leagues_study.odds_columns`); five main leagues from their
+     `matches.parquet` (`ht_home_goals`, `ht_away_goals` and `avg_odds_*` from the football-data average
+     columns), the four new leagues from their cached raw CSVs. Drop matches missing any needed value;
+     never fill.
+   - Raw probability: `lambda_home` and `lambda_away` from `accumulators.bookmaker_implied` (league rho
+     from `market_live.league_rho`); first-half goal share `s` per league = mean first-half goals /
+     mean total goals over EARLIER seasons only; each team's goals per half Poisson with mean
+     `s * lambda` (first) and `(1 - s) * lambda` (second), independent.
+   - Markets: `fh_over_0.5`, `fh_over_1.5`, `sh_over_0.5`, `sh_over_1.5`, `home_win_either_half`,
+     `away_win_either_half`.
+   - Calibration: Platt (`LogisticRegression(C=1.0)` on logit(raw)) per league x market, walk-forward
+     by season (first season unscored).
+   - Judgement: `market_gates.evaluate` unchanged (one-sided C1-C4, >= 300 legs, seed 20261029) on
+     2024/25 onwards with `bookmaker_probability = raw`.
+   - Decision rule: a PASS pair is only "eligible pending real Betpawa prices" (>= 300 settled priced
+     legs and one-sided level check passing, as in task 15); FAIL or INSUFFICIENT stays out. Report the
+     typical fair odds (`median(1 / probability)`). Synthetic known-answer tests before real data verify
+     exact Poisson half-goal and win-either-half formulas for a fixed lambda and share `s`. No live change.
+17. **Double Chance 1UP and 2UP** (PRE-REGISTERED 2026-11-07, before results; research backtest only,
+   `python -m src.up_markets_study`):
+   - Module `engine/src/up_markets_study.py`, report `engine/reports/up_markets_study.md`, tests in
+     `engine/tests/test_up_markets_study.py`.
+   - Data: five main leagues only (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`, seasons 2014/15
+     onwards: they have Understat goal minutes in `engine/data/processed/<league>/goals.parquet` and
+     `matches.parquet`). Drop matches missing average odds (`avg_odds_*`), scores, or goal-minute
+     coverage (matches with total goals > 0 must reconcile with `goals.parquet`); never fill.
+   - Outcomes from goal minutes in event order (matching the settlement rules confirmed from Betpawa's
+     API explainers in Part A):
+     `dc1up_1x` wins if the home team led at any point OR the final result is home win or draw;
+     `dc1up_x2` wins if the away team led at any point OR the final result is away win or draw;
+     `dc1up_12` wins if either team led at any point OR the final result is not a draw (equivalently,
+     any goal is scored);
+     `home_2up` wins if the home team was ever two goals ahead at any point (mirror for `away_2up`).
+   - Raw probability from the bookmaker score matrix (`accumulators.bookmaker_implied`, league rho):
+     `dc1up_1x = sum over scores of P(score) * [1 if home >= away else P(home led at some point | score)]`
+     (mirror for `dc1up_x2`; `dc1up_12 = 1 - P(0-0)` since any goal produces a leader), using the same
+     exchangeable goal-order assumption as `accumulators.PRIORS`; for 2UP compute
+     `P(lead reached 2 | final score)` exactly by enumerating every goal order of that score (equally
+     likely). Verify on small scores (1-0, 2-1, 3-1) that enumeration matches hand counts before running
+     real data.
+   - Calibration and judgement: Platt (`LogisticRegression(C=1.0)` on logit(raw)) per league x market,
+     walk-forward by season; judged with `market_gates.evaluate` unchanged (one-sided C1-C4, >= 300
+     legs, seed 20261029) on 2024/25 onwards with `bookmaker_probability = raw`. Same eligibility rule
+     and typical fair odds reporting as task 16. No live change.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -484,6 +553,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Pre-registered study tasks 15 (team goals and Draw No Bet with real Betpawa prices),
+  16 (goals by half and win either half across all nine leagues) and 17 (Double Chance 1UP and 2UP
+  across the five main leagues) in PROJECT.md before computing any results.
 - 2026-11-07: Expanded research-only Betpawa market parsing and price logging after verifying all
   seven market families across real events from all nine leagues (`4958` first-half Over 0.5/1.5,
   `4976` second-half Over 0.5/1.5, `80000` Double Chance 1UP `1X`/`X2`/`12`, `28000850` 1X2 2UP `1`/`2`,

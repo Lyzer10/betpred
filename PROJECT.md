@@ -731,6 +731,30 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
        `-0.0562` to `-0.0243`) its CI lower bound is below 0. **0 markets** have a 95% CI lower bound `> 0`
        at both `median r` and `p75 r` (**no market flagged as priority**; report only, no live change).
 
+23. **Extra research leagues price collection and settlement** (PRE-REGISTERED 2026-11-08, before code or results):
+   - Scope: Collect Betpawa prices for the 30 RESEARCH_MARKETS on 7 extra leagues (E1 Championship,
+     I2 Serie B, D2 2. Bundesliga, F2 Ligue 2, SP2 Segunda, G1 Greece Super League, SC0 Scottish
+     Premiership) for RESEARCH ONLY to reach the 300 settled legs threshold sooner.
+   - Isolation: These 7 leagues must NEVER appear in predictions, slips, best picks, the web app,
+     tables, health checks, or calibrations. The owner explicitly excluded them from betting.
+     Research collection failure must fail safely (log one line and continue); a crash in research
+     collection must never alter main predictions or live pipeline output.
+   - Storage:
+     - Prices: engine/data/live/research/prices/<EAT date>.csv (snapshot at most once per hour; skip
+       if latest snapshot is < 55 minutes old; only events kicking off within next 48 h).
+     - Each price row records: snapshot time (EAT/UTC), league, home team, away team, kickoff, 30 research
+       markets, Betpawa 1X2 (including draw) and over/under 2.5, and football-data consensus average odds
+       (AvgH, AvgD, AvgA, Avg>2.5, Avg<2.5) from fixtures.csv.
+     - Settlement: engine/data/live/research/results.csv from ESPN completed event summaries (FT score,
+       HT score, goal minutes/clock seconds).
+   - Settlement rules:
+     - Score markets settled from FT / HT scores.
+     - 10-minute interval settled from ESPN clock seconds in period 1 (< 600 s = first 10 minutes).
+     - UP markets settled per task 17 corrected rules.
+     - Half markets settled per task 16 rules.
+   - Reporting: python -m src.research_status writes engine/reports/research_status.md tabulating
+     settled priced legs count across live 9 leagues, research 7 leagues, and total vs 300 target.
+
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
 outcomes for already published picks without changing any study decision below.
@@ -793,6 +817,7 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Pre-register task 23 (extra research leagues price collection and settlement).
 - 2026-11-07: Claude reviewed tasks 18-22. Tests pass and all five reports reproduced byte for byte
   (sha256 identical). Independent boundary check of the task-19 minute mapping on 49 different goals
   recorded by Understat at minutes 8-11 (2022/23-2025/26, 10 random matches per league, seed

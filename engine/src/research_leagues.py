@@ -1,4 +1,4 @@
-﻿"""Task 23: Research-only price collection for 7 extra leagues.
+"""Task 23: Research-only price collection for 7 extra leagues.
 
 Leagues: E1 Championship, I2 Serie B, D2 2. Bundesliga, F2 Ligue 2,
          SP2 Segunda, G1 Greece Super League, SC0 Scottish Premiership.
@@ -86,6 +86,23 @@ def should_collect_prices(now: pd.Timestamp) -> bool:
         return True
 
 
+def consensus_lookup(fixtures_df: pd.DataFrame | None) -> dict[tuple[str, str, str], dict[str, Any]]:
+    """(Div, home, away) -> football-data average odds for the research leagues."""
+    lookup: dict[tuple[str, str, str], dict[str, Any]] = {}
+    if fixtures_df is None or fixtures_df.empty:
+        return lookup
+    # Rows as dicts: itertuples() renames columns such as "Avg>2.5" and would silently drop them.
+    for r in fixtures_df.to_dict("records"):
+        div = r.get("Div")
+        if div not in RESEARCH_LEAGUES:
+            continue
+        h = normalize_research_team(r.get("HomeTeam"), div)
+        a = normalize_research_team(r.get("AwayTeam"), div)
+        if h and a:
+            lookup[(div, h, a)] = {col: r.get(col) for col in ("AvgH", "AvgD", "AvgA", "Avg>2.5", "Avg<2.5")}
+    return lookup
+
+
 def collect_research_prices(
     now: pd.Timestamp,
     fixtures_df: pd.DataFrame | None = None,
@@ -107,26 +124,7 @@ def collect_research_prices(
     eat_iso = _to_eat_timestamp(now).isoformat()
     horizon_utc = now_utc + pd.Timedelta(hours=48)
 
-    # Index football-data fixtures for consensus odds matching
-    fd_lookup: dict[tuple[str, str, str], dict[str, float]] = {}
-    if fixtures_df is not None and not fixtures_df.empty:
-        for r in fixtures_df.itertuples():
-            div = getattr(r, "Div", None)
-            if div not in RESEARCH_LEAGUES:
-                continue
-            h_raw = getattr(r, "HomeTeam", None)
-            a_raw = getattr(r, "AwayTeam", None)
-            h = normalize_research_team(h_raw, div)
-            a = normalize_research_team(a_raw, div)
-            if not h or not a:
-                continue
-            fd_lookup[(div, h, a)] = {
-                "AvgH": getattr(r, "AvgH", None),
-                "AvgD": getattr(r, "AvgD", None),
-                "AvgA": getattr(r, "AvgA", None),
-                "Avg>2.5": getattr(r, "Avg_over25", getattr(r, "Avg>2.5", None)),
-                "Avg<2.5": getattr(r, "Avg_under25", getattr(r, "Avg<2.5", None)),
-            }
+    fd_lookup = consensus_lookup(fixtures_df)
 
     for div, (name, country, cid, slug) in RESEARCH_LEAGUES.items():
         if cid is None:
@@ -224,10 +222,6 @@ def settle_markets(
     """Settle research markets using pre-registered Task 15-20 rules."""
     outcomes: dict[str, bool | None] = {}
     total_ft = home_ft + away_ft
-    home_sh = (home_ft - home_ht) if home_ht is not None else None
-    away_sh = (away_ft - away_ht) if away_ht is not None else None
-    total_sh = (home_sh + away_sh) if home_sh is not None and away_sh is not None else None
-    total_ht = (home_ht + away_ht) if home_ht is not None and away_ht is not None else None
 
     # Core
     outcomes["home_win"] = bool(home_ft > away_ft)
@@ -246,8 +240,12 @@ def settle_markets(
     outcomes["dnb_home"] = True if home_ft > away_ft else (False if home_ft < away_ft else None)
     outcomes["dnb_away"] = True if away_ft > home_ft else (False if away_ft < home_ft else None)
 
-    # Half markets
+    # Half markets (a half-time score larger than the final score is a data error: unsettled)
+    if home_ht is not None and away_ht is not None and not (0 <= home_ht <= home_ft and 0 <= away_ht <= away_ft):
+        home_ht = away_ht = None
     if home_ht is not None and away_ht is not None:
+        home_sh, away_sh = home_ft - home_ht, away_ft - away_ht
+        total_sh, total_ht = home_sh + away_sh, home_ht + away_ht
         outcomes["fh_over_0.5"] = bool(total_ht > 0.5)
         outcomes["fh_over_1.5"] = bool(total_ht > 1.5)
         outcomes["sh_over_0.5"] = bool(total_sh > 0.5)
@@ -263,7 +261,15 @@ def settle_markets(
         outcomes["home_sh_over_0.5"] = bool(home_sh > 0.5)
         outcomes["away_sh_over_0.5"] = bool(away_sh > 0.5)
 
-    # Goal-timing, 1up, 2up, interval_10, first_goal
+    # Goal-timing, 1up, 2up, interval_10, first_goal: only when ESPN's goal list is complete
+    # (every goal assigned to a side and the per-side counts equal the final score). Never inferred.
+    if goals is not None:
+        goals = sorted(goals, key=lambda g: (g["period"], g["seconds"]))
+        complete = (all(g["side"] in ("home", "away") for g in goals)
+                    and sum(g["side"] == "home" for g in goals) == home_ft
+                    and sum(g["side"] == "away" for g in goals) == away_ft)
+        if not complete:
+            goals = None
     if goals is not None:
         # First goal
         if len(goals) > 0:
@@ -312,140 +318,156 @@ def settle_markets(
     return outcomes
 
 
-def settle_research_events(now: pd.Timestamp, session: requests.Session | None = None) -> int:
-    """Query ESPN completed events and settle markets into results.csv."""
-    session = session or requests.Session()
-    headers = {"User-Agent": "BetPredz research", "Accept": "application/json"}
-    RESEARCH_DIR.mkdir(parents=True, exist_ok=True)
+ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer"
+ESPN_HEADERS = {"User-Agent": "BetPredz research", "Accept": "application/json"}
+# Betpawa research prices exist from this day (engine/data/live/prices/2026-10-25.csv): settle from here.
+BACKFILL_START = pd.Timestamp("2026-10-25", tz="UTC")
+RECENT_DAYS = 3                 # after the backfill, look back this many days each settlement
+SETTLE_EVERY = pd.Timedelta(hours=3)
+MAX_REQUESTS = 150              # ESPN requests per settlement run (the backfill finishes over a few runs)
+LAST_SETTLEMENT_PATH = RESEARCH_DIR / "last_settlement.txt"
+RESULT_COLUMNS = ["match_id", "league", "home", "away", "kickoff", "FT", "HT", "goals_complete"]
 
-    settled_keys: set[tuple[str, str, str, str]] = set()
-    if RESULTS_PATH.exists():
+
+def _settlement_targets() -> list[tuple[str, str, Any]]:
+    """(league code, ESPN slug, ESPN event -> (home, away) or None) for the 7 research + 9 live leagues.
+
+    Live leagues use the same name mapping as the line-ups (lineups.event_teams), so names equal the
+    names in engine/data/live/prices. Live leagues are settled here for research markets only.
+    """
+    from .lineups import SLUGS, event_teams
+
+    def research_teams(event: dict, div: str) -> tuple[str, str] | None:
+        sides = {c.get("homeAway"): normalize_research_team(c.get("team", {}).get("displayName", ""), div)
+                 for c in event["competitions"][0]["competitors"]}
+        return (sides["home"], sides["away"]) if sides.get("home") and sides.get("away") else None
+
+    def live_teams(event: dict, code: str) -> tuple[str, str] | None:
         try:
-            existing_df = pd.read_csv(RESULTS_PATH, dtype=str)
-            for r in existing_df.itertuples():
-                ht_val = getattr(r, "HT", "")
-                if pd.notna(ht_val) and str(ht_val).strip() != "":
-                    settled_keys.add((str(r.league), str(r.home), str(r.away), str(r.kickoff)))
-        except Exception:
-            pass
+            return event_teams(event, code)
+        except (ValueError, KeyError):
+            return None
 
-    result_rows: list[dict[str, Any]] = []
+    targets: list[tuple[str, str, Any]] = [(div, slug, lambda ev, d=div: research_teams(ev, d))
+                                           for div, (_n, _c, _cid, slug) in RESEARCH_LEAGUES.items()]
+    targets += [(code, slug, lambda ev, c=code: live_teams(ev, c)) for code, slug in SLUGS.items()]
+    return targets
 
-    for div, (name, country, _cid, slug) in RESEARCH_LEAGUES.items():
-        time.sleep(PAUSE_SECONDS)
-        url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{slug}/scoreboard"
-        try:
-            resp = session.get(url, headers=headers, timeout=20)
-            if not resp.ok:
-                continue
-            board = resp.json()
-        except Exception as err:
-            print(f"Research settlement {div}: ESPN scoreboard error ({err})")
-            continue
 
-        events = board.get("events", [])
-        for ev in events:
-            status = ev.get("status", {}).get("type", {})
-            if not status.get("completed"):
-                continue
+def _due(now: pd.Timestamp) -> bool:
+    try:
+        last = pd.Timestamp(LAST_SETTLEMENT_PATH.read_text(encoding="utf-8").strip())
+        return _to_utc_timestamp(now) - _to_utc_timestamp(last) >= SETTLE_EVERY
+    except (OSError, ValueError):
+        return True
 
-            comps = ev.get("competitions", [])
-            if not comps:
-                continue
-            comp = comps[0]
-            competitors = comp.get("competitors", [])
-            home_c = next((c for c in competitors if c.get("homeAway") == "home"), None)
-            away_c = next((c for c in competitors if c.get("homeAway") == "away"), None)
-            if not home_c or not away_c:
-                continue
 
-            h_raw = home_c.get("team", {}).get("displayName", "")
-            a_raw = away_c.get("team", {}).get("displayName", "")
-            home = normalize_research_team(h_raw, div)
-            away = normalize_research_team(a_raw, div)
-            if not home or not away:
-                print(f"Research settlement {div}: unmapped team ({h_raw} v {a_raw}); skipping")
-                continue
-
-            kickoff = ev.get("date", "")
-            if (div, home, away, kickoff) in settled_keys:
-                continue
-
-            time.sleep(PAUSE_SECONDS)
-            try:
-                s_url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{slug}/summary?event={ev['id']}"
-                s_res = session.get(s_url, headers=headers, timeout=20)
-                if not s_res.ok:
-                    continue
-                s_json = s_res.json()
-            except Exception as err:
-                print(f"Research settlement {div}: summary error event {ev['id']} ({err})")
-                continue
-
-            header_comps = s_json.get("header", {}).get("competitions", [])
-            if not header_comps:
-                continue
-            h_comp = header_comps[0]
-            h_competitors = h_comp.get("competitors", [])
-            h_home_c = next((c for c in h_competitors if c.get("homeAway") == "home"), None)
-            h_away_c = next((c for c in h_competitors if c.get("homeAway") == "away"), None)
-            if not h_home_c or not h_away_c:
-                continue
-
-            try:
-                home_ft = int(h_home_c.get("score", 0))
-                away_ft = int(h_away_c.get("score", 0))
-            except (ValueError, TypeError):
-                continue
-
-            home_ls = h_home_c.get("linescores", [])
-            away_ls = h_away_c.get("linescores", [])
-            home_ht = away_ht = None
-            if home_ls and away_ls:
-                try:
-                    home_ht = int(home_ls[0].get("displayValue"))
-                    away_ht = int(away_ls[0].get("displayValue"))
-                except (ValueError, TypeError):
-                    home_ht = away_ht = None
-
-            g_objs = parse_espn_summary_goals(s_json)
-            goals = [{"side": g.team, "seconds": g.seconds, "period": g.period} for g in g_objs]
-
-            outcomes = settle_markets(home_ft, away_ft, home_ht, away_ht, goals)
-            row = {
-                "match_id": str(ev["id"]),
-                "league": div,
-                "home": home,
-                "away": away,
-                "kickoff": kickoff,
-                "FT": f"{home_ft}-{away_ft}",
-                "HT": f"{home_ht}-{away_ht}" if home_ht is not None and away_ht is not None else "",
-            }
-            for m in sorted(RESEARCH_MARKETS):
-                val = outcomes.get(m)
-                row[m] = "1" if val is True else ("0" if val is False else "")
-            result_rows.append(row)
-
-    if not result_rows:
-        print("Research settlement: 0 new completed matches found")
+def settle_research_events(now: pd.Timestamp, session: requests.Session | None = None, force: bool = False) -> int:
+    """Record full-time, half-time and goal-time outcomes from ESPN into results.csv (research only)."""
+    if not force and not _due(now):
+        print("Research settlement: skipped (last run < 3 hours ago)")
         return 0
-
-    df_new = pd.DataFrame(result_rows)
+    session = session or requests.Session()
+    RESEARCH_DIR.mkdir(parents=True, exist_ok=True)
+    now_utc = _to_utc_timestamp(now)
     if RESULTS_PATH.exists():
-        existing = pd.read_csv(RESULTS_PATH, dtype=str)
-        combined = pd.concat([existing, df_new], ignore_index=True)
-        combined = combined.drop_duplicates(subset=["league", "home", "away", "kickoff"], keep="last")
-        combined.to_csv(RESULTS_PATH, index=False)
+        existing = pd.read_csv(RESULTS_PATH, dtype=str).fillna("")
     else:
-        df_new.to_csv(RESULTS_PATH, index=False)
+        existing = pd.DataFrame(columns=RESULT_COLUMNS)
+    done_ids = set(existing.loc[existing.goals_complete.eq("1") & existing.HT.ne(""), "match_id"])
+    seen_leagues = set(existing.league)
 
-    print(f"Research settlement: recorded {len(result_rows)} matches to {RESULTS_PATH.name}")
-    return len(result_rows)
+    requests_left = MAX_REQUESTS
+    rows: list[dict[str, Any]] = []
+    unmapped: list[str] = []
+    for code, slug, teams_of in _settlement_targets():
+        recent = now_utc.normalize() - pd.Timedelta(days=RECENT_DAYS)
+        start = BACKFILL_START if code not in seen_leagues else max(BACKFILL_START, recent)
+        for day in pd.date_range(start.normalize(), now_utc.normalize(), freq="D"):
+            if requests_left <= 0:
+                break
+            time.sleep(PAUSE_SECONDS)
+            requests_left -= 1
+            try:   # ESPN accepts one day per request (date ranges return HTTP 400, checked 2026-11-08)
+                res = session.get(f"{ESPN_BASE}/{slug}/scoreboard", params={"dates": day.strftime("%Y%m%d")},
+                                  headers=ESPN_HEADERS, timeout=20)
+                events = res.json().get("events", []) if res.ok else []
+            except (requests.RequestException, ValueError) as err:
+                print(f"Research settlement {code} {day.date()}: scoreboard unavailable ({err})")
+                continue
+            for ev in events:
+                if not ev.get("status", {}).get("type", {}).get("completed") or str(ev.get("id")) in done_ids:
+                    continue
+                teams = teams_of(ev)
+                if teams is None:
+                    unmapped.append(f"{code}: {ev.get('name', ev.get('id'))}")
+                    continue
+                if requests_left <= 0:
+                    break
+                time.sleep(PAUSE_SECONDS)
+                requests_left -= 1
+                try:
+                    s_res = session.get(f"{ESPN_BASE}/{slug}/summary", params={"event": ev["id"]},
+                                        headers=ESPN_HEADERS, timeout=20)
+                    if not s_res.ok:
+                        continue
+                    row = _result_row(s_res.json(), code, teams, ev)
+                except (requests.RequestException, ValueError, KeyError, StopIteration, TypeError) as err:
+                    print(f"Research settlement {code}: summary {ev.get('id')} unusable ({err})")
+                    continue
+                rows.append(row)
+                done_ids.add(row["match_id"])
+
+    if requests_left > 0:      # every league reached today: next settlement after SETTLE_EVERY
+        LAST_SETTLEMENT_PATH.write_text(now_utc.isoformat(), encoding="utf-8")
+    if unmapped:
+        print(f"Research settlement: {len(unmapped)} completed matches skipped, team names not mapped: "
+              + "; ".join(sorted(set(unmapped))[:20]))
+    if not rows:
+        print("Research settlement: 0 new completed matches")
+        return 0
+    combined = pd.concat([existing, pd.DataFrame(rows).astype(str)], ignore_index=True)
+    combined = combined.drop_duplicates(subset=["match_id"], keep="last").sort_values(["kickoff", "league", "home"])
+    combined.to_csv(RESULTS_PATH, index=False)
+    print(f"Research settlement: recorded {len(rows)} matches ({requests_left} ESPN requests unused)")
+    return len(rows)
+
+
+def _result_row(summary: dict, code: str, teams: tuple[str, str], event: dict) -> dict[str, Any]:
+    comp = summary["header"]["competitions"][0]
+    sides = {c["homeAway"]: c for c in comp["competitors"]}
+    home_ft, away_ft = int(sides["home"]["score"]), int(sides["away"]["score"])
+    home_ht = away_ht = None
+    hl, al = sides["home"].get("linescores") or [], sides["away"].get("linescores") or []
+    if hl and al:     # linescores[0] = first half (checked against real summaries, task 23 review)
+        try:
+            home_ht, away_ht = int(hl[0]["displayValue"]), int(al[0]["displayValue"])
+        except (KeyError, ValueError, TypeError):
+            home_ht = away_ht = None
+    goals = [{"side": g.team, "seconds": g.seconds, "period": g.period} for g in parse_espn_summary_goals(summary)]
+    outcomes = settle_markets(home_ft, away_ft, home_ht, away_ht, goals)
+    row = {"match_id": str(event["id"]), "league": code, "home": teams[0], "away": teams[1],
+           "kickoff": str(event.get("date", "")), "FT": f"{home_ft}-{away_ft}",
+           "HT": f"{home_ht}-{away_ht}" if outcomes.get("fh_over_0.5") is not None else "",
+           "goals_complete": "1" if outcomes.get("interval_10_draw") is not None else "0"}
+    for m in sorted(RESEARCH_MARKETS):
+        val = outcomes.get(m)
+        row[m] = "1" if val is True else ("0" if val is False else "")
+    return row
+
+
+def run_research_safely(now: pd.Timestamp, fixtures_df: pd.DataFrame | None) -> None:
+    """Called by predict.main: research collection and settlement can never break the main run."""
+    for step, call in (("collection", lambda: collect_research_prices(now, fixtures_df)),
+                       ("settlement", lambda: settle_research_events(now))):
+        try:
+            call()
+        except Exception as error:   # noqa: BLE001 - research only, the betting run must continue
+            print(f"Research {step} unavailable ({error})")
 
 
 if __name__ == "__main__":
     now = pd.Timestamp.now(tz=timezone.utc)
     print(f"Running research leagues at {now.isoformat()}...")
-    prices_count = collect_research_prices(now)
-    settled_count = settle_research_events(now)
-    print(f"Done: {prices_count} prices, {settled_count} settled matches.")
+    collect_research_prices(now)
+    settle_research_events(now, force=True)

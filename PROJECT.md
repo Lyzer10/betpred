@@ -148,7 +148,12 @@ cd ..\web; npm ci; npm run dev                             # install exactly fro
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-11-07)
+## 5. Current status (2026-11-08)
+- Task 23 merged (Claude review, 2026-11-08): Betpawa research prices now also logged for 6 extra
+  leagues (Championship, Serie B, 2. Bundesliga, Segunda, Greece, Scotland; Ligue 2 not on Betpawa
+  today), and ESPN settles the research markets for all 16 leagues into
+  `engine/data/live/research/results.csv`. Count progress with `python -m src.research_status`.
+  These leagues never enter predictions, slips or the app.
 - Tasks 18-22 reviewed and merged (Claude, 2026-11-07): 30 research markets logged from Betpawa;
   timing markets (first goal, 1-10 minutes) and team-half markets mostly calibrated in both test
   periods; simulated Betpawa prices show no market with reliable profit. Next: collect >= 300 settled
@@ -761,10 +766,31 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      - Built `engine/src/research_aliases.json` with 225 exact, verified team name mappings across Betpawa, football-data, and ESPN.
      - Implemented `engine/src/research_leagues.py` (collection with 48h horizon and >= 55 min debounce; settlement from ESPN scoreboard and summaries with 100% HT and goal-minute resolution).
      - Integrated fail-safe call into `engine/src/predict.py` (reusing `_fixtures_csv()`).
-     - Implemented `engine/src/research_status.py` and generated `reports/research_status.md` and `engine/reports/research_status.md`.
+     - Implemented `engine/src/research_status.py` (report written on demand to `engine/reports/research_status.md`).
      - Initial live run stats: 493 Betpawa prices collected across 17 upcoming matches in 5 leagues (96.7% candidate market coverage); 34 completed matches settled across 7 leagues with 100% HT score and goal-minute resolution.
      - Settled priced legs: all 30 candidate markets currently have < 300 settled priced legs (highest: away_over_1.5: 121, home_over_1.5: 121, away_over_0.5: 119, home_over_0.5: 116, dnb_home: 101, dnb_away: 101 in live leagues; 0 in research leagues as the 17 priced matches have not yet kicked off). Status: INSUFFICIENT for all 30 markets; live betting unchanged.
      - Test verification: 7 dedicated unit tests pass in `tests/test_research_leagues.py`. Full test suite passes: 188 passed, 0 failures. No research league touches predictions.json, slips, best picks, tables, or models.
+   - Claude review (2026-11-08), fixes before merge:
+     - Consensus over/under columns were always empty (`itertuples()` renames `Avg>2.5`/`Avg<2.5`);
+       now read as dict rows (`consensus_lookup`, tested). Real run: 17 matches, 494 rows, AvgH and
+       Avg>2.5 filled on 100% of rows.
+     - Goal-time markets (first goal, 10-minute interval, 1UP/2UP) are settled only when ESPN's goal
+       list is complete (every goal has a side and per-side counts equal the final score); goals are
+       sorted by period and clock first. Half markets need 0 <= HT <= FT. Otherwise unsettled.
+     - Settlement now asks ESPN one day at a time (date ranges return HTTP 400), backfills from
+       2026-10-25 (first Betpawa research price file), then looks back 3 days; at most every 3 hours
+       and 150 ESPN requests per run. It also settles the 9 live leagues (team names via
+       `lineups.event_teams`), research markets only, because nothing settled their logged
+       half/timing/UP prices before. The live archive, slips and models are untouched.
+     - Results keyed by ESPN match id; the status report matches price to result by league, teams
+       and kickoff day (Scottish teams meet up to 4 times a season).
+     - Added verified SP2 names (Andorra, Castellon, Eibar, Granada, Mallorca, Tenerife; Betpawa names
+       only where seen). The status report is a counter only; generated time is EAT; single copy.
+     - `predict.py` calls only `run_research_safely`, which catches each step separately (tested).
+   - Verification (2026-11-08): ESPN backfill recorded 316 matches in 16 leagues, all with HT and
+     a complete goal list; against football-data 2026/27 files, FT and HT agree on 175/175
+     comparable matches (the rest not yet in football-data). Ligue 2 (F2) has no Betpawa
+     competition today, so it has results but no prices.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -772,6 +798,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| OddsPapi free API as a Betpawa price history (owner found it, 2026-11-08) | Free plan 250 requests/month, history only since Jan 2026, 1 request per match; Betpawa only as `betpawa.cm` (Cameroon). Liverpool v Arsenal 1 Nov: Cameroon 2.74/3.74/2.39, DNB 1.96/1.69 vs our Tanzania log 2.94/2.47, DNB 2.10/1.74; Cameroon DNB first/second half equal full-time DNB (data looks wrong); SportyBet empty | not used for Tanzania prices; several accounts to get round the limit would break their terms. Possible later use: Pinnacle history as a sharp reference |
 | SIMULATED Betpawa-price value check (task 22) | 17/30 research markets have `n >= 50` (`home_2up` med `r = 1.0059`, `away_2up` `0.9980`); 0 markets have SIMULATED 95% CI lower bound `> 0` at both median and p75 `r` | report only; keep logging real prices toward 300 settled legs |
 | Replication of tasks 16 and 17 on 2019/20-2023/24 (task 21) | Task 16: 44/54 PASS both periods; Task 17: 24/25 PASS both periods (`68/79` Strong candidates) | 68 Strong candidates pending >= 300 real Betpawa priced legs |
 | Goal-timing and team-half markets backtest (task 20) | Timing (5 leagues): 24/25 PASS both periods; Team-half (9 leagues): 58/72 PASS both periods (`82/97` Strong candidates) | 82 Strong candidates pending >= 300 real Betpawa priced legs |
@@ -822,13 +849,20 @@ outcomes for already published picks without changing any study decision below.
 - Bookmaker average odds in `fixtures.csv` can be stale vs live Betpawa (team news): price warning.
 - CI runs on Linux with the live raw cache: tests must not depend on the in-progress season.
 - In Git Bash heredocs and `sed`, backslashes get stripped: edit regexes with the editor.
+- `DataFrame.itertuples()` renames columns that are not Python names (`Avg>2.5` becomes `_7`):
+  read football-data rows with `to_dict("records")`.
 - Windows working copies use CRLF; `*.sh` is forced to LF by `.gitattributes`.
 - The workflow's push trigger only fires when the workflow file changes; otherwise use
   "Run workflow" (or the API).
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
-- 2026-11-08: Task 23 complete. Implemented extra research leagues price collection (7 leagues, 30 candidate markets) and settlement module (engine/src/research_leagues.py, engine/src/research_aliases.json), research status command (engine/src/research_status.py, reports/research_status.md), unit tests (tests/test_research_leagues.py), and fail-safe predict.py wiring. Initial live run collected 493 prices on 17 matches and settled 34 matches. Full test suite: 188 passed, 0 failures. Live betting unchanged.
+- 2026-11-08: Claude reviewed task 23 and fixed it before merge: consensus over/under odds were never
+  saved (itertuples renamed the columns); goal-time markets now settle only from a complete ESPN goal
+  list; ESPN settlement goes day by day, backfills from 2026-10-25 and now also settles research
+  markets for the 9 live leagues (316 matches, FT/HT 175/175 agree with football-data); results are
+  keyed by match id and kickoff day; 6 Segunda teams added; tests rewritten (11). No live change.
+- 2026-11-08: Task 23 complete. Implemented extra research leagues price collection (7 leagues, 30 candidate markets) and settlement module (engine/src/research_leagues.py, engine/src/research_aliases.json), research status command (engine/src/research_status.py), unit tests (tests/test_research_leagues.py), and fail-safe predict.py wiring. Initial live run collected 493 prices on 17 matches and settled 34 matches. Full test suite: 188 passed, 0 failures. Live betting unchanged.
 - 2026-11-08: Pre-register task 23 (extra research leagues price collection and settlement).
 - 2026-11-07: Claude reviewed tasks 18-22. Tests pass and all five reports reproduced byte for byte
   (sha256 identical). Independent boundary check of the task-19 minute mapping on 49 different goals

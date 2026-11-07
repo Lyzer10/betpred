@@ -55,6 +55,27 @@ def test_notification_lists_only_final_slips():
     assert notify.message(_published(final=False), _at("10:40")) is None
 
 
+def test_checkin_reminder_rides_on_first_final_notification_from_its_date():
+    note = "📋 Check-in day: open Claude for the weekly check of the new-market leg counts."
+    assert notify.checkin_note("2026-11-15", []) is None                       # not yet
+    assert notify.checkin_note("2026-11-16", ["2026-11-08"]) == note           # on the day
+    # 16 Nov had no matches (international break): the first match day after carries it, once.
+    assert notify.checkin_note("2026-11-21", ["2026-11-08"]) == note
+    assert notify.checkin_note("2026-11-22", ["2026-11-08", "2026-11-21"]) is None
+    assert notify.checkin_note("2026-12-01", []) is None or "Draw No Bet" in notify.checkin_note("2026-12-01", [])
+    assert "300 legs" in notify.checkin_note("2026-12-05", ["2026-11-28"])
+
+
+def test_notification_adds_booking_code_and_checkin_line():
+    published = _published(final=True)
+    published["days"][0]["slips"]["safe"]["booking_code"] = "F4OA87M"
+    title, body = notify.message(published, _at("10:40"), match_days=[])
+    assert body == "Safe: odds 2.51 · 48% chance · 3 matches · Betpawa code F4OA87M"
+    published["days"][0]["date"] = "2026-11-28"
+    title, body = notify.message(published, datetime(2026, 11, 28, 10, 40, tzinfo=timezone.utc), match_days=[])
+    assert body.endswith("📋 Check-in day: open Claude for the team overs / Draw No Bet decision and the closing-odds test.")
+
+
 def _csv_row(div, date, time, odds=True):
     return {"Div": div, "Date": date, "Time": time, "AvgH": "2.1" if odds else ""}
 

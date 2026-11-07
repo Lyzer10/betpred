@@ -155,6 +155,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   price ids; cached by price ids in `engine/data/live/booking_codes.json` (3 days). App: "Copy",
   then Betpawa -> Betslip -> Load Betslip. Real check: code F4OA87M loaded 3 EPL Over 1.5 picks with
   the same matches and prices. No change to which picks are chosen.
+- Check-in reminders (owner request 2026-11-08): `scripts/notify.py` `CHECKINS` (16 Nov weekly
+  check, 28 Nov team overs / DNB decision and closing-odds test, 5 Dec new-markets real-price test)
+  adds one line to the final-slips notification on the first match day on or after each date. The
+  final notification also lists each slip's Betpawa booking code. Change dates there when plans move.
 - Task 23 merged (Claude review, 2026-11-08): Betpawa research prices now also logged for 6 extra
   leagues (Championship, Serie B, 2. Bundesliga, Segunda, Greece, Scotland; Ligue 2 not on Betpawa
   today), and ESPN settles the research markets for all 16 leagues into
@@ -865,6 +869,8 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Final-slips notification now carries Betpawa booking codes and check-in reminders
+  (`scripts/notify.py` CHECKINS; tests in `tests/test_schedule.py`).
 - 2026-11-08: Betpawa booking codes for slips (`engine/src/booking_codes.py`, price ids carried from
   `betpawa.parse_market_prices` to slip legs, app Copy button, `tests/test_booking_codes.py`). Fixed:
   research collection ran in `--no-refresh` runs and tests (network calls, stray local files); now

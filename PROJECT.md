@@ -567,6 +567,97 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      and stays out; the 24 PASS pairs are **eligible pending real Betpawa prices** (>= 300 settled
      priced legs and one-sided level check passing).
 
+18. **Betpawa market catalogue and additional research price logging** (PRE-REGISTERED 2026-11-07,
+   before results; read-only research and price logging only, `python -m src.betpawa_catalogue`):
+   - Module `engine/src/betpawa_catalogue.py`, report `engine/reports/betpawa_market_catalogue.md`.
+   - For each of the 9 live leagues, fetch the upcoming events list and the full detail of up to 3
+     events (>= 1 s apart, `betpawa.HEADERS`, cached under gitignored `engine/data/raw/betpawa/`).
+   - For every `marketType` id observed: report `id`, `name`, `displayName`, outcome names, handicap
+     values and their meaning (`handicap / 4 = line`, verified on each market), how many fetched
+     events offer it, the event ids as evidence, `"can we settle it from our data"` (`goal minutes` /
+     `HT-FT score` / `corners HC,AC` / `cards HY,AY,HR,AR` / `no`), and `"historical outcomes
+     available"` (which leagues, seasons).
+   - Search specifically for every time-interval market (e.g. 1-10, 1-15, 15-30 minutes, `"goal
+     before"`, `"first goal time"`). Report what exists and on which events; if a 15-minute market
+     does not exist, state so plainly.
+   - For corners and bookings markets, check Betpawa's settlement rule in Betpawa's own published
+     rules/explainers; if not found in Betpawa's published rules, write `"rule unverified"` and do not
+     study it.
+   - Add to `RESEARCH_MARKETS` logging (prices only, never slips) after verifying every id, outcome
+     name and handicap on real responses first, with a real trimmed event fixture and parser/isolation
+     tests: `28000224` (`"Goal 1"`: `"1"`, `"2"`, `"None"`) -> `first_goal_home`, `first_goal_away`;
+     `28000173` `"1"` and `"2"` -> `interval_10_home`, `interval_10_away`; `1096807`/`1096814` `"Yes"` ->
+     `home_score_both_halves`, `away_score_both_halves`; `1096805`/`1096808` `"Yes"` ->
+     `home_win_both_halves`, `away_win_both_halves`; `4964`/`4961`/`4982`/`4979` Over 0.5 ->
+     `home_fh_over_0.5`, `away_fh_over_0.5`, `home_sh_over_0.5`, `away_sh_over_0.5`.
+19. **Goal-minute accuracy check** (PRE-REGISTERED 2026-11-07, before results; must pass before task
+   20 uses minutes, `python -m src.goal_minute_check`):
+   - Module `engine/src/goal_minute_check.py`, report `engine/reports/goal_minute_check.md`, tests in
+     `engine/tests/test_goal_minute_check.py`.
+   - Data: >= 300 goals across the 5 main leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`) and
+     at least 3 seasons, comparing Understat's `minute` (`engine/data/processed/<league>/goals.parquet`)
+     with ESPN summary `keyEvents` (`scoringPlay`; `clock.value` in seconds, `clock.displayValue`,
+     `period.number`, fetched >= 1 s apart with `User-Agent: "BetPredz research"`, cached under
+     gitignored `engine/data/raw/espn/`).
+   - Determine the exact mapping between ESPN clock and Understat `minute` and how first-half stoppage
+     goals (`45+x`) are stored.
+   - Betpawa's 10-minute window is `"00:01-09:59"`: a goal counts if it is before `10:00` on the match
+     clock (`clock.value < 600` in period 1).
+   - Rule: Understat may be used for the 10-minute window and timing markets in task 20 only if the
+     mapping assigns >= 98% of the compared goals to the same side of `10:00` as ESPN, AND goal ORDER
+     agrees in >= 99% of compared matches. Otherwise task 20 uses only the HT/FT-based markets and
+     reports the timing ones as `INSUFFICIENT`.
+   - Report the agreement tables and every disagreement example (match, ESPN seconds, Understat minute).
+20. **Goal-timing and half markets backtest** (PRE-REGISTERED 2026-11-07, before results; research
+   backtest only, `python -m src.timing_half_markets_study`):
+   - Module `engine/src/timing_half_markets_study.py`, report
+     `engine/reports/timing_half_markets_study.md`, tests in
+     `engine/tests/test_timing_half_markets_study.py`.
+   - Markets: `first_goal_home`, `first_goal_away`, `interval_10_home`, `interval_10_draw`,
+     `interval_10_away` (5 main leagues, goal minutes from reconciled `goals.parquet` and
+     `matches.parquet` 2014/15+, only if task 19 passes; otherwise `INSUFFICIENT`);
+     `home_score_both_halves`, `away_score_both_halves`, `home_win_both_halves`,
+     `away_win_both_halves`, `home_fh_over_0.5`, `away_fh_over_0.5`, `home_sh_over_0.5`,
+     `away_sh_over_0.5` (all 9 live leagues, HT/FT scores 2014/15+).
+   - Raw probability from `accumulators.bookmaker_implied` lambdas (league rho), as in task 16:
+     first-half share `s` and 10-minute share `w` (fraction of all goals scored before `10:00`) per
+     league from EARLIER seasons only; each team's goals in a period ~ `Poisson(share * lambda)`,
+     independent; `first_goal_home = lambda_h / (lambda_h + lambda_a) * (1 - P(no goal))` (mirror for
+     `first_goal_away`). Outcomes from goal order / HT-FT.
+   - Synthetic known-answer tests before real data (fixed lambdas: exact formulas, and a simulated
+     league where the answer is known).
+   - Calibration and judgement: Platt (`LogisticRegression(C=1.0)` on `logit(raw)`) per league x
+     market, walk-forward by season; `market_gates.evaluate` unchanged (one-sided C1-C4, >= 300 legs,
+     seed 20261029), `bookmaker_probability = raw`. Judged on `2024/25+` (primary) AND on
+     `2019/20-2023/24` (replication, each season scored with a calibrator fitted on earlier seasons
+     only). `"Strong candidate"` = `PASS` in both periods; otherwise stays out. No live change.
+21. **Replication of tasks 16 and 17 on 2019/20-2023/24** (PRE-REGISTERED 2026-11-07, before results;
+   research backtest only, `python -m src.replicate_tasks_16_17`):
+   - Module `engine/src/replicate_tasks_16_17.py`, report
+     `engine/reports/tasks_16_17_replication.md`, tests in
+     `engine/tests/test_replicate_tasks_16_17.py`.
+   - Re-judge the markets of task 16 (9 leagues x 6 half markets = 54 pairs) and task 17 (5 main
+     leagues x 5 UP markets = 25 pairs) on `2019/20-2023/24` with the exact same code and rules (no
+     other change; each season calibrated on earlier seasons only with `LogisticRegression(C=1.0)` on
+     `logit(raw)`, judged with `market_gates.evaluate` unchanged, seed 20261029).
+   - Report `PASS`/`FAIL` per pair across both periods (`2024/25+` and `2019/20-2023/24`); `"Strong
+     candidate"` = `PASS` in both periods. Do not change the earlier reports' numbers. No live change.
+22. **Simulated Betpawa-price value check** (PRE-REGISTERED 2026-11-07, before results; clearly
+   labelled `SIMULATED`, never `"real prices"`, `python -m src.simulated_value_study`):
+   - Module `engine/src/simulated_value_study.py`, report `engine/reports/simulated_value_study.md`,
+     tests in `engine/tests/test_simulated_value_study.py`.
+   - From `engine/data/live/prices` (last pre-kickoff snapshot per match) and the archived consensus
+     fair probabilities (same reconstruction as task 15), compute per research market the ratio
+     `r = (1 / Betpawa odds) / raw_consensus_probability`. Report median, 25th and 75th percentile,
+     and `n`. Fewer than 50 priced matches for a market = `INSUFFICIENT` for that market.
+   - For each market with `r` (`n >= 50`), over the historical matches of tasks 16/17/20 (`2014/15+`):
+     simulated return per unit = `mean(won / (raw * r)) - 1`, with 95% CI by bootstrap of whole days
+     (2,000 resamples, seed 20261029), pooled and per league, also at the 25th and 75th percentile `r`
+     (sensitivity).
+   - Decision rule: report only. A market whose CI lower bound is above 0 at the median `r` AND the
+     75th percentile `r` becomes `"priority for the real-price test"`; nothing enters slips from this
+     task.
+
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
 outcomes for already published picks without changing any study decision below.
@@ -624,6 +715,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Pre-registered tasks 18 (Betpawa market catalogue and additional research price
+  logging), 19 (Understat vs ESPN goal-minute accuracy check), 20 (goal-timing and half markets
+  backtest on 2024/25+ and 2019/20-2023/24 replication), 21 (2019/20-2023/24 replication of tasks 16
+  and 17), and 22 (simulated Betpawa-price value check) in PROJECT.md before computing any results.
 - 2026-11-07: Added league flags for Netherlands, Belgium, Portugal and Turkey (`web/src/badges.tsx`;
   they showed a grey box). Checked all 168 team names in the published data and archive: every one
   has a badge URL, all 173 URLs load a real image and all 148 ESPN images are distinct.

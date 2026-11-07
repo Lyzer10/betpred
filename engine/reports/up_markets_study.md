@@ -39,29 +39,29 @@ Matches missing average odds or failing exact goal-count reconciliation with `go
 |---|---|---:|---:|---:|---:|---|---|
 | EPL | dc1up_1x | 830 | 0.7410 | 0.7398 | 1.31 | **PASS** | eligible pending real Betpawa prices |
 | EPL | dc1up_x2 | 830 | 0.6305 | 0.6627 | 1.55 | **PASS** | eligible pending real Betpawa prices |
-| EPL | dc1up_12 | 830 | 0.9466 | 0.9422 | 1.06 | **PASS** | eligible pending real Betpawa prices |
+| EPL | dc1up_12 | 830 | 0.9462 | 0.9422 | 1.06 | **PASS** | eligible pending real Betpawa prices |
 | EPL | home_2up | 830 | 0.4680 | 0.4337 | 2.19 | **FAIL** | stays out |
 | EPL | away_2up | 830 | 0.3418 | 0.3434 | 3.10 | **PASS** | eligible pending real Betpawa prices |
 | LALIGA | dc1up_1x | 805 | 0.7572 | 0.7801 | 1.29 | **PASS** | eligible pending real Betpawa prices |
 | LALIGA | dc1up_x2 | 805 | 0.6192 | 0.6037 | 1.57 | **PASS** | eligible pending real Betpawa prices |
-| LALIGA | dc1up_12 | 805 | 0.9208 | 0.9453 | 1.09 | **PASS** | eligible pending real Betpawa prices |
-| LALIGA | home_2up | 805 | 0.4627 | 0.4807 | 2.27 | **PASS** | eligible pending real Betpawa prices |
+| LALIGA | dc1up_12 | 805 | 0.9209 | 0.9453 | 1.09 | **PASS** | eligible pending real Betpawa prices |
+| LALIGA | home_2up | 805 | 0.4628 | 0.4807 | 2.27 | **PASS** | eligible pending real Betpawa prices |
 | LALIGA | away_2up | 805 | 0.3027 | 0.3006 | 3.58 | **PASS** | eligible pending real Betpawa prices |
 | SERIEA | dc1up_1x | 803 | 0.7351 | 0.7173 | 1.30 | **PASS** | eligible pending real Betpawa prices |
 | SERIEA | dc1up_x2 | 803 | 0.6530 | 0.6588 | 1.49 | **PASS** | eligible pending real Betpawa prices |
-| SERIEA | dc1up_12 | 803 | 0.9196 | 0.9191 | 1.09 | **PASS** | eligible pending real Betpawa prices |
-| SERIEA | home_2up | 803 | 0.4233 | 0.4159 | 2.45 | **PASS** | eligible pending real Betpawa prices |
+| SERIEA | dc1up_12 | 803 | 0.9202 | 0.9191 | 1.09 | **PASS** | eligible pending real Betpawa prices |
+| SERIEA | home_2up | 803 | 0.4234 | 0.4159 | 2.45 | **PASS** | eligible pending real Betpawa prices |
 | SERIEA | away_2up | 803 | 0.3381 | 0.3624 | 3.25 | **PASS** | eligible pending real Betpawa prices |
 | BUNDES | dc1up_1x | 638 | 0.7542 | 0.7429 | 1.30 | **PASS** | eligible pending real Betpawa prices |
 | BUNDES | dc1up_x2 | 638 | 0.6220 | 0.6458 | 1.57 | **PASS** | eligible pending real Betpawa prices |
-| BUNDES | dc1up_12 | 638 | 0.9479 | 0.9404 | 1.05 | **PASS** | eligible pending real Betpawa prices |
-| BUNDES | home_2up | 638 | 0.4755 | 0.4561 | 2.17 | **PASS** | eligible pending real Betpawa prices |
+| BUNDES | dc1up_12 | 638 | 0.9475 | 0.9404 | 1.05 | **PASS** | eligible pending real Betpawa prices |
+| BUNDES | home_2up | 638 | 0.4754 | 0.4561 | 2.17 | **PASS** | eligible pending real Betpawa prices |
 | BUNDES | away_2up | 638 | 0.3251 | 0.3589 | 3.23 | **PASS** | eligible pending real Betpawa prices |
-| LIGUE1 | dc1up_1x | 638 | 0.7339 | 0.7304 | 1.31 | **PASS** | eligible pending real Betpawa prices |
+| LIGUE1 | dc1up_1x | 638 | 0.7340 | 0.7304 | 1.31 | **PASS** | eligible pending real Betpawa prices |
 | LIGUE1 | dc1up_x2 | 638 | 0.6408 | 0.6254 | 1.53 | **PASS** | eligible pending real Betpawa prices |
-| LIGUE1 | dc1up_12 | 638 | 0.9437 | 0.9342 | 1.06 | **PASS** | eligible pending real Betpawa prices |
+| LIGUE1 | dc1up_12 | 638 | 0.9430 | 0.9342 | 1.06 | **PASS** | eligible pending real Betpawa prices |
 | LIGUE1 | home_2up | 638 | 0.4559 | 0.4718 | 2.21 | **PASS** | eligible pending real Betpawa prices |
-| LIGUE1 | away_2up | 638 | 0.3453 | 0.3386 | 3.10 | **PASS** | eligible pending real Betpawa prices |
+| LIGUE1 | away_2up | 638 | 0.3452 | 0.3386 | 3.10 | **PASS** | eligible pending real Betpawa prices |
 
 Summary: **24 PASS / 1 FAIL** across 25 league x market pairs.
 
@@ -109,19 +109,19 @@ Gate details:
     "market": "dc1up_1x",
     "n": 830,
     "status": "PASS",
-    "C1_slope": 1.047,
+    "C1_slope": 1.05,
     "C1_ci": [
-      0.822,
-      1.272
+      0.825,
+      1.275
     ],
     "C1": true,
     "C2_level": -0.0012,
     "C2_ci": [
-      -0.0294,
+      -0.0293,
       0.0258
     ],
     "C2": true,
-    "C3_min_z": -1.3,
+    "C3_min_z": -1.56,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
@@ -141,10 +141,10 @@ Gate details:
     "market": "dc1up_x2",
     "n": 830,
     "status": "PASS",
-    "C1_slope": 0.95,
+    "C1_slope": 0.952,
     "C1_ci": [
-      0.73,
-      1.169
+      0.732,
+      1.172
     ],
     "C1": true,
     "C2_level": 0.0321,
@@ -153,12 +153,12 @@ Gate details:
       0.0651
     ],
     "C2": true,
-    "C3_min_z": -0.04,
+    "C3_min_z": -0.03,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": -0.0005,
+    "logloss_vs_book": -0.0006,
     "logloss_vs_book_ci": [
       -0.0018,
       0.0007
@@ -173,29 +173,29 @@ Gate details:
     "market": "dc1up_12",
     "n": 830,
     "status": "PASS",
-    "C1_slope": 0.816,
+    "C1_slope": 0.847,
     "C1_ci": [
-      0.026,
-      1.606
+      0.027,
+      1.667
     ],
     "C1": true,
-    "C2_level": -0.0044,
+    "C2_level": -0.004,
     "C2_ci": [
-      -0.0209,
-      0.0123
+      -0.0205,
+      0.0127
     ],
     "C2": true,
-    "C3_min_z": -1.75,
+    "C3_min_z": -1.7,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": 0.0003,
+    "logloss_vs_book": 0.0002,
     "logloss_vs_book_ci": [
-      -0.0011,
-      0.0019
+      -0.001,
+      0.0016
     ],
-    "mean_p": 0.9466,
+    "mean_p": 0.9462,
     "actual": 0.9422,
     "fair_odds": 1.06,
     "eligibility": "eligible pending real Betpawa prices"
@@ -205,10 +205,10 @@ Gate details:
     "market": "home_2up",
     "n": 830,
     "status": "FAIL",
-    "C1_slope": 1.045,
+    "C1_slope": 1.048,
     "C1_ci": [
-      0.842,
-      1.249
+      0.844,
+      1.251
     ],
     "C1": true,
     "C2_level": -0.0343,
@@ -217,15 +217,15 @@ Gate details:
       -0.0041
     ],
     "C2": false,
-    "C3_min_z": -1.79,
+    "C3_min_z": -1.8,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": 0.0004,
+    "logloss_vs_book": 0.0005,
     "logloss_vs_book_ci": [
       -0.0009,
-      0.0019
+      0.0018
     ],
     "mean_p": 0.468,
     "actual": 0.4337,
@@ -237,26 +237,26 @@ Gate details:
     "market": "away_2up",
     "n": 830,
     "status": "PASS",
-    "C1_slope": 0.984,
+    "C1_slope": 0.986,
     "C1_ci": [
-      0.78,
-      1.188
+      0.782,
+      1.191
     ],
     "C1": true,
     "C2_level": 0.0015,
     "C2_ci": [
       -0.0308,
-      0.032
+      0.0321
     ],
     "C2": true,
-    "C3_min_z": -0.89,
+    "C3_min_z": -0.88,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
     "logloss_vs_book": 0.0001,
     "logloss_vs_book_ci": [
-      -0.0011,
+      -0.001,
       0.0013
     ],
     "mean_p": 0.3418,
@@ -269,26 +269,26 @@ Gate details:
     "market": "dc1up_1x",
     "n": 805,
     "status": "PASS",
-    "C1_slope": 1.099,
+    "C1_slope": 1.103,
     "C1_ci": [
-      0.848,
-      1.351
+      0.851,
+      1.355
     ],
     "C1": true,
-    "C2_level": 0.0229,
+    "C2_level": 0.023,
     "C2_ci": [
       -0.0032,
-      0.0516
+      0.0517
     ],
     "C2": true,
-    "C3_min_z": -0.45,
+    "C3_min_z": -0.43,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
     "logloss_vs_book": -0.0039,
     "logloss_vs_book_ci": [
-      -0.007,
+      -0.0069,
       -0.0009
     ],
     "mean_p": 0.7572,
@@ -301,26 +301,26 @@ Gate details:
     "market": "dc1up_x2",
     "n": 805,
     "status": "PASS",
-    "C1_slope": 1.069,
+    "C1_slope": 1.072,
     "C1_ci": [
-      0.848,
-      1.289
+      0.85,
+      1.293
     ],
     "C1": true,
     "C2_level": -0.0155,
     "C2_ci": [
       -0.0432,
-      0.0144
+      0.0145
     ],
     "C2": true,
-    "C3_min_z": -1.49,
+    "C3_min_z": -1.5,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
     "logloss_vs_book": -0.0014,
     "logloss_vs_book_ci": [
-      -0.0045,
+      -0.0044,
       0.0018
     ],
     "mean_p": 0.6192,
@@ -333,10 +333,10 @@ Gate details:
     "market": "dc1up_12",
     "n": 805,
     "status": "PASS",
-    "C1_slope": 1.322,
+    "C1_slope": 1.354,
     "C1_ci": [
-      0.517,
-      2.127
+      0.529,
+      2.179
     ],
     "C1": true,
     "C2_level": 0.0245,
@@ -345,17 +345,17 @@ Gate details:
       0.0402
     ],
     "C2": true,
-    "C3_min_z": -1.71,
+    "C3_min_z": -1.7,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": -0.0003,
+    "logloss_vs_book": -0.0002,
     "logloss_vs_book_ci": [
       -0.0009,
       0.0005
     ],
-    "mean_p": 0.9208,
+    "mean_p": 0.9209,
     "actual": 0.9453,
     "fair_odds": 1.09,
     "eligibility": "eligible pending real Betpawa prices"
@@ -365,10 +365,10 @@ Gate details:
     "market": "home_2up",
     "n": 805,
     "status": "PASS",
-    "C1_slope": 1.156,
+    "C1_slope": 1.159,
     "C1_ci": [
-      0.939,
-      1.373
+      0.941,
+      1.377
     ],
     "C1": true,
     "C2_level": 0.018,
@@ -377,17 +377,17 @@ Gate details:
       0.0472
     ],
     "C2": true,
-    "C3_min_z": -1.51,
+    "C3_min_z": -1.5,
     "C3": true,
-    "C4_lifted_legs": 84,
-    "C4_z": 2.01,
+    "C4_lifted_legs": 79,
+    "C4_z": 1.73,
     "C4": true,
     "logloss_vs_book": -0.0031,
     "logloss_vs_book_ci": [
-      -0.0057,
-      -0.0004
+      -0.0056,
+      -0.0005
     ],
-    "mean_p": 0.4627,
+    "mean_p": 0.4628,
     "actual": 0.4807,
     "fair_odds": 2.27,
     "eligibility": "eligible pending real Betpawa prices"
@@ -397,10 +397,10 @@ Gate details:
     "market": "away_2up",
     "n": 805,
     "status": "PASS",
-    "C1_slope": 1.046,
+    "C1_slope": 1.049,
     "C1_ci": [
-      0.827,
-      1.264
+      0.83,
+      1.268
     ],
     "C1": true,
     "C2_level": -0.002,
@@ -414,10 +414,10 @@ Gate details:
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": -0.0017,
+    "logloss_vs_book": -0.0016,
     "logloss_vs_book_ci": [
-      -0.0049,
-      0.0016
+      -0.0048,
+      0.0015
     ],
     "mean_p": 0.3027,
     "actual": 0.3006,
@@ -429,10 +429,10 @@ Gate details:
     "market": "dc1up_1x",
     "n": 803,
     "status": "PASS",
-    "C1_slope": 1.116,
+    "C1_slope": 1.119,
     "C1_ci": [
-      0.905,
-      1.326
+      0.908,
+      1.33
     ],
     "C1": true,
     "C2_level": -0.0178,
@@ -441,14 +441,14 @@ Gate details:
       0.0134
     ],
     "C2": true,
-    "C3_min_z": -1.2,
+    "C3_min_z": -1.29,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": -0.003,
+    "logloss_vs_book": -0.0029,
     "logloss_vs_book_ci": [
-      -0.0064,
+      -0.0063,
       0.0007
     ],
     "mean_p": 0.7351,
@@ -461,10 +461,10 @@ Gate details:
     "market": "dc1up_x2",
     "n": 803,
     "status": "PASS",
-    "C1_slope": 0.943,
+    "C1_slope": 0.945,
     "C1_ci": [
-      0.748,
-      1.137
+      0.75,
+      1.14
     ],
     "C1": true,
     "C2_level": 0.0058,
@@ -473,15 +473,15 @@ Gate details:
       0.0354
     ],
     "C2": true,
-    "C3_min_z": -1.84,
+    "C3_min_z": -1.82,
     "C3": true,
-    "C4_lifted_legs": 409,
-    "C4_z": 0.12,
+    "C4_lifted_legs": 407,
+    "C4_z": 0.05,
     "C4": true,
     "logloss_vs_book": -0.0022,
     "logloss_vs_book_ci": [
       -0.0073,
-      0.0028
+      0.0027
     ],
     "mean_p": 0.653,
     "actual": 0.6588,
@@ -493,29 +493,29 @@ Gate details:
     "market": "dc1up_12",
     "n": 803,
     "status": "PASS",
-    "C1_slope": 1.309,
+    "C1_slope": 1.364,
     "C1_ci": [
-      0.375,
-      2.244
+      0.39,
+      2.339
     ],
     "C1": true,
-    "C2_level": -0.0006,
+    "C2_level": -0.0011,
     "C2_ci": [
-      -0.0206,
-      0.018
+      -0.0212,
+      0.0175
     ],
     "C2": true,
-    "C3_min_z": -2.06,
+    "C3_min_z": -2.11,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": -0.0,
+    "logloss_vs_book": 0.0001,
     "logloss_vs_book_ci": [
       -0.0013,
-      0.0013
+      0.0015
     ],
-    "mean_p": 0.9196,
+    "mean_p": 0.9202,
     "actual": 0.9191,
     "fair_odds": 1.09,
     "eligibility": "eligible pending real Betpawa prices"
@@ -525,10 +525,10 @@ Gate details:
     "market": "home_2up",
     "n": 803,
     "status": "PASS",
-    "C1_slope": 1.012,
+    "C1_slope": 1.014,
     "C1_ci": [
-      0.828,
-      1.196
+      0.83,
+      1.199
     ],
     "C1": true,
     "C2_level": -0.0074,
@@ -537,17 +537,17 @@ Gate details:
       0.0231
     ],
     "C2": true,
-    "C3_min_z": -1.37,
+    "C3_min_z": -1.38,
     "C3": true,
-    "C4_lifted_legs": 66,
-    "C4_z": -0.4,
+    "C4_lifted_legs": 61,
+    "C4_z": -0.49,
     "C4": true,
     "logloss_vs_book": -0.0032,
     "logloss_vs_book_ci": [
-      -0.0078,
-      0.002
+      -0.0077,
+      0.0019
     ],
-    "mean_p": 0.4233,
+    "mean_p": 0.4234,
     "actual": 0.4159,
     "fair_odds": 2.45,
     "eligibility": "eligible pending real Betpawa prices"
@@ -557,27 +557,27 @@ Gate details:
     "market": "away_2up",
     "n": 803,
     "status": "PASS",
-    "C1_slope": 1.023,
+    "C1_slope": 1.026,
     "C1_ci": [
-      0.837,
-      1.21
+      0.839,
+      1.213
     ],
     "C1": true,
     "C2_level": 0.0243,
     "C2_ci": [
-      -0.0092,
+      -0.0091,
       0.0575
     ],
     "C2": true,
     "C3_min_z": -0.38,
     "C3": true,
     "C4_lifted_legs": 185,
-    "C4_z": 1.73,
+    "C4_z": 1.74,
     "C4": true,
     "logloss_vs_book": -0.0034,
     "logloss_vs_book_ci": [
-      -0.0077,
-      0.0009
+      -0.0076,
+      0.0008
     ],
     "mean_p": 0.3381,
     "actual": 0.3624,
@@ -589,10 +589,10 @@ Gate details:
     "market": "dc1up_1x",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 1.131,
+    "C1_slope": 1.135,
     "C1_ci": [
-      0.86,
-      1.401
+      0.863,
+      1.406
     ],
     "C1": true,
     "C2_level": -0.0113,
@@ -608,7 +608,7 @@ Gate details:
     "C4": true,
     "logloss_vs_book": -0.0001,
     "logloss_vs_book_ci": [
-      -0.0022,
+      -0.002,
       0.0019
     ],
     "mean_p": 0.7542,
@@ -621,10 +621,10 @@ Gate details:
     "market": "dc1up_x2",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 1.334,
+    "C1_slope": 1.338,
     "C1_ci": [
-      1.032,
-      1.636
+      1.035,
+      1.64
     ],
     "C1": true,
     "C2_level": 0.0238,
@@ -641,7 +641,7 @@ Gate details:
     "logloss_vs_book": 0.003,
     "logloss_vs_book_ci": [
       0.001,
-      0.005
+      0.0051
     ],
     "mean_p": 0.622,
     "actual": 0.6458,
@@ -653,29 +653,29 @@ Gate details:
     "market": "dc1up_12",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 1.116,
+    "C1_slope": 1.174,
     "C1_ci": [
-      0.366,
-      1.867
+      0.384,
+      1.965
     ],
     "C1": true,
-    "C2_level": -0.0074,
+    "C2_level": -0.0071,
     "C2_ci": [
-      -0.0268,
-      0.0098
+      -0.0265,
+      0.0102
     ],
     "C2": true,
-    "C3_min_z": -1.27,
+    "C3_min_z": -1.25,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
     "logloss_vs_book": 0.0001,
     "logloss_vs_book_ci": [
-      -0.0028,
-      0.0031
+      -0.0024,
+      0.0028
     ],
-    "mean_p": 0.9479,
+    "mean_p": 0.9475,
     "actual": 0.9404,
     "fair_odds": 1.05,
     "eligibility": "eligible pending real Betpawa prices"
@@ -685,10 +685,10 @@ Gate details:
     "market": "home_2up",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 1.394,
+    "C1_slope": 1.398,
     "C1_ci": [
-      1.108,
-      1.679
+      1.111,
+      1.684
     ],
     "C1": true,
     "C2_level": -0.0193,
@@ -702,12 +702,12 @@ Gate details:
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": 0.0028,
+    "logloss_vs_book": 0.0029,
     "logloss_vs_book_ci": [
-      0.0009,
-      0.0048
+      0.001,
+      0.0049
     ],
-    "mean_p": 0.4755,
+    "mean_p": 0.4754,
     "actual": 0.4561,
     "fair_odds": 2.17,
     "eligibility": "eligible pending real Betpawa prices"
@@ -717,10 +717,10 @@ Gate details:
     "market": "away_2up",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 0.921,
+    "C1_slope": 0.924,
     "C1_ci": [
-      0.688,
-      1.154
+      0.69,
+      1.157
     ],
     "C1": true,
     "C2_level": 0.0339,
@@ -737,7 +737,7 @@ Gate details:
     "logloss_vs_book": 0.0022,
     "logloss_vs_book_ci": [
       0.0002,
-      0.0042
+      0.0041
     ],
     "mean_p": 0.3251,
     "actual": 0.3589,
@@ -749,10 +749,10 @@ Gate details:
     "market": "dc1up_1x",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 0.919,
+    "C1_slope": 0.922,
     "C1_ci": [
-      0.683,
-      1.154
+      0.686,
+      1.158
     ],
     "C1": true,
     "C2_level": -0.0035,
@@ -761,17 +761,17 @@ Gate details:
       0.0311
     ],
     "C2": true,
-    "C3_min_z": -1.22,
+    "C3_min_z": -1.2,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": 0.0003,
+    "logloss_vs_book": 0.0002,
     "logloss_vs_book_ci": [
       -0.0031,
-      0.0041
+      0.0039
     ],
-    "mean_p": 0.7339,
+    "mean_p": 0.734,
     "actual": 0.7304,
     "fair_odds": 1.31,
     "eligibility": "eligible pending real Betpawa prices"
@@ -781,27 +781,27 @@ Gate details:
     "market": "dc1up_x2",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 0.889,
+    "C1_slope": 0.893,
     "C1_ci": [
-      0.659,
-      1.12
+      0.662,
+      1.124
     ],
     "C1": true,
     "C2_level": -0.0154,
     "C2_ci": [
       -0.0501,
-      0.0206
+      0.0207
     ],
     "C2": true,
-    "C3_min_z": -1.89,
+    "C3_min_z": -1.9,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
     "logloss_vs_book": 0.0012,
     "logloss_vs_book_ci": [
-      -0.0019,
-      0.0045
+      -0.0018,
+      0.0043
     ],
     "mean_p": 0.6408,
     "actual": 0.6254,
@@ -813,29 +813,29 @@ Gate details:
     "market": "dc1up_12",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 1.143,
+    "C1_slope": 1.187,
     "C1_ci": [
-      0.206,
-      2.08
+      0.212,
+      2.161
     ],
     "C1": true,
-    "C2_level": -0.0095,
+    "C2_level": -0.0089,
     "C2_ci": [
-      -0.032,
-      0.0113
+      -0.0314,
+      0.0119
     ],
     "C2": true,
-    "C3_min_z": -2.01,
+    "C3_min_z": -2.51,
     "C3": true,
     "C4_lifted_legs": 0,
     "C4_z": null,
     "C4": true,
-    "logloss_vs_book": 0.0007,
+    "logloss_vs_book": 0.0006,
     "logloss_vs_book_ci": [
-      -0.003,
-      0.0047
+      -0.0027,
+      0.0044
     ],
-    "mean_p": 0.9437,
+    "mean_p": 0.943,
     "actual": 0.9342,
     "fair_odds": 1.06,
     "eligibility": "eligible pending real Betpawa prices"
@@ -845,27 +845,27 @@ Gate details:
     "market": "home_2up",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 0.901,
+    "C1_slope": 0.904,
     "C1_ci": [
-      0.691,
-      1.112
+      0.693,
+      1.115
     ],
     "C1": true,
     "C2_level": 0.0159,
     "C2_ci": [
       -0.0213,
-      0.0516
+      0.0517
     ],
     "C2": true,
     "C3_min_z": -0.67,
     "C3": true,
-    "C4_lifted_legs": 85,
-    "C4_z": 0.5,
+    "C4_lifted_legs": 81,
+    "C4_z": 0.27,
     "C4": true,
     "logloss_vs_book": 0.0004,
     "logloss_vs_book_ci": [
-      -0.003,
-      0.0042
+      -0.0029,
+      0.0041
     ],
     "mean_p": 0.4559,
     "actual": 0.4718,
@@ -877,29 +877,29 @@ Gate details:
     "market": "away_2up",
     "n": 638,
     "status": "PASS",
-    "C1_slope": 0.953,
+    "C1_slope": 0.956,
     "C1_ci": [
-      0.725,
-      1.18
+      0.727,
+      1.184
     ],
     "C1": true,
-    "C2_level": -0.0068,
+    "C2_level": -0.0067,
     "C2_ci": [
-      -0.0389,
-      0.0315
+      -0.0388,
+      0.0316
     ],
     "C2": true,
     "C3_min_z": -1.36,
     "C3": true,
-    "C4_lifted_legs": 61,
-    "C4_z": -0.69,
+    "C4_lifted_legs": 56,
+    "C4_z": -0.71,
     "C4": true,
-    "logloss_vs_book": 0.0002,
+    "logloss_vs_book": 0.0001,
     "logloss_vs_book_ci": [
-      -0.0025,
-      0.0029
+      -0.0024,
+      0.0028
     ],
-    "mean_p": 0.3453,
+    "mean_p": 0.3452,
     "actual": 0.3386,
     "fair_odds": 3.1,
     "eligibility": "eligible pending real Betpawa prices"

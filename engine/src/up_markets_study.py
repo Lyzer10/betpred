@@ -13,10 +13,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .accumulators import PRIORS, bookmaker_implied
-from .dixon_coles import score_matrix
+from .accumulators import bookmaker_implied
 from .goal_timing import MAX_GOALS
-from .calibration import TEST_SEASONS, fit_calibrator
+from sklearn.linear_model import LogisticRegression
+
+from .calibration import TEST_SEASONS
+from .new_markets_study import _logit
 from .leagues import LEAGUES, paths
 from .market_gates import SEED, evaluate
 from .market_live import league_rho
@@ -283,8 +285,10 @@ def walk_forward_platt(frame: pd.DataFrame) -> pd.DataFrame:
         for market in MARKETS:
             raw_col = f"raw_{market}"
             act_col = f"actual_{market}"
-            cal = fit_calibrator(prior[raw_col], prior[act_col], "platt")
-            p_cal = np.clip(cal.predict(fold[raw_col]), 1e-6, 1.0 - 1e-6)
+            # Pre-registered Platt: LogisticRegression(C=1.0) on logit(raw), as in tasks 10 and 16.
+            cal = LogisticRegression(C=1.0, max_iter=1000).fit(
+                _logit(prior[raw_col]).reshape(-1, 1), prior[act_col])
+            p_cal = np.clip(cal.predict_proba(_logit(fold[raw_col]).reshape(-1, 1))[:, 1], 1e-6, 1.0 - 1e-6)
             for row, p_val, b_val, won in zip(
                 fold.itertuples(index=False),
                 p_cal,

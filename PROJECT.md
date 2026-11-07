@@ -149,6 +149,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Tasks 15-17 reviewed by Claude (reproduced exactly; task 17 calibration aligned to the
+  pre-registration, decisions unchanged). Next step for all candidate markets: collect >= 300 settled
+  Betpawa-priced legs per market (logging is live since 21e66d1), then judge them with real prices.
+  Watch: Betpawa 2UP looks priced near zero margin vs ~4% on 1X2 (29 matches, 2026-11-07).
 - Task 17 Double Chance 1UP and 1X2 2UP backtest (`reports/up_markets_study.md`, five main leagues):
   **24 PASS / 1 FAIL** across 25 league x market pairs on 2024/25+ (`EPL` 4/5, `LALIGA` 5/5, `SERIEA`
   5/5, `BUNDES` 5/5, `LIGUE1` 5/5). Only `EPL home_2up` failed (C2 level -0.0343, CI [-0.0657, -0.0041])
@@ -620,6 +624,14 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Claude reviewed tasks 15-17. All three reports reproduced byte for byte; 168 tests
+  pass. Fixed task 17 to use the pre-registered Platt (`LogisticRegression(C=1.0)`; it had used
+  `calibration.fit_calibrator`, C=1e6): probabilities moved by at most 0.0007, all 25 decisions
+  unchanged. Task 15 report text no longer hard-codes counts. Independent check of the new market
+  definitions on 29 real Betpawa matches (2026-11-07): our model probability built from Betpawa's
+  own 1X2 + over/under 2.5 sits just below Betpawa's implied probability in every market (median
+  ratio 1.00-1.10, i.e. Betpawa's margin), so no definition is wrong. Observation to test later,
+  not a decision: 2UP is priced at about zero margin (ratio 1.00-1.01) while 1X2 carries about 4%.
 - 2026-11-07: Completed task 17 (`src/up_markets_study.py`, `reports/up_markets_study.md`,
   `tests/test_up_markets_study.py`): backtested `dc1up_1x`, `dc1up_x2`, `dc1up_12`, `home_2up`,
   `away_2up` across the five main leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`) on 2024/25+

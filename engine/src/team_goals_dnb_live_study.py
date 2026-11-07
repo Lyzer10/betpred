@@ -173,12 +173,18 @@ def main() -> None:
     legs = build_settled_priced_legs(settled_predictions(), load_prices(), models)
     summaries = summarize_markets(legs)
     matches_n = int(legs[["home", "away", "kickoff_utc"]].drop_duplicates().shape[0]) if not legs.empty else 0
+    keys = ["home", "away", "kickoff_utc"]
+    drawn_n = (int(len(legs[keys].drop_duplicates()) - len(legs[legs.market.str.startswith("dnb_")][keys].drop_duplicates()))
+               if not legs.empty else 0)
+    counts = [s["legs"] for s in summaries]
+    needs = [s["still_needed"] for s in summaries]
+    statuses = sorted({s["status"] for s in summaries})
     lines = [
         "# Team goals and Draw No Bet with real Betpawa prices (PROJECT.md task 15, pre-registered 2026-11-07)",
         "",
         f"Settled archived matches with logged pre-kickoff Betpawa prices: **{matches_n}** matches, **{len(legs)}** scored legs.",
         "Platt calibrators fitted per league x market on seasons before 2026/27 only (`LogisticRegression(C=1.0)` on `logit(raw)`).",
-        "Draw No Bet (`dnb_home`, `dnb_away`) is scored on non-drawn matches only (13 drawn matches refunded).",
+        f"Draw No Bet (`dnb_home`, `dnb_away`) is scored on non-drawn matches only (about {drawn_n} matches without a DNB leg: drawn, i.e. refunded, or DNB not priced).",
         "Margin column reports mean(`1 / betpawa_odds - probability`) for every market (and for DNB also the exact two-way bookmaker overround `1/odds_home + 1/odds_away - 1` because both sides are logged; Betpawa team-total Under prices are not logged).",
         "",
         "| Market | Settled legs | Still needed (to 300) | Our mean p | Actual win rate (95% Wilson CI) | Betpawa mean implied p | Mean margin vs our p (2-way DNB) | Value legs (edge >= 3%) | Value return / unit | Level gap (95% CI) | Status |",
@@ -199,9 +205,9 @@ def main() -> None:
         "",
         "## Decision",
         "",
-        "None yet (`INSUFFICIENT` on all 6 markets). Every market has between 84 and 97 settled priced legs so far "
-        "(still needing 203 to 216 legs to reach the 300-leg minimum). The one-sided level check (95% CI upper bound >= 0) "
-        "is currently above zero on all 6 markets, but no market may enter slips until it has >= 300 settled priced legs.",
+        f"Statuses: {', '.join(statuses)}. Settled priced legs per market: {min(counts)} to {max(counts)} "
+        f"(still needing {min(needs)} to {max(needs)} to reach the {MIN_LEGS}-leg minimum). "
+        f"No market may enter slips until it has >= {MIN_LEGS} settled priced legs and passes the one-sided level check.",
         "",
         "Details:",
         "```json",

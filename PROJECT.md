@@ -789,6 +789,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Added non-fatal badge coverage warning in `src/health.py` (`known_badge_teams`,
+  `missing_badge_teams`, wired into `health_check` and `src/predict.py` without changing `status` or
+  `stake_factor`) listing any team in published fixtures or tables without a badge in
+  `web/src/badgeUrls.json` or `PL_BADGE_IDS` in `web/src/badges.tsx`, plus tests in
+  `tests/test_health.py` verifying the badge warning and that every league country in `src/leagues.py`
+  has a flag `case` in `web/src/badges.tsx`.
 - 2026-11-07: Completed task 22 (`src/simulated_value_study.py`, `reports/simulated_value_study.md`,
   `tests/test_simulated_value_study.py`): computed pre-kickoff ratio `r = (1 / Betpawa odds) /
   raw_consensus_probability` across all 30 `RESEARCH_MARKETS` (`17` with `n >= 50`, `13` `INSUFFICIENT`)

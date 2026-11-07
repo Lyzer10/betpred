@@ -74,3 +74,35 @@ def test_slip_leg_monitor_counts_only_settled_legs():
     legs.append({"league": {"code": "EPL"}, "market": "home_win", "probability": 0.6, "won": None})
     rows = slip_leg_monitor([{"legs": legs}])
     assert rows[0]["n"] == 30 and rows[0]["actual"] == 0.6 and rows[0]["status"] == "ok"
+
+
+def test_missing_badge_warning_is_non_fatal_and_lists_unbadged_teams(capsys):
+    from src.health import health_check, known_badge_teams, missing_badge_teams
+
+    known = known_badge_teams()
+    assert "Arsenal" in known
+    fixtures = _fixtures(60, 0.6, 0.6, 0.6, np.random.default_rng(1))
+    slips = [{"status": "won", "win_probability": 0.4} for _ in range(40)]
+    pub_fixtures = [{"home": "Arsenal", "away": "Unbadged Athletic"}]
+    tables = {"EPL": [{"team": "Arsenal"}, {"team": "Mystery Rovers"}]}
+
+    missing = missing_badge_teams(pub_fixtures, tables, known=known)
+    assert missing == ["Mystery Rovers", "Unbadged Athletic"]
+
+    result = health_check(fixtures, slips, SLIP_MARKETS, tables=tables, published_fixtures=pub_fixtures)
+    assert result["status"] == "ok"
+    assert result["stake_factor"] == 1.0
+    assert result["missing_badges"] == ["Mystery Rovers", "Unbadged Athletic"]
+    out = capsys.readouterr().out
+    assert "Mystery Rovers" in out and "Unbadged Athletic" in out
+
+
+def test_every_league_country_has_flag_case_in_badges_tsx():
+    import re
+    from src.health import WEB_SRC
+    from src.leagues import LEAGUES
+
+    tsx = (WEB_SRC / "badges.tsx").read_text(encoding="utf-8")
+    flag_cases = set(re.findall(r'case\s+"([^"]+)"\s*:', tsx))
+    league_countries = {lg.country for lg in LEAGUES.values()}
+    assert league_countries <= flag_cases, f"Missing flag cases: {league_countries - flag_cases}"

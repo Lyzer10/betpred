@@ -137,10 +137,78 @@ def slip_leg_monitor(slips: list[dict]) -> list[dict]:
     return rows
 
 
-def health_check(fixtures: list[dict], slips: list[dict], slip_markets: tuple[str, ...]) -> dict:
+import json
+from pathlib import Path
+import re
+
+WEB_SRC = Path(__file__).resolve().parents[2] / "web" / "src"
+
+
+def known_badge_teams(web_src: Path = WEB_SRC) -> set[str]:
+    """Return all team names with a badge in web/src/badgeUrls.json or PL_BADGE_IDS in web/src/badges.tsx."""
+    known: set[str] = set()
+    try:
+        urls_path = web_src / "badgeUrls.json"
+        if urls_path.exists():
+            known.update(json.loads(urls_path.read_text(encoding="utf-8")).keys())
+        badges_path = web_src / "badges.tsx"
+        if badges_path.exists():
+            tsx = badges_path.read_text(encoding="utf-8")
+            m = re.search(r"const\s+PL_BADGE_IDS\s*:\s*Record<string,\s*number>\s*=\s*\{([^}]*)\}", tsx, re.S)
+            if m:
+                for hit in re.finditer(r'"([^"]+)"\s*:|([A-Za-z0-9_]+)\s*:', m.group(1)):
+                    name = hit.group(1) or hit.group(2)
+                    if name:
+                        known.add(name)
+    except Exception as exc:
+        print(f"Health warning: could not read badge definitions: {exc}")
+    return known
+
+
+def missing_badge_teams(
+    fixtures: list[dict] | None = None,
+    tables: dict[str, list[dict]] | None = None,
+    known: set[str] | None = None,
+) -> list[str]:
+    """Return sorted list of teams in fixtures/tables missing a badge (non-fatal)."""
+    try:
+        badge_set = known if known is not None else known_badge_teams()
+        if not badge_set:
+            return []
+        teams: set[str] = set()
+        for f in fixtures or ():
+            for side in ("home", "away"):
+                t = f.get(side)
+                if isinstance(t, str) and t:
+                    teams.add(t)
+        for rows in (tables or {}).values():
+            for row in rows or ():
+                t = row.get("team")
+                if isinstance(t, str) and t:
+                    teams.add(t)
+        missing = sorted(teams - badge_set)
+        if missing:
+            print(f"Health warning: teams without badge: {', '.join(missing)}")
+        return missing
+    except Exception as exc:
+        print(f"Health warning: badge check failed safely: {exc}")
+        return []
+
+
+def health_check(
+    fixtures: list[dict],
+    slips: list[dict],
+    slip_markets: tuple[str, ...],
+    tables: dict[str, list[dict]] | None = None,
+    published_fixtures: list[dict] | None = None,
+) -> dict:
     """fixtures: settled archived predictions (oldest first); slips: published slips with status."""
     recent = fixtures[-WINDOW_MATCHES:]
     checks = [_accuracy(recent), _calibration(recent, slip_markets), _slips(slips)]
     # Worst check wins; "insufficient" ranks lowest, so it only shows when no check has enough data.
     status = max((c["status"] for c in checks), key=_RANK.get)
-    return {"status": status, "stake_factor": STAKE_FACTOR[status], "checks": checks}
+    result = {"status": status, "stake_factor": STAKE_FACTOR[status], "checks": checks}
+    missing = missing_badge_teams([*(published_fixtures or ()), *fixtures], tables)
+    if missing:
+        result["missing_badges"] = missing
+    return result

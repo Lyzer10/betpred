@@ -933,7 +933,7 @@ def main() -> None:
     output["archive"] = settle_archive(all_matches)
     output["live_record"] = live_record()
     output["clv"] = clv_report(history)
-    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS) | {
+    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS, output["tables"], output["fixtures"]) | {
         "pairs": pairs, "slip_legs": slip_leg_monitor(history)}
     output["realised"] = realised_slips(history)
     print(f"Model health: {output['health']['status']}")

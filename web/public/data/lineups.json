@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-11-07T12:31:13.962614Z",
+ "generated_at": "2026-11-07T12:46:30.750300Z",
  "matches": [
   {
    "league": "EPL",
    "home": "Leeds",
    "away": "Tottenham",
    "home_lineup": {
-    "formation": "3-5-2",
+    "formation": "3-4-2-1",
     "starters": [
      {
       "name": "James Trafford",
@@ -45,12 +45,6 @@
       "formation_place": 7
      },
      {
-      "name": "Lukas Nmecha",
-      "number": "14",
-      "position": "AM",
-      "formation_place": 9
-     },
-     {
       "name": "Gabriel Gudmundsson",
       "number": "3",
       "position": "LM",
@@ -65,14 +59,20 @@
      {
       "name": "Dominic Calvert-Lewin",
       "number": "9",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Lukas Nmecha",
+      "number": "14",
       "position": "CF-L",
-      "formation_place": 10
+      "formation_place": 11
      },
      {
       "name": "Sean Longstaff",
       "number": "8",
       "position": "CF-R",
-      "formation_place": 11
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -133,7 +133,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-3",
     "starters": [
      {
       "name": "Antonín Kinsky",
@@ -168,20 +168,20 @@
      {
       "name": "Mateus Fernandes",
       "number": "18",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
-      "name": "Sandro Tonali",
-      "number": "16",
-      "position": "LM",
+      "position": "CM",
       "formation_place": 4
      },
      {
       "name": "Archie Gray",
       "number": "14",
-      "position": "RM",
+      "position": "LM",
       "formation_place": 8
+     },
+     {
+      "name": "Sandro Tonali",
+      "number": "16",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Omar Marmoush",
@@ -192,14 +192,14 @@
      {
       "name": "Mathys Tel",
       "number": "11",
-      "position": "AM-L",
+      "position": "LF",
       "formation_place": 11
      },
      {
       "name": "Mohammed Kudus",
       "number": "20",
-      "position": "AM-R",
-      "formation_place": 7
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [

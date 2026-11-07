@@ -754,6 +754,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      - Half markets settled per task 16 rules.
    - Reporting: python -m src.research_status writes engine/reports/research_status.md tabulating
      settled priced legs count across live 9 leagues, research 7 leagues, and total vs 300 target.
+   - Implementation & Verification (2026-11-08):
+     - Identified Betpawa competition IDs: E1 (12101), I2 (12241), D2 (12091), SP2 (12142), G1 (12332), SC0 (12281). F2 verified with 0 upcoming events / no active competition on Betpawa (safely set to None).
+     - Verified ESPN slugs: eng.2, ita.2, ger.2, fra.2, esp.2, gre.1, sco.1.
+     - Saved 6 real trimmed Betpawa event responses as test fixtures in `engine/tests/fixtures/research_leagues/`.
+     - Built `engine/src/research_aliases.json` with 225 exact, verified team name mappings across Betpawa, football-data, and ESPN.
+     - Implemented `engine/src/research_leagues.py` (collection with 48h horizon and >= 55 min debounce; settlement from ESPN scoreboard and summaries with 100% HT and goal-minute resolution).
+     - Integrated fail-safe call into `engine/src/predict.py` (reusing `_fixtures_csv()`).
+     - Implemented `engine/src/research_status.py` and generated `reports/research_status.md` and `engine/reports/research_status.md`.
+     - Initial live run stats: 493 Betpawa prices collected across 17 upcoming matches in 5 leagues (96.7% candidate market coverage); 34 completed matches settled across 7 leagues with 100% HT score and goal-minute resolution.
+     - Settled priced legs: all 30 candidate markets currently have < 300 settled priced legs (highest: away_over_1.5: 121, home_over_1.5: 121, away_over_0.5: 119, home_over_0.5: 116, dnb_home: 101, dnb_away: 101 in live leagues; 0 in research leagues as the 17 priced matches have not yet kicked off). Status: INSUFFICIENT for all 30 markets; live betting unchanged.
+     - Test verification: 7 dedicated unit tests pass in `tests/test_research_leagues.py`. Full test suite passes: 188 passed, 0 failures. No research league touches predictions.json, slips, best picks, tables, or models.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -817,6 +828,7 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Task 23 complete. Implemented extra research leagues price collection (7 leagues, 30 candidate markets) and settlement module (engine/src/research_leagues.py, engine/src/research_aliases.json), research status command (engine/src/research_status.py, reports/research_status.md), unit tests (tests/test_research_leagues.py), and fail-safe predict.py wiring. Initial live run collected 493 prices on 17 matches and settled 34 matches. Full test suite: 188 passed, 0 failures. Live betting unchanged.
 - 2026-11-08: Pre-register task 23 (extra research leagues price collection and settlement).
 - 2026-11-07: Claude reviewed tasks 18-22. Tests pass and all five reports reproduced byte for byte
   (sha256 identical). Independent boundary check of the task-19 minute mapping on 49 different goals

@@ -866,6 +866,12 @@ def main() -> None:
         log_research_prices(betpawa, now)
     except Exception as error:
         print(f"Research price logging unavailable ({error})")
+    try:
+        from .research_leagues import collect_research_prices, settle_research_events
+        collect_research_prices(now, _fixtures_csv())
+        settle_research_events(now)
+    except Exception as error:
+        print(f"Research leagues collection/settlement unavailable ({error})")
     if legs is not None:
         legs = attach_betpawa(legs, betpawa)
         legs["day"] = local_day(legs.kickoff_utc)

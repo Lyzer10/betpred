@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-11-04 (Africa/Dar_es_Salaam), by Codex.
+Last updated: 2026-11-07 (Africa/Dar_es_Salaam), by Gemini.
 
 ---
 
@@ -148,7 +148,13 @@ cd ..\web; npm ci; npm run dev                             # install exactly fro
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-11-04)
+## 5. Current status (2026-11-07)
+- Candidate market price logging expanded (research only, no live model or slip changes): verified
+  from real Betpawa responses across all nine leagues (`4958` first-half O/U -> `fh_over_0.5`,
+  `fh_over_1.5`; `4976` second-half O/U -> `sh_over_0.5`, `sh_over_1.5`; `80000` Double Chance 1UP ->
+  `dc1up_1x`, `dc1up_x2`, `dc1up_12`; `28000850` 1X2 2UP -> `home_2up`, `away_2up`; `1096806`/`1096809`
+  Win Either Half -> `home_win_either_half`, `away_win_either_half`; `28000173` 10-minute interval
+  1X2 -> `interval_10_draw` for `"X"`). Added to `RESEARCH_MARKETS` with real-fixture isolation tests.
 - Results repair: the Understat results endpoint returned HTML instead of JSON. The independent
   ESPN settlement step repaired 20 missing original-five results from 1 and 2 November, with all
   timing outcomes verified against complete goal sequences. All 21 scores checked independently
@@ -478,6 +484,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Expanded research-only Betpawa market parsing and price logging after verifying all
+  seven market families across real events from all nine leagues (`4958` first-half Over 0.5/1.5,
+  `4976` second-half Over 0.5/1.5, `80000` Double Chance 1UP `1X`/`X2`/`12`, `28000850` 1X2 2UP `1`/`2`,
+  `1096806`/`1096809` Win Either Half `Yes`, and `28000173` 10-minute interval `X` as `interval_10_draw`).
+  Trimmed real event 38292840 added to `tests/fixtures/betpawa_research.json`; parser and isolation
+  tests pass. No live model, gate or slip behavior changed.
 - 2026-11-04: Owner-authorized results repair and merge. Added independent ESPN settlement after
   full/final/price runs, complete-goal verification for 1Up/first scorer, exact competition/team/date
   matching, cached responses and outage-safe history. Backfilled 20 missing November results;

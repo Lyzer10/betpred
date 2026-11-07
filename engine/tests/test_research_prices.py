@@ -7,9 +7,10 @@ from src.betpawa import RESEARCH_MARKETS, parse_markets
 
 
 def test_real_event_research_markets():
-    # Event 38781890, fetched 2026-10-29 with the identified client. Fields deleted only.
+    # Events 38781890 (2026-10-29) and 38292840 (2026-11-07), fetched with the identified client. Fields deleted only.
     markets = json.loads((Path(__file__).parent / "fixtures" / "betpawa_research.json").read_text())
-    assert parse_markets(markets) == dict(zip(RESEARCH_MARKETS, (1.15, 1.7, 1.37, 2.71, 1.37, 2.84)))
+    expected = (1.15, 1.7, 1.37, 2.71, 1.37, 2.84, 1.37, 2.64, 1.24, 2.08, 1.16, 1.66, 1.03, 1.77, 4.57, 1.4, 2.46, 1.2)
+    assert parse_markets(markets) == dict(zip(RESEARCH_MARKETS, expected))
     assert not set(RESEARCH_MARKETS).intersection(SLIP_MARKETS)
     assert not set(RESEARCH_MARKETS).intersection(LEG_MARKETS)
 

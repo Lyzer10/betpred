@@ -31,7 +31,12 @@ HEADERS = {
     "User-Agent": "PL-Predictor/1.0 (personal odds research)",
 }
 PAUSE_SECONDS = 1.0
-RESEARCH_MARKETS = ("home_over_0.5", "home_over_1.5", "away_over_0.5", "away_over_1.5", "dnb_home", "dnb_away")
+RESEARCH_MARKETS = (
+    "home_over_0.5", "home_over_1.5", "away_over_0.5", "away_over_1.5", "dnb_home", "dnb_away",
+    "fh_over_0.5", "fh_over_1.5", "sh_over_0.5", "sh_over_1.5",
+    "dc1up_1x", "dc1up_x2", "dc1up_12", "home_2up", "away_2up",
+    "home_win_either_half", "away_win_either_half", "interval_10_draw",
+)
 
 
 def parse_markets(markets: list[dict]) -> dict[str, float]:
@@ -71,15 +76,29 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                 for name, key in (("1", "dnb_home"), ("2", "dnb_away")):
                     if name in prices:
                         take(key, prices[name])
-            elif type_id in ("5006", "5003") and handicap is not None:
+            elif type_id == "80000":
+                for name, key in (("1X", "dc1up_1x"), ("X2", "dc1up_x2"), ("12", "dc1up_12")):
+                    if name in prices:
+                        take(key, prices[name])
+            elif type_id == "28000850":
+                for name, key in (("1", "home_2up"), ("2", "away_2up")):
+                    if name in prices:
+                        take(key, prices[name])
+            elif type_id in ("1096806", "1096809"):
+                if "Yes" in prices:
+                    take("home_win_either_half" if type_id == "1096806" else "away_win_either_half", prices["Yes"])
+            elif type_id == "28000173":
+                if "X" in prices:
+                    take("interval_10_draw", prices["X"])
+            elif type_id in ("5006", "5003", "4958", "4976") and handicap is not None:
                 try:
                     line = float(handicap) / 4
                 except (TypeError, ValueError):
                     print(f"Research market {type_id}: invalid handicap; skipping row")
                     continue
                 if line in (0.5, 1.5) and "Over" in prices:
-                    side = "home" if type_id == "5006" else "away"
-                    take(f"{side}_over_{line}", prices["Over"])
+                    prefix = {"5006": "home", "5003": "away", "4958": "fh", "4976": "sh"}[type_id]
+                    take(f"{prefix}_over_{line}", prices["Over"])
             elif type_id == "5000" and handicap is not None:
                 line = float(handicap) / 4
                 if line in (0.5, 1.5, 2.5, 3.5):

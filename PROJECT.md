@@ -624,6 +624,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Added league flags for Netherlands, Belgium, Portugal and Turkey (`web/src/badges.tsx`;
+  they showed a grey box). Checked all 168 team names in the published data and archive: every one
+  has a badge URL, all 173 URLs load a real image and all 148 ESPN images are distinct.
 - 2026-11-07: Claude reviewed tasks 15-17. All three reports reproduced byte for byte; 168 tests
   pass. Fixed task 17 to use the pre-registered Platt (`LogisticRegression(C=1.0)`; it had used
   `calibration.fit_calibrator`, C=1e6): probabilities moved by at most 0.0007, all 25 decisions

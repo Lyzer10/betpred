@@ -52,6 +52,14 @@ export function Flag({ country, width = 28 }: { country: string; width?: number 
       return <svg viewBox="0 0 30 20" {...box}><rect width="30" height="7" fill="#000" /><rect y="6.6" width="30" height="6.8" fill="#dd0000" /><rect y="13.3" width="30" height="6.7" fill="#ffce00" /></svg>;
     case "France":
       return <svg viewBox="0 0 30 20" {...box}><rect width="10" height="20" fill="#002395" /><rect x="10" width="10" height="20" fill="#fff" /><rect x="20" width="10" height="20" fill="#ed2939" /></svg>;
+    case "Netherlands":
+      return <svg viewBox="0 0 30 20" {...box}><rect width="30" height="20" fill="#fff" /><rect width="30" height="6.7" fill="#ae1c28" /><rect y="13.3" width="30" height="6.7" fill="#21468b" /></svg>;
+    case "Belgium":
+      return <svg viewBox="0 0 30 20" {...box}><rect width="10" height="20" fill="#000" /><rect x="10" width="10" height="20" fill="#fdda24" /><rect x="20" width="10" height="20" fill="#ef3340" /></svg>;
+    case "Portugal":
+      return <svg viewBox="0 0 30 20" {...box}><rect width="30" height="20" fill="#da291c" /><rect width="12" height="20" fill="#046a38" /><circle cx="12" cy="10" r="3.6" fill="#ffe900" /><circle cx="12" cy="10" r="2.2" fill="#da291c" /></svg>;
+    case "Turkey":
+      return <svg viewBox="0 0 30 20" {...box}><rect width="30" height="20" fill="#e30a17" /><circle cx="11" cy="10" r="5" fill="#fff" /><circle cx="12.25" cy="10" r="4" fill="#e30a17" /><polygon fill="#fff" points="15,10 17.89,9.06 16.11,11.52 16.11,8.48 17.89,10.94" /></svg>;
     default:
       return <svg viewBox="0 0 30 20" {...box}><rect width="30" height="20" fill="currentColor" opacity="0.15" /></svg>;
   }

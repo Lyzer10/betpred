@@ -152,6 +152,37 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onP
 
 // ---- Accumulator card ------------------------------------------------------------
 
+/** Betpawa booking code: copy it, then Betpawa → Betslip → "Load Betslip" → paste. */
+function BookingCode({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      const area = document.createElement("textarea");   // older phones: copy without the Clipboard API
+      area.value = code;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      area.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div data-booking-code className="flex items-center justify-between gap-3 border-t border-border/60 px-5 py-3">
+      <div className="min-w-0">
+        <div className="text-[11px] text-ink-3">Betpawa booking code</div>
+        <div className="font-mono text-lg font-bold tracking-wider">{code}</div>
+        <div className="text-[11px] text-ink-3">Betpawa → Betslip → Load Betslip → paste</div>
+      </div>
+      <button onClick={copy} className="shrink-0 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white">
+        {copied ? "✓ Copied" : "Copy"}
+      </button>
+    </div>
+  );
+}
+
 function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fixtures, onPlace }: {
   tier: TierName; slip: Slip; day: string; balances: Record<Bookmaker, number>; placed: boolean; stakeFactor: number;
   staking?: StakingSettings; fixtures: Fixture[];
@@ -223,6 +254,8 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
           );
         })}
       </ul>
+
+      {slip.booking_code && !slip.locked && <BookingCode code={slip.booking_code} />}
 
       {(slip.flexi?.length ?? 0) > 0 && (
         <div className="border-t border-border/60 px-5 py-3 text-xs text-ink-2">

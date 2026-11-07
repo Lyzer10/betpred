@@ -149,6 +149,12 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-08)
+- Betpawa booking codes live (2026-11-08): each open slip whose legs all have a Betpawa price gets a
+  booking code from Betpawa's public `POST /api/sportsbook/v3/booking-number` (no login, no account,
+  no money). A code is shown only after loading it back and checking it holds exactly the slip's
+  price ids; cached by price ids in `engine/data/live/booking_codes.json` (3 days). App: "Copy",
+  then Betpawa -> Betslip -> Load Betslip. Real check: code F4OA87M loaded 3 EPL Over 1.5 picks with
+  the same matches and prices. No change to which picks are chosen.
 - Task 23 merged (Claude review, 2026-11-08): Betpawa research prices now also logged for 6 extra
   leagues (Championship, Serie B, 2. Bundesliga, Segunda, Greece, Scotland; Ligue 2 not on Betpawa
   today), and ESPN settles the research markets for all 16 leagues into
@@ -849,6 +855,8 @@ outcomes for already published picks without changing any study decision below.
 - Bookmaker average odds in `fixtures.csv` can be stale vs live Betpawa (team news): price warning.
 - CI runs on Linux with the live raw cache: tests must not depend on the in-progress season.
 - In Git Bash heredocs and `sed`, backslashes get stripped: edit regexes with the editor.
+- `--no-refresh` runs (and tests that call `predict.main`) must make no network calls: gate new
+  download steps on `args.no_refresh`.
 - `DataFrame.itertuples()` renames columns that are not Python names (`Avg>2.5` becomes `_7`):
   read football-data rows with `to_dict("records")`.
 - Windows working copies use CRLF; `*.sh` is forced to LF by `.gitattributes`.
@@ -857,6 +865,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Betpawa booking codes for slips (`engine/src/booking_codes.py`, price ids carried from
+  `betpawa.parse_market_prices` to slip legs, app Copy button, `tests/test_booking_codes.py`). Fixed:
+  research collection ran in `--no-refresh` runs and tests (network calls, stray local files); now
+  only in refresh runs. 200 engine tests pass.
 - 2026-11-08: Claude reviewed task 23 and fixed it before merge: consensus over/under odds were never
   saved (itertuples renamed the columns); goal-time markets now settle only from a complete ESPN goal
   list; ESPN settlement goes day by day, backfills from 2026-10-25 and now also settles research

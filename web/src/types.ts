@@ -95,6 +95,7 @@ export interface SlipLeg {
   probability: number;
   estimated_odds: number | null;
   betpawa_odds: number | null;
+  betpawa_price_id?: string | null;   // Betpawa's id for this price (builds the booking code)
   fair_odds: number;
   price_warning?: boolean;
   won?: boolean | null;
@@ -113,6 +114,7 @@ export interface Slip {
   expected_value?: number;
   kelly?: number;
   price_warning?: boolean;
+  booking_code?: string;         // Betpawa booking code, checked to hold exactly these picks
   flexi?: { min_correct: number; probability: number }[];   // SportyBet Flexi: P(at least k of n win)
   locked?: boolean;              // first match under way: frozen and tracked
   final?: boolean;               // from the run shortly before the day's first match: never changes again

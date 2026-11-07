@@ -26,6 +26,7 @@ from .accumulators import (
     bookmaker_fair_probabilities, fit_model_weight,
 )
 from .backtest import _promoted_initialization
+from .booking_codes import add_booking_codes
 from .betpawa import fetch_competition_odds
 from .health import health_check, pair_monitor, slip_leg_monitor
 from .build_dataset import build, understat_results
@@ -416,13 +417,15 @@ def attach_betpawa(legs: pd.DataFrame, betpawa: pd.DataFrame) -> pd.DataFrame:
     legs = legs.copy()
     if betpawa.empty:
         legs["betpawa_odds"] = np.nan
+        legs["betpawa_price_id"] = None
     else:
-        merged = legs.merge(betpawa[["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds"]]
+        betpawa = betpawa if "betpawa_price_id" in betpawa else betpawa.assign(betpawa_price_id=None)
+        merged = legs.merge(betpawa[["home_team", "away_team", "market", "kickoff_utc", "betpawa_odds", "betpawa_price_id"]]
                             .rename(columns={"kickoff_utc": "betpawa_kickoff"}),
                             on=["home_team", "away_team", "market"], how="left")
         # Guard against a same-teams fixture on another date (e.g. a cup tie).
         far = (merged.betpawa_kickoff - merged.kickoff_utc).abs() > pd.to_timedelta(1, unit="D")
-        merged.loc[far, "betpawa_odds"] = np.nan
+        merged.loc[far, ["betpawa_odds", "betpawa_price_id"]] = np.nan
         legs = merged.drop(columns="betpawa_kickoff")
     legs["estimated_odds"] = legs.odds
     legs["odds"] = legs.betpawa_odds.fillna(legs.estimated_odds)
@@ -512,8 +515,17 @@ def _leg_json(row) -> dict:
             "probability": round(float(row.probability), 4),
             "estimated_odds": round(float(row.estimated_odds), 2) if pd.notna(row.estimated_odds) else None,
             "betpawa_odds": None if pd.isna(row.betpawa_odds) else round(float(row.betpawa_odds), 2),
+            "betpawa_price_id": _price_id(row),
             "fair_odds": round(1 / float(row.probability), 2),
             "price_warning": bool(getattr(row, "price_warning", False))}
+
+
+def _price_id(row) -> str | None:
+    """Betpawa price id of a leg priced by Betpawa (used only to build booking codes)."""
+    value = getattr(row, "betpawa_price_id", None)
+    if value is None or pd.isna(value) or pd.isna(row.betpawa_odds):
+        return None
+    return str(int(value)) if isinstance(value, float) and value.is_integer() else str(value)
 
 
 def outcome(match: pd.Series, market: str) -> bool | None:
@@ -866,9 +878,10 @@ def main() -> None:
         log_research_prices(betpawa, now)
     except Exception as error:
         print(f"Research price logging unavailable ({error})")
-    try:   # research only (task 23): never used in predictions, slips or the app
-        from .research_leagues import run_research_safely
-        run_research_safely(now, _fixtures_csv())
+    try:   # research only (task 23): never used in predictions, slips or the app; downloads, so not with --no-refresh
+        if not args.no_refresh:
+            from .research_leagues import run_research_safely
+            run_research_safely(now, _fixtures_csv())
     except Exception as error:
         print(f"Research leagues unavailable ({error})")
     if legs is not None:
@@ -886,6 +899,10 @@ def main() -> None:
         slips = build_slips(day_legs, blocked)
         history = update_history(day, slips, all_matches, now, final=args.final and day == today)
         shown = displayed_slips(day, slips, history, now)
+        try:   # Betpawa booking codes: optional, a failure only means no code is shown
+            shown = add_booking_codes(shown, now, online=not args.no_refresh)
+        except Exception as error:
+            print(f"Booking codes unavailable ({error})")
         days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
                      "first_kickoff_utc": day_legs.kickoff_utc.min().isoformat() + "Z",
                      "final": any(slip["final"] for slip in shown.values()),

@@ -46,11 +46,19 @@ RESEARCH_MARKETS = (
 
 def parse_markets(markets: list[dict]) -> dict[str, float]:
     """Map Betpawa markets onto the model's market keys; skip suspended or empty prices."""
+    return parse_market_prices(markets)[0]
+
+
+def parse_market_prices(markets: list[dict]) -> tuple[dict[str, float], dict[str, str]]:
+    """(market key -> decimal odds, market key -> Betpawa price id); the id builds booking codes."""
     odds: dict[str, float] = {}
+    price_ids: dict[str, str] = {}
 
     def take(key: str, price: dict) -> None:
         if price.get("odds", 0) > 1 and not price.get("suspended", False):
             odds[key] = float(price["odds"])
+            if price.get("id") is not None:
+                price_ids[key] = str(price["id"])
 
     for market in markets:
         type_id = market["marketType"]["id"]
@@ -135,7 +143,7 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                         take(f"over_{line}", prices["Over"])
                     if "Under" in prices and line in (2.5, 3.5):
                         take(f"under_{line}", prices["Under"])
-    return odds
+    return odds, price_ids
 
 
 def fetch_premier_league_odds(session: requests.Session | None = None) -> pd.DataFrame:
@@ -166,7 +174,10 @@ def fetch_competition_odds(league="EPL", session: requests.Session | None = None
             print(f"{get_league(league).code}: Betpawa event {event['id']} skipped ({error})")
             continue
         kickoff = pd.Timestamp(event["startTime"]).tz_convert("UTC").tz_localize(None)
-        for market, price in parse_markets(detail.json().get("markets", [])).items():
+        odds, price_ids = parse_market_prices(detail.json().get("markets", []))
+        for market, price in odds.items():
             rows.append({"home_team": home, "away_team": away, "kickoff_utc": kickoff,
-                         "market": market, "betpawa_odds": price, "betpawa_event_id": event["id"]})
-    return pd.DataFrame(rows, columns=["home_team", "away_team", "kickoff_utc", "market", "betpawa_odds", "betpawa_event_id"])
+                         "market": market, "betpawa_odds": price, "betpawa_event_id": event["id"],
+                         "betpawa_price_id": price_ids.get(market)})
+    return pd.DataFrame(rows, columns=["home_team", "away_team", "kickoff_utc", "market", "betpawa_odds",
+                                       "betpawa_event_id", "betpawa_price_id"])

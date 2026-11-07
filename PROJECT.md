@@ -149,6 +149,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Tasks 18-22 reviewed and merged (Claude, 2026-11-07): 30 research markets logged from Betpawa;
+  timing markets (first goal, 1-10 minutes) and team-half markets mostly calibrated in both test
+  periods; simulated Betpawa prices show no market with reliable profit. Next: collect >= 300 settled
+  real-priced legs per market, then judge with real prices.
 - Task 18 Betpawa market catalogue and research price logging (`src/betpawa_catalogue.py`,
   `reports/betpawa_market_catalogue.md`): catalogued all 128 `marketType` IDs across 27 real upcoming
   events (3 per league across all 9 live leagues). Only one time-interval market exists (`28000173`
@@ -789,6 +793,16 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Claude reviewed tasks 18-22. Tests pass and all five reports reproduced byte for byte
+  (sha256 identical). Independent boundary check of the task-19 minute mapping on 49 different goals
+  recorded by Understat at minutes 8-11 (2022/23-2025/26, 10 random matches per league, seed
+  20261107): 48/49 on the same side of 10:00 as ESPN's clock seconds (one miss: Roma v Lazio,
+  Understat minute 9 vs ESPN 601 s). Fixes: task 20 now computes the task-19 gate instead of stating
+  it (timing markets are skipped if it fails); task 22 report counts are computed, not typed;
+  health.py imports moved to the top. Results unchanged. Plain reading for the owner: no candidate
+  market shows a reliable profit at Betpawa's typical prices (simulated); 2UP is the cheapest
+  (about -2% at the median price, vs -5% to -10% for most others). Real-price checks still need
+  >= 300 settled priced legs per market.
 - 2026-11-07: Added non-fatal badge coverage warning in `src/health.py` (`known_badge_teams`,
   `missing_badge_teams`, wired into `health_check` and `src/predict.py` without changing `status` or
   `stake_factor`) listing any team in published fixtures or tables without a badge in

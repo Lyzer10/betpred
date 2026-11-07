@@ -4,8 +4,8 @@
 
 ## 1. Executive Summary
 - **Research markets checked (`RESEARCH_MARKETS`)**: **30** markets total.
-- **Markets meeting `n >= 50` priced matches**: **17** markets (`11` from Tasks 16/17 with `n = 52–71`, plus `6` from Tasks 10/15 with `n = 163–171`).
-- **Markets marked `INSUFFICIENT` (`n < 50`)**: **13** markets (`interval_10_draw` has `n = 41` priced matches in the 5 main leagues where 10-minute goal share `w` is defined from Understat `goals.parquet`, and `0` historical goal-minute data in the 4 new leagues; the 12 newly added Task-18 markets have `n = 0` logged snapshots so far).
+- **Markets meeting `n >= 50` priced matches**: **17** markets (`n` = 52-171).
+- **Markets marked `INSUFFICIENT` (`n < 50`)**: **13** markets: `interval_10_home` (n = 0), `interval_10_draw` (n = 41), `interval_10_away` (n = 0), `first_goal_home` (n = 0), `first_goal_away` (n = 0), `home_score_both_halves` (n = 0), `away_score_both_halves` (n = 0), `home_win_both_halves` (n = 0), `away_win_both_halves` (n = 0), `home_fh_over_0.5` (n = 0), `away_fh_over_0.5` (n = 0), `home_sh_over_0.5` (n = 0), `away_sh_over_0.5` (n = 0). The 10-minute share `w` exists only for the 5 main leagues (Understat goal minutes).
 - **Priority for the real-price test** (95% whole-day bootstrap CI lower bound `> 0` at **both** `median r` and `75th percentile r`): **0** markets (**none**).
 
 ## 2. Observed Ratio `r = (1 / Betpawa odds) / raw_consensus_probability` Across All 30 `RESEARCH_MARKETS`

@@ -15,6 +15,10 @@ Per league x bet type (`pair_monitor`), over every settled published prediction 
 """
 from __future__ import annotations
 
+import json
+import re
+from pathlib import Path
+
 import numpy as np
 
 WINDOW_MATCHES = 60
@@ -136,10 +140,6 @@ def slip_leg_monitor(slips: list[dict]) -> list[dict]:
         row["status"] = "insufficient" if row["n"] < PAIR_MIN else "watch" if row["z"] < RESUME_Z else "ok"
     return rows
 
-
-import json
-from pathlib import Path
-import re
 
 WEB_SRC = Path(__file__).resolve().parents[2] / "web" / "src"
 

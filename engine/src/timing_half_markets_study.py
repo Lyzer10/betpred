@@ -29,7 +29,7 @@ from sklearn.linear_model import LogisticRegression
 
 from .accumulators import bookmaker_implied
 from .calibration import ENGINE_DIR
-from .goal_minute_check import UNDERSTAT_10MIN_MAX_MINUTE, sort_understat_goals
+from .goal_minute_check import UNDERSTAT_10MIN_MAX_MINUTE, evaluate_goal_minute_accuracy, sort_understat_goals
 from .half_markets_study import MAX_HALF_GOALS, _poisson_win_prob, load_league_matches as load_htft_matches
 from .leagues import LEAGUES, paths
 from .market_gates import SEED, evaluate
@@ -382,7 +382,13 @@ def run_study() -> dict[str, Any]:
 
     timing_results: list[dict[str, Any]] = []
     timing_coverage: dict[str, Any] = {}
-    for code in MAIN_LEAGUES:
+    # Task 19 gate, computed (not assumed): timing markets only if both pre-registered thresholds hold.
+    g19 = evaluate_goal_minute_accuracy()
+    task19 = {"agree_10": g19["agree_10_le9"], "n_goals": g19["n_goals"], "rate_10": g19["rate_10_le9"],
+              "agree_order": g19["order_agree_sorted"], "n_matches": g19["n_matches"],
+              "rate_order": g19["rate_order_sorted"]}
+    task19["passed"] = bool(task19["rate_10"] >= 0.98 and task19["rate_order"] >= 0.99)
+    for code in (MAIN_LEAGUES if task19["passed"] else ()):
         rho = league_rho(code)
         t_matches, stats = load_timing_matches(code)
         t_legs, shares_10 = build_walkforward_timing_legs(t_matches, code, rho)
@@ -413,6 +419,7 @@ def run_study() -> dict[str, Any]:
         "timing_coverage": timing_coverage,
         "half_results": half_results,
         "half_coverage": half_coverage,
+        "task19": task19,
     }
 
 
@@ -461,6 +468,7 @@ def write_report(data: dict[str, Any] | None = None) -> Path:
     t_res = data["timing_results"]
     h_res = data["half_results"]
     all_res = [*t_res, *h_res]
+    t19 = data["task19"]
 
     tc = _summarize_counts(t_res)
     hc = _summarize_counts(h_res)
@@ -470,7 +478,11 @@ def write_report(data: dict[str, Any] | None = None) -> Path:
         "# Goal-timing and team-half markets backtest (PROJECT.md task 20, pre-registered 2026-11-07)",
         "",
         "## Pre-registered design and Task 19 prerequisite",
-        "- **Task 19 gate**: **PASS** (`332/332 = 100.00%` `< 10:00` agreement with `Understat minute <= 9`, `73/73 = 100.00%` goal-order agreement when `goals.parquet` is sorted by `minute`). Therefore all 5 timing markets are evaluated on the 5 main leagues.",
+        (f"- **Task 19 gate** (computed from `goal_minute_check`): **{'PASS' if t19['passed'] else 'FAIL'}** "
+         f"(`{t19['agree_10']}/{t19['n_goals']} = {t19['rate_10'] * 100:.2f}%` `< 10:00` agreement with `Understat minute <= 9`, "
+         f"`{t19['agree_order']}/{t19['n_matches']} = {t19['rate_order'] * 100:.2f}%` goal-order agreement when `goals.parquet` is sorted by `minute`). "
+         + ("Therefore all 5 timing markets are evaluated on the 5 main leagues." if t19["passed"]
+            else "Therefore the 5 timing markets are INSUFFICIENT and not evaluated.")),
         "- **Raw probability model**: From `accumulators.bookmaker_implied` lambdas (`league_rho(league)`):",
         "  - First-half share `s` and 10-minute share `w` (fraction of goals with `Understat minute <= 9`) per league from **earlier seasons only** (`< season`).",
         "  - Team goals in a period ~ independent `Poisson(share * lambda)`.",

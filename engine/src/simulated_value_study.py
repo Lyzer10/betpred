@@ -418,8 +418,11 @@ def write_report(data: dict[str, Any] | None = None) -> Path:
         "",
         "## 1. Executive Summary",
         f"- **Research markets checked (`RESEARCH_MARKETS`)**: **{len(ratios)}** markets total.",
-        f"- **Markets meeting `n >= {MIN_PRICED_MATCHES}` priced matches**: **{len(ok_ratios)}** markets (`11` from Tasks 16/17 with `n = 52–71`, plus `6` from Tasks 10/15 with `n = 163–171`).",
-        f"- **Markets marked `INSUFFICIENT` (`n < {MIN_PRICED_MATCHES}`)**: **{len(ins_ratios)}** markets (`interval_10_draw` has `n = 41` priced matches in the 5 main leagues where 10-minute goal share `w` is defined from Understat `goals.parquet`, and `0` historical goal-minute data in the 4 new leagues; the 12 newly added Task-18 markets have `n = 0` logged snapshots so far).",
+        f"- **Markets meeting `n >= {MIN_PRICED_MATCHES}` priced matches**: **{len(ok_ratios)}** markets"
+        + (f" (`n` = {min(r['n'] for r in ok_ratios)}-{max(r['n'] for r in ok_ratios)})." if ok_ratios else "."),
+        f"- **Markets marked `INSUFFICIENT` (`n < {MIN_PRICED_MATCHES}`)**: **{len(ins_ratios)}** markets: "
+        + ", ".join(f"`{r['market']}` (n = {r['n']})" for r in ins_ratios)
+        + ". The 10-minute share `w` exists only for the 5 main leagues (Understat goal minutes).",
         f"- **Priority for the real-price test** (95% whole-day bootstrap CI lower bound `> 0` at **both** `median r` and `75th percentile r`): **{len(priority_mkts)}** markets" + (f" (`{', '.join(priority_mkts)}`)" if priority_mkts else " (**none**)") + ".",
         "",
         "## 2. Observed Ratio `r = (1 / Betpawa odds) / raw_consensus_probability` Across All 30 `RESEARCH_MARKETS`",

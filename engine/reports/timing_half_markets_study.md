@@ -1,7 +1,7 @@
 # Goal-timing and team-half markets backtest (PROJECT.md task 20, pre-registered 2026-11-07)
 
 ## Pre-registered design and Task 19 prerequisite
-- **Task 19 gate**: **PASS** (`332/332 = 100.00%` `< 10:00` agreement with `Understat minute <= 9`, `73/73 = 100.00%` goal-order agreement when `goals.parquet` is sorted by `minute`). Therefore all 5 timing markets are evaluated on the 5 main leagues.
+- **Task 19 gate** (computed from `goal_minute_check`): **PASS** (`332/332 = 100.00%` `< 10:00` agreement with `Understat minute <= 9`, `73/73 = 100.00%` goal-order agreement when `goals.parquet` is sorted by `minute`). Therefore all 5 timing markets are evaluated on the 5 main leagues.
 - **Raw probability model**: From `accumulators.bookmaker_implied` lambdas (`league_rho(league)`):
   - First-half share `s` and 10-minute share `w` (fraction of goals with `Understat minute <= 9`) per league from **earlier seasons only** (`< season`).
   - Team goals in a period ~ independent `Poisson(share * lambda)`.

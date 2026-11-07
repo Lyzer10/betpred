@@ -149,6 +149,12 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Task 16 goals by half and win either half backtest (`reports/half_markets_study.md`, all nine live
+  leagues): **49 PASS / 5 FAIL** across 54 league x market pairs on 2024/25+ (`EPL` 4/6, `LALIGA` 6/6,
+  `SERIEA` 6/6, `BUNDES` 6/6, `LIGUE1` 6/6, `EREDIV` 5/6, `JUPILER` 5/6, `PRIMEIRA` 5/6, `SUPERLIG`
+  6/6). The 49 PASS pairs are **eligible pending real Betpawa prices** (>= 300 settled priced legs and
+  one-sided level check passing); the 5 FAIL pairs (`EPL fh_over_1.5`, `EPL sh_over_0.5`, `EREDIV sh_over_1.5`,
+  `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`) stay out. No live change.
 - Task 15 first look at team goals and Draw No Bet with real Betpawa prices (`reports/team_goals_dnb_live_study.md`):
   97 settled archived matches (550 scored legs; 13 drawn matches refunded on DNB) have logged
   pre-kickoff Betpawa prices. All 6 markets are **INSUFFICIENT** (84-97 legs each, still needing
@@ -492,6 +498,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      legs and one-sided level check passing, as in task 15); FAIL or INSUFFICIENT stays out. Report the
      typical fair odds (`median(1 / probability)`). Synthetic known-answer tests before real data verify
      exact Poisson half-goal and win-either-half formulas for a fixed lambda and share `s`. No live change.
+   - Result (DONE 2026-11-07, `reports/half_markets_study.md`): **49 PASS / 5 FAIL** across 54 league x
+     market pairs (`EPL` 4/6, `LALIGA` 6/6, `SERIEA` 6/6, `BUNDES` 6/6, `LIGUE1` 6/6, `EREDIV` 5/6,
+     `JUPILER` 5/6, `PRIMEIRA` 5/6, `SUPERLIG` 6/6; first-half goal share `s` 0.4329-0.4474 across
+     leagues). Typical fair odds (`median(1 / probability)` across leagues): `fh_over_0.5` 1.29-1.51,
+     `fh_over_1.5` 2.32-3.31, `sh_over_0.5` 1.19-1.32, `sh_over_1.5` 1.87-2.52,
+     `home_win_either_half` 1.64-1.79, `away_win_either_half` 2.12-2.40. The 5 FAIL pairs stay out:
+     `EPL fh_over_1.5` (C2 level -0.0349, CI [-0.0694, -0.0000]), `EPL sh_over_0.5` (C1 slope -0.138,
+     CI [-0.894, 0.619]; C3 min_z -3.31), `EREDIV sh_over_1.5` (C4 lifted legs z -2.53, n=69),
+     `JUPILER sh_over_0.5` (C2 level -0.0467, CI [-0.0789, -0.0159]), and `PRIMEIRA fh_over_0.5`
+     (C4 lifted legs z -2.07, n=68). The 49 PASS pairs are **eligible pending real Betpawa prices**
+     (same >= 300 settled priced legs and one-sided level rule as task 15).
 17. **Double Chance 1UP and 2UP** (PRE-REGISTERED 2026-11-07, before results; research backtest only,
    `python -m src.up_markets_study`):
    - Module `engine/src/up_markets_study.py`, report `engine/reports/up_markets_study.md`, tests in
@@ -537,6 +554,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Goals by half and win either half, 9 leagues (task 16) | 49/54 PASS, 5 FAIL (`EPL fh_over_1.5`, `EPL sh_over_0.5`, `EREDIV sh_over_1.5`, `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`) | 49 PASS eligible pending >= 300 real Betpawa priced legs; 5 FAIL stay out |
 | Team goals and DNB with real Betpawa prices (task 15) | 84-97 settled priced legs per market (need 203-216 more for 300) | INSUFFICIENT; keep collecting prices |
 | Four candidate leagues (task 13) | N1 7/8, B1 8/8, P1 7/8, T1 8/8 PASS; Betpawa and ESPN verified | READY for a later integration task; not live |
 | Limit a match to two slips (task 14) | matched return -4.55 points, CI -14.45 to +4.51; all-loss days slightly lower | KEEP A |
@@ -586,6 +604,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 16 (`src/half_markets_study.py`, `reports/half_markets_study.md`,
+  `tests/test_half_markets_study.py`): backtested `fh_over_0.5`, `fh_over_1.5`, `sh_over_0.5`,
+  `sh_over_1.5`, `home_win_either_half`, `away_win_either_half` across all nine live leagues on 2024/25+
+  with earlier-season first-half goal share `s` and walk-forward Platt calibration. 49 of 54 pairs PASS
+  (eligible pending >= 300 settled Betpawa priced legs) and 5 FAIL (`EPL fh_over_1.5`, `EPL sh_over_0.5`,
+  `EREDIV sh_over_1.5`, `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`). No live change.
 - 2026-11-07: Completed task 15 (`src/team_goals_dnb_live_study.py`, `reports/team_goals_dnb_live_study.md`,
   `tests/test_team_goals_dnb_live_study.py`): 97 settled archived matches (550 scored legs) have logged
   pre-kickoff Betpawa prices for team over 0.5/1.5 and DNB; all 6 markets have 84-97 legs and still need

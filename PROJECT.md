@@ -481,19 +481,31 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      `matches.parquet`). Drop matches missing average odds (`avg_odds_*`), scores, or goal-minute
      coverage (matches with total goals > 0 must reconcile with `goals.parquet`); never fill.
    - Outcomes from goal minutes in event order (matching the settlement rules confirmed from Betpawa's
-     API explainers in Part A):
+     API explainers and real price inequalities in Part A):
      `dc1up_1x` wins if the home team led at any point OR the final result is home win or draw;
      `dc1up_x2` wins if the away team led at any point OR the final result is away win or draw;
      `dc1up_12` wins if either team led at any point OR the final result is not a draw (equivalently,
      any goal is scored);
-     `home_2up` wins if the home team was ever two goals ahead at any point (mirror for `away_2up`).
+     CORRECTION 2026-11-07 (settlement definition corrected before any task-17 result was computed):
+     real Betpawa prices prove 2UP is an early-payout enhancement of 1X2 that includes normal 1-goal
+     full-time wins: across all 9 real events fetched (and the 6 reviewed: e.g. Torino v Lecce 1.77 vs
+     1.82; Fulham v Newcastle 2.01 vs 2.09; Espanyol v Deportivo 2.49 vs 2.58; Paderborn v Frankfurt
+     2.70 vs 2.87; Auxerre v Paris FC 4.54 vs 4.76; Arsenal v Hull 1.14 vs 1.16), the 2UP `"1"` and
+     `"2"` prices are always strictly below the plain 1X2 `"1"` and `"2"` prices. Likewise, across all
+     active DC 1UP quotes in the 9 real events, DC 1UP `1X`, `X2`, `12` are strictly below plain
+     Double Chance (`4693`) `1X`, `X2`, `12` (e.g. Torino v Lecce 1.16/1.66/1.03 vs 1.21/1.99/1.29;
+     Espanyol v Deportivo 1.30/1.38/1.05 vs 1.41/1.53/1.35; Arsenal v Hull DC 1UP `1X` and `12` are
+     `0.0` suspended, skipped by the parser's `odds > 1` rule). Therefore:
+     `home_2up` wins if the home team was ever two goals ahead OR the home team won (mirror for
+     `away_2up`).
    - Raw probability from the bookmaker score matrix (`accumulators.bookmaker_implied`, league rho):
      `dc1up_1x = sum over scores of P(score) * [1 if home >= away else P(home led at some point | score)]`
      (mirror for `dc1up_x2`; `dc1up_12 = 1 - P(0-0)` since any goal produces a leader), using the same
-     exchangeable goal-order assumption as `accumulators.PRIORS`; for 2UP compute
-     `P(lead reached 2 | final score)` exactly by enumerating every goal order of that score (equally
-     likely). Verify on small scores (1-0, 2-1, 3-1) that enumeration matches hand counts before running
-     real data.
+     exchangeable goal-order assumption as `accumulators.PRIORS`; for 2UP:
+     `home_2up = sum over scores of P(score) * [1 if home > away else P(home ever 2 ahead | score)]`
+     (mirror for `away_2up`), computing `P(lead reached 2 | final score)` exactly by enumerating every
+     goal order of that score (equally likely). Verify on small scores (1-0, 2-1, 3-1) that enumeration
+     matches hand counts before running real data.
    - Calibration and judgement: Platt (`LogisticRegression(C=1.0)` on logit(raw)) per league x market,
      walk-forward by season; judged with `market_gates.evaluate` unchanged (one-sided C1-C4, >= 300
      legs, seed 20261029) on 2024/25 onwards with `bookmaker_probability = raw`. Same eligibility rule
@@ -553,6 +565,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Corrected task 17 2UP settlement definition in PROJECT.md before computing any task-17
+  results: real Betpawa prices (2UP `"1"`/`"2"` always below 1X2 `"1"`/`"2"`, and DC 1UP always below
+  plain Double Chance) prove `home_2up`/`away_2up` win when the team is ever two goals ahead OR wins at
+  full time (`sum over scores of P(score) * [1 if home > away else P(home ever 2 ahead | score)]`).
 - 2026-11-07: Pre-registered study tasks 15 (team goals and Draw No Bet with real Betpawa prices),
   16 (goals by half and win either half across all nine leagues) and 17 (Double Chance 1UP and 2UP
   across the five main leagues) in PROJECT.md before computing any results.

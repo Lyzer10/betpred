@@ -149,6 +149,11 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Task 17 Double Chance 1UP and 1X2 2UP backtest (`reports/up_markets_study.md`, five main leagues):
+  **24 PASS / 1 FAIL** across 25 league x market pairs on 2024/25+ (`EPL` 4/5, `LALIGA` 5/5, `SERIEA`
+  5/5, `BUNDES` 5/5, `LIGUE1` 5/5). Only `EPL home_2up` failed (C2 level -0.0343, CI [-0.0657, -0.0041])
+  and stays out; the 24 PASS pairs are **eligible pending real Betpawa prices** (>= 300 settled priced
+  legs and one-sided level check passing). No live change.
 - Task 16 goals by half and win either half backtest (`reports/half_markets_study.md`, all nine live
   leagues): **49 PASS / 5 FAIL** across 54 league x market pairs on 2024/25+ (`EPL` 4/6, `LALIGA` 6/6,
   `SERIEA` 6/6, `BUNDES` 6/6, `LIGUE1` 6/6, `EREDIV` 5/6, `JUPILER` 5/6, `PRIMEIRA` 5/6, `SUPERLIG`
@@ -547,6 +552,16 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      walk-forward by season; judged with `market_gates.evaluate` unchanged (one-sided C1-C4, >= 300
      legs, seed 20261029) on 2024/25 onwards with `bookmaker_probability = raw`. Same eligibility rule
      and typical fair odds reporting as task 16. No live change.
+   - Result (DONE 2026-11-07, `reports/up_markets_study.md`): **24 PASS / 1 FAIL** across 25 league x
+     market pairs (`EPL` 4/5, `LALIGA` 5/5, `SERIEA` 5/5, `BUNDES` 5/5, `LIGUE1` 5/5). Exact goal-order
+     enumeration verified on small scores (`1-0`: 0/1 reach +2, `home_2up` weight 1.0; `2-1`: 1/3 (`HHA`)
+     reaches +2, `home_2up` weight 1.0; `3-1`: 4/4 reach +2, `home_2up` weight 1.0; `2-2`: 1/6 (`HHAA`)
+     reaches +2, weight 1/6; `2-3`: 1/10 (`HHAAA`) reaches +2, weight 1/10; `3-3`: 6/20 reach +2,
+     weight 0.30). Typical fair odds (`median(1 / probability)` across leagues): `dc1up_1x` 1.29-1.31,
+     `dc1up_x2` 1.49-1.57, `dc1up_12` 1.05-1.09, `home_2up` 2.17-2.45, `away_2up` 3.10-3.58. Only
+     `EPL home_2up` failed (n=830, said 0.4680, won 0.4337, C2 level -0.0343, CI [-0.0657, -0.0041])
+     and stays out; the 24 PASS pairs are **eligible pending real Betpawa prices** (>= 300 settled
+     priced legs and one-sided level check passing).
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -554,6 +569,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Double Chance 1UP and 1X2 2UP, 5 main leagues (task 17) | 24/25 PASS, 1 FAIL (`EPL home_2up`) | 24 PASS eligible pending >= 300 real Betpawa priced legs; `EPL home_2up` stays out |
 | Goals by half and win either half, 9 leagues (task 16) | 49/54 PASS, 5 FAIL (`EPL fh_over_1.5`, `EPL sh_over_0.5`, `EREDIV sh_over_1.5`, `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`) | 49 PASS eligible pending >= 300 real Betpawa priced legs; 5 FAIL stay out |
 | Team goals and DNB with real Betpawa prices (task 15) | 84-97 settled priced legs per market (need 203-216 more for 300) | INSUFFICIENT; keep collecting prices |
 | Four candidate leagues (task 13) | N1 7/8, B1 8/8, P1 7/8, T1 8/8 PASS; Betpawa and ESPN verified | READY for a later integration task; not live |
@@ -604,6 +620,11 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 17 (`src/up_markets_study.py`, `reports/up_markets_study.md`,
+  `tests/test_up_markets_study.py`): backtested `dc1up_1x`, `dc1up_x2`, `dc1up_12`, `home_2up`,
+  `away_2up` across the five main leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`) on 2024/25+
+  with exact goal-order enumeration for 2UP and walk-forward Platt calibration. 24 of 25 pairs PASS
+  (eligible pending >= 300 settled Betpawa priced legs) and 1 FAIL (`EPL home_2up`). No live change.
 - 2026-11-07: Completed task 16 (`src/half_markets_study.py`, `reports/half_markets_study.md`,
   `tests/test_half_markets_study.py`): backtested `fh_over_0.5`, `fh_over_1.5`, `sh_over_0.5`,
   `sh_over_1.5`, `home_win_either_half`, `away_win_either_half` across all nine live leagues on 2024/25+

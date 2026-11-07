@@ -19293,7 +19293,7 @@
               "betpawa_odds": 1.9,
               "fair_odds": 1.75,
               "price_warning": true,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-07",
@@ -19396,7 +19396,7 @@
               "betpawa_odds": 1.9,
               "fair_odds": 1.75,
               "price_warning": true,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-07",
@@ -19519,7 +19519,7 @@
               "betpawa_odds": 1.9,
               "fair_odds": 1.75,
               "price_warning": true,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-07",
@@ -23195,7 +23195,7 @@
           "betpawa_odds": 1.9,
           "fair_odds": 1.75,
           "price_warning": true,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-07",
@@ -23300,7 +23300,7 @@
           "betpawa_odds": 1.9,
           "fair_odds": 1.75,
           "price_warning": true,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-07",
@@ -23425,7 +23425,7 @@
           "betpawa_odds": 1.9,
           "fair_odds": 1.75,
           "price_warning": true,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-07",
@@ -24360,6 +24360,93 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "home": "Nottingham Forest",
+      "away": "Manchester City",
+      "score": [
+        3,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "home": "Osasuna",
+      "away": "Ath Bilbao",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "home": "Stuttgart",
+      "away": "Werder Bremen",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
         "under_2.5": true,
@@ -51725,7 +51812,7 @@
     {
       "date": "2026-11-07",
       "fixtures": 33,
-      "settled": 19
+      "settled": 22
     },
     {
       "date": "2026-11-06",

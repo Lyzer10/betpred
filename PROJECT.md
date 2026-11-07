@@ -149,6 +149,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Task 15 first look at team goals and Draw No Bet with real Betpawa prices (`reports/team_goals_dnb_live_study.md`):
+  97 settled archived matches (550 scored legs; 13 drawn matches refunded on DNB) have logged
+  pre-kickoff Betpawa prices. All 6 markets are **INSUFFICIENT** (84-97 legs each, still needing
+  203-216 settled priced legs to reach 300). No live change.
 - Candidate market price logging expanded (research only, no live model or slip changes): verified
   from real Betpawa responses across all nine leagues (`4958` first-half O/U -> `fh_over_0.5`,
   `fh_over_1.5`; `4976` second-half O/U -> `sh_over_0.5`, `sh_over_1.5`; `80000` Double Chance 1UP ->
@@ -448,6 +452,22 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
    - Decision rule: none yet; a market may enter slips only when it has >= 300 settled priced legs and
      its one-sided level check (actual - predicted, 95% CI upper bound >= 0) passes. State plainly how
      many legs are still needed. No live change.
+   - Result (DONE 2026-11-07, `reports/team_goals_dnb_live_study.md`): **INSUFFICIENT** across all 6
+     markets (97 settled priced matches, 550 scored legs; 13 draws refunded on DNB). Per market:
+     `home_over_0.5` n=92 (208 needed), our mean p 0.7908 vs actual 0.7826 (Wilson 95% CI 0.6879-0.8546),
+     Betpawa mean implied 0.8038 (+0.0130 over our p), 5 value legs (return -0.2040/unit);
+     `away_over_0.5` n=96 (204 needed), p 0.7288 vs actual 0.6667 (0.5676-0.7529), Betpawa implied
+     0.7444 (+0.0156), 5 value legs (-0.4740/unit);
+     `home_over_1.5` n=97 (203 needed), p 0.4875 vs actual 0.5670 (0.4677-0.6612), Betpawa implied
+     0.5099 (+0.0224), 14 value legs (+0.3757/unit);
+     `away_over_1.5` n=97 (203 needed), p 0.3857 vs actual 0.3299 (0.2444-0.4284), Betpawa implied
+     0.4121 (+0.0264), 7 value legs (-0.7129/unit);
+     `dnb_home` n=84 (216 needed), p 0.5781 vs actual 0.6548 (0.5483-0.7477), Betpawa implied 0.5996
+     (+0.0215 vs our p; 2-way DNB margin +0.0502), 8 value legs (+0.4175/unit);
+     `dnb_away` n=84 (216 needed), p 0.4219 vs actual 0.3452 (0.2523-0.4517), Betpawa implied 0.4506
+     (+0.0287 vs our p; 2-way DNB margin +0.0502), 10 value legs (+0.2020/unit).
+     One-sided level CI upper bounds are all >= 0, but 203-216 more settled priced legs are needed
+     before any pair can be judged for slip eligibility.
 16. **Goals by half and win either half** (PRE-REGISTERED 2026-11-07, before results; research backtest
    only, `python -m src.half_markets_study`):
    - Module `engine/src/half_markets_study.py`, report `engine/reports/half_markets_study.md`, tests in
@@ -517,6 +537,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Team goals and DNB with real Betpawa prices (task 15) | 84-97 settled priced legs per market (need 203-216 more for 300) | INSUFFICIENT; keep collecting prices |
 | Four candidate leagues (task 13) | N1 7/8, B1 8/8, P1 7/8, T1 8/8 PASS; Betpawa and ESPN verified | READY for a later integration task; not live |
 | Limit a match to two slips (task 14) | matched return -4.55 points, CI -14.45 to +4.51; all-loss days slightly lower | KEEP A |
 | League table, derbies, team home strength, rest days | none lowered log loss on unseen seasons | rejected |
@@ -565,6 +586,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 15 (`src/team_goals_dnb_live_study.py`, `reports/team_goals_dnb_live_study.md`,
+  `tests/test_team_goals_dnb_live_study.py`): 97 settled archived matches (550 scored legs) have logged
+  pre-kickoff Betpawa prices for team over 0.5/1.5 and DNB; all 6 markets have 84-97 legs and still need
+  203-216 legs to reach the 300-leg threshold. No live change.
 - 2026-11-07: Corrected task 17 2UP settlement definition in PROJECT.md before computing any task-17
   results: real Betpawa prices (2UP `"1"`/`"2"` always below 1X2 `"1"`/`"2"`, and DC 1UP always below
   plain Double Chance) prove `home_2up`/`away_2up` win when the team is ever two goals ahead OR wins at

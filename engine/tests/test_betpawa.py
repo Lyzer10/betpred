@@ -25,7 +25,7 @@ def test_parse_markets_maps_every_supported_market():
     odds = parse_markets(markets)
     assert odds == {
         "home_win": 4.89, "draw": 4.69, "away_win": 1.65, "home_1up": 2.27, "away_1up": 1.33,
-        "home_first": 2.74, "away_first": 1.53, "btts_yes": 1.54, "btts_no": 2.48,
+        "home_first": 2.74, "away_first": 1.53, "first_goal_home": 2.74, "first_goal_away": 1.53, "btts_yes": 1.54, "btts_no": 2.48,
         "over_0.5": 1.02, "over_2.5": 1.47, "under_2.5": 2.77, "over_3.5": 2.15, "under_3.5": 1.74,
         "double_1x": 2.24, "double_x2": 1.2, "double_12": 1.22,
     }

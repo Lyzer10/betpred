@@ -35,7 +35,12 @@ RESEARCH_MARKETS = (
     "home_over_0.5", "home_over_1.5", "away_over_0.5", "away_over_1.5", "dnb_home", "dnb_away",
     "fh_over_0.5", "fh_over_1.5", "sh_over_0.5", "sh_over_1.5",
     "dc1up_1x", "dc1up_x2", "dc1up_12", "home_2up", "away_2up",
-    "home_win_either_half", "away_win_either_half", "interval_10_draw",
+    "home_win_either_half", "away_win_either_half",
+    "interval_10_home", "interval_10_draw", "interval_10_away",
+    "first_goal_home", "first_goal_away",
+    "home_score_both_halves", "away_score_both_halves",
+    "home_win_both_halves", "away_win_both_halves",
+    "home_fh_over_0.5", "away_fh_over_0.5", "home_sh_over_0.5", "away_sh_over_0.5",
 )
 
 
@@ -61,7 +66,8 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                     if name in prices:
                         take(key, prices[name])
             elif type_id == "28000224" and handicap is not None and float(handicap) == 4:
-                for name, key in (("1", "home_first"), ("2", "away_first")):
+                for name, key in (("1", "home_first"), ("2", "away_first"),
+                                  ("1", "first_goal_home"), ("2", "first_goal_away")):
                     if name in prices:
                         take(key, prices[name])
             elif type_id == "4693":
@@ -84,12 +90,35 @@ def parse_markets(markets: list[dict]) -> dict[str, float]:
                 for name, key in (("1", "home_2up"), ("2", "away_2up")):
                     if name in prices:
                         take(key, prices[name])
-            elif type_id in ("1096806", "1096809"):
+            elif type_id in ("1096806", "1096809", "1096807", "1096814", "1096805", "1096808"):
                 if "Yes" in prices:
-                    take("home_win_either_half" if type_id == "1096806" else "away_win_either_half", prices["Yes"])
+                    yes_key = {
+                        "1096806": "home_win_either_half",
+                        "1096809": "away_win_either_half",
+                        "1096807": "home_score_both_halves",
+                        "1096814": "away_score_both_halves",
+                        "1096805": "home_win_both_halves",
+                        "1096808": "away_win_both_halves",
+                    }[type_id]
+                    take(yes_key, prices["Yes"])
             elif type_id == "28000173":
-                if "X" in prices:
-                    take("interval_10_draw", prices["X"])
+                for name, key in (("1", "interval_10_home"), ("X", "interval_10_draw"), ("2", "interval_10_away")):
+                    if name in prices:
+                        take(key, prices[name])
+            elif type_id in ("4964", "4961", "4982", "4979") and handicap is not None:
+                try:
+                    line = float(handicap) / 4
+                except (TypeError, ValueError):
+                    print(f"Research market {type_id}: invalid handicap; skipping row")
+                    continue
+                if line == 0.5 and "Over" in prices:
+                    prefix = {
+                        "4964": "home_fh",
+                        "4961": "away_fh",
+                        "4982": "home_sh",
+                        "4979": "away_sh",
+                    }[type_id]
+                    take(f"{prefix}_over_0.5", prices["Over"])
             elif type_id in ("5006", "5003", "4958", "4976") and handicap is not None:
                 try:
                     line = float(handicap) / 4

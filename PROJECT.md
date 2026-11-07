@@ -149,6 +149,14 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-07)
+- Task 18 Betpawa market catalogue and research price logging (`src/betpawa_catalogue.py`,
+  `reports/betpawa_market_catalogue.md`): catalogued all 128 `marketType` IDs across 27 real upcoming
+  events (3 per league across all 9 live leagues). Only one time-interval market exists (`28000173`
+  00:01-09:59; no 15-minute market exists). Added 10 new keys to `RESEARCH_MARKETS` (`first_goal_home`,
+  `first_goal_away`, `interval_10_home`, `interval_10_away`, `home_score_both_halves`,
+  `away_score_both_halves`, `home_win_both_halves`, `away_win_both_halves`, `home_fh_over_0.5`,
+  `away_fh_over_0.5`, `home_sh_over_0.5`, `away_sh_over_0.5`) with real trimmed fixture and isolation
+  tests. No live change.
 - Tasks 15-17 reviewed by Claude (reproduced exactly; task 17 calibration aligned to the
   pre-registration, decisions unchanged). Next step for all candidate markets: collect >= 300 settled
   Betpawa-priced legs per market (logging is live since 21e66d1), then judge them with real prices.
@@ -590,6 +598,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      `home_score_both_halves`, `away_score_both_halves`; `1096805`/`1096808` `"Yes"` ->
      `home_win_both_halves`, `away_win_both_halves`; `4964`/`4961`/`4982`/`4979` Over 0.5 ->
      `home_fh_over_0.5`, `away_fh_over_0.5`, `home_sh_over_0.5`, `away_sh_over_0.5`.
+   - Result (DONE 2026-11-07, `reports/betpawa_market_catalogue.md`): catalogued 128 `marketType` IDs
+     across 27 upcoming events (3 per league across all 9 leagues): 94 settleable from `HT-FT score`
+     (all 9 leagues, 2014/15-2026/27), 6 from `goal minutes` (5 main leagues, 2014/15-2026/27), 7 FT
+     corner markets from `corners HC,AC` (5 main leagues 2014/15-2026/27; 4 new leagues
+     2017/18-2026/27), 3 dismissal markets from `cards HY,AY,HR,AR`, and 18 `no` (8 player props, 9
+     1H/sequence corner markets, 5 1H booking markets, plus FT booking totals where Betpawa counts a
+     2nd yellow leading to red as 2 bookings rather than 3, which `HY,AY,HR,AR` cannot separate from a
+     straight red, and team/3-way booking markets whose card-point formula is unverified in the API
+     explainer). Only one time-interval market exists (`28000173`, 00:01-09:59; no 15-minute market
+     exists). All 10 new `RESEARCH_MARKETS` keys verified on real responses and added with trimmed
+     real fixture `38916500` in `tests/fixtures/betpawa_research.json`.
 19. **Goal-minute accuracy check** (PRE-REGISTERED 2026-11-07, before results; must pass before task
    20 uses minutes, `python -m src.goal_minute_check`):
    - Module `engine/src/goal_minute_check.py`, report `engine/reports/goal_minute_check.md`, tests in
@@ -664,6 +683,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Betpawa market catalogue, 9 leagues (task 18) | 128 `marketType` IDs across 27 events; only 00:01-09:59 interval exists; 10 new research keys logged | price logging expanded; bookings not studied (`HY,AY,HR,AR` lacks 2nd-yellow split / rule unverified) |
 | Double Chance 1UP and 1X2 2UP, 5 main leagues (task 17) | 24/25 PASS, 1 FAIL (`EPL home_2up`) | 24 PASS eligible pending >= 300 real Betpawa priced legs; `EPL home_2up` stays out |
 | Goals by half and win either half, 9 leagues (task 16) | 49/54 PASS, 5 FAIL (`EPL fh_over_1.5`, `EPL sh_over_0.5`, `EREDIV sh_over_1.5`, `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`) | 49 PASS eligible pending >= 300 real Betpawa priced legs; 5 FAIL stay out |
 | Team goals and DNB with real Betpawa prices (task 15) | 84-97 settled priced legs per market (need 203-216 more for 300) | INSUFFICIENT; keep collecting prices |
@@ -715,6 +735,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 18 (`src/betpawa_catalogue.py`, `reports/betpawa_market_catalogue.md`,
+  `src/betpawa.py`, `tests/fixtures/betpawa_research.json`, `tests/test_betpawa.py`,
+  `tests/test_research_prices.py`): catalogued all 128 `marketType` IDs across 27 upcoming events (3 per
+  league across all 9 leagues), verified that only the 00:01-09:59 interval market (`28000173`) exists
+  (no 15-minute market), documented corners and bookings rules/limitations, and added 10 new keys to
+  `RESEARCH_MARKETS` with real fixture and isolation tests. No live change.
 - 2026-11-07: Pre-registered tasks 18 (Betpawa market catalogue and additional research price
   logging), 19 (Understat vs ESPN goal-minute accuracy check), 20 (goal-timing and half markets
   backtest on 2024/25+ and 2019/20-2023/24 replication), 21 (2019/20-2023/24 replication of tasks 16

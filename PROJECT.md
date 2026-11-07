@@ -661,6 +661,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      seed 20261029), `bookmaker_probability = raw`. Judged on `2024/25+` (primary) AND on
      `2019/20-2023/24` (replication, each season scored with a calibrator fitted on earlier seasons
      only). `"Strong candidate"` = `PASS` in both periods; otherwise stays out. No live change.
+   - Result (DONE 2026-11-07, `reports/timing_half_markets_study.md`):
+     - **Timing markets** (5 main leagues x 5 markets = 25 pairs, Understat `goals.parquet` after Task 19
+       PASS, dropping 3 matches with earliest-minute home/away ties out of 20,305): Primary `2024/25+`
+       **25 PASS / 0 FAIL**; Replication `2019/20-2023/24` **24 PASS / 1 FAIL** (`LIGUE1 first_goal_home`);
+       **24 / 25 Strong candidates** (`PASS` in both periods, pending real Betpawa prices).
+     - **Team-half markets** (9 live leagues x 8 markets = 72 pairs, `HTHG`/`HTAG` & `FTHG`/`FTAG`):
+       Primary `2024/25+` **68 PASS / 4 FAIL** (`EPL home_sh_over_0.5`, `LALIGA away_win_both_halves`,
+       `JUPILER away_win_both_halves`, `JUPILER away_sh_over_0.5`); Replication `2019/20-2023/24`
+       **61 PASS / 11 FAIL**; **58 / 72 Strong candidates** (`PASS` in both periods, pending real Betpawa
+       prices).
+     - **Combined**: **82 / 97 Strong candidates** (`PASS` in both periods), **15 stay out**.
 21. **Replication of tasks 16 and 17 on 2019/20-2023/24** (PRE-REGISTERED 2026-11-07, before results;
    research backtest only, `python -m src.replicate_tasks_16_17`):
    - Module `engine/src/replicate_tasks_16_17.py`, report
@@ -746,6 +757,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 20 (`src/timing_half_markets_study.py`,
+  `reports/timing_half_markets_study.md`, `tests/test_timing_half_markets_study.py`): ran synthetic
+  known-answer tests before real data, then evaluated 5 timing markets across 5 main leagues (25 pairs)
+  and 8 team-half markets across 9 live leagues (72 pairs) on `2024/25+` (primary) and
+  `2019/20-2023/24` (replication). Found 24/25 timing and 58/72 team-half Strong candidates (82/97
+  combined `PASS` in both periods, pending real Betpawa prices). No live change.
 - 2026-11-07: Completed task 19 (`src/goal_minute_check.py`, `reports/goal_minute_check.md`,
   `tests/fixtures/espn_summary_671408.json`, `tests/test_goal_minute_check.py`): compared 332 goals
   across 73 matches (5 main leagues, `2023/24`–`2025/26`) between Understat `goals.parquet` and ESPN

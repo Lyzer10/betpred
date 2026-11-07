@@ -709,6 +709,23 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
    - Decision rule: report only. A market whose CI lower bound is above 0 at the median `r` AND the
      75th percentile `r` becomes `"priority for the real-price test"`; nothing enters slips from this
      task.
+   - Result (DONE 2026-11-07, `reports/simulated_value_study.md`, **SIMULATED** only):
+     - Checked all 30 `RESEARCH_MARKETS`: **17 markets meet `n >= 50`** priced matches (`11` from Tasks
+       16/17 with `n = 52–71` and `6` from Tasks 10/15 with `n = 163–171`), while **13 markets are
+       `INSUFFICIENT` (`n < 50`)** (`interval_10_draw` has `n = 41` in the 5 main leagues where 10-minute
+       share `w` is defined from Understat `goals.parquet`, and the 12 newly added Task-18 markets have
+       `n = 0`).
+     - Observed median `r = (1 / Betpawa odds) / raw_consensus_probability`: lowest on 2UP (`away_2up`
+       `0.9980`, `home_2up` `1.0059`, `n = 71`), `sh_over_0.5` (`1.0238`), `fh_over_0.5` (`1.0316`),
+       `home_over_0.5` (`1.0326`), `away_over_0.5` (`1.0348`), `dc1up_12` (`1.0390`), `sh_over_1.5`
+       (`1.0418`), `dnb_home` (`1.0446`), `dnb_away` (`1.0552`), `home_over_1.5` (`1.0628`), `dc1up_1x`
+       (`1.0669`), `dc1up_x2` (`1.0733`), `away_over_1.5` (`1.0735`), `fh_over_1.5` (`1.0804`),
+       `home_win_either_half` (`1.0806`), `away_win_either_half` (`1.0919`).
+     - Over `2014/15+` historical matches (2,000 whole-day bootstrap resamples, `SEED = 20261029`),
+       `home_2up` has a positive **SIMULATED** pooled return at `p25 r` (`+0.0243`, 95% CI `+0.0074` to
+       `+0.0419`), but at `median r` (`-0.0207`, CI `-0.0368` to `-0.0042`) and `p75 r` (`-0.0401`, CI
+       `-0.0562` to `-0.0243`) its CI lower bound is below 0. **0 markets** have a 95% CI lower bound `> 0`
+       at both `median r` and `p75 r` (**no market flagged as priority**; report only, no live change).
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -716,6 +733,10 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| SIMULATED Betpawa-price value check (task 22) | 17/30 research markets have `n >= 50` (`home_2up` med `r = 1.0059`, `away_2up` `0.9980`); 0 markets have SIMULATED 95% CI lower bound `> 0` at both median and p75 `r` | report only; keep logging real prices toward 300 settled legs |
+| Replication of tasks 16 and 17 on 2019/20-2023/24 (task 21) | Task 16: 44/54 PASS both periods; Task 17: 24/25 PASS both periods (`68/79` Strong candidates) | 68 Strong candidates pending >= 300 real Betpawa priced legs |
+| Goal-timing and team-half markets backtest (task 20) | Timing (5 leagues): 24/25 PASS both periods; Team-half (9 leagues): 58/72 PASS both periods (`82/97` Strong candidates) | 82 Strong candidates pending >= 300 real Betpawa priced legs |
+| Goal-minute accuracy check, Understat vs ESPN (task 19) | 332 goals / 73 matches (5 leagues, 3 seasons): `< 10:00` (`minute <= 9`) `332/332` (`100%`), sorted goal order `73/73` (`100%`) | PASS; cleared Understat minutes for task 20 |
 | Betpawa market catalogue, 9 leagues (task 18) | 128 `marketType` IDs across 27 events; only 00:01-09:59 interval exists; 10 new research keys logged | price logging expanded; bookings not studied (`HY,AY,HR,AR` lacks 2nd-yellow split / rule unverified) |
 | Double Chance 1UP and 1X2 2UP, 5 main leagues (task 17) | 24/25 PASS, 1 FAIL (`EPL home_2up`) | 24 PASS eligible pending >= 300 real Betpawa priced legs; `EPL home_2up` stays out |
 | Goals by half and win either half, 9 leagues (task 16) | 49/54 PASS, 5 FAIL (`EPL fh_over_1.5`, `EPL sh_over_0.5`, `EREDIV sh_over_1.5`, `JUPILER sh_over_0.5`, `PRIMEIRA fh_over_0.5`) | 49 PASS eligible pending >= 300 real Betpawa priced legs; 5 FAIL stay out |
@@ -768,6 +789,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 22 (`src/simulated_value_study.py`, `reports/simulated_value_study.md`,
+  `tests/test_simulated_value_study.py`): computed pre-kickoff ratio `r = (1 / Betpawa odds) /
+  raw_consensus_probability` across all 30 `RESEARCH_MARKETS` (`17` with `n >= 50`, `13` `INSUFFICIENT`)
+  and evaluated **SIMULATED** historical returns (`2014/15+`, 2,000 whole-day bootstrap resamples,
+  `SEED = 20261029`) pooled and per league at `p25`, `median`, and `p75` of `r`. Found 0 markets with 95%
+  CI lower bound `> 0` at both `median r` and `p75 r`. Report only; no live change.
 - 2026-11-07: Completed task 21 (`src/replicate_tasks_16_17.py`,
   `reports/tasks_16_17_replication.md`, `tests/test_replicate_tasks_16_17.py`): replicated Tasks 16
   (54 pairs) and 17 (25 pairs) on `2019/20-2023/24` with identical rules and `market_gates.evaluate`

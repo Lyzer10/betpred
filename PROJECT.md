@@ -627,6 +627,17 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      agrees in >= 99% of compared matches. Otherwise task 20 uses only the HT/FT-based markets and
      reports the timing ones as `INSUFFICIENT`.
    - Report the agreement tables and every disagreement example (match, ESPN seconds, Understat minute).
+   - Result (DONE 2026-11-07, `reports/goal_minute_check.md`): **PASS** across 332 goals in 73 matches
+     (all 5 main leagues, seasons `2023/24`, `2024/25`, `2025/26`). Understat stores 0-indexed completed
+     minutes (`minute = floor(seconds / 60) = display_minute - 1` for regular time, matching `293/296` =
+     `98.99%` exactly and differing by `-1` minute on the remaining `3`), `44 + x` for first-half
+     stoppage (`45'+x'`, `16/16` = `100.00%`), and `89 + x` for second-half stoppage (`90'+x'`, `20/20` =
+     `100.00%`). Under `minute <= 9`, `< 10:00` (`clock.value < 600.0s` in period 1) agrees in
+     **`332/332` (`100.00%` >= `98%`)** goals (naive `minute <= 10` misclassifies two 11th-minute goals at
+     `608.0s` and `646.0s`, giving `330/332` = `99.40%`). Sorting `goals.parquet` by `minute` reproduces
+     ESPN's full goal-scoring team sequence in **`73/73` (`100.00%` >= `99%`)** matches (unsorted raw
+     `goals.parquet` groups `home` before `away`, agreeing in `36/73` = `49.32%`). Task 20 is cleared to
+     use Understat minutes with `minute <= 9` and sorted `goals.parquet`.
 20. **Goal-timing and half markets backtest** (PRE-REGISTERED 2026-11-07, before results; research
    backtest only, `python -m src.timing_half_markets_study`):
    - Module `engine/src/timing_half_markets_study.py`, report
@@ -735,6 +746,13 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-07: Completed task 19 (`src/goal_minute_check.py`, `reports/goal_minute_check.md`,
+  `tests/fixtures/espn_summary_671408.json`, `tests/test_goal_minute_check.py`): compared 332 goals
+  across 73 matches (5 main leagues, `2023/24`–`2025/26`) between Understat `goals.parquet` and ESPN
+  `keyEvents`. Verified Understat's 0-indexed minute convention (`floor(seconds / 60)` in regular time,
+  `44 + x` in 1H stoppage, `89 + x` in 2H stoppage); `minute <= 9` agrees with ESPN `< 600.0s` on
+  `332/332` (`100.00%`) goals and sorting `goals.parquet` by `minute` agrees with ESPN goal order on
+  `73/73` (`100.00%`) matches (PASS).
 - 2026-11-07: Completed task 18 (`src/betpawa_catalogue.py`, `reports/betpawa_market_catalogue.md`,
   `src/betpawa.py`, `tests/fixtures/betpawa_research.json`, `tests/test_betpawa.py`,
   `tests/test_research_prices.py`): catalogued all 128 `marketType` IDs across 27 upcoming events (3 per

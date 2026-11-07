@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T17:31:48.944288Z",
+ "generated_at": "2026-11-07T17:46:17.715779Z",
  "matches": [
   {
    "league": "EPL",
@@ -535,64 +535,64 @@
       "formation_place": 1
      },
      {
-      "name": "Murillo",
-      "number": "5",
-      "position": "D",
-      "formation_place": 4
-     },
-     {
       "name": "Nikola Milenkovic",
       "number": "31",
-      "position": "D",
+      "position": "CD",
       "formation_place": 5
      },
      {
-      "name": "Jair Paula",
+      "name": "Murillo",
+      "number": "5",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Jair Cunha",
       "number": "23",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 6
      },
      {
       "name": "Ryan Yates",
       "number": "22",
-      "position": "M",
-      "formation_place": 7
-     },
-     {
-      "name": "James McAtee",
-      "number": "24",
-      "position": "M",
-      "formation_place": 10
-     },
-     {
-      "name": "Daniel Muñoz",
-      "number": "27",
-      "position": "M",
-      "formation_place": 2
-     },
-     {
-      "name": "Morgan Gibbs-White",
-      "number": "10",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Neco Williams",
-      "number": "3",
-      "position": "M",
-      "formation_place": 3
+      "position": "CM-L",
+      "formation_place": 8
      },
      {
       "name": "Xaver Schlager",
       "number": "21",
-      "position": "M",
-      "formation_place": 8
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Neco Williams",
+      "number": "3",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Daniel Muñoz",
+      "number": "27",
+      "position": "RM",
+      "formation_place": 2
      },
      {
       "name": "Liam Delap",
       "number": "19",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Morgan Gibbs-White",
+      "number": "10",
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "James McAtee",
+      "number": "24",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -662,57 +662,45 @@
       "formation_place": 1
      },
      {
+      "name": "Marc Guéhi",
+      "number": "6",
+      "position": "CD-L",
+      "formation_place": 6
+     },
+     {
+      "name": "Rúben Dias",
+      "number": "3",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
       "name": "Josko Gvardiol",
       "number": "24",
-      "position": "D",
+      "position": "LB",
       "formation_place": 3
      },
      {
       "name": "Abdukodir Khusanov",
       "number": "45",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Rúben Dias",
-      "number": "3",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Marc Guéhi",
-      "number": "6",
-      "position": "D",
-      "formation_place": 6
      },
      {
       "name": "Rayan Cherki",
       "number": "10",
-      "position": "M",
+      "position": "AM",
       "formation_place": 10
-     },
-     {
-      "name": "Jérémy Doku",
-      "number": "11",
-      "position": "M",
-      "formation_place": 11
      },
      {
       "name": "Enzo Fernández",
       "number": "17",
-      "position": "M",
+      "position": "LM",
       "formation_place": 4
-     },
-     {
-      "name": "Iliman Ndiaye",
-      "number": "7",
-      "position": "M",
-      "formation_place": 7
      },
      {
       "name": "Elliot Anderson",
       "number": "5",
-      "position": "M",
+      "position": "RM",
       "formation_place": 8
      },
      {
@@ -720,6 +708,18 @@
       "number": "9",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Jérémy Doku",
+      "number": "11",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Iliman Ndiaye",
+      "number": "7",
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [
@@ -1091,14 +1091,14 @@
       "formation_place": 1
      },
      {
-      "name": "Enzo Boyomo",
-      "number": "22",
+      "name": "Alejandro Catena",
+      "number": "24",
       "position": "CD-L",
       "formation_place": 6
      },
      {
-      "name": "Alejandro Catena",
-      "number": "24",
+      "name": "Enzo Boyomo",
+      "number": "22",
       "position": "CD-R",
       "formation_place": 5
      },
@@ -1266,14 +1266,14 @@
       "formation_place": 10
      },
      {
-      "name": "Peio Canales",
-      "number": "28",
+      "name": "Beñat Gerenabarrena",
+      "number": "24",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Beñat Gerenabarrena",
-      "number": "24",
+      "name": "Peio Canales",
+      "number": "28",
       "position": "RM",
       "formation_place": 8
      },
@@ -1858,14 +1858,14 @@
       "formation_place": 10
      },
      {
-      "name": "Youri Regeer",
-      "number": "44",
+      "name": "Senne Lynen",
+      "number": "14",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Senne Lynen",
-      "number": "14",
+      "name": "Youri Regeer",
+      "number": "44",
       "position": "RM",
       "formation_place": 8
      },
@@ -2339,7 +2339,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Ronald Koeman",
@@ -2374,20 +2374,20 @@
      {
       "name": "Tyrone Owusu",
       "number": "10",
-      "position": "CM",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
+      "name": "Isaiah Ahmed",
+      "number": "6",
+      "position": "LM",
       "formation_place": 4
      },
      {
       "name": "Nils Rossen",
       "number": "17",
-      "position": "LM",
-      "formation_place": 8
-     },
-     {
-      "name": "Isaiah Ahmed",
-      "number": "6",
       "position": "RM",
-      "formation_place": 7
+      "formation_place": 8
      },
      {
       "name": "Nökkvi Thórisson",
@@ -2398,14 +2398,14 @@
      {
       "name": "Patrick Brouwer",
       "number": "27",
-      "position": "LF",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
       "name": "Ar'jany Martha",
       "number": "42",
-      "position": "RF",
-      "formation_place": 10
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [

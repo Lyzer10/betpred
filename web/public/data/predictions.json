@@ -8977,7 +8977,7 @@
               "betpawa_price_id": "1580981653",
               "fair_odds": 1.11,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-08",
@@ -9023,7 +9023,7 @@
             }
           ],
           "final": true,
-          "status": "pending",
+          "status": "won",
           "locked": true
         },
         "medium": {
@@ -9063,7 +9063,7 @@
               "betpawa_price_id": "1580981638",
               "fair_odds": 1.4,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-08",
@@ -9191,7 +9191,7 @@
               "betpawa_price_id": "1580981638",
               "fair_odds": 1.4,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-08",
@@ -12361,7 +12361,7 @@
           "betpawa_price_id": "1580981653",
           "fair_odds": 1.11,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-08",
@@ -12407,7 +12407,7 @@
         }
       ],
       "final": true,
-      "status": "pending"
+      "status": "won"
     },
     {
       "round": "2026-11-08",
@@ -12449,7 +12449,7 @@
           "betpawa_price_id": "1580981638",
           "fair_odds": 1.4,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-08",
@@ -12579,7 +12579,7 @@
           "betpawa_price_id": "1580981638",
           "fair_odds": 1.4,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-08",
@@ -13447,6 +13447,93 @@
         "away_win": false,
         "over_0.5": true,
         "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "home": "Celta",
+      "away": "Levante",
+      "score": [
+        0,
+        0
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": false,
+        "home_first": false,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "home": "Villarreal",
+      "away": "Getafe",
+      "score": [
+        2,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "home": "St. Gilloise",
+      "away": "Genk",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
         "over_2.5": false,
         "over_3.5": false,
         "under_2.5": true,
@@ -41735,7 +41822,7 @@
     {
       "date": "2026-11-08",
       "fixtures": 42,
-      "settled": 28
+      "settled": 31
     },
     {
       "date": "2026-11-07",

@@ -147,24 +147,27 @@ export function DateStrip({ dates, selected, onSelect, markers }: {
     if (!strip) return;
     const focusIndex = dates.indexOf(selected && dates.includes(selected) ? selected : today);
     if (focusIndex < 0) return;
-    const buttons = strip.querySelectorAll<HTMLElement>("[data-date]");
-    const rightmost = buttons[Math.min(focusIndex + 2, buttons.length - 1)];
-    if (!rightmost) return;
-    strip.scrollLeft = Math.max(0, rightmost.offsetLeft + rightmost.offsetWidth - strip.clientWidth);
+    const focus = strip.querySelectorAll<HTMLElement>("[data-date]")[focusIndex];
+    if (!focus) return;
+    // The selected day (or today) sits in the middle of the strip.
+    strip.scrollLeft = Math.max(0, focus.offsetLeft + focus.offsetWidth / 2 - strip.clientWidth / 2);
   }, [dates, selected, today]);
   return (
-    <div ref={stripRef} className="no-scrollbar -mx-4 flex overflow-x-auto border-b border-border/70 px-2" role="tablist">
+    <div ref={stripRef} className="no-scrollbar relative -mx-4 flex overflow-x-auto border-b border-border/70" role="tablist"
+      style={{ paddingInline: "calc(50% - 1.875rem)" }}>
       {dates.map((d) => {
         const date = new Date(`${d}T12:00:00`);
         const active = d === selected;
         return (
           <button key={d} role="tab" data-date={d} aria-selected={active} onClick={() => onSelect(d)}
-            className={`relative shrink-0 px-3 pb-2.5 pt-1 text-center ${active ? "text-accent" : "text-ink-3"}`}>
-            <div className="text-[11px] font-bold tracking-wide">
+            className={`relative flex w-[3.75rem] shrink-0 flex-col items-center justify-start pb-2.5 pt-1 text-center ${active ? "text-accent" : "text-ink-3"}`}>
+            <div className="text-[11px] font-bold leading-4 tracking-wide">
               {d === today ? "TODAY" : date.toLocaleDateString(undefined, { weekday: "short" }).toUpperCase()}
             </div>
-            <div className="text-[11px] font-medium">{date.toLocaleDateString(undefined, { day: "numeric", month: "short" }).toUpperCase()}</div>
-            {markers?.[d] && <span aria-label={`${markers[d]} bets`} className={`date-result-dot date-result-${markers[d]} mt-1`} />}
+            <div className="text-[11px] font-medium leading-4">{date.toLocaleDateString(undefined, { day: "numeric", month: "short" }).toUpperCase()}</div>
+            <span className="mt-1 flex h-1.5 items-center">
+              {markers?.[d] && <span aria-label={`${markers[d]} bets`} className={`date-result-dot date-result-${markers[d]}`} />}
+            </span>
             {active && <span className="date-active-line absolute inset-x-2 bottom-0 h-[3px] rounded-full" />}
           </button>
         );

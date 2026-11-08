@@ -149,16 +149,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-08)
-- App look (owner request 2026-11-08): blue glass theme in light and dark, solid colours only (owner:
-  no gradients): frosted see-through panels with a bright rim (`web/src/index.css`), Urbanist font, solid
-  blue buttons (`.btn-primary`), past slips keep the owner's #001339. Explanations cut to one short line
-  (Bets, Money, Record, match pages). No data, logic or numbers changed; e2e check passes in both modes.
-- Betpawa booking codes live (2026-11-08): each open slip whose legs all have a Betpawa price gets a
-  booking code from Betpawa's public `POST /api/sportsbook/v3/booking-number` (no login, no account,
-  no money). A code is shown only after loading it back and checking it holds exactly the slip's
-  price ids; cached by price ids in `engine/data/live/booking_codes.json` (3 days). App: "Copy",
-  then Betpawa -> Betslip -> Load Betslip. Real check: code F4OA87M loaded 3 EPL Over 1.5 picks with
-  the same matches and prices. No change to which picks are chosen.
+- App look (owner requests 2026-11-08): frosted glass in light and dark with solid colours only (no
+  gradients); slip cards, past slips and the match header are part of the glass card (no blue block;
+  replaces the earlier #001339 past-slip colour). Inter font. Date strip: equal-width days, today (or
+  the selected day) centred. Explanations cut to one short line. No data or logic changed.
 - Check-in reminders (owner request 2026-11-08): `scripts/notify.py` `CHECKINS` (16 Nov weekly
   check, 28 Nov team overs / DNB decision and closing-odds test, 5 Dec new-markets real-price test)
   adds one line to the final-slips notification on the first match day on or after each date. The
@@ -873,6 +867,8 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Slip cards full glass (no blue block), Inter font back, date strip centred on today with
+  equal-width days; e2e checks updated (glass past slip, today centred).
 - 2026-11-08: UI refresh: solid-colour blue glassmorphism (light + dark), shorter text across the app;
   e2e text checks updated. No logic change.
 - 2026-11-08: Understat is down for maintenance (its data URL returns the "We will come back soon"

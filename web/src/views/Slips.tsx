@@ -200,12 +200,12 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
   const liveSlip = useSlipLive(slip.legs);
   return (
     <Card className="overflow-hidden">
-      <div data-current-slip-hero className="slip-hero px-5 pb-5 pt-4 text-hero-ink">
+      <div data-current-slip-hero className="slip-hero px-5 pb-5 pt-4">
         <div className="flex items-center justify-between text-xs opacity-70">
           <span>{TIERS[tier].range}</span>
-          {slip.locked && (liveSlip ? <SlipLivePill legs={slip.legs} onDark />
-            : <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">Locked · in play</span>)}
-          {!slip.locked && slip.final && <span className="rounded-full bg-white/10 px-2 py-0.5 font-semibold">✓ Final</span>}
+          {slip.locked && (liveSlip ? <SlipLivePill legs={slip.legs} />
+            : <span className="rounded-full bg-surface-2 px-2 py-0.5 font-semibold">Locked · in play</span>)}
+          {!slip.locked && slip.final && <span className="rounded-full bg-good/15 px-2 py-0.5 font-semibold text-good-ink">✓ Final</span>}
         </div>
         <div className="mt-3 flex items-end justify-between">
           <div>

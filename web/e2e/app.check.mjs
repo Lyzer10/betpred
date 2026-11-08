@@ -88,6 +88,12 @@ for (const scheme of ["light", "dark"]) {
     });
   });
   check(todayAndNextTwoVisible, `[${scheme}] Bets: today and the next two days are visible initially`);
+  const todayCentred = await page.evaluate(() => {
+    const today = Array.from(document.querySelectorAll("[data-date]")).find((b) => b.querySelector("div")?.textContent === "TODAY");
+    const strip = today?.parentElement?.getBoundingClientRect(); const box = today?.getBoundingClientRect();
+    return !!strip && !!box && Math.abs((box.left + box.right) / 2 - (strip.left + strip.right) / 2) <= box.width / 2 + 1;
+  });
+  check(todayCentred, `[${scheme}] Bets: today sits in the middle of the date strip`);
   check(await page.getByRole("navigation", { name: "Primary" }).getByRole("button").count() === 4,
     `[${scheme}] floating menu has exactly four destinations`);
   check(await page.getByRole("button", { name: "History", exact: true }).count() === 0 && await page.locator("main[data-page='bets']").count() === 1,
@@ -188,8 +194,9 @@ for (const scheme of ["light", "dark"]) {
   await page.locator("[data-date='2026-10-24']").click();
   const pastSlips = page.locator("[data-past-slip]");
   await pastSlips.first().waitFor();
-  const pastBlue = await page.locator("[data-past-slip-header]").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-  check(pastBlue === "rgb(0, 19, 57)", `[${scheme}] past slip card uses the owner's #001339 (${pastBlue})`);
+  // Owner 2026-11-08: slip cards are full frosted glass (no coloured block).
+  const pastGlass = await pastSlips.first().evaluate((el) => getComputedStyle(el).backdropFilter);
+  check(/blur/.test(pastGlass), `[${scheme}] past slip card is frosted glass (${pastGlass})`);
   check(await pastSlips.first().getByText(/Won|Lost/, { exact: true }).count() === 1, `[${scheme}] past slip shows its final status`);
   await pastSlips.first().getByRole("button").click();
   check(await pastSlips.first().getByRole("button").getAttribute("aria-expanded") === "true", `[${scheme}] past slip expands`);

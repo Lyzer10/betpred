@@ -381,7 +381,7 @@ function MatchDetail({ fixture, onBack }: { fixture: Fixture; onBack: () => void
     <div className="space-y-4">
       <button onClick={onBack} className="px-1 text-sm font-semibold text-accent">‹ Matches</button>
       <Card className="overflow-hidden">
-        <div className="bg-hero px-5 pb-5 pt-4 text-hero-ink">
+        <div className="slip-hero px-5 pb-5 pt-4">
           <div className="text-center text-xs opacity-70">{kickoffLabel(fixture.kickoff_utc)}</div>
           <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-start gap-2">
             <div className="flex flex-col items-center gap-2 text-center">

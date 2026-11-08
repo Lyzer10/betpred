@@ -869,6 +869,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: Understat is down for maintenance (its data URL returns the "We will come back soon"
+  page), so full runs fall back to `--no-refresh` (cached data). Booking codes now also run in that
+  fallback (Betpawa prices are fetched there too); the cache file is written only when a code is added.
+  Research collection still needs a refresh run and resumes when Understat is back.
 - 2026-11-08: Final-slips notification now carries Betpawa booking codes and check-in reminders
   (`scripts/notify.py` CHECKINS; tests in `tests/test_schedule.py`).
 - 2026-11-08: Betpawa booking codes for slips (`engine/src/booking_codes.py`, price ids carried from

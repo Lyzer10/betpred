@@ -899,8 +899,10 @@ def main() -> None:
         slips = build_slips(day_legs, blocked)
         history = update_history(day, slips, all_matches, now, final=args.final and day == today)
         shown = displayed_slips(day, slips, history, now)
-        try:   # Betpawa booking codes: optional, a failure only means no code is shown
-            shown = add_booking_codes(shown, now, online=not args.no_refresh)
+        try:   # Betpawa booking codes: optional, a failure only means no code is shown. Also in the
+            # --no-refresh fallback (Betpawa prices are fetched there too); legs without a Betpawa
+            # price id (e.g. tests) never reach Betpawa.
+            shown = add_booking_codes(shown, now)
         except Exception as error:
             print(f"Booking codes unavailable ({error})")
         days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),

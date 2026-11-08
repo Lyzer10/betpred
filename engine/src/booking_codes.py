@@ -57,6 +57,7 @@ def add_booking_codes(slips: dict, now: pd.Timestamp, online: bool = True,
                       session: requests.Session | None = None) -> dict:
     """Add `booking_code` to each slip whose legs all have a Betpawa price and none has kicked off."""
     cache = _read_cache()
+    before = dict(cache)
     session = session or requests.Session()
     out = {}
     for tier, slip in slips.items():
@@ -77,7 +78,7 @@ def add_booking_codes(slips: dict, now: pd.Timestamp, online: bool = True,
             if key in cache:
                 slip["booking_code"] = cache[key]["code"]
         out[tier] = slip
-    if online:      # offline runs (--no-refresh, tests) never write
+    if cache != before:      # written only when a new code was added (tests and empty runs leave no file)
         _write_cache(cache, now)
     return out
 

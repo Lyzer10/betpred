@@ -149,6 +149,10 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-08)
+- App look (owner request 2026-11-08): blue glass theme in light and dark, solid colours only (owner:
+  no gradients): frosted see-through panels with a bright rim (`web/src/index.css`), Urbanist font, solid
+  blue buttons (`.btn-primary`), past slips keep the owner's #001339. Explanations cut to one short line
+  (Bets, Money, Record, match pages). No data, logic or numbers changed; e2e check passes in both modes.
 - Betpawa booking codes live (2026-11-08): each open slip whose legs all have a Betpawa price gets a
   booking code from Betpawa's public `POST /api/sportsbook/v3/booking-number` (no login, no account,
   no money). A code is shown only after loading it back and checking it holds exactly the slip's
@@ -869,6 +873,8 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-08: UI refresh: solid-colour blue glassmorphism (light + dark), shorter text across the app;
+  e2e text checks updated. No logic change.
 - 2026-11-08: Understat is down for maintenance (its data URL returns the "We will come back soon"
   page), so full runs fall back to `--no-refresh` (cached data). Booking codes now also run in that
   fallback (Betpawa prices are fetched there too); the cache file is written only when a code is added.

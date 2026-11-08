@@ -41,7 +41,7 @@ export function Record({ data }: { data: Predictions }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-2 text-[11px] text-ink-3">Checked every update against the bookmakers and real results. "Under review" halves every stake automatically.</p>
+            <p className="mt-2 text-[11px] text-ink-3">"Under review" halves every stake.</p>
           </Card>
         </>
       )}
@@ -63,7 +63,7 @@ export function Record({ data }: { data: Predictions }) {
           </div>
         </Card>
       ) : (
-        <Empty>Live accuracy appears here once the first predicted matches have finished.</Empty>
+        <Empty>Appears after the first finished matches.</Empty>
       )}
 
       <SectionTitle aside={settledSlips.length ? `${settledSlips.filter((h) => h.status === "won").length}/${settledSlips.length} won` : undefined}>
@@ -99,7 +99,7 @@ export function Record({ data }: { data: Predictions }) {
             })}
           </tbody>
         </table>
-        <p className="mt-3 text-[11px] leading-relaxed text-ink-3">Every round replayed using only information available before kickoff.</p>
+        <p className="mt-3 text-[11px] leading-relaxed text-ink-3">Replayed with pre-kick-off data only.</p>
       </Card>
     </div>
   );

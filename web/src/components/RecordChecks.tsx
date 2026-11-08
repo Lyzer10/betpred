@@ -20,7 +20,7 @@ export function PriceTracking({ clv }: { clv?: ClvReport }) {
     <>
       <SectionTitle>Are we beating Betpawa's prices?</SectionTitle>
       {!clv || !("mean_clv" in clv) ? (
-        <Empty>Prices are saved before every kick-off. The first results appear after the next matches.</Empty>
+        <Empty>Appears after the next matches.</Empty>
       ) : (
         <Card className="px-5 py-4" data-clv>
           <div className="text-base font-bold">
@@ -32,10 +32,7 @@ export function PriceTracking({ clv }: { clv?: ClvReport }) {
               Too early to judge: needs {CLV_JUDGE_LEGS} bets ({clv.legs} so far).
             </p>
           )}
-          <p className="mt-2 text-[11px] leading-relaxed text-ink-3">
-            When the price falls after we pick, the market moved towards us: the strongest early sign of a real edge,
-            long before wins and losses can prove it.
-          </p>
+          <p className="mt-2 text-[11px] text-ink-3">Price falling after our pick = the market agrees with us.</p>
           <ClvTable title="League" rows={clv.league} name={(k) => LEAGUE_NAMES[k] ?? k} />
           <ClvTable title="Bet type" rows={clv.market} name={(k) => MARKET_NAMES[k as MarketKey] ?? k} />
         </Card>
@@ -84,11 +81,8 @@ export function BetTypeChecks({ pairs }: { pairs?: PairCheck[] }) {
     <>
       <SectionTitle>Is each bet type behaving?</SectionTitle>
       <Card className="overflow-hidden" data-bet-types>
-        <p className="px-5 pt-4 text-[11px] leading-relaxed text-ink-3">
-          Our published chance against what really happened. <b>Paused</b> bet types won clearly less than we said and are
-          kept out of slips until they recover. Winning more than predicted is never a problem.
-        </p>
-        {shown.length === 0 && <p className="px-5 py-3 text-xs text-ink-2">Each bet type needs 30 finished matches first.</p>}
+        <p className="px-5 pt-4 text-[11px] text-ink-3">Said vs won. <b>Paused</b> types stay out of slips until they recover.</p>
+        {shown.length === 0 && <p className="px-5 py-3 text-xs text-ink-2">Needs 30 finished matches per bet type.</p>}
         {shown.map((p) => (
           <div key={`${p.league}-${p.market}`} data-bet-type className="flex items-center justify-between gap-3 border-t border-border/60 px-5 py-3 first:border-t-0">
             <div className="min-w-0">
@@ -140,7 +134,7 @@ export function RealResults({ realised }: { realised?: Record<TierName, Realised
               })}
             </tbody>
           </table>
-          <p className="mt-2 text-[11px] text-ink-3">"Expected" is how many we should have won by our own chances. Small numbers swing a lot.</p>
+          <p className="mt-2 text-[11px] text-ink-3">"Expected" = wins our chances predicted.</p>
         </Card>
       ) : (
         <Empty>Appears once published slips have settled.</Empty>

@@ -327,7 +327,7 @@ export function Lineups({ fixture, expected }: { fixture: Fixture & { lineups?: 
     <Card className="overflow-hidden" data-lineups>
       <h2 className="px-4 pb-2 pt-4 text-[13px] font-semibold text-ink-2">Line-ups</h2>
       {!team ? (
-        <p className="px-4 pb-4 text-xs text-ink-3">{started ? "Line-ups for this match are not available." : "Line-ups appear here about an hour before kick-off, once the clubs announce them."}</p>
+        <p className="px-4 pb-4 text-xs text-ink-3">{started ? "Line-ups for this match are not available." : "Line-ups about an hour before kick-off."}</p>
       ) : (
         <>
           {!lineup && !started && expected && <p className="mx-4 mb-3 rounded-xl bg-warning/15 px-3 py-2 text-xs font-semibold text-warning-ink">Expected: starting XI from last league match ({(team as ExpectedLineup).from_match}). Official line-ups replace this about an hour before kick-off.</p>}

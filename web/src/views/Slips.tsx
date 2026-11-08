@@ -7,7 +7,7 @@ import { Flag, TeamBadge } from "../badges";
 import { explainPick } from "../explain";
 import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
 import { type Fixture, PREMIER_LEAGUE } from "../types";
-import { Card, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
+import { Card, DateStrip, todayIso, Empty, OddsInput, SectionTitle, Segmented, Stat, StatusPill, TIERS, VerdictBadge, parseOdds } from "../ui";
 
 const named = (leg: { label: string; home: string; away: string }) =>
   leg.label.replace("Home", leg.home).replace("Away", leg.away);
@@ -57,10 +57,10 @@ function DayStatus({ day }: { day: DayBets }) {
   const first = timeLabel(day.first_kickoff_utc);
   const finalAround = timeLabel(new Date(Date.parse(day.first_kickoff_utc) - 45 * 60_000).toISOString());
   return (
-    <div data-day-status className={`mb-3 rounded-xl px-4 py-2.5 text-xs ${day.final ? "bg-good/15 text-good-ink" : "bg-surface-2 text-ink-2"}`}>
+    <div data-day-status className={`mb-3 inline-flex rounded-full px-3.5 py-1.5 text-xs ${day.final ? "bg-good/15 text-good-ink" : "bg-surface-2 text-ink-2"}`}>
       {day.final
-        ? <><span className="font-semibold">✓ Final slips.</span> These will not change.{Date.parse(day.first_kickoff_utc) > Date.now() ? ` First match ${first}.` : " Matches under way: scores update live below."}</>
-        : <><span className="font-semibold">Preview.</span> Final slips around {finalAround}, with the latest prices, about 45 minutes before the first match ({first}). They may still change until then.</>}
+        ? <><span className="font-semibold">✓ Final slips.</span>&nbsp;{Date.parse(day.first_kickoff_utc) > Date.now() ? `First match ${first}` : "Live"}</>
+        : <><span className="font-semibold">Preview.</span>&nbsp;Final at {finalAround} · first match {first}</>}
     </div>
   );
 }
@@ -138,7 +138,7 @@ function PlaceForm({ tier, slip, day, total, balances, stakeFactor, staking, onP
       )}
       <div className="flex gap-2">
         <button onClick={onCancel} className="flex-1 rounded-xl bg-surface-2 py-2.5 text-sm font-semibold text-ink-2">Cancel</button>
-        <button disabled={!ready} className="flex-[2] rounded-xl bg-accent py-2.5 text-sm font-semibold text-white disabled:opacity-40"
+        <button disabled={!ready} className="flex-[2] btn-primary rounded-xl py-2.5 text-sm font-semibold disabled:opacity-40"
           onClick={() => onPlace({
             id: newId(), type: "bet", placedAt: new Date().toISOString(), day, bookmaker, tier, stake,
             odds: placedOdds, winProbability: slip.win_probability,
@@ -172,11 +172,10 @@ function BookingCode({ code }: { code: string }) {
   return (
     <div data-booking-code className="flex items-center justify-between gap-3 border-t border-border/60 px-5 py-3">
       <div className="min-w-0">
-        <div className="text-[11px] text-ink-3">Betpawa booking code</div>
+        <div className="text-[11px] text-ink-3">Betpawa code · Load Betslip</div>
         <div className="font-mono text-lg font-bold tracking-wider">{code}</div>
-        <div className="text-[11px] text-ink-3">Betpawa → Betslip → Load Betslip → paste</div>
       </div>
-      <button onClick={copy} className="shrink-0 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white">
+      <button onClick={copy} className="btn-primary shrink-0 rounded-full px-5 py-2 text-sm font-semibold">
         {copied ? "✓ Copied" : "Copy"}
       </button>
     </div>
@@ -219,7 +218,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
           </div>
         </div>
       </div>
-      <ul className="bg-surface">
+      <ul>
         {slip.legs.map((leg, i) => {
           const fixture = fixtures.find((f) => f.home === leg.home && f.away === leg.away);
           const why = fixture ? explainPick(leg.market, fixture) : [];
@@ -266,7 +265,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
 
       <div className="bg-surface-2/60 px-5 py-3.5">
         {!complete ? (
-          <span className="text-xs text-ink-3">Betpawa has no price for one pick: type it to check.</span>
+          <span className="text-xs text-ink-3">One pick has no Betpawa price: type it.</span>
         ) : (
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -278,9 +277,9 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
                 </>
               ) : (
                 <div className="text-xs text-ink-3">
-                  {!hasValue ? "Betpawa's odds are too low for this slip: skip it."
-                    : balances[bookmaker] > 0 ? `The right stake is under TSh ${STAKING.minStake} for your ${BOOKMAKERS[bookmaker]} balance: skip, or keep it to the minimum.`
-                    : `Set your ${BOOKMAKERS[bookmaker]} balance in Money to see the stake.`}
+                  {!hasValue ? "Odds too low: skip it."
+                    : balances[bookmaker] > 0 ? `Stake under TSh ${STAKING.minStake}: skip or bet the minimum.`
+                    : `Set your ${BOOKMAKERS[bookmaker]} balance in Money.`}
                 </div>
               )}
             </div>
@@ -288,7 +287,7 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
           </div>
         )}
         {slip.price_warning && complete && (
-          <p className="mt-2 text-[11px] text-warning-ink">⚠ A pick's price is much higher than other bookmakers': check team news first. Stake halved.</p>
+          <p className="mt-2 text-[11px] text-warning-ink">⚠ One price is well above other bookmakers: check team news. Stake halved.</p>
         )}
       </div>
 
@@ -326,18 +325,17 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
         placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={staking} fixtures={data.fixtures} onPlace={onPlace} />
       {record && (
-        <p className="px-2 text-xs leading-relaxed text-ink-3">
-          Track record of {TIERS[tier].title} slips: won <b className="text-ink-2">{pct(record.win_rate, 1)}</b> of {record.slips} past days
-          (we predicted {pct(record.predicted_win_rate, 1)}). A slip at odds {odds(record.average_odds)} can't win much more often than that:
-          it's what those odds mean.
-        </p>
+        <Card data-track-record className="grid grid-cols-3 gap-2 px-5 py-3.5">
+          <Stat label="Past wins" value={pct(record.win_rate, 1)} sub={`${record.slips} days`} />
+          <Stat label="We predicted" value={pct(record.predicted_win_rate, 1)} />
+          <Stat label="Avg odds" value={odds(record.average_odds)} />
+        </Card>
       )}
       <p className="px-2 text-xs text-ink-3">
-        Stakes: {ledger.staking?.mode === "fixed" ? `a fixed ${tsh(ledger.staking.fixed)} per slip`
-          : ledger.staking?.mode === "percent" ? `${ledger.staking.percent}% of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance per slip`
-          : `a quarter of the Kelly amount, at most ${pct(STAKING.maxTier[tier])} of your ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]} balance for ${TIERS[tier].title}`} (change in Money).
-        {staking.pilot && <> Pilot phase: max {pct(STAKING.pilotCap)} of your balance per slip until {STAKING.pilotSlips} of your slips have settled ({settled}/{STAKING.pilotSlips}).</>}
-        Nothing when the odds are below fair.
+        Stake: {ledger.staking?.mode === "fixed" ? `fixed ${tsh(ledger.staking.fixed)}`
+          : ledger.staking?.mode === "percent" ? `${ledger.staking.percent}% of balance`
+          : `¼ Kelly, max ${pct(STAKING.maxTier[tier])} of ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]}`}
+        {staking.pilot && <> · Pilot: max {pct(STAKING.pilotCap)} ({settled}/{STAKING.pilotSlips} slips)</>}
       </p>
     </div>
   );
@@ -379,7 +377,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
             </button>
             {open[t] && (
               <div id={`past-${t}-legs`}>
-                <ul className="bg-surface">
+                <ul>
                   {slip.legs.map((leg, i) => {
                     const fixture = snapshot.fixtures.find((item) => item.home === leg.home && item.away === leg.away);
                     const legStatus = leg.won === true ? "won" : leg.won === false ? "lost" : "pending";
@@ -461,7 +459,7 @@ export function Slips({ data, ledger, day: selected, dates, schedule, markers, o
         <button onClick={onOpenMoney} className="mb-4 block w-full text-left">
           <Card className="px-5 py-4">
             <div className="text-sm font-semibold">Set your Betpawa and SportyBet balances</div>
-            <div className="text-xs text-ink-3">Needed to tell you how much to stake. Open Money ›</div>
+            <div className="text-xs text-ink-3">To see stakes · Open Money ›</div>
           </Card>
         </button>
       )}

@@ -37,10 +37,7 @@ function StakingCard({ ledger, balance, pilotSettled, onChange }: { ledger: Ledg
           value={staking.mode} onChange={(m) => setMode(m as StakingMode)} />
       </div>
       {staking.mode === "smart" ? (
-        <p className="mt-3 text-xs leading-relaxed text-ink-2">
-          Sized by how much value the slip has (a quarter of the Kelly amount), at most {pct(STAKING.maxTier.safe)} of your balance on Safe.
-          Safest for small balances, but stakes can be small.
-        </p>
+        <p className="mt-3 text-xs text-ink-2">¼ Kelly by value · max {pct(STAKING.maxTier.safe)} of balance on Safe.</p>
       ) : (
         <>
           <label className="mt-3 flex items-center gap-2 rounded-xl bg-surface-2 px-3 py-2.5">
@@ -50,17 +47,16 @@ function StakingCard({ ledger, balance, pilotSettled, onChange }: { ledger: Ledg
           </label>
           {balance > 0 && example > 0 && (
             <p className={`mt-3 text-xs leading-relaxed ${risk > 0.5 ? "text-critical-ink" : risk > 0.2 ? "text-warning-ink" : "text-ink-2"}`}>
-              {tsh(example)} is {pct(example / balance)} of your Betpawa balance. Losing half of it takes {lossesToHalve} Safe slips lost in a row;
-              over a month of {BETS_PER_MONTH} Safe slips that happens at least once about <b>{pct(risk)}</b> of the time.
+              {tsh(example)} = {pct(example / balance)} of balance · losing half takes {lossesToHalve} Safe slips lost in a row
+              · chance in a month <b>{pct(risk)}</b>
             </p>
           )}
         </>
       )}
-      <p className="mt-2 text-[11px] text-ink-3">Any mode: slips without value still say skip, and stakes are halved on price or model warnings.</p>
+      <p className="mt-2 text-[11px] text-ink-3">No value = skip · warnings halve the stake.</p>
       {pilotSettled < STAKING.pilotSlips && (
-        <p className="mt-2 rounded-xl bg-warning/15 px-3 py-2 text-[11px] leading-relaxed text-warning-ink">
-          Pilot phase: until {STAKING.pilotSlips} of your slips have settled ({pilotSettled}/{STAKING.pilotSlips} so far), no slip stakes more than {pct(STAKING.pilotCap)} of your balance,
-          whatever you choose above. The system's edge is not yet proven with your own bets.
+        <p className="mt-2 rounded-xl bg-warning/15 px-3 py-2 text-[11px] text-warning-ink">
+          Pilot: max {pct(STAKING.pilotCap)} per slip until {STAKING.pilotSlips} slips settle ({pilotSettled}/{STAKING.pilotSlips}).
         </p>
       )}
     </Card>
@@ -78,7 +74,7 @@ function AmountForm({ label, onSubmit, onCancel }: { label: string; onSubmit: (a
         className="min-w-0 flex-1 rounded-xl bg-surface-2 px-3 py-2.5 text-sm font-bold outline-none ring-accent focus:ring-2"
         value={text} onChange={(e) => setText(e.target.value)} />
       <button type="button" onClick={onCancel} className="rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-3">Cancel</button>
-      <button type="submit" disabled={!(amount > 0)} className="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-40">Save</button>
+      <button type="submit" disabled={!(amount > 0)} className="btn-primary rounded-xl px-4 py-2.5 text-sm font-semibold disabled:opacity-40">Save</button>
     </form>
   );
 }
@@ -115,7 +111,7 @@ function AccountCard({ bookmaker, ledger, results, onChange }: {
       ) : (
         <div className="mt-3 flex gap-2">
           {!started ? (
-            <button onClick={() => setMode("start")} className="flex-1 rounded-xl bg-accent py-2.5 text-sm font-semibold text-white">Set balance</button>
+            <button onClick={() => setMode("start")} className="flex-1 btn-primary rounded-xl py-2.5 text-sm font-semibold">Set balance</button>
           ) : (
             <>
               <button onClick={() => setMode("deposit")} className="flex-1 rounded-xl bg-surface-2 py-2.5 text-sm font-semibold">+ Deposit</button>
@@ -297,15 +293,15 @@ function NotificationsCard() {
       <div className="text-sm font-semibold">Notifications</div>
       {code ? (
         <>
-          <p className="mt-1 text-xs leading-relaxed text-ink-2">✓ On for this phone. One last step, only once: copy this code and send it to Claude, so the daily run knows where to notify you.</p>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">✓ On for this phone. Copy this code and send it to Claude once.</p>
           <textarea readOnly value={code} aria-label="Notification code" className="mt-2 h-16 w-full resize-none rounded-xl bg-surface-2 px-3 py-2 text-[10px] text-ink-2 outline-none" />
-          <button onClick={copy} className="mt-2 w-full rounded-xl bg-accent py-2.5 text-sm font-semibold text-white">{copied ? "Copied ✓" : "Copy code"}</button>
+          <button onClick={copy} className="mt-2 w-full btn-primary rounded-xl py-2.5 text-sm font-semibold">{copied ? "Copied ✓" : "Copy code"}</button>
         </>
       ) : (
         <>
-          <p className="mt-1 text-xs leading-relaxed text-ink-2">Get a message when today's slips are final, about 45 minutes before the first match.
-            {pushSupported() ? "" : " On iPhone, add BetPredz to the Home Screen first."}</p>
-          <button onClick={turnOn} className="mt-3 w-full rounded-xl bg-accent py-2.5 text-sm font-semibold text-white">Turn on notifications</button>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">A message when today's slips are final.
+            {pushSupported() ? "" : " iPhone: add BetPredz to the Home Screen first."}</p>
+          <button onClick={turnOn} className="mt-3 w-full btn-primary rounded-xl py-2.5 text-sm font-semibold">Turn on notifications</button>
         </>
       )}
       {error && <p className="mt-2 text-xs text-critical-ink">{error}</p>}
@@ -342,16 +338,13 @@ export function Money({ ledger, results, onChange }: { ledger: Ledger; results: 
         <Stat label="This month" value={signed(monthProfit)} />
         <Stat label="Slips won" value={won + lost ? `${won}/${won + lost}` : "–"} sub={won + lost ? pct(won / (won + lost)) : undefined} />
       </Card>
-      <p className="mt-2 px-2 text-xs leading-relaxed text-ink-3">
-        Deposits and withdrawals change your balance but never your profit. A realistic good result is steady growth;
-        losing runs of several slips are normal even with an edge.
-      </p>
+      <p className="mt-2 px-2 text-xs text-ink-3">Deposits and withdrawals never count as profit.</p>
 
       <SectionTitle aside={bets.length ? `${bets.length}` : undefined}>Placed bets</SectionTitle>
       {bets.length ? (
         <PlacedBets bets={bets} results={results} onDelete={remove} />
       ) : (
-        <Empty>When you place a slip, tap <b>I placed this bet</b> on it. It appears here and settles automatically.</Empty>
+        <Empty>Tap <b>I placed this bet</b> on a slip to track it here.</Empty>
       )}
       {transfers.length > 0 && <Transfers transfers={transfers} onDelete={remove} />}
       <SectionTitle>Notifications</SectionTitle>

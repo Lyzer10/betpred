@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-08T12:31:29.872415Z",
+ "generated_at": "2026-11-08T12:47:48.046407Z",
  "matches": [
   {
    "league": "LALIGA",
@@ -9,70 +9,70 @@
     "formation": "4-3-3",
     "starters": [
      {
-      "name": "Víctor Chust",
-      "number": "23",
-      "position": "SUB",
-      "formation_place": 6
-     },
-     {
-      "name": "Rubén Sánchez",
-      "number": "22",
-      "position": "SUB",
-      "formation_place": 2
-     },
-     {
-      "name": "Fer Niño",
-      "number": "14",
-      "position": "SUB",
-      "formation_place": 9
-     },
-     {
-      "name": "Ali Houary",
-      "number": "29",
-      "position": "SUB",
-      "formation_place": 7
-     },
-     {
-      "name": "Martim Neto",
-      "number": "16",
-      "position": "SUB",
-      "formation_place": 8
-     },
-     {
-      "name": "Roy Revivo",
-      "number": "3",
-      "position": "SUB",
-      "formation_place": 3
-     },
-     {
-      "name": "Lucas Cepeda",
-      "number": "21",
-      "position": "SUB",
-      "formation_place": 10
-     },
-     {
       "name": "Matías Dituro",
       "number": "1",
-      "position": "SUB",
+      "position": "G",
       "formation_place": 1
      },
      {
-      "name": "Germán Valera",
-      "number": "11",
-      "position": "SUB",
-      "formation_place": 11
-     },
-     {
-      "name": "Javier Morcillo",
-      "number": "47",
-      "position": "SUB",
-      "formation_place": 4
+      "name": "Víctor Chust",
+      "number": "23",
+      "position": "CD-L",
+      "formation_place": 6
      },
      {
       "name": "Federico Redondo",
       "number": "5",
-      "position": "SUB",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Roy Revivo",
+      "number": "3",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Rubén Sánchez",
+      "number": "22",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Javier Morcillo",
+      "number": "47",
+      "position": "CM",
+      "formation_place": 4
+     },
+     {
+      "name": "Martim Neto",
+      "number": "16",
+      "position": "LM",
+      "formation_place": 8
+     },
+     {
+      "name": "Ali Houary",
+      "number": "29",
+      "position": "RM",
+      "formation_place": 7
+     },
+     {
+      "name": "Fer Niño",
+      "number": "14",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Germán Valera",
+      "number": "11",
+      "position": "LF",
+      "formation_place": 11
+     },
+     {
+      "name": "Lucas Cepeda",
+      "number": "21",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -151,7 +151,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Álvaro Valles",
@@ -162,44 +162,44 @@
      {
       "name": "Natan",
       "number": "4",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
+     },
+     {
+      "name": "Marc Bartra",
+      "number": "5",
+      "position": "CD-R",
+      "formation_place": 5
      },
      {
       "name": "Fran García",
       "number": "11",
-      "position": "D",
+      "position": "LB",
       "formation_place": 3
      },
      {
       "name": "Héctor Bellerín",
       "number": "2",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
      },
      {
-      "name": "Marc Bartra",
-      "number": "5",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Marc Roca",
-      "number": "21",
-      "position": "M",
-      "formation_place": 8
+      "name": "Antony",
+      "number": "7",
+      "position": "AM",
+      "formation_place": 7
      },
      {
       "name": "Isco",
       "number": "22",
-      "position": "M",
-      "formation_place": 4
+      "position": "LM",
+      "formation_place": 10
      },
      {
-      "name": "Pablo Fornals",
-      "number": "8",
-      "position": "M",
-      "formation_place": 7
+      "name": "Marc Roca",
+      "number": "21",
+      "position": "RM",
+      "formation_place": 4
      },
      {
       "name": "Troy Parrott",
@@ -210,14 +210,14 @@
      {
       "name": "Abde Ezzalzouli",
       "number": "10",
-      "position": "F",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
-      "name": "Antony",
-      "number": "7",
-      "position": "F",
-      "formation_place": 10
+      "name": "Pablo Fornals",
+      "number": "8",
+      "position": "AM-R",
+      "formation_place": 8
      }
     ],
     "subs": [
@@ -1211,8 +1211,8 @@
       "formation_place": 2
      },
      {
-      "name": "Felix Lemarechal",
-      "number": "80",
+      "name": "Romeo Vermant",
+      "number": "17",
       "position": "AM",
       "formation_place": 10
      },
@@ -1235,8 +1235,8 @@
       "formation_place": 9
      },
      {
-      "name": "Romeo Vermant",
-      "number": "17",
+      "name": "Felix Lemarechal",
+      "number": "80",
       "position": "AM-L",
       "formation_place": 11
      },
@@ -1305,7 +1305,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-4-2",
     "starters": [
      {
       "name": "Colin Coosemans",
@@ -1338,40 +1338,40 @@
       "formation_place": 2
      },
      {
-      "name": "Mario Stroeykens",
-      "number": "29",
-      "position": "CM",
+      "name": "Enric Llansana",
+      "number": "24",
+      "position": "CM-L",
       "formation_place": 8
      },
      {
-      "name": "Lukás Ambros",
-      "number": "18",
-      "position": "LM",
-      "formation_place": 10
-     },
-     {
-      "name": "Enric Llansana",
-      "number": "24",
-      "position": "RM",
-      "formation_place": 7
-     },
-     {
-      "name": "Mihajlo Cvetkovic",
-      "number": "9",
-      "position": "F",
-      "formation_place": 9
+      "name": "Mario Stroeykens",
+      "number": "29",
+      "position": "CM-R",
+      "formation_place": 4
      },
      {
       "name": "Jayden Onia-Seke",
       "number": "49",
-      "position": "LF",
+      "position": "LM",
       "formation_place": 11
+     },
+     {
+      "name": "Lukás Ambros",
+      "number": "18",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Danylo Sikan",
       "number": "14",
-      "position": "RF",
-      "formation_place": 4
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Mihajlo Cvetkovic",
+      "number": "9",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [

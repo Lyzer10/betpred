@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-08T14:31:57.016824Z",
+ "generated_at": "2026-11-08T14:46:38.762435Z",
  "matches": [
   {
    "league": "EPL",
@@ -3297,57 +3297,45 @@
       "formation_place": 1
      },
      {
+      "name": "Matties Volckaert",
+      "number": "57",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
       "name": "Siebe van der Heyden",
       "number": "44",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 4
      },
      {
       "name": "Maksim Paskotši",
       "number": "3",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 6
-     },
-     {
-      "name": "Matties Volckaert",
-      "number": "57",
-      "position": "D",
-      "formation_place": 5
-     },
-     {
-      "name": "Tibe De Vlieger",
-      "number": "27",
-      "position": "M",
-      "formation_place": 7
-     },
-     {
-      "name": "Abdelkahar Kadri",
-      "number": "37",
-      "position": "M",
-      "formation_place": 10
-     },
-     {
-      "name": "Momodou Sonko",
-      "number": "11",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Tiago Araújo",
-      "number": "20",
-      "position": "M",
-      "formation_place": 3
      },
      {
       "name": "Mathias Delorge-Knieper",
       "number": "17",
-      "position": "M",
+      "position": "CM-L",
       "formation_place": 8
+     },
+     {
+      "name": "Tibe De Vlieger",
+      "number": "27",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Tiago Araújo",
+      "number": "20",
+      "position": "LM",
+      "formation_place": 3
      },
      {
       "name": "Hyllarion",
       "number": "45",
-      "position": "M",
+      "position": "RM",
       "formation_place": 2
      },
      {
@@ -3355,6 +3343,18 @@
       "number": "47",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Momodou Sonko",
+      "number": "11",
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Abdelkahar Kadri",
+      "number": "37",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -3367,12 +3367,6 @@
      {
       "name": "Gilles De Meyer",
       "number": "35",
-      "position": "SUB",
-      "formation_place": 0
-     },
-     {
-      "name": "Kyrell Wilson",
-      "number": "14",
       "position": "SUB",
       "formation_place": 0
      },
@@ -3403,12 +3397,6 @@
      {
       "name": "El Hadji Seck",
       "number": "59",
-      "position": "SUB",
-      "formation_place": 0
-     },
-     {
-      "name": "Bas Evers",
-      "number": "31",
       "position": "SUB",
       "formation_place": 0
      },
@@ -4122,6 +4110,272 @@
     ]
    },
    "kickoff_utc": "2026-11-08T13:00:00Z"
+  },
+  {
+   "league": "SUPERLIG",
+   "home": "Alanyaspor",
+   "away": "Trabzonspor",
+   "home_lineup": {
+    "formation": "3-4-3",
+    "starters": [
+     {
+      "name": "Paulo Victor",
+      "number": "48",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Fidan Aliti",
+      "number": "5",
+      "position": "CD",
+      "formation_place": 5
+     },
+     {
+      "name": "Bedirhan Özyurt",
+      "number": "4",
+      "position": "CD-L",
+      "formation_place": 4
+     },
+     {
+      "name": "Nuno Lima",
+      "number": "3",
+      "position": "CD-R",
+      "formation_place": 6
+     },
+     {
+      "name": "Baran Gezek",
+      "number": "55",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
+      "name": "Maestro",
+      "number": "58",
+      "position": "CM-R",
+      "formation_place": 7
+     },
+     {
+      "name": "Ruan",
+      "number": "11",
+      "position": "LM",
+      "formation_place": 3
+     },
+     {
+      "name": "Florent Hadergjonaj",
+      "number": "94",
+      "position": "RM",
+      "formation_place": 2
+     },
+     {
+      "name": "Arda Usluoglu",
+      "number": "17",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Yusuf Ozdemir",
+      "number": "88",
+      "position": "CF-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Hwang Ui-Jo",
+      "number": "16",
+      "position": "CF-R",
+      "formation_place": 10
+     }
+    ],
+    "subs": [
+     {
+      "name": "Enes Keskin",
+      "number": "8",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Emre Demir",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Omar Ben Ali",
+      "number": "9",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ianis Hagi",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Iván Cédric",
+      "number": "19",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Izzet Celik",
+      "number": "26",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Gaïus Makouta",
+      "number": "42",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ibrahim Kaya",
+      "number": "7",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mert Bayram",
+      "number": "23",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Meschack Elia",
+      "number": "12",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "4-2-3-1",
+    "starters": [
+     {
+      "name": "André Onana",
+      "number": "24",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Stefan Savic",
+      "number": "15",
+      "position": "CD-L",
+      "formation_place": 6
+     },
+     {
+      "name": "Chibuike Nwaiwu",
+      "number": "27",
+      "position": "CD-R",
+      "formation_place": 5
+     },
+     {
+      "name": "Sidny Lopes Cabral",
+      "number": "55",
+      "position": "LB",
+      "formation_place": 3
+     },
+     {
+      "name": "Wagner Pina",
+      "number": "20",
+      "position": "RB",
+      "formation_place": 2
+     },
+     {
+      "name": "Ernest Muçi",
+      "number": "7",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
+      "name": "Fabinho",
+      "number": "6",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Ozan Tufan",
+      "number": "11",
+      "position": "RM",
+      "formation_place": 8
+     },
+     {
+      "name": "Paul Onuachu",
+      "number": "30",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
+      "name": "Noah Saviolo",
+      "number": "70",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Mohamed Salah",
+      "number": "10",
+      "position": "AM-R",
+      "formation_place": 7
+     }
+    ],
+    "subs": [
+     {
+      "name": "Metehan Mimaroglu",
+      "number": "77",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Samet Akaydin",
+      "number": "4",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Cenk Özkacar",
+      "number": "39",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mustafa Eskihellac",
+      "number": "19",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mehmet Umut Nayir",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Melih Kabasakal",
+      "number": "57",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ahmet Yildirim",
+      "number": "1",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ali Habesoglu",
+      "number": "99",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Erol Çolak",
+      "number": "96",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-11-08T15:30:00Z"
   }
  ],
  "events": [

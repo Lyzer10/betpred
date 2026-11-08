@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-08T11:11:43.126348Z",
+ "generated_at": "2026-11-08T11:16:09.963179Z",
  "matches": [
   {
    "league": "SERIEA",
@@ -468,52 +468,46 @@
       "formation_place": 1
      },
      {
-      "name": "Javi López",
-      "number": "16",
-      "position": "D",
-      "formation_place": 3
+      "name": "Mika Mármol",
+      "number": "35",
+      "position": "CD-L",
+      "formation_place": 6
      },
      {
       "name": "Tsuyoshi Watanabe",
       "number": "4",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Javi López",
+      "number": "16",
+      "position": "LB",
+      "formation_place": 3
      },
      {
       "name": "Givairo Read",
       "number": "26",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Mika Mármol",
-      "number": "35",
-      "position": "D",
-      "formation_place": 6
-     },
-     {
-      "name": "Oussama Targhaline",
-      "number": "28",
-      "position": "M",
-      "formation_place": 8
      },
      {
       "name": "Charles Vanhoutte",
       "number": "34",
-      "position": "M",
+      "position": "CM",
       "formation_place": 4
+     },
+     {
+      "name": "Oussama Targhaline",
+      "number": "28",
+      "position": "LM",
+      "formation_place": 8
      },
      {
       "name": "Gjivai Zechiël",
       "number": "8",
-      "position": "M",
+      "position": "RM",
       "formation_place": 7
-     },
-     {
-      "name": "Anis Hadj Moussa",
-      "number": "23",
-      "position": "F",
-      "formation_place": 10
      },
      {
       "name": "Nacho Ferri",
@@ -524,8 +518,14 @@
      {
       "name": "Luciano Valente",
       "number": "10",
-      "position": "F",
+      "position": "LF",
       "formation_place": 11
+     },
+     {
+      "name": "Anis Hadj Moussa",
+      "number": "23",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -1220,15 +1220,6 @@
    "slug": "ned.1",
    "espn_date": "20261108",
    "event_id": "401875549"
-  },
-  {
-   "league": "JUPILER",
-   "home": "Oud-Heverlee Leuven",
-   "away": "Mechelen",
-   "kickoff_utc": "2026-11-07T17:15:00Z",
-   "slug": "bel.1",
-   "espn_date": "20261107",
-   "event_id": "401878949"
   },
   {
    "league": "JUPILER",

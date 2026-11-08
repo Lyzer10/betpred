@@ -8602,7 +8602,35 @@
      "fair_odds": 1.27,
      "betpawa_odds": 1.19
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     4,
+     3
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401875548"
+   }
   },
   {
    "league": {

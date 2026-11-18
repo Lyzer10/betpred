@@ -96,14 +96,21 @@ def decide(published: dict, now: datetime, fixture_rows: list[dict] | None = Non
     return "skip"
 
 
+def first_run_after_seven(published: dict, now: datetime) -> bool:
+    """True for exactly one run per day: the first one at or after 07:00 Tanzania (check-in reminders)."""
+    seven = now.astimezone(EAT).replace(hour=7, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
+    return _utc(published["generated_at"]) < seven <= now
+
+
 def main() -> None:
     forced = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] not in ("", "auto") else None
-    mode = forced or decide(json.loads(PREDICTIONS.read_text(encoding="utf-8")), datetime.now(timezone.utc),
-                            fetch_fixture_rows())
-    print(f"mode={mode}")
+    published = json.loads(PREDICTIONS.read_text(encoding="utf-8"))
+    mode = forced or decide(published, datetime.now(timezone.utc), fetch_fixture_rows())
+    morning = str(mode in ("full", "final") and first_run_after_seven(published, datetime.now(timezone.utc))).lower()
+    print(f"mode={mode} morning={morning}")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
-            out.write(f"mode={mode}\n")
+            out.write(f"mode={mode}\nmorning={morning}\n")
 
 
 if __name__ == "__main__":

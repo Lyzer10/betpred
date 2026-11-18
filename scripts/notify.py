@@ -46,6 +46,15 @@ def checkin_note(today: str, match_days: list[str]) -> str | None:
     return None
 
 
+def checkin_today(published: dict, now: datetime) -> tuple[str, str] | None:
+    """Stand-alone reminder for a check-in date without matches (no final notification to carry it)."""
+    today = now.astimezone(EAT).date().isoformat()
+    if any(d["date"] == today for d in published.get("days", [])):
+        return None                  # a match day: the final-slips notification carries the reminder
+    what = next((what for due, what in CHECKINS if due == today), None)
+    return ("BetPredz check-in day", f"📋 Open Claude today for the {what}.") if what else None
+
+
 def _archive_days() -> list[str]:
     return sorted(p.stem for p in ARCHIVE.glob("????-??-??.json"))
 
@@ -81,15 +90,7 @@ def send_push(title: str, body: str) -> None:
         print(f"App notification failed ({error}); the slips are published anyway")
 
 
-def main() -> None:
-    if "--test" in sys.argv:          # "Run workflow" with mode test-notify: checks the whole chain
-        send_push("BetPredz notifications are on ✓", "You will get a message when each day's slips are final.")
-        return
-    built = message(json.loads(PREDICTIONS.read_text(encoding="utf-8")), datetime.now(timezone.utc))
-    if not built:
-        print("No final slips today: nothing to notify")
-        return
-    title, body = built
+def send(title: str, body: str) -> None:
     send_push(title, body)
     topic = os.environ.get("NTFY_TOPIC", "").strip()
     if not topic:
@@ -102,6 +103,18 @@ def main() -> None:
         print("Notification sent")
     except Exception as error:
         print(f"Notification failed ({error}); the slips are published anyway")
+
+
+def main() -> None:
+    if "--test" in sys.argv:          # "Run workflow" with mode test-notify: checks the whole chain
+        send_push("BetPredz notifications are on ✓", "You will get a message when each day's slips are final.")
+        return
+    published, now = json.loads(PREDICTIONS.read_text(encoding="utf-8")), datetime.now(timezone.utc)
+    built = checkin_today(published, now) if "--morning" in sys.argv else message(published, now)
+    if not built:
+        print("Nothing to notify")
+        return
+    send(*built)
 
 
 if __name__ == "__main__":

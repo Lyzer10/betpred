@@ -95,3 +95,22 @@ def test_full_run_when_football_data_posts_matches_we_have_not_published():
     # Unknown league codes and past matches do not count; no fixture list at all changes nothing.
     assert run_mode.decide(published, _at("08:00"), [_csv_row("E1", "25/10/2026", "18:30"), _csv_row("I1", "24/10/2026", "18:30")]) == "skip"
     assert run_mode.decide(published, _at("08:00"), None) == "skip"
+
+
+def test_checkin_reminder_sent_alone_on_a_day_without_matches():
+    # 16 Nov 2026 fell in an international break: no final notification existed to carry the reminder.
+    morning = datetime(2026, 11, 16, 4, 5, tzinfo=timezone.utc)           # 07:05 Tanzania
+    title, body = notify.checkin_today({"days": []}, morning)
+    assert "leg counts" in body
+    assert notify.checkin_today({"days": []}, datetime(2026, 11, 17, 4, 5, tzinfo=timezone.utc)) is None
+    match_day = {"days": [{"date": "2026-11-16"}]}                          # final notification carries it
+    assert notify.checkin_today(match_day, morning) is None
+
+
+def test_morning_flag_is_true_once_per_day():
+    seven_five = datetime(2026, 11, 16, 4, 5, tzinfo=timezone.utc)
+    assert run_mode.first_run_after_seven({"generated_at": "2026-11-15T15:05:00Z"}, seven_five)
+    assert not run_mode.first_run_after_seven({"generated_at": "2026-11-16T04:05:00Z"},
+                                              datetime(2026, 11, 16, 10, 5, tzinfo=timezone.utc))
+    assert not run_mode.first_run_after_seven({"generated_at": "2026-11-15T15:05:00Z"},
+                                              datetime(2026, 11, 16, 3, 50, tzinfo=timezone.utc))

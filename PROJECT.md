@@ -157,6 +157,8 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   check, 28 Nov team overs / DNB decision and closing-odds test, 5 Dec new-markets real-price test)
   adds one line to the final-slips notification on the first match day on or after each date. The
   final notification also lists each slip's Betpawa booking code. Change dates there when plans move.
+  On a check-in date without matches (e.g. an international break) the first run after 07:00
+  Tanzania sends the reminder on its own (`notify.py --morning`, run_mode output `morning`).
 - Task 23 merged (Claude review, 2026-11-08): Betpawa research prices now also logged for 6 extra
   leagues (Championship, Serie B, 2. Bundesliga, Segunda, Greece, Scotland; Ligue 2 not on Betpawa
   today), and ESPN settles the research markets for all 16 leagues into
@@ -867,6 +869,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-19: Fix: the 16 Nov check-in reminder never arrived because 9-19 Nov was an international
+  break (no match day, so no final notification to carry it). Check-in dates without matches now get a
+  stand-alone reminder from the first run after 07:00 Tanzania; the missed 16 Nov reminder rides on
+  the 20 Nov final notification. Tests added in `tests/test_schedule.py`.
 - 2026-11-08: Slip cards full glass (no blue block), Inter font back, date strip centred on today with
   equal-width days; e2e checks updated (glass past slip, today centred).
 - 2026-11-08: UI refresh: solid-colour blue glassmorphism (light + dark), shorter text across the app;

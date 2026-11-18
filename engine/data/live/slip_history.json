@@ -3377,5 +3377,332 @@
     ],
     "final": true,
     "status": "won"
+  },
+  {
+    "round": "2026-11-20",
+    "tier": "safe",
+    "generated_at": "2026-11-18T22:19:10.486794Z",
+    "total_odds": 2.5,
+    "win_probability": 0.4134,
+    "odds_source": "betpawa",
+    "expected_value": 0.0352,
+    "kelly": 0.0234,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 3,
+        "probability": 0.8456
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.9853
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-20",
+        "time": "20:00",
+        "kickoff_utc": "2026-11-20T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Ath Bilbao",
+        "away": "Espanol",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.7109,
+        "estimated_odds": 1.43,
+        "betpawa_odds": 1.5,
+        "betpawa_price_id": "1587933909",
+        "fair_odds": 1.41,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:30",
+        "kickoff_utc": "2026-11-20T19:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Bayern Munich",
+        "away": "FC Koln",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.9384,
+        "estimated_odds": 0.99,
+        "betpawa_odds": 1.05,
+        "betpawa_price_id": "1586775553",
+        "fair_odds": 1.07,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Troyes",
+        "away": "Le Havre",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9236,
+        "estimated_odds": 1.01,
+        "betpawa_odds": 1.06,
+        "betpawa_price_id": "1586623007",
+        "fair_odds": 1.08,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "JUPILER",
+          "name": "Belgian Pro League",
+          "country": "Belgium"
+        },
+        "home": "Cercle Brugge",
+        "away": "Westerlo",
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.6709,
+        "estimated_odds": 1.46,
+        "betpawa_odds": 1.5,
+        "betpawa_price_id": "1593381163",
+        "fair_odds": 1.49,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-20",
+    "tier": "medium",
+    "generated_at": "2026-11-18T22:19:10.486794Z",
+    "total_odds": 3.55,
+    "win_probability": 0.2893,
+    "odds_source": "betpawa",
+    "expected_value": 0.0281,
+    "kelly": 0.011,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 3,
+        "probability": 0.7514
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.9645
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-20",
+        "time": "20:00",
+        "kickoff_utc": "2026-11-20T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Ath Bilbao",
+        "away": "Espanol",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.7109,
+        "estimated_odds": 1.43,
+        "betpawa_odds": 1.5,
+        "betpawa_price_id": "1587933909",
+        "fair_odds": 1.41,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:30",
+        "kickoff_utc": "2026-11-20T19:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Bayern Munich",
+        "away": "FC Koln",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.9076,
+        "estimated_odds": 1.04,
+        "betpawa_odds": 1.09,
+        "betpawa_price_id": "1586756863",
+        "fair_odds": 1.1,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Troyes",
+        "away": "Le Havre",
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.5159,
+        "estimated_odds": 1.84,
+        "betpawa_odds": 1.89,
+        "betpawa_price_id": "1586623285",
+        "fair_odds": 1.94,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "JUPILER",
+          "name": "Belgian Pro League",
+          "country": "Belgium"
+        },
+        "home": "Cercle Brugge",
+        "away": "Westerlo",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8691,
+        "estimated_odds": 1.11,
+        "betpawa_odds": 1.15,
+        "betpawa_price_id": "1593380881",
+        "fair_odds": 1.15,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-20",
+    "tier": "big",
+    "generated_at": "2026-11-18T22:19:10.486794Z",
+    "total_odds": 8.03,
+    "win_probability": 0.1298,
+    "odds_source": "betpawa",
+    "expected_value": 0.0424,
+    "kelly": 0.006,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 3,
+        "probability": 0.5725
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.912
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-20",
+        "time": "20:00",
+        "kickoff_utc": "2026-11-20T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Ath Bilbao",
+        "away": "Espanol",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.7109,
+        "estimated_odds": 1.43,
+        "betpawa_odds": 1.5,
+        "betpawa_price_id": "1587933909",
+        "fair_odds": 1.41,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:30",
+        "kickoff_utc": "2026-11-20T19:30:00Z",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Bayern Munich",
+        "away": "FC Koln",
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.9384,
+        "estimated_odds": 0.99,
+        "betpawa_odds": 1.05,
+        "betpawa_price_id": "1586775553",
+        "fair_odds": 1.07,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Troyes",
+        "away": "Le Havre",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.29,
+        "estimated_odds": 3.24,
+        "betpawa_odds": 3.4,
+        "betpawa_price_id": "1586596145",
+        "fair_odds": 3.45,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-20",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-20T19:45:00Z",
+        "league": {
+          "code": "JUPILER",
+          "name": "Belgian Pro League",
+          "country": "Belgium"
+        },
+        "home": "Cercle Brugge",
+        "away": "Westerlo",
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.6709,
+        "estimated_odds": 1.46,
+        "betpawa_odds": 1.5,
+        "betpawa_price_id": "1593381163",
+        "fair_odds": 1.49,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
   }
 ]

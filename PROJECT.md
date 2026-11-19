@@ -869,6 +869,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-19: Repository moved from `C:\Users\user\Desktop\FOOTBALL` to `D:\FOOTBALL` (with the
+  worktrees `D:\FOOTBALL-codex` and `D:\FOOTBALL-public-overs-churn`) to free space on C:. Files
+  copied byte for byte (counts and sizes checked), git worktree links repaired, Python environment
+  rebuilt with the identical 49 package versions, node_modules junctions recreated. Engine tests
+  (204 passed, 4 skipped) and the web build pass from D. New `HANDOFF.md` holds the current state,
+  recent decisions and where every secret is kept (no values). No code or data changed.
 - 2026-11-19: Fix: the 16 Nov check-in reminder never arrived because 9-19 Nov was an international
   break (no match day, so no final notification to carry it). Check-in dates without matches now get a
   stand-alone reminder from the first run after 07:00 Tanzania; the missed 16 Nov reminder rides on

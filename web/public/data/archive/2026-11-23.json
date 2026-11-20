@@ -1,6 +1,6 @@
 {
  "date": "2026-11-23",
- "generated_at": "2026-11-20T15:02:12.741613Z",
+ "generated_at": "2026-11-20T18:40:23.069338Z",
  "fixtures": [
   {
    "league": {
@@ -691,15 +691,15 @@
    "top_scorelines": [
     {
      "score": "1-1",
-     "probability": 0.1259116220466325
+     "probability": 0.12591220494404282
     },
     {
      "score": "1-0",
-     "probability": 0.09599567186149766
+     "probability": 0.09599645531312705
     },
     {
      "score": "2-1",
-     "probability": 0.095866080154744
+     "probability": 0.09586587693717132
     }
    ],
    "has_market_odds": true,
@@ -711,7 +711,7 @@
      "model_probability": 0.5079,
      "market_probability": 0.4436,
      "fair_odds": 2.18,
-     "betpawa_odds": 2.21
+     "betpawa_odds": 2.2
     },
     {
      "market": "draw",
@@ -729,7 +729,7 @@
      "model_probability": 0.2217,
      "market_probability": 0.2885,
      "fair_odds": 3.69,
-     "betpawa_odds": 3.32
+     "betpawa_odds": 3.34
     },
     {
      "market": "over_0.5",
@@ -801,13 +801,13 @@
      "model_probability": 0.4409,
      "market_probability": 0.4188,
      "fair_odds": 2.36,
-     "betpawa_odds": 2.27
+     "betpawa_odds": 2.26
     },
     {
      "market": "home_1up",
      "label": "Home 1Up",
-     "probability": 0.6337,
-     "model_probability": 0.6988,
+     "probability": 0.6323,
+     "model_probability": 0.6936,
      "market_probability": 0.6107,
      "fair_odds": 1.58,
      "betpawa_odds": 1.57
@@ -815,8 +815,8 @@
     {
      "market": "away_1up",
      "label": "Away 1Up",
-     "probability": 0.4656,
-     "model_probability": 0.4295,
+     "probability": 0.4653,
+     "model_probability": 0.4279,
      "market_probability": 0.4778,
      "fair_odds": 2.15,
      "betpawa_odds": 1.93
@@ -824,20 +824,20 @@
     {
      "market": "home_first",
      "label": "Home scores first",
-     "probability": 0.5368,
-     "model_probability": 0.5766,
+     "probability": 0.5362,
+     "model_probability": 0.5743,
      "market_probability": 0.5234,
      "fair_odds": 1.86,
-     "betpawa_odds": 1.82
+     "betpawa_odds": 1.81
     },
     {
      "market": "away_first",
      "label": "Away scores first",
-     "probability": 0.3963,
-     "model_probability": 0.3583,
+     "probability": 0.3969,
+     "model_probability": 0.3606,
      "market_probability": 0.4093,
      "fair_odds": 2.52,
-     "betpawa_odds": 2.27
+     "betpawa_odds": 2.28
     },
     {
      "market": "double_1x",
@@ -1021,7 +1021,7 @@
      "model_probability": 0.4486,
      "market_probability": 0.435,
      "fair_odds": 2.23,
-     "betpawa_odds": 2.23
+     "betpawa_odds": 2.25
     },
     {
      "market": "draw",
@@ -1039,7 +1039,7 @@
      "model_probability": 0.2797,
      "market_probability": 0.3007,
      "fair_odds": 3.58,
-     "betpawa_odds": 3.25
+     "betpawa_odds": 3.23
     },
     {
      "market": "over_0.5",
@@ -1147,7 +1147,7 @@
      "model_probability": 0.4141,
      "market_probability": 0.4233,
      "fair_odds": 2.41,
-     "betpawa_odds": 2.24
+     "betpawa_odds": 2.23
     },
     {
      "market": "double_1x",
@@ -1165,7 +1165,7 @@
      "model_probability": 0.5521,
      "market_probability": 0.565,
      "fair_odds": 1.81,
-     "betpawa_odds": 1.66
+     "betpawa_odds": 1.65
     },
     {
      "market": "double_12",
@@ -1322,19 +1322,19 @@
   },
   "big": {
    "total_odds": 8.2,
-   "win_probability": 0.1285,
+   "win_probability": 0.1282,
    "odds_source": "betpawa",
-   "expected_value": 0.054,
-   "kelly": 0.0075,
+   "expected_value": 0.0516,
+   "kelly": 0.0072,
    "price_warning": false,
    "flexi": [
     {
      "min_correct": 3,
-     "probability": 0.4803
+     "probability": 0.4796
     },
     {
      "min_correct": 2,
-     "probability": 0.8295
+     "probability": 0.829
     }
    ],
    "legs": [
@@ -1351,7 +1351,7 @@
      "away": "Everton",
      "market": "home_1up",
      "label": "Home 1Up",
-     "probability": 0.6337,
+     "probability": 0.6323,
      "estimated_odds": 1.53,
      "betpawa_odds": 1.57,
      "betpawa_price_id": "1586115176",

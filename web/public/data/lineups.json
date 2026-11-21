@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T19:17:35.880024Z",
+ "generated_at": "2026-11-21T19:32:17.456370Z",
  "matches": [
   {
    "league": "EPL",
@@ -2883,7 +2883,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Thijs Jansen",
@@ -2916,22 +2916,22 @@
       "formation_place": 2
      },
      {
-      "name": "Nicky Souren",
-      "number": "8",
-      "position": "CM",
-      "formation_place": 4
-     },
-     {
       "name": "Rafik El Arguioui",
       "number": "10",
-      "position": "LM",
-      "formation_place": 8
+      "position": "AM",
+      "formation_place": 10
      },
      {
       "name": "Mathieu Maertens",
       "number": "33",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Nicky Souren",
+      "number": "8",
       "position": "RM",
-      "formation_place": 7
+      "formation_place": 8
      },
      {
       "name": "Nicolas Binder",
@@ -2942,14 +2942,14 @@
      {
       "name": "Ilyes Hamache",
       "number": "11",
-      "position": "LF",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
       "name": "Jason Ceka",
       "number": "30",
-      "position": "RF",
-      "formation_place": 10
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [

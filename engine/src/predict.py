@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from datetime import datetime, timezone
 from io import StringIO
 
@@ -76,6 +77,12 @@ MARKET_LABELS = {
 
 
 _FIXTURES_CSV: pd.DataFrame | None = None
+
+
+def research_online(no_refresh: bool) -> bool:
+    """Research collection needs ESPN, Betpawa and football-data, never Understat. A plain --no-refresh run
+    (tests, local) stays offline; the workflow's fallback after an Understat outage sets RESEARCH_ONLINE=1."""
+    return not no_refresh or os.environ.get("RESEARCH_ONLINE") == "1"
 
 
 def _fixtures_csv() -> pd.DataFrame:
@@ -879,7 +886,7 @@ def main() -> None:
     except Exception as error:
         print(f"Research price logging unavailable ({error})")
     try:   # research only (task 23): never used in predictions, slips or the app; downloads, so not with --no-refresh
-        if not args.no_refresh:
+        if research_online(args.no_refresh):
             from .research_leagues import run_research_safely
             run_research_safely(now, _fixtures_csv())
     except Exception as error:

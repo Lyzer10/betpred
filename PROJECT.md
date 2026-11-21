@@ -869,6 +869,14 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-21: Weekly check of the new-market leg counts found ZERO settled legs for every market:
+  Understat has returned an error page since 8 Nov, so every full run falls back to
+  `predict --no-refresh`, and that fallback skipped all research collection and ESPN settling.
+  Fix (research only, no model or slip change): `research_online()` in `predict.py`; the workflow's
+  fallback line sets `RESEARCH_ONLINE=1`. Plain `--no-refresh` stays offline. Test added; the old
+  source-text test now pins the new guard. Counts restart now and backfill from 25 Oct (ESPN, capped
+  per run). The 28 Nov and 5 Dec decisions depend on how many legs accrue; re-check the counts then.
+  The two extra worktrees moved into `D:\FOOTBALL\.worktrees\` so D: has one repo folder.
 - 2026-11-19: Repository moved from `C:\Users\user\Desktop\FOOTBALL` to `D:\FOOTBALL` (with the
   worktrees `D:\FOOTBALL-codex` and `D:\FOOTBALL-public-overs-churn`) to free space on C:. Files
   copied byte for byte (counts and sizes checked), git worktree links repaired, Python environment

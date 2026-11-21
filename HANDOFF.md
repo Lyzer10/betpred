@@ -17,7 +17,7 @@ Always quote times in EAT (UTC+3). Explain things plainly. Owner is in Tanzania 
 
 | Thing | Location |
 |---|---|
-| Repo (moved 2026-11-19 from C: to D:) | `D:\FOOTBALL` (main), plus git worktrees `D:\FOOTBALL-codex`, `D:\FOOTBALL-public-overs-churn` and `D:\FOOTBALL\.worktrees\*` (Codex/Gemini branches) |
+| Repo (moved 2026-11-19 from C: to D:) | `D:\FOOTBALL` is the ONE folder to open in VS Code. Old Codex/Gemini branch folders live inside it in `.worktrees\` (all merged, safe to ignore) |
 | GitHub | `Lyzer10/betpred`, branch `main`, public |
 | App | https://betpredz.vercel.app (Vercel redeploys on every push) |
 | Python | `engine\.venv\Scripts\python.exe` (rebuilt after the move; if broken: `python -m venv engine\.venv` then `pip install -r engine\requirements.txt`) |
@@ -41,6 +41,10 @@ Secrets (values are NOT here and are never needed in a chat):
 - Pipeline healthy: a commit "Predictions (full)" about every 6 h at 04:05, 10:05, 15:05 UTC.
   No matches in the live leagues from 9 to 19 Nov (international break); the next ones are on
   Fri 20 Nov 2026, first kick-off 22:30 EAT in the schedule file.
+- Understat has been down since 8 Nov (still an error page on 21 Nov). Runs fall back to cached data
+  and predictions still publish. The weekly check on 21 Nov showed 0 settled new-market legs because
+  the fallback skipped research collection; fixed 2026-11-21 (see PROJECT.md change log). Re-run
+  `python -m src.research_status` after a few days to confirm counts are growing.
 - Live accuracy (206 matches): log loss 0.8861 vs market 0.8949. Beat closing line 46%, mean CLV
   +0.28%. Value-bet ROI -5.6%: profitability is NOT proven. Never promise wins.
 - Closing-odds vs pre-match Avg: -0.0025 log loss (CI -0.0037..-0.0013). Pinnacle vs Avg: not

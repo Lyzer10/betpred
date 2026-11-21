@@ -175,7 +175,7 @@ def test_research_failure_never_reaches_main_run(capsys: pytest.CaptureFixture) 
 def test_predict_calls_research_only_through_safe_wrapper() -> None:
     src_text = (Path(__file__).resolve().parents[1] / "src" / "predict.py").read_text(encoding="utf-8")
     assert "run_research_safely(now, _fixtures_csv())" in src_text
-    assert "if not args.no_refresh:\n            from .research_leagues import run_research_safely" in src_text
+    assert "if research_online(args.no_refresh):\n            from .research_leagues import run_research_safely" in src_text
     assert "collect_research_prices" not in src_text and "settle_research_events" not in src_text
 
 
@@ -244,3 +244,12 @@ def test_research_status_counts(tmp_path: Path, monkeypatch: pytest.MonkeyPatch)
     assert counts.at["dnb_home", "live"] == 0               # void on the draw
     content, reached = rs.generate_status_report(write=False)
     assert "EAT" in content and reached == []
+
+
+def test_research_stays_offline_with_no_refresh_unless_the_workflow_fallback_allows_it(monkeypatch):
+    from src.predict import research_online
+    monkeypatch.delenv("RESEARCH_ONLINE", raising=False)
+    assert research_online(no_refresh=False)                    # normal run: collect
+    assert not research_online(no_refresh=True)                 # tests and local --no-refresh: offline
+    monkeypatch.setenv("RESEARCH_ONLINE", "1")
+    assert research_online(no_refresh=True)                     # Understat outage fallback in the workflow

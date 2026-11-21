@@ -55,11 +55,19 @@ Secrets (values are NOT here and are never needed in a chat):
   reminder rides on the 20 Nov final notification.
 
 ### Checkpoints (reminders are in `scripts/notify.py` CHECKINS)
-1. Fri 20 Nov (carries the missed 16 Nov one): weekly leg-count check of the new markets,
-   `python -m src.research_status`, report in `engine/reports/research_status.md`.
-2. Sat 28 Nov: team overs / Draw No Bet decision, plus closing-line test with fresh Betpawa prices
+1. DONE 21 Nov (the missed 16 Nov / 20 Nov check): counts were 0 because research collection was
+   off during the Understat outage. Fixed and live since 03:38 EAT 21 Nov; 81 ESPN results recorded.
+   Settled priced legs were still 0 that morning. Re-run `python -m src.research_status` (report in
+   `engine/reports/research_status.md`, do not commit it) before the 28 Nov decision.
+2. Sat 28 Nov: first confirm counts are growing and Understat is back; then team overs / Draw No Bet decision, plus closing-line test with fresh Betpawa prices
    as model input (needs 200 CLV legs; 115 on 8 Nov).
 3. Sat 5 Dec: new markets real-price test (300 legs).
+
+### Small open items
+- Serie B (I2): "Ascoli Calcio 1898" and "L.R. Vicenza" are missing from `engine/src/research_aliases.json`,
+  so their research prices are skipped. Research only; add the aliases when convenient.
+- Understat still down (see above). Nothing to fix on our side; check it on 28 Nov.
+- Empty folder `C:\Users\user\Desktop\FOOTBALL` can be deleted by hand once VS Code is closed.
 
 ## 4. Decisions since the last PROJECT.md status rewrite
 

@@ -1,6 +1,6 @@
 {
  "date": "2026-11-23",
- "generated_at": "2026-11-21T09:47:08.618152Z",
+ "generated_at": "2026-11-21T10:02:20.729759Z",
  "fixtures": [
   {
    "league": {
@@ -691,15 +691,15 @@
    "top_scorelines": [
     {
      "score": "1-1",
-     "probability": 0.12591152917797202
+     "probability": 0.12591196381295888
     },
     {
      "score": "1-0",
-     "probability": 0.09599604366585841
+     "probability": 0.09599427977635375
     },
     {
      "score": "2-1",
-     "probability": 0.09586624962468897
+     "probability": 0.09586580901656745
     }
    ],
    "has_market_odds": true,
@@ -762,7 +762,7 @@
      "market": "over_3.5",
      "label": "Over 3.5 goals",
      "probability": 0.3215,
-     "model_probability": 0.3225,
+     "model_probability": 0.3226,
      "market_probability": 0.3211,
      "fair_odds": 3.11,
      "betpawa_odds": 2.91
@@ -780,7 +780,7 @@
      "market": "under_3.5",
      "label": "Under 3.5 goals",
      "probability": 0.6785,
-     "model_probability": 0.6775,
+     "model_probability": 0.6774,
      "market_probability": 0.6789,
      "fair_odds": 1.47,
      "betpawa_odds": 1.42
@@ -806,8 +806,8 @@
     {
      "market": "home_1up",
      "label": "Home 1Up",
-     "probability": 0.6325,
-     "model_probability": 0.6945,
+     "probability": 0.6327,
+     "model_probability": 0.695,
      "market_probability": 0.6107,
      "fair_odds": 1.58,
      "betpawa_odds": 1.57
@@ -815,8 +815,8 @@
     {
      "market": "away_1up",
      "label": "Away 1Up",
-     "probability": 0.465,
-     "model_probability": 0.4268,
+     "probability": 0.4652,
+     "model_probability": 0.4276,
      "market_probability": 0.4778,
      "fair_odds": 2.15,
      "betpawa_odds": 1.95
@@ -824,8 +824,8 @@
     {
      "market": "home_first",
      "label": "Home scores first",
-     "probability": 0.5362,
-     "model_probability": 0.5745,
+     "probability": 0.5373,
+     "model_probability": 0.5785,
      "market_probability": 0.5234,
      "fair_odds": 1.86,
      "betpawa_odds": 1.82
@@ -833,10 +833,10 @@
     {
      "market": "away_first",
      "label": "Away scores first",
-     "probability": 0.3969,
-     "model_probability": 0.3605,
+     "probability": 0.3959,
+     "model_probability": 0.3565,
      "market_probability": 0.4093,
-     "fair_odds": 2.52,
+     "fair_odds": 2.53,
      "betpawa_odds": 2.29
     },
     {

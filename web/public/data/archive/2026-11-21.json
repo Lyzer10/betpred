@@ -3248,7 +3248,35 @@
      "fair_odds": 1.24,
      "betpawa_odds": 1.14
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401875056"
+   }
   },
   {
    "league": {
@@ -3558,7 +3586,35 @@
      "fair_odds": 1.27,
      "betpawa_odds": 1.21
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     3,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": false,
+     "under_2.5": false,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401874981"
+   }
   },
   {
    "league": {
@@ -13250,7 +13306,7 @@
      "betpawa_price_id": "1586915968",
      "fair_odds": 1.1,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-11-21",
@@ -13357,7 +13413,7 @@
      "betpawa_price_id": "1586915968",
      "fair_odds": 1.1,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-11-21",
@@ -13485,7 +13541,7 @@
      "betpawa_price_id": "1586915968",
      "fair_odds": 1.1,
      "price_warning": false,
-     "won": null
+     "won": true
     },
     {
      "date": "2026-11-21",

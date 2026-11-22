@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-11-22T13:01:58.271114Z",
+ "generated_at": "2026-11-22T13:17:17.868592Z",
  "matches": [
   {
    "league": "EPL",
    "home": "Hull",
    "away": "Brighton",
    "home_lineup": {
-    "formation": "4-5-1",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Konstantinos Tzolakis",
@@ -17,62 +17,62 @@
      {
       "name": "Nobel Mendy",
       "number": "32",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
-     },
-     {
-      "name": "Lewie Coyle",
-      "number": "2",
-      "position": "D",
-      "formation_place": 2
      },
      {
       "name": "Semi Ajayi",
       "number": "6",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
      },
      {
       "name": "Elliot Stroud",
       "number": "21",
-      "position": "D",
+      "position": "LB",
       "formation_place": 3
+     },
+     {
+      "name": "Lewie Coyle",
+      "number": "2",
+      "position": "RB",
+      "formation_place": 2
      },
      {
       "name": "Matt Crooks",
       "number": "25",
-      "position": "M",
+      "position": "AM",
       "formation_place": 10
-     },
-     {
-      "name": "Mohamed-Ali Cho",
-      "number": "50",
-      "position": "M",
-      "formation_place": 11
-     },
-     {
-      "name": "Regan Slater",
-      "number": "27",
-      "position": "M",
-      "formation_place": 8
      },
      {
       "name": "Tim Iroegbunam",
       "number": "42",
-      "position": "M",
+      "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Mohamed Belloumi",
-      "number": "10",
-      "position": "M",
-      "formation_place": 7
+      "name": "Regan Slater",
+      "number": "27",
+      "position": "RM",
+      "formation_place": 8
      },
      {
       "name": "Oliver McBurnie",
       "number": "9",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Mohamed-Ali Cho",
+      "number": "50",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Mohamed Belloumi",
+      "number": "10",
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [
@@ -142,64 +142,64 @@
       "formation_place": 1
      },
      {
-      "name": "Olivier Boscagli",
-      "number": "21",
-      "position": "D",
-      "formation_place": 3
-     },
-     {
       "name": "Lewis Dunk",
       "number": "5",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
-     },
-     {
-      "name": "Costinha",
-      "number": "20",
-      "position": "D",
-      "formation_place": 2
      },
      {
       "name": "Luka Vuskovic",
       "number": "44",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
      },
      {
-      "name": "Chema Andrés",
-      "number": "14",
-      "position": "M",
-      "formation_place": 4
+      "name": "Olivier Boscagli",
+      "number": "21",
+      "position": "LB",
+      "formation_place": 3
      },
      {
-      "name": "Diego Gómez",
-      "number": "25",
-      "position": "M",
-      "formation_place": 7
+      "name": "Costinha",
+      "number": "20",
+      "position": "RB",
+      "formation_place": 2
      },
      {
       "name": "Yasin Ayari",
       "number": "26",
-      "position": "M",
+      "position": "AM",
       "formation_place": 10
+     },
+     {
+      "name": "Chema Andrés",
+      "number": "14",
+      "position": "LM",
+      "formation_place": 4
      },
      {
       "name": "Pascal Gross",
       "number": "13",
-      "position": "M",
+      "position": "RM",
       "formation_place": 8
-     },
-     {
-      "name": "Maxim De Cuyper",
-      "number": "29",
-      "position": "M",
-      "formation_place": 11
      },
      {
       "name": "Georginio Rutter",
       "number": "10",
       "position": "F",
       "formation_place": 9
+     },
+     {
+      "name": "Maxim De Cuyper",
+      "number": "29",
+      "position": "AM-L",
+      "formation_place": 11
+     },
+     {
+      "name": "Diego Gómez",
+      "number": "25",
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [
@@ -450,8 +450,8 @@
       "formation_place": 4
      },
      {
-      "name": "Alberto Moleiro",
-      "number": "10",
+      "name": "Tani Oluwaseyi",
+      "number": "21",
       "position": "LM",
       "formation_place": 11
      },
@@ -462,14 +462,14 @@
       "formation_place": 7
      },
      {
-      "name": "Georges Mikautadze",
-      "number": "9",
+      "name": "Alberto Moleiro",
+      "number": "10",
       "position": "CF-L",
       "formation_place": 9
      },
      {
-      "name": "Tani Oluwaseyi",
-      "number": "21",
+      "name": "Georges Mikautadze",
+      "number": "9",
       "position": "CF-R",
       "formation_place": 10
      }
@@ -2532,7 +2532,7 @@
    "home": "Konyaspor",
    "away": "Besiktas",
    "home_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-4-2",
     "starters": [
      {
       "name": "Bahadir Han Güngördü",
@@ -2565,40 +2565,40 @@
       "formation_place": 2
      },
      {
-      "name": "Jackson Muleka",
-      "number": "11",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
       "name": "Melih Ibrahimoglu",
       "number": "77",
-      "position": "LM",
-      "formation_place": 4
+      "position": "CM-L",
+      "formation_place": 8
      },
      {
       "name": "Rajmund Tóth",
       "number": "66",
-      "position": "RM",
-      "formation_place": 8
-     },
-     {
-      "name": "Enis Destan",
-      "number": "94",
-      "position": "F",
-      "formation_place": 9
+      "position": "CM-R",
+      "formation_place": 4
      },
      {
       "name": "Jean-Luc Dompé",
       "number": "91",
-      "position": "AM-L",
+      "position": "LM",
       "formation_place": 11
      },
      {
       "name": "Deniz Turuc",
       "number": "9",
-      "position": "AM-R",
+      "position": "RM",
       "formation_place": 7
+     },
+     {
+      "name": "Jackson Muleka",
+      "number": "11",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Enis Destan",
+      "number": "94",
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -2704,26 +2704,26 @@
       "formation_place": 2
      },
      {
-      "name": "Wilfred Ndidi",
-      "number": "4",
+      "name": "Junior Olaitan",
+      "number": "15",
       "position": "CM-L",
       "formation_place": 10
      },
      {
-      "name": "Junior Olaitan",
-      "number": "15",
+      "name": "Wilfred Ndidi",
+      "number": "4",
       "position": "CM-R",
       "formation_place": 8
      },
      {
-      "name": "Leandro Trossard",
-      "number": "19",
+      "name": "Ernest Poku",
+      "number": "17",
       "position": "LM",
       "formation_place": 11
      },
      {
-      "name": "Ernest Poku",
-      "number": "17",
+      "name": "Leandro Trossard",
+      "number": "19",
       "position": "RM",
       "formation_place": 7
      },

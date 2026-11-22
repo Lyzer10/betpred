@@ -10392,7 +10392,7 @@
               "betpawa_price_id": "1586917765",
               "fair_odds": 1.1,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-22",
@@ -10500,7 +10500,7 @@
               "betpawa_price_id": "1586917765",
               "fair_odds": 1.1,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-22",
@@ -10608,7 +10608,7 @@
               "betpawa_price_id": "1586917765",
               "fair_odds": 1.1,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-22",
@@ -15205,7 +15205,7 @@
           "betpawa_price_id": "1586917765",
           "fair_odds": 1.1,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-22",
@@ -15314,7 +15314,7 @@
           "betpawa_price_id": "1586917765",
           "fair_odds": 1.1,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-22",
@@ -15423,7 +15423,7 @@
           "betpawa_price_id": "1586917765",
           "fair_odds": 1.1,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-22",
@@ -15819,6 +15819,35 @@
         "away_1up": true,
         "home_first": false,
         "away_first": true,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Juventus",
+      "away": "Venezia",
+      "score": [
+        4,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
         "double_1x": true,
         "double_x2": false,
         "double_12": true
@@ -46567,7 +46596,7 @@
     {
       "date": "2026-11-22",
       "fixtures": 28,
-      "settled": 2
+      "settled": 3
     },
     {
       "date": "2026-11-21",

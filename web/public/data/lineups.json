@@ -1,61 +1,280 @@
 {
- "generated_at": "2026-11-22T04:08:53.376826Z",
- "matches": [],
+ "generated_at": "2026-11-22T09:52:25.589871Z",
+ "matches": [
+  {
+   "league": "SUPERLIG",
+   "home": "Erzurumspor",
+   "away": "Goztep",
+   "home_lineup": {
+    "formation": "4-1-4-1",
+    "starters": [
+     {
+      "name": "Ertugrul Taskiran",
+      "number": "1",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Orhan Ovacikli",
+      "number": "53",
+      "position": "D",
+      "formation_place": 2
+     },
+     {
+      "name": "Nihad Mujakic",
+      "number": "18",
+      "position": "D",
+      "formation_place": 6
+     },
+     {
+      "name": "Guram Giorbelidze",
+      "number": "15",
+      "position": "D",
+      "formation_place": 3
+     },
+     {
+      "name": "Amar Gerxhaliu",
+      "number": "4",
+      "position": "D",
+      "formation_place": 5
+     },
+     {
+      "name": "Elisha Owusu",
+      "number": "42",
+      "position": "M",
+      "formation_place": 8
+     },
+     {
+      "name": "Gyrano Kerk",
+      "number": "9",
+      "position": "M",
+      "formation_place": 11
+     },
+     {
+      "name": "Mustafa Yumlu",
+      "number": "22",
+      "position": "M",
+      "formation_place": 7
+     },
+     {
+      "name": "Martín Rodríguez",
+      "number": "65",
+      "position": "M",
+      "formation_place": 10
+     },
+     {
+      "name": "Brandon Baiye",
+      "number": "6",
+      "position": "M",
+      "formation_place": 4
+     },
+     {
+      "name": "Ibrahim Diabate",
+      "number": "19",
+      "position": "F",
+      "formation_place": 9
+     }
+    ],
+    "subs": [
+     {
+      "name": "Matija Orbanic",
+      "number": "31",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Festy Ebosele",
+      "number": "2",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Eren Tozlu",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mustafa Fettahoglu",
+      "number": "99",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Sefa Akgün",
+      "number": "8",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Nariman Akhundzade",
+      "number": "90",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Miguel Cardoso",
+      "number": "20",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Yakup Kırtay",
+      "number": "3",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Cengizhan Bayrak",
+      "number": "23",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Lawrence Agyekum",
+      "number": "77",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "away_lineup": {
+    "formation": "3-4-1-2",
+    "starters": [
+     {
+      "name": "Arda Ozcimen",
+      "number": "1",
+      "position": "G",
+      "formation_place": 1
+     },
+     {
+      "name": "Malcom Bokele",
+      "number": "26",
+      "position": "D",
+      "formation_place": 4
+     },
+     {
+      "name": "Noah Sonko Sundberg",
+      "number": "19",
+      "position": "D",
+      "formation_place": 5
+     },
+     {
+      "name": "Taha Altikardes",
+      "number": "4",
+      "position": "D",
+      "formation_place": 6
+     },
+     {
+      "name": "Richard Akonnor",
+      "number": "12",
+      "position": "M",
+      "formation_place": 3
+     },
+     {
+      "name": "Alexis Antunes",
+      "number": "8",
+      "position": "M",
+      "formation_place": 9
+     },
+     {
+      "name": "Novatus Miroshi",
+      "number": "20",
+      "position": "M",
+      "formation_place": 8
+     },
+     {
+      "name": "Arda Okan Kurtulan",
+      "number": "2",
+      "position": "M",
+      "formation_place": 2
+     },
+     {
+      "name": "Rhaldney",
+      "number": "5",
+      "position": "M",
+      "formation_place": 7
+     },
+     {
+      "name": "André Henrique",
+      "number": "7",
+      "position": "F",
+      "formation_place": 10
+     },
+     {
+      "name": "Juan",
+      "number": "9",
+      "position": "F",
+      "formation_place": 11
+     }
+    ],
+    "subs": [
+     {
+      "name": "Santos",
+      "number": "3",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Alex Matos",
+      "number": "6",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Ege Yildirim",
+      "number": "13",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Mehmet Ozturk",
+      "number": "33",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Sinclair Armstrong",
+      "number": "22",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Faustino Anjorin",
+      "number": "18",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Efkan Bekiroglu",
+      "number": "10",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Turaç Böke",
+      "number": "14",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Janderson",
+      "number": "39",
+      "position": "SUB",
+      "formation_place": 0
+     },
+     {
+      "name": "Gökdeniz Bayrakdar",
+      "number": "17",
+      "position": "SUB",
+      "formation_place": 0
+     }
+    ]
+   },
+   "kickoff_utc": "2026-11-22T10:30:00Z"
+  }
+ ],
  "events": [
-  {
-   "league": "EPL",
-   "home": "Manchester City",
-   "away": "Fulham",
-   "kickoff_utc": "2026-11-21T12:30:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401879233"
-  },
-  {
-   "league": "EPL",
-   "home": "Bournemouth",
-   "away": "Nottingham Forest",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401879238"
-  },
-  {
-   "league": "EPL",
-   "home": "Aston Villa",
-   "away": "Sunderland",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401878756"
-  },
-  {
-   "league": "EPL",
-   "home": "Chelsea",
-   "away": "Leeds",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401879236"
-  },
-  {
-   "league": "EPL",
-   "home": "Coventry",
-   "away": "Crystal Palace",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401879235"
-  },
-  {
-   "league": "EPL",
-   "home": "Tottenham",
-   "away": "Ipswich",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "eng.1",
-   "espn_date": "20261121",
-   "event_id": "401878754"
-  },
   {
    "league": "EPL",
    "home": "Newcastle",
@@ -84,22 +303,13 @@
    "event_id": "401878755"
   },
   {
-   "league": "LALIGA",
-   "home": "Alaves",
-   "away": "La Coruna",
-   "kickoff_utc": "2026-11-21T13:00:00Z",
-   "slug": "esp.1",
-   "espn_date": "20261121",
-   "event_id": "401882806"
-  },
-  {
-   "league": "LALIGA",
-   "home": "Vallecano",
-   "away": "Valencia",
-   "kickoff_utc": "2026-11-21T15:15:00Z",
-   "slug": "esp.1",
-   "espn_date": "20261121",
-   "event_id": "401882799"
+   "league": "EPL",
+   "home": "Brentford",
+   "away": "Everton",
+   "kickoff_utc": "2026-11-23T20:00:00Z",
+   "slug": "eng.1",
+   "espn_date": "20261123",
+   "event_id": "401879237"
   },
   {
    "league": "LALIGA",
@@ -156,22 +366,13 @@
    "event_id": "401882803"
   },
   {
-   "league": "SERIEA",
-   "home": "Como",
-   "away": "Cagliari",
-   "kickoff_utc": "2026-11-21T14:00:00Z",
-   "slug": "ita.1",
-   "espn_date": "20261121",
-   "event_id": "401875056"
-  },
-  {
-   "league": "SERIEA",
-   "home": "Lazio",
-   "away": "Lecce",
-   "kickoff_utc": "2026-11-21T14:00:00Z",
-   "slug": "ita.1",
-   "espn_date": "20261121",
-   "event_id": "401874981"
+   "league": "LALIGA",
+   "home": "Levante",
+   "away": "Elche",
+   "kickoff_utc": "2026-11-23T20:00:00Z",
+   "slug": "esp.1",
+   "espn_date": "20261123",
+   "event_id": "401882802"
   },
   {
    "league": "SERIEA",
@@ -237,49 +438,13 @@
    "event_id": "401875001"
   },
   {
-   "league": "BUNDES",
-   "home": "Union Berlin",
-   "away": "RB Leipzig",
-   "kickoff_utc": "2026-11-21T14:30:00Z",
-   "slug": "ger.1",
-   "espn_date": "20261121",
-   "event_id": "401884732"
-  },
-  {
-   "league": "BUNDES",
-   "home": "Leverkusen",
-   "away": "Paderborn",
-   "kickoff_utc": "2026-11-21T14:30:00Z",
-   "slug": "ger.1",
-   "espn_date": "20261121",
-   "event_id": "401884735"
-  },
-  {
-   "league": "BUNDES",
-   "home": "M'gladbach",
-   "away": "Dortmund",
-   "kickoff_utc": "2026-11-21T14:30:00Z",
-   "slug": "ger.1",
-   "espn_date": "20261121",
-   "event_id": "401884731"
-  },
-  {
-   "league": "BUNDES",
-   "home": "Ein Frankfurt",
-   "away": "Hoffenheim",
-   "kickoff_utc": "2026-11-21T14:30:00Z",
-   "slug": "ger.1",
-   "espn_date": "20261121",
-   "event_id": "401884734"
-  },
-  {
-   "league": "BUNDES",
-   "home": "Elversberg",
-   "away": "Freiburg",
-   "kickoff_utc": "2026-11-21T14:30:00Z",
-   "slug": "ger.1",
-   "espn_date": "20261121",
-   "event_id": "401884728"
+   "league": "SERIEA",
+   "home": "Monza",
+   "away": "Fiorentina",
+   "kickoff_utc": "2026-11-23T19:45:00Z",
+   "slug": "ita.1",
+   "espn_date": "20261123",
+   "event_id": "401875009"
   },
   {
    "league": "BUNDES",
@@ -382,15 +547,6 @@
   },
   {
    "league": "EREDIV",
-   "home": "Nijmegen",
-   "away": "PSV Eindhoven",
-   "kickoff_utc": "2026-11-21T15:30:00Z",
-   "slug": "ned.1",
-   "espn_date": "20261121",
-   "event_id": "401875541"
-  },
-  {
-   "league": "EREDIV",
    "home": "Utrecht",
    "away": "Cambuur",
    "kickoff_utc": "2026-11-21T17:45:00Z",
@@ -463,15 +619,6 @@
   },
   {
    "league": "JUPILER",
-   "home": "Charleroi",
-   "away": "St Truiden",
-   "kickoff_utc": "2026-11-21T15:00:00Z",
-   "slug": "bel.1",
-   "espn_date": "20261121",
-   "event_id": "401878940"
-  },
-  {
-   "league": "JUPILER",
    "home": "Genk",
    "away": "RAAL La Louviere",
    "kickoff_utc": "2026-11-21T17:15:00Z",
@@ -535,33 +682,6 @@
   },
   {
    "league": "SUPERLIG",
-   "home": "Genclerbirligi",
-   "away": "Gaziantep",
-   "kickoff_utc": "2026-11-21T10:30:00Z",
-   "slug": "tur.1",
-   "espn_date": "20261121",
-   "event_id": "401888247"
-  },
-  {
-   "league": "SUPERLIG",
-   "home": "Amedspor",
-   "away": "Rizespor",
-   "kickoff_utc": "2026-11-21T13:00:00Z",
-   "slug": "tur.1",
-   "espn_date": "20261121",
-   "event_id": "401888369"
-  },
-  {
-   "league": "SUPERLIG",
-   "home": "Galatasaray",
-   "away": "Samsunspor",
-   "kickoff_utc": "2026-11-21T13:00:00Z",
-   "slug": "tur.1",
-   "espn_date": "20261121",
-   "event_id": "401888245"
-  },
-  {
-   "league": "SUPERLIG",
    "home": "Kocaelispor",
    "away": "Fenerbahce",
    "kickoff_utc": "2026-11-21T16:00:00Z",
@@ -604,6 +724,15 @@
    "slug": "tur.1",
    "espn_date": "20261122",
    "event_id": "401888249"
+  },
+  {
+   "league": "SUPERLIG",
+   "home": "Buyuksehyr",
+   "away": "Corum",
+   "kickoff_utc": "2026-11-23T17:00:00Z",
+   "slug": "tur.1",
+   "espn_date": "20261123",
+   "event_id": "401888370"
   }
  ]
 }

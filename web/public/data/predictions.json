@@ -5775,7 +5775,7 @@
               "betpawa_price_id": "1586625183",
               "fair_odds": 1.92,
               "price_warning": true,
-              "won": null
+              "won": false
             },
             {
               "date": "2026-11-22",
@@ -10589,7 +10589,7 @@
           "betpawa_price_id": "1586625183",
           "fair_odds": 1.92,
           "price_warning": true,
-          "won": null
+          "won": false
         },
         {
           "date": "2026-11-22",
@@ -11424,6 +11424,122 @@
         "under_3.5": true,
         "btts_yes": false,
         "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Lorient",
+      "away": "Rennes",
+      "score": [
+        1,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Liverpool",
+      "away": "Manchester United",
+      "score": [
+        4,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Werder Bremen",
+      "away": "Hamburg",
+      "score": [
+        4,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Milan",
+      "away": "Frosinone",
+      "score": [
+        5,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
         "home_1up": true,
         "away_1up": false,
         "home_first": true,
@@ -42176,7 +42292,7 @@
     {
       "date": "2026-11-22",
       "fixtures": 28,
-      "settled": 18
+      "settled": 22
     },
     {
       "date": "2026-11-21",

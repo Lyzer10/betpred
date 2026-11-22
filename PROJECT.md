@@ -818,7 +818,7 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      per unit (95% CI -0.1519 to +0.0942, 955 matched slips): no clear difference, the CI is far too wide
      to say D is better or worse. All-loss days fell from 47.8% to 41.3% and shared matches per day from
      4.10 to 3.19, so D does spread the risk, but no return gain is shown. Predicted vs actual win rates
-     are close in both variants. Live unchanged. `diversity_study.load_legs` now names the five main
+     are close in both variants. Made LIVE on 2026-11-22 as the owner's product decision (see change log). `diversity_study.load_legs` now names the five main
      leagues explicitly (`MAIN_LEAGUES`), because `LEAGUES` grew to nine and only five have a legs table.
    - Live overlap measured 2026-11-22 from the archive (17 slip days): 2 to 4 matches sit in every one of
      the day's slips on most days (e.g. 22 Nov: 8 matches, 4 on 2+ slips).
@@ -890,6 +890,11 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-22: LIVE (owner decision, like task 11): `predict.build_slips` no longer repeats the same
+  match + market on a later slip (Safe unchanged; Medium and Big pick from legs not already used).
+  Evidence: task 24 (no measurable return cost, all-loss days 47.8% -> 41.3%). Applies to slips not yet
+  frozen (from 23 Nov); slips frozen at first kick-off are unchanged. Checked on a local run: 23 Nov
+  has no identical pick across slips. Tests 206 passed. Judge on live results later.
 - 2026-11-22: Task 24 (owner: same match and pick on many slips). Pre-registered and ran
   `distinct_legs_study`: no identical match+market on two slips. KEEP A (return D - A -0.026, CI -0.152
   to +0.094; all-loss days 47.8% -> 41.3%). No live change. Added `MAIN_LEAGUES` in `diversity_study`.

@@ -495,11 +495,16 @@ def build_slips(legs: pd.DataFrame, blocked: set[tuple[str, str]] | None = None)
     pool = legs[legs.market.isin(SLIP_MARKETS) & ~legs.market.isin(OWNER_EXCLUDED_MARKETS)
                 & allowed & legs.odds.notna() & (legs.odds >= 1.05)]
     slips = {}
+    # Owner rule (task 24): a later slip may reuse a match but never the same pick (match + market).
+    key = pd.Series(pool.index if "match_id" not in pool else pool.match_id, index=pool.index).astype(str) + "|" + pool.market
+    used: set[str] = set()
     for tier in TIERS:
-        picks = best_slip(pool, tier) if not pool.empty else None
+        open_pool = pool[~key.isin(used)]
+        picks = best_slip(open_pool, tier) if not open_pool.empty else None
         if picks is None:
             continue
         chosen = pool.loc[picks]
+        used.update(key.loc[picks])
         total, win = float(chosen.odds.prod()), float(chosen.probability.prod())
         slips[tier.name] = {
             "total_odds": round(total, 2),

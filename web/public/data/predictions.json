@@ -5582,11 +5582,11 @@
               "betpawa_price_id": "1586899741",
               "fair_odds": 1.72,
               "price_warning": true,
-              "won": null
+              "won": false
             }
           ],
           "final": true,
-          "status": "pending",
+          "status": "lost",
           "locked": true
         },
         "medium": {
@@ -5668,7 +5668,7 @@
               "betpawa_price_id": "1586899741",
               "fair_odds": 1.72,
               "price_warning": true,
-              "won": null
+              "won": false
             },
             {
               "date": "2026-11-22",
@@ -5693,7 +5693,7 @@
             }
           ],
           "final": true,
-          "status": "pending",
+          "status": "lost",
           "locked": true
         },
         "big": {
@@ -5817,7 +5817,7 @@
               "betpawa_price_id": "1586899741",
               "fair_odds": 1.72,
               "price_warning": true,
-              "won": null
+              "won": false
             },
             {
               "date": "2026-11-22",
@@ -5842,7 +5842,7 @@
             }
           ],
           "final": true,
-          "status": "pending",
+          "status": "lost",
           "locked": true
         }
       }
@@ -10392,11 +10392,11 @@
           "betpawa_price_id": "1586899741",
           "fair_odds": 1.72,
           "price_warning": true,
-          "won": null
+          "won": false
         }
       ],
       "final": true,
-      "status": "pending"
+      "status": "lost"
     },
     {
       "round": "2026-11-22",
@@ -10480,7 +10480,7 @@
           "betpawa_price_id": "1586899741",
           "fair_odds": 1.72,
           "price_warning": true,
-          "won": null
+          "won": false
         },
         {
           "date": "2026-11-22",
@@ -10505,7 +10505,7 @@
         }
       ],
       "final": true,
-      "status": "pending"
+      "status": "lost"
     },
     {
       "round": "2026-11-22",
@@ -10631,7 +10631,7 @@
           "betpawa_price_id": "1586899741",
           "fair_odds": 1.72,
           "price_warning": true,
-          "won": null
+          "won": false
         },
         {
           "date": "2026-11-22",
@@ -10656,7 +10656,7 @@
         }
       ],
       "final": true,
-      "status": "pending"
+      "status": "lost"
     },
     {
       "round": "2026-11-23",
@@ -11372,6 +11372,35 @@
         "away_first": false,
         "double_1x": true,
         "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-22",
+      "home": "Go Ahead Eagles",
+      "away": "For Sittard",
+      "score": [
+        0,
+        1
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
         "double_12": true
       }
     },
@@ -42118,7 +42147,7 @@
     {
       "date": "2026-11-22",
       "fixtures": 28,
-      "settled": 16
+      "settled": 17
     },
     {
       "date": "2026-11-21",

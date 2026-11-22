@@ -18,6 +18,7 @@ from .leagues import ENGINE_DIR, LEAGUES, paths
 GATES_PATH = ENGINE_DIR / "data" / "processed" / "market_gates.json"
 REPORT_PATH = ENGINE_DIR / "reports" / "slip_diversity.md"
 VARIANTS = ("A", "B", "C")
+MAIN_LEAGUES = ("EPL", "LALIGA", "SERIEA", "BUNDES", "LIGUE1")  # the only leagues with a backtest legs table
 STAKES = {"safe": 0.03, "medium": 0.02, "big": 0.01}
 BOOTSTRAP_RESAMPLES = 2_000
 BOOTSTRAP_SEED = 20261025
@@ -33,7 +34,7 @@ def load_legs() -> pd.DataFrame:
     """Load the registered five-league test pool with its live probability."""
     blocked = failed_gates()
     frames = []
-    for code in LEAGUES:
+    for code in MAIN_LEAGUES:
         frame = pd.read_parquet(paths(code).accumulator_legs).copy()
         frame["date"] = pd.to_datetime(frame.date)
         frame = frame[frame.season.str[:4].astype(int) >= 2024]

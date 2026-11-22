@@ -802,6 +802,27 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      comparable matches (the rest not yet in football-data). Ligue 2 (F2) has no Betpawa
      competition today, so it has results but no prices.
 
+24. **No identical leg on two slips** (PRE-REGISTERED 2026-11-22, before any result; owner's request: "the
+   same match with the same pick on several slips kills them all together"; research only,
+   `python -m src.distinct_legs_study`, tests `tests/test_distinct_legs_study.py`).
+   - Pool exactly as task 14 (`diversity_study.load_legs`, five leagues, 2024/25+, gate FAILs and under
+     2.5/3.5 excluded). A = live (independent `best_slip` per tier). D = Safe as A; Medium and Big may
+     reuse a match but never the same match AND market already on an earlier slip (a match can return
+     with a different bet, e.g. win on one slip and double chance on another).
+   - Primary: return per unit staked `won * total_odds - 1` on matched day/tier pairs offered by both;
+     D - A with 95% CI from 2,000 whole-day bootstrap resamples, seed 20261122. Secondary: all-loss day
+     share, mean matches shared between slips per day, per-tier predicted/actual with Wilson CIs.
+   - Adopt D only if D - A >= 0, CI lower bound >= -0.01 and D all-loss share <= A's; otherwise KEEP A.
+   - Limit: the backtest pool has only the five main leagues, the live app now has nine.
+   - Result (DONE 2026-11-22, `reports/distinct_legs_study.md`): **KEEP A**. Matched return D - A -0.0257
+     per unit (95% CI -0.1519 to +0.0942, 955 matched slips): no clear difference, the CI is far too wide
+     to say D is better or worse. All-loss days fell from 47.8% to 41.3% and shared matches per day from
+     4.10 to 3.19, so D does spread the risk, but no return gain is shown. Predicted vs actual win rates
+     are close in both variants. Live unchanged. `diversity_study.load_legs` now names the five main
+     leagues explicitly (`MAIN_LEAGUES`), because `LEAGUES` grew to nine and only five have a legs table.
+   - Live overlap measured 2026-11-22 from the archive (17 slip days): 2 to 4 matches sit in every one of
+     the day's slips on most days (e.g. 22 Nov: 8 matches, 4 on 2+ slips).
+
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
 outcomes for already published picks without changing any study decision below.
@@ -869,6 +890,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-22: Task 24 (owner: same match and pick on many slips). Pre-registered and ran
+  `distinct_legs_study`: no identical match+market on two slips. KEEP A (return D - A -0.026, CI -0.152
+  to +0.094; all-loss days 47.8% -> 41.3%). No live change. Added `MAIN_LEAGUES` in `diversity_study`.
 - 2026-11-21: Weekly check of the new-market leg counts found ZERO settled legs for every market:
   Understat has returned an error page since 8 Nov, so every full run falls back to
   `predict --no-refresh`, and that fallback skipped all research collection and ESPN settling.

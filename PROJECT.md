@@ -149,7 +149,7 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-23)
-- Task 28 (unmerged branch `gemini/trial-live`, awaiting Claude audit): Daily Trial slip wired into the
+- Task 28 (audited by Claude and merged to `main` 2026-11-23; live from the next daily run): Daily Trial slip wired into the
   pipeline and Bets screen with zero impact on Safe/Medium/Big. Pure-numeric cached calibrators committed
   at `engine/data/processed/trial_calibrators.json` (`2026/27`, 9 leagues, 141 eligible pairs across 22
   markets, `data_last_match_date: 2026-05-24`; 2UP, DNB, and Task 10 team overs excluded). Daily runs
@@ -1167,6 +1167,14 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Claude audited and merged task 28. Main slips proven byte-identical with Trial ON vs OFF
+  and with a forced Trial crash (test now also asserts main slips were really built, so it cannot pass
+  on empty slips). Engine suite 228 passed, 4 skipped; e2e ALL PASSED (188 checks, light and dark,
+  375px). Daily workflow needs no change (it already commits `engine/data/live`; requirements cover
+  Trial). Fixed two pre-existing e2e test faults (also failing on `main`): the frosted-glass check now
+  expects solid panels when the browser reports reduced transparency (Windows "Transparency effects"
+  off; the app was right), and the ESPN news check waits for its result instead of a fixed 800 ms.
+  Known noise: `pd.Timedelta(days=1)` emits a NumPy 2.5 DeprecationWarning from inside pandas 2.3.3.
 - 2026-11-23: Completed task 28 on branch `gemini/trial-live` (not merged/pushed; awaiting Claude audit):
   committed pure-numeric cached Trial calibrators (`engine/data/processed/trial_calibrators.json`,
   `2026/27`, 9 leagues, 141 pairs across 22 markets, `data_last_match_date: 2026-05-24`), wired fail-safe

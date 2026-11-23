@@ -198,7 +198,10 @@ for (const scheme of ["light", "dark"]) {
   check(await page.locator("[data-trial-slip]").count() === 0, `[${scheme}] Bets past unchanged when trial_slip is absent`);
   // Owner 2026-11-08: slip cards are full frosted glass (no coloured block).
   const pastGlass = await pastSlips.first().evaluate((el) => getComputedStyle(el).backdropFilter);
-  check(/blur/.test(pastGlass), `[${scheme}] past slip card is frosted glass (${pastGlass})`);
+  // Windows "Transparency effects" off sets prefers-reduced-transparency, and the app then rightly draws solid panels.
+  if (await page.evaluate(() => matchMedia("(prefers-reduced-transparency: reduce)").matches)) {
+    check(pastGlass === "none", `[${scheme}] past slip card is solid under reduced transparency (${pastGlass})`);
+  } else check(/blur/.test(pastGlass), `[${scheme}] past slip card is frosted glass (${pastGlass})`);
   check(await pastSlips.first().getByText(/Won|Lost/, { exact: true }).count() === 1, `[${scheme}] past slip shows its final status`);
   await pastSlips.first().getByRole("button").click();
   check(await pastSlips.first().getByRole("button").getAttribute("aria-expanded") === "true", `[${scheme}] past slip expands`);
@@ -342,8 +345,10 @@ for (const scheme of ["light", "dark"]) {
   check(positions.every((value, index) => Number(value) === index + 1), `[${scheme}] league table is in position order`);
   await noOverflow("league table"); await snap("league-table");
   await page.getByRole("tab", { name: "News", exact: true }).click();
-  await page.waitForTimeout(800);
-  check(await page.getByText("News unavailable", { exact: true }).count() === 1 || await page.locator("a[target='_blank']").count() > 0, `[${scheme}] league news renders ESPN results or its error state`);
+  // Live ESPN call: wait for either outcome instead of a fixed delay.
+  const newsShown = await page.getByText("News unavailable", { exact: true }).or(page.locator("a[target='_blank']")).first()
+    .waitFor({ timeout: 15000 }).then(() => true, () => false);
+  check(newsShown, `[${scheme}] league news renders ESPN results or its error state`);
   await snap("league-news");
 
   // Official settlement wins over live state. The copied real fixture set will exercise each

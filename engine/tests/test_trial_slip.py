@@ -581,6 +581,8 @@ def test_predict_no_refresh_trial_on_vs_off_byte_identical_and_error_isolation(t
 
     # Trial ON actually published a valid trial_slip in both predictions.json and archive, without touching main slips.
     assert "trial_slip" not in pred_off["days"][0]
+    # Identity below is only meaningful if main slips were really built.
+    assert any(slip and slip.get("legs") for slip in pred_off["days"][0]["slips"].values())
     assert "trial_slip" in pred_on["days"][0] and pred_on["days"][0]["trial_slip"]["trial"] is True
     assert "trial_slip" not in arch_off
     assert "trial_slip" in arch_on and arch_on["trial_slip"]["trial"] is True

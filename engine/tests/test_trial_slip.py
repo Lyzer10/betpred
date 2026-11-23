@@ -549,6 +549,12 @@ def test_predict_no_refresh_trial_on_vs_off_byte_identical_and_error_isolation(t
     monkeypatch.setattr(predict, "log_research_prices", lambda *a, **k: None)
     monkeypatch.setattr(predict, "add_booking_codes", lambda shown, now: shown)
     monkeypatch.setattr(predict, "LIVE_LEAGUES", {"EPL": "blended", "LALIGA": "market", "SERIEA": "market"})
+    # Offline: current-season matches from the committed tables, never Understat or the gitignored raw cache.
+    from src.calibration import paths as _paths
+    def _committed_build(refresh_current=False, league="EPL", write=True, start=None):
+        m = pd.read_parquet(_paths(league).matches)
+        return m[m.season.str[:4].astype(int) >= (start or 0)].reset_index(drop=True), None
+    monkeypatch.setattr(predict, "build", _committed_build)
     monkeypatch.setattr(trial_slip, "CALIBRATORS_PATH", cache_path)
     monkeypatch.setattr(trial_slip, "RESEARCH_RESULTS_PATH", tmp_path / "empty_results.csv")
     monkeypatch.setattr(sys, "argv", ["predict", "--no-refresh"])

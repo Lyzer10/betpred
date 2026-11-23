@@ -1238,6 +1238,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Claude audited task 29 and merged it: scope 4 files, pre-registration unchanged; primary
+  `F >= 0.70` results reproduced independently (win n=501 77.37% vs 78.84%, 1Up n=448 84.89% vs 82.59%,
+  win-or-draw n=152 89.94% vs 90.79%; all CIs cover 0), so **KEEP current method** stands. Fixed the
+  Trial ON/OFF test to be fully offline (`predict.build` stubbed with the committed match tables): without
+  the gitignored raw Understat cache it had skipped La Liga/Serie A, built no main slips and compared
+  nothing, and could have failed the daily run's test step.
 - 2026-11-23: Completed task 29 (`src/favourites_study.py`, `tests/test_favourites_study.py`,
   `reports/favourites_study.md`) on branch `gemini/favourites-study` (research only, no live changes).
   All three favourite markets (`win`, `1up`, `win_or_draw`) failed Step 1 (`F >= 0.70` gaps near zero in

@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-11-07 (Africa/Dar_es_Salaam), by Gemini.
+Last updated: 2026-11-23 (Africa/Dar_es_Salaam), by Gemini.
 
 ---
 
@@ -822,6 +822,76 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      leagues explicitly (`MAIN_LEAGUES`), because `LEAGUES` grew to nine and only five have a legs table.
    - Live overlap measured 2026-11-22 from the archive (17 slip days): 2 to 4 matches sit in every one of
      the day's slips on most days (e.g. 22 Nov: 8 matches, 4 on 2+ slips).
+25. **Slip leg quality: minimum leg probability and tighter leg caps** (PRE-REGISTERED 2026-11-23, before
+    any result; research only, `python -m src.leg_quality_study`, report `engine/reports/leg_quality_study.md`,
+    tests `engine/tests/test_leg_quality_study.py`).
+    - Motivation (owner observation on 43 settled live slips, 24 Oct - 22 Nov 2026): 30 lost, 29 of those
+      contained a leg with probability < 0.70, and 19 lost on exactly one leg. To reach each tier's minimum
+      odds from 1.05-1.30 legs, `accumulators.best_slip` often adds a weaker leg. Test whether restricting
+      weak legs or tightening leg caps improves return without shrinking calibration.
+    - Pool: `diversity_study.load_legs()` (five main leagues: EPL, LALIGA, SERIEA, BUNDES, LIGUE1; test
+      seasons 2024/25+; gate FAILs excluded; odds >= 1.05), additionally excluding `under_2.5` and `under_3.5`,
+      grouped by calendar day (`date.dt.strftime("%Y-%m-%d")`).
+    - Variants (all per day, tiers selected via `accumulators.best_slip`):
+      - `A` (baseline): current independent `best_slip` per tier (`TIERS`: Safe 2.5-3.5 / 2-4 legs,
+        Medium 3.5-8.0 / 3-6 legs, Big 8.0-12.0 / 4-8 legs).
+      - `L` (leg floor >= 0.70): exclude any leg with `probability < 0.70`; independent `best_slip` per tier;
+        a tier with no valid slip is not offered.
+      - `F` (fewer-legs cap): cap max legs at Safe 3, Medium 4, Big 6 (`Tier("safe", 2.5, 3.5, 2, 3)`,
+        `Tier("medium", 3.5, 8.0, 3, 4)`, `Tier("big", 8.0, 12.0, 4, 6)`); otherwise as `A`.
+      - `D` (distinct legs, now live in `predict.build_slips`): `A` except no identical `match_key + "|" + market`
+        may repeat on a later tier (Safe -> Medium -> Big).
+    - Primary metric: return per unit staked (`won * total_odds - 1`) on matched `(date, tier)` pairs offered
+      by BOTH the challenger variant and `A` (so no variant can win by betting less). For each challenger `V`
+      in `(L, F, D)`, compute `V - A` with a 95% CI from 2,000 whole-day bootstrap resamples (ratio of
+      resampled day sums to resampled day slip counts), fresh RNG seed `20261123` per comparison.
+    - Secondary metrics (reported, not deciding): per-tier predicted vs actual win rate with Wilson 95% CIs;
+      number of slips offered per tier; all-loss-day share (fraction of offered days with >= 1 slip on which
+      every offered slip lost; also report raw all-loss days / offered days / total pool days); difference in
+      offered days vs `A`; how often each tier becomes unavailable under `L` (and `F`, `D`).
+    - Decision rule: adopt a challenger `V` only if its matched return point estimate `V - A >= 0` AND its
+      95% CI lower bound `>= -0.01` AND its all-loss-day share (on offered days) `<= A`'s. If multiple pass,
+      choose the highest point estimate; otherwise **KEEP A**. Research only: no live changes in this task.
+    - Descriptive checks (not deciding): win rate of legs by probability band (`<0.50`, `0.50-0.60`,
+      `0.60-0.70`, `0.70-0.80`, `0.80-0.90`, `>=0.90`) with `n`, mean predicted probability, actual win rate,
+      and Wilson 95% CI in (i) the backtest pool (all eligible legs and legs selected by `A`) and (ii) the
+      live archive (`web/public/data/archive`, read-only: settled slip legs and settled archived slip-market
+      predictions) to compare the live pattern against the backtest.
+    - Known-answer synthetic tests before real data: (1) `L` never selects a leg `< 0.70` and omits tiers
+      without a valid slip; (2) `F` never exceeds the leg cap (Safe 3, Medium 4, Big 6); (3) identical
+      variants yield identical slips and zero difference; (4) `D` never repeats `match_key + "|" + market`.
+26. **Team over 1.5 / over 2.5 goals tendencies** (PRE-REGISTERED 2026-11-23, before any result; research
+    only, `python -m src.team_goals_tendency_study`, report `engine/reports/team_goals_tendency_study.md`,
+    tests `engine/tests/test_team_goals_tendency_study.py`).
+    - Motivation: owner saw social-media claims that specific teams are "profitable" for over 1.5 / over 2.5
+      goals. Test honestly using the walk-forward method of `src/team_tendency_study.py`.
+    - Data: five main leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`) pooled from `matches.parquet`,
+      seasons 2014/15 onwards, dropping rows missing average odds (`avg_odds_home`, `avg_odds_draw`,
+      `avg_odds_away`, `avg_odds_over25`, `avg_odds_under25`) or `home_goals`/`away_goals`.
+    - Markets (decided separately): `over_1.5` (`home_goals + away_goals > 1.5`) and `over_2.5`
+      (`home_goals + away_goals > 2.5`), one row per match. Bookmaker probability `p` = de-margined average
+      odds read through `accumulators.bookmaker_implied(..., league_rho(league))`.
+    - Features (strictly no look-ahead): for each team in each league, mean `(outcome - bookmaker probability)`
+      over its previous 38 league matches (home and away combined, `MIN_HISTORY = 10`, else `0.0`), giving
+      `r_home` (home team's own past residual) and `r_away` (away team's / opponent's past residual) per match.
+    - Primary evaluation: for each season `S` from `2017/18` onwards, fit on seasons `2015/16 .. S-1`
+      baseline `won ~ 1 + logit(p)` vs challenger `won ~ 1 + logit(p) + r_home + r_away`, and score season `S`.
+      Metric: paired per-match log-loss gain `loss(base) - loss(challenger)` (positive = challenger better),
+      95% CI from 2,000 whole-day bootstrap resamples, seed `20261123`.
+    - Secondary evaluation (live-era probabilities, 2024/25+): `accumulator_legs.parquet` across the five
+      leagues using `market_gates.gate_column` (`blended` for EPL, `market` for the other four), filtered to
+      `over_1.5` and `over_2.5`, merged with `(r_home, r_away)` from historical matches; fit on the first 60%
+      of calendar days, score the last 40% with `p = live_p`, same paired log-loss gain and 95% whole-day
+      bootstrap CI (2,000 resamples, seed `20261123`).
+    - Decision per market: **USE** only if the primary 95% CI lower bound `> 0` AND the live-era secondary
+      gain `> 0`; otherwise **DO NOT USE** (report that social-media "profitable team" lists are in-sample
+      selection / noise, without reproducing their figures).
+    - Secondary diagnostics (reported, not deciding): per-league primary gains, logistic coefficients by
+      season and in secondary, and season-to-season persistence correlation `r` of a team's season residual
+      (`>= 30` matches in consecutive seasons).
+    - Known-answer synthetic tests before real data: (1) planted team goals tendency (`effect = 0.5`) yields
+      primary CI lower bound `> 0`; (2) zero tendency (`effect = 0.0`) yields primary CI lower bound `<= 0`;
+      (3) no look-ahead (perturbing a future match outcome leaves all earlier `r_home`/`r_away` unchanged).
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -890,6 +960,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Pre-registered research tasks 25 (slip leg quality: >= 0.70 probability floor, tighter leg
+  caps, distinct-legs comparison) and 26 (team over 1.5 / over 2.5 goals tendencies) in PROJECT.md before
+  computing any results. Research only; no live changes.
 - 2026-11-22: LIVE (owner decision, like task 11): `predict.build_slips` no longer repeats the same
   match + market on a later slip (Safe unchanged; Medium and Big pick from legs not already used).
   Evidence: task 24 (no measurable return cost, all-loss days 47.8% -> 41.3%). Applies to slips not yet

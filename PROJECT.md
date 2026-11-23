@@ -1013,6 +1013,45 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
         (`trial: true`, `stake_cap: 0.01`, predicted win **34.12%**, EV `+0.0405`, margin not measurable):
         `LALIGA` Levante v Elche `home_sh_over_0.5` @ `1.58` (raw `0.5943`, cal `0.6133`) + `SERIEA` Monza
         v Fiorentina `away_2up` @ `1.93` (raw `0.5111`, cal `0.5564`).
+28. **Live Trial slip wiring (cached calibrators, safe pipeline hook, settlement, and Bets UI)**
+    (PRE-REGISTERED 2026-11-23 on branch `gemini/trial-live`, before writing code).
+    - Goal: run the Task 27 Trial slip in the daily pipeline without slowing it (<= 20 s budget), without
+      any chance of breaking or altering main Safe/Medium/Big slips, and display it as a separate Trial
+      card on the Bets screen. Unchanged standing rules from Task 27: `home_2up`/`away_2up`, Draw No Bet,
+      and Task 10 team overs stay excluded (141 eligible pairs across 22 markets); stake cap fixed at 1%
+      (`0.01`); Trial legs never repeat a `match + market` from Safe/Medium/Big; pause rule locked at
+      `>= 30` settled Trial slips with one-sided `z < -2.5`.
+    - Step 1 (Cached calibrators): add `python -m src.trial_slip --refit` fitting all live leagues with
+      the exact Task 27 walk-forward functions (seasons `< current_season` only) and saving pure numeric
+      JSON (`coef`, `intercept`, `rho`, `shares`, `season`, `fitted_at_eat`, `data_last_match_date` — no
+      pickles) to `engine/data/processed/trial_calibrators.json`. Add `load_calibrators(current_season)`
+      returning `None` if missing, unreadable, or built for another season. Daily runs never refit.
+      Known-answer test: cached predictions match `fit_league_calibrators` to `<= 1e-9` on the same input.
+      Run `--refit` once and commit `engine/data/processed/trial_calibrators.json`.
+    - Step 2 (Pipeline hook in `src/predict.py`, minimal diff): after `build_slips` for each day, call
+      `trial_slip.build_day_trial(...)` wrapped in `try/except` and a 20-second timeout budget. On any
+      error, missing/stale cache, or Trial PAUSED status, log one line and continue with no Trial slip.
+      Output goes under a separate `trial_slip` key on each day object in `predictions.json` (never inside
+      `slips`) and under `trial_slip` in `web/public/data/archive/<day>.json`. Use real Betpawa prices
+      (`odds >= 1.05`) from the same Betpawa snapshot as the main slips. Freeze once final or once the
+      day's first Trial leg kicks off via a separate `engine/data/live/trial_history.json` mirroring
+      `update_history`/`displayed_slips` so main `slip_history.json`, `history`, `health`, `clv`, and
+      `realised` stay completely untouched. Acceptance tests: `predict.py --no-refresh` with Trial ON vs
+      OFF produces byte-for-byte identical `slips` and every other existing key; forced exception inside
+      Trial still publishes main slips cleanly; extra runtime `< 20` seconds.
+    - Step 3 (Settlement): settle Trial legs from `engine/data/live/research/results.csv` matched by
+      `(league, home, away)` and kickoff date (within 1 day). Missing/unverified outcomes stay pending;
+      a source outage never resets a known outcome. Slip wins only if every leg won. Hook into both
+      `predict.py` and `settle_results.py` (fail-safe). Tests using real rows from `results.csv`.
+      Extend `evaluate_trial_pause` to read settled Trial slips from `trial_history.json` and suppress
+      publishing when `PAUSED`.
+    - Step 4 (App `web/`): add ONE separate frosted-glass `Trial` card on the Bets screen below the three
+      tiers (`UpcomingDay` and `PastDay`), clearly labelled `Trial`, `max stake 1% of balance`, and
+      `Testing new markets. Not proven.`, showing legs, odds, probability, and settled status. Leave
+      Safe/Medium/Big, Money, settlement, and notifications untouched. Render nothing and error-free when
+      `trial_slip` is absent. Verify with `npm run build` and `npm run check:e2e` at 375px in light and
+      dark (with screenshots checked), plus a check that the page is unchanged when `trial_slip` is absent.
+    - Workflow files (`.github/workflows/*`): do not edit; report whether any change is needed and why.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -1084,6 +1123,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Pre-registered task 28 (live Trial slip wiring: cached JSON calibrators, fail-safe pipeline
+  hook with 20 s budget, results.csv settlement, pause guard, and Bets Trial card) in PROJECT.md on
+  branch `gemini/trial-live` before writing code.
 - 2026-11-23: Completed research tasks 25 (`src/leg_quality_study.py`, `reports/leg_quality_study.md`,
   `tests/test_leg_quality_study.py`) and 26 (`src/team_goals_tendency_study.py`,
   `reports/team_goals_tendency_study.md`, `tests/test_team_goals_tendency_study.py`) on branch

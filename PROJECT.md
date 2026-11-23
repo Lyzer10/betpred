@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-11-07 (Africa/Dar_es_Salaam), by Gemini.
+Last updated: 2026-11-23 (Africa/Dar_es_Salaam), by Gemini.
 
 ---
 
@@ -823,6 +823,60 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
    - Live overlap measured 2026-11-22 from the archive (17 slip days): 2 to 4 matches sit in every one of
      the day's slips on most days (e.g. 22 Nov: 8 matches, 4 on 2+ slips).
 
+27. **Daily Trial slip design, margin check and dry run** (PRE-REGISTERED 2026-11-23, before any result;
+    research and dry run only, `python -m src.trial_slip --dry-run`, module `engine/src/trial_slip.py`,
+    report `engine/reports/trial_slip_dryrun.md`, tests `engine/tests/test_trial_slip.py`; note: tasks 25
+    and 26 live on unmerged branch `gemini/slip-leg-quality`).
+    - Owner decision (2026-11-23): design one extra daily "Trial" slip, separate from Safe/Medium/Big (which
+      stay unchanged), built only from markets that passed backtests but are not yet allowed in main slips
+      (they need >= 300 settled Betpawa-priced legs). Purposes: (1) see whether these markets survive being
+      selected by the slip search (winner's curse), which average accuracy cannot show; (2) use them earlier,
+      labelled Trial; (3) see real slip behaviour with real prices. Stake cap fixed at `0.01` (1% of balance)
+      per Trial slip. Does not collect more data than research price logging already does, and does not prove
+      profit. Nothing goes live in this task.
+    - Margin check (read-only, no model): from `engine/data/live/prices` (main nine leagues) and
+      `engine/data/live/research/prices` (research leagues), last logged snapshot strictly before kick-off per
+      match, compute overround `sum(1 / odds) - 1` for every complete mutually exclusive outcome set logged
+      (`1X2`, `over/under 2.5`, `DNB two-way`, `10-minute interval 1X2`, plus any other verified complete set
+      present in the logged columns). For markets with no complementary price logged (e.g. first-half over 0.5,
+      team overs, 2UP, DC 1UP, first goal, win either half, team-half markets), report `"margin not measurable"`
+      and the count of logged matches. Report `n`, `mean`, `10th` and `90th` percentile per market and per
+      league group (`main nine` vs `research leagues`).
+    - Eligible list: parse exact league x market PASS lists from `engine/reports/new_markets_study.md`,
+      `engine/reports/half_markets_study.md`, `engine/reports/up_markets_study.md`,
+      `engine/reports/timing_half_markets_study.md`, and `engine/reports/tasks_16_17_replication.md`. A pair is
+      TRIAL-ELIGIBLE only if it PASSED in the original study AND in the replication period (`2019/20-2023/24`,
+      the reports' "Strong candidates") and is not FAIL/INSUFFICIENT in any backtest report. Copy every
+      eligible pair into the report with source file and line number. Exclude Draw No Bet in v1 (a draw refunds
+      the leg at odds 1.00; slip maths not implemented) and exclude Task 10 team overs in v1 because no
+      replication-period report exists in the repo (document both exclusions with exact source lines).
+    - Live probability: reuse each study's exact raw-probability function (`half_markets_study`,
+      `up_markets_study`, `timing_half_markets_study`) and walk-forward Platt calibrator
+      (`LogisticRegression(C=1.0)` on `logit(raw)`, fitted on seasons strictly before the current season,
+      `< "2026/27"`), driven by `accumulators.bookmaker_implied` on the cached fixture's fair 1X2 and
+      over/under 2.5 `market_probability` with `market_live.league_rho(league)`. Drop any market whose
+      probability cannot be reproduced exactly from data available at run time and report why; never create a
+      new model.
+    - Build & dry run: `accumulators.Tier("trial", 3.0, 5.0, 2, 4)` selected via `accumulators.best_slip` on
+      a pool containing only TRIAL-ELIGIBLE legs with a real Betpawa price (`odds >= 1.05`), one leg per match,
+      excluding any leg whose `match + market` is already on that day's Safe/Medium/Big slips. Each leg and the
+      slip carry `"trial": True`, the Step-2 margin figure where measurable (else `None`), and `stake_cap = 0.01`.
+      `python -m src.trial_slip --dry-run` reads cached `web/public/data/predictions.json` and logged pre-kickoff
+      Betpawa prices (read-only) and writes ONLY `engine/reports/trial_slip_dryrun.md`; never modifies
+      `web/public/data` or `engine/data/live`, and does not import or modify anything that publishes.
+    - Pre-registered judgement rules (for later live evaluation; do not change after seeing results):
+      - **PROMOTION** of a league x market to main slips: unchanged existing rule (>= 300 settled priced legs,
+        one-sided level check passes, `pair_monitor` not paused).
+      - **PAUSE** of the whole Trial: after >= 30 settled Trial slips, if actual win rate is below predicted
+        with one-sided `z < -2.5` (`z = (wins - sum p) / sqrt(sum p(1 - p))`), pause it.
+      - **Report every 30 Trial slips**: predicted vs actual win rate with Wilson 95% CI, return per unit
+        staked, per-market leg results, and the share of days every slip (main + Trial) lost.
+    - Known-answer tests before real data: (1) pool with no eligible legs -> no Trial slip; (2) Trial slip
+      legs never repeat a `match + market` of Safe/Medium/Big; (3) legs are only from the eligible list;
+      (4) total odds always in `3.0-5.0` and `2-4` legs, one leg per match; (5) `stake_cap` is `0.01` and
+      `"trial": True` is set on slip and legs; (6) running `--dry-run` leaves `git status` for
+      `web/public/data` and `engine/data/live` unchanged.
+
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
 outcomes for already published picks without changing any study decision below.
@@ -890,6 +944,9 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Pre-registered task 27 (daily Trial slip design, Betpawa margin check, eligible list,
+  live probability reuse, dry run, and judgement rules) in PROJECT.md on branch `gemini/trial-slip` before
+  computing any results. Research and dry run only; no live changes.
 - 2026-11-22: LIVE (owner decision, like task 11): `predict.build_slips` no longer repeats the same
   match + market on a later slip (Safe unchanged; Medium and Big pick from legs not already used).
   Evidence: task 24 (no measurable return cost, all-loss days 47.8% -> 41.3%). Applies to slips not yet

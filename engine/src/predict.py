@@ -12,6 +12,7 @@ Usage:  python -m src.predict            (refresh current season, then predict)
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 from datetime import datetime, timezone
@@ -668,7 +669,8 @@ def _fixture_key(fixture: dict) -> tuple:
     return fixture["date"], fixture["home"], fixture["away"]
 
 
-def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timestamp) -> None:
+def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timestamp,
+                     trial_slip: dict | None = None) -> None:
     """Save a match day's predictions and bets; matches already kicked off keep their earlier prediction."""
     ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
     path = ARCHIVE_DIR / f"{day}.json"
@@ -682,6 +684,10 @@ def archive_snapshot(fixtures: list[dict], slips: dict, day: str, now: pd.Timest
                 "fixtures": sorted(current.values(), key=lambda f: f["kickoff_utc"]),
                 # Locked slips are already frozen; unlocked ones are the latest pre-kickoff version.
                 "slips": {tier: {k: v for k, v in slip.items() if k != "status"} for tier, slip in slips.items()}}
+    if trial_slip is not None:
+        snapshot["trial_slip"] = {k: v for k, v in trial_slip.items() if k != "status"}
+    elif os.environ.get("TRIAL_DISABLED") != "1" and isinstance(previous.get("trial_slip"), dict) and previous["trial_slip"].get("final"):
+        snapshot["trial_slip"] = previous["trial_slip"]
     path.write_text(json.dumps(snapshot, indent=1), encoding="utf-8")
 
 
@@ -795,6 +801,46 @@ def backtest_summary() -> dict:
                    "predicted_win_rate": round(float(group.predicted_win.mean()), 4),
                    "average_odds": round(float(group.total_odds.mean()), 2)}
             for tier, group in accuracy.groupby("tier")}
+
+
+TRIAL_TIMEOUT_SECONDS = 20.0
+
+
+def _run_day_trial_safely(
+    day: str,
+    day_legs: pd.DataFrame,
+    betpawa: pd.DataFrame,
+    main_slips: dict,
+    current_season: str,
+    now: pd.Timestamp,
+    final: bool = False,
+) -> dict | None:
+    """Run one day's Trial slip inside a 20s wall-clock budget; never raise and never alter main slips."""
+    if os.environ.get("TRIAL_DISABLED") == "1":
+        return None
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    try:
+        from . import trial_slip
+        future = executor.submit(
+            trial_slip.run_day_trial,
+            day,
+            day_legs,
+            betpawa,
+            main_slips,
+            current_season,
+            now,
+            final,
+            history_path=LIVE_DIR / "trial_history.json",
+        )
+        return future.result(timeout=TRIAL_TIMEOUT_SECONDS)
+    except concurrent.futures.TimeoutError:
+        print(f"Trial slip timed out for {day} (>{TRIAL_TIMEOUT_SECONDS:.0f}s budget); continuing without Trial")
+        return None
+    except Exception as error:
+        print(f"Trial slip unavailable for {day} ({error}); continuing without Trial")
+        return None
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
 
 
 def main() -> None:
@@ -917,13 +963,24 @@ def main() -> None:
             shown = add_booking_codes(shown, now)
         except Exception as error:
             print(f"Booking codes unavailable ({error})")
-        days.append({"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
+        day_entry = {"date": day, "fixtures": sorted(int(f) for f in day_legs.fixture.unique()),
                      "first_kickoff_utc": day_legs.kickoff_utc.min().isoformat() + "Z",
                      "final": any(slip["final"] for slip in shown.values()),
                      "value_picks": value_picks(day_legs),
-                     "slips": shown})
+                     "slips": shown}
+        trial_shown = _run_day_trial_safely(day, day_legs, betpawa, shown, current_season, now,
+                                            final=args.final and day == today)
+        if trial_shown is not None:
+            day_entry["trial_slip"] = trial_shown
+        days.append(day_entry)
     if not days:
         history = update_history(None, {}, all_matches, now)
+        if os.environ.get("TRIAL_DISABLED") != "1":
+            try:
+                from . import trial_slip
+                trial_slip.update_trial_history(None, None, now, history_path=LIVE_DIR / "trial_history.json")
+            except Exception as error:
+                print(f"Trial slip settlement unavailable ({error})")
 
     output = {
         "generated_at": now.isoformat() + "Z",
@@ -964,9 +1021,16 @@ def main() -> None:
         "tables": league_tables(context, league_of),
     }
     for day in days:
-        archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]], day["slips"], day["date"], now)
+        archive_snapshot([f for f in output["fixtures"] if f["day"] == day["date"]],
+                         day["slips"], day["date"], now, trial_slip=day.get("trial_slip"))
     print(f"Archive backfill: {backfill_archive(h2h_history, blocked, now)} older entries completed")
     output["archive"] = settle_archive(all_matches)
+    if os.environ.get("TRIAL_DISABLED") != "1":
+        try:
+            from . import trial_slip
+            trial_slip.settle_trial_files(ARCHIVE_DIR, history_path=LIVE_DIR / "trial_history.json")
+        except Exception as error:
+            print(f"Trial archive settlement unavailable ({error})")
     output["live_record"] = live_record()
     output["clv"] = clv_report(history)
     output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS, output["tables"], output["fixtures"]) | {

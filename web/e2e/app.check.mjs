@@ -157,6 +157,7 @@ for (const scheme of ["light", "dark"]) {
       `[${scheme}] ${label || "away leg"}: badge belongs to the named away team`);
   }
   const stakeShown = await page.getByText(/^Stake on Betpawa$/).count();
+  check(await page.locator("[data-trial-slip]").count() === 0, `[${scheme}] Bets upcoming unchanged when trial_slip is absent`);
   await noOverflow("bets today"); await snap("bets-today");
   // A slip whose first match has kicked off is locked and cannot be placed any more: skip, don't fail.
   const safeOpen = await page.getByRole("button", { name: "I placed this bet" }).count() > 0;
@@ -194,6 +195,7 @@ for (const scheme of ["light", "dark"]) {
   await page.locator("[data-date='2026-10-24']").click();
   const pastSlips = page.locator("[data-past-slip]");
   await pastSlips.first().waitFor();
+  check(await page.locator("[data-trial-slip]").count() === 0, `[${scheme}] Bets past unchanged when trial_slip is absent`);
   // Owner 2026-11-08: slip cards are full frosted glass (no coloured block).
   const pastGlass = await pastSlips.first().evaluate((el) => getComputedStyle(el).backdropFilter);
   check(/blur/.test(pastGlass), `[${scheme}] past slip card is frosted glass (${pastGlass})`);
@@ -399,6 +401,76 @@ for (const scheme of ["light", "dark"]) {
 
   check(errors.length === 0, `[${scheme}] no console errors${errors.length ? `: ${errors.join(" | ")}` : ""}`);
   await page.close();
+
+  // Separate check with a Trial slip present on upcoming and archived days (light and dark, 375px).
+  const trialPage = await browser.newPage({ viewport: { width: 375, height: 812 }, colorScheme: scheme, serviceWorkers: "block",
+    userAgent: "Mozilla/5.0 (Linux; Android 14; SM-A546E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36" });
+  const trialErrors = [];
+  await trialPage.clock.setFixedTime(new Date(predictionsFixture.generated_at));
+  trialPage.on("pageerror", (e) => trialErrors.push(e.message));
+  trialPage.on("console", (m) => m.type() === "error" && trialErrors.push(m.text()));
+  const trialUpcoming = {
+    tier: "trial", trial: true, stake_cap: 0.01, total_odds: 3.45, win_probability: 0.342,
+    odds_source: "betpawa", final: false, locked: false, status: "pending",
+    legs: [
+      {
+        date: predictionsFixture.days[0].date, time: "17:30", kickoff_utc: predictionsFixture.days[0].first_kickoff_utc,
+        league: { code: "EPL", name: "Premier League", country: "England" },
+        home: "Arsenal", away: "Chelsea", market: "fh_over_0.5", label: "First-half over 0.5 goals",
+        probability: 0.72, betpawa_odds: 1.38, fair_odds: 1.39, trial: true, stake_cap: 0.01, won: null,
+      },
+      {
+        date: predictionsFixture.days[0].date, time: "20:00", kickoff_utc: predictionsFixture.days[0].first_kickoff_utc,
+        league: { code: "SERIEA", name: "Serie A", country: "Italy" },
+        home: "Inter", away: "Fiorentina", market: "home_win_either_half", label: "Home to win either half",
+        probability: 0.64, betpawa_odds: 1.56, fair_odds: 1.56, trial: true, stake_cap: 0.01, won: null,
+      },
+      {
+        date: predictionsFixture.days[0].date, time: "20:00", kickoff_utc: predictionsFixture.days[0].first_kickoff_utc,
+        league: { code: "LALIGA", name: "La Liga", country: "Spain" },
+        home: "Ath Bilbao", away: "Getafe", market: "dc1up_1x", label: "Home or draw (1Up)",
+        probability: 0.74, betpawa_odds: 1.60, fair_odds: 1.35, trial: true, stake_cap: 0.01, won: null,
+      },
+    ],
+  };
+  const trialPast = {
+    ...trialUpcoming, status: "lost", locked: true, final: true,
+    legs: trialUpcoming.legs.map((l, idx) => ({ ...l, won: idx !== 1, score: idx === 0 ? [2, 1] : idx === 1 ? [0, 1] : [1, 0] })),
+  };
+  const predWithTrial = structuredClone(predictionsFixture);
+  predWithTrial.days[0].trial_slip = trialUpcoming;
+  await trialPage.route("**/data/predictions.json", (route) => route.fulfill({ body: JSON.stringify(predWithTrial), contentType: "application/json" }));
+  await trialPage.route("**/data/schedule.json", (route) => route.fulfill({ path: join(fixtureDir, "schedule.json"), contentType: "application/json" }));
+  await trialPage.route("**/data/lineups.json", (route) => route.fulfill({ path: join(fixtureDir, "lineups.json"), contentType: "application/json" }));
+  await trialPage.route("**/data/archive/*.json", (route) => {
+    const name = new URL(route.request().url()).pathname.split("/").pop();
+    try {
+      const body = JSON.parse(readFileSync(join(fixtureDir, "archive", name), "utf8"));
+      if (name === "2026-10-24.json") body.trial_slip = trialPast;
+      route.fulfill({ body: JSON.stringify(body), contentType: "application/json" });
+    } catch { route.fulfill({ status: 200, body: "null", contentType: "application/json" }); }
+  });
+  await trialPage.goto(`${BASE}#bets/${predictionsFixture.days[0].date}`);
+  const trialCard = trialPage.locator("[data-trial-slip]");
+  await trialCard.waitFor();
+  check(await trialCard.getByText("Trial", { exact: true }).count() === 1, `[${scheme}] Trial card shows Trial label`);
+  check(await trialCard.getByText(/Max stake 1% of balance/i).count() === 1, `[${scheme}] Trial card shows max stake 1% of balance`);
+  check(await trialCard.getByText("Testing new markets. Not proven.").count() === 1, `[${scheme}] Trial card shows unproven notice`);
+  check(await trialCard.locator("[data-trial-leg]").count() === 3, `[${scheme}] Trial card shows all 3 legs`);
+  check(await trialCard.getByText("3.45").count() === 1 && await trialCard.getByText("34%").count() === 1,
+    `[${scheme}] Trial card shows odds and predicted probability`);
+  check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] Trial upcoming: no horizontal overflow`);
+  if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-trial-upcoming.png`, fullPage: true });
+  await trialPage.locator("[data-date='2026-10-24']").click();
+  await trialCard.waitFor();
+  check(await trialCard.locator(".past-slip-status").filter({ hasText: /Lost/ }).count() === 1, `[${scheme}] Past Trial card shows settled status`);
+  check(await trialCard.locator("[data-trial-leg][data-leg-status='won']").count() === 2
+    && await trialCard.locator("[data-trial-leg][data-leg-status='lost']").count() === 1,
+    `[${scheme}] Past Trial card shows per-leg settled statuses`);
+  check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] Trial past: no horizontal overflow`);
+  if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-trial-past.png`, fullPage: true });
+  check(trialErrors.length === 0, `[${scheme}] Trial checks: no console errors${trialErrors.length ? `: ${trialErrors.join(" | ")}` : ""}`);
+  await trialPage.close();
 }
 await browser.close();
 console.log(failures.length ? `\n${failures.length} FAILED` : "\nALL PASSED");

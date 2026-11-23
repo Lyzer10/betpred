@@ -207,6 +207,15 @@ def repair(now=None, data_dir=None, history_path=None, cache=CACHE, session=None
         output["results"] = sorted(published.values(), key=lambda r: r["date"], reverse=True)
         # Do not recompute health, stakes, prices, picks or slip selection in this repair.
         write_changed(output_path, output)
+    try:
+        from . import trial_slip
+        trial_slip.settle_trial_files(
+            data_dir / "archive",
+            history_path=history_path.parent / "trial_history.json",
+            predictions_path=output_path if output_path.exists() else None,
+        )
+    except Exception as error:
+        print(f"Trial results repair unavailable ({error}); keeping existing Trial records")
     print(f"Results repair: {changed} archived matches updated; no predictions or selected bets changed")
     return changed
 

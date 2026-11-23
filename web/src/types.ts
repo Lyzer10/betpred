@@ -145,11 +145,48 @@ export interface Result {
   outcomes: Record<MarketKey, boolean>;
 }
 
+export interface TrialLeg {
+  match_id?: string;
+  league?: League | string;
+  date: string;
+  time?: string;
+  kickoff_utc?: string;
+  home: string;
+  away: string;
+  market: string;
+  label: string;
+  probability: number;
+  raw_probability?: number;
+  betpawa_odds: number;
+  fair_odds: number;
+  trial: true;
+  stake_cap: number;
+  margin?: number | null;
+  won?: boolean | null;
+  score?: [number, number];
+}
+
+export interface TrialSlip {
+  tier?: "trial";
+  trial: true;
+  stake_cap: number;
+  total_odds: number;
+  win_probability: number;
+  expected_value?: number;
+  odds_source?: "betpawa";
+  margin?: number | null;
+  legs: TrialLeg[];
+  locked?: boolean;
+  final?: boolean;
+  status?: "won" | "lost" | "pending";
+}
+
 export interface DayBets {
   date: string;
   fixtures: number[];
   value_picks: ValuePick[];
   slips: Partial<Record<TierName, Slip>>;
+  trial_slip?: TrialSlip | null;
   first_kickoff_utc?: string;
   final?: boolean;               // today's slips are final (placed after the notification)
 }
@@ -244,6 +281,7 @@ export interface ArchiveSnapshot {
   generated_at: string;
   fixtures: ArchivedFixture[];
   slips: Partial<Record<TierName, Slip>>;
+  trial_slip?: TrialSlip | null;
 }
 
 export interface SavedPick {

@@ -148,7 +148,15 @@ cd ..\web; npm ci; npm run dev                             # install exactly fro
 npm run build; npx vite preview --port 4173; npm run check:e2e   # browser checks, phone width
 ```
 
-## 5. Current status (2026-11-08)
+## 5. Current status (2026-11-23)
+- Task 28 (unmerged branch `gemini/trial-live`, awaiting Claude audit): Daily Trial slip wired into the
+  pipeline and Bets screen with zero impact on Safe/Medium/Big. Pure-numeric cached calibrators committed
+  at `engine/data/processed/trial_calibrators.json` (`2026/27`, 9 leagues, 141 eligible pairs across 22
+  markets, `data_last_match_date: 2026-05-24`; 2UP, DNB, and Task 10 team overs excluded). Daily runs
+  never refit, run under a 20-second timeout budget and `try/except`, freeze in separate
+  `engine/data/live/trial_history.json`, settle from `engine/data/live/research/results.csv`, enforce the
+  pause guard (`n >= 30`, `z < -2.5`), and render one separate frosted-glass `Trial` card on Bets.
+  Profitability is **not proven** (`max stake 1% of balance`).
 - App look (owner requests 2026-11-08): frosted glass in light and dark with solid colours only (no
   gradients); slip cards, past slips and the match header are part of the glass card (no blue block;
   replaces the earlier #001339 past-slip colour). Inter font. Date strip: equal-width days, today (or
@@ -1052,6 +1060,42 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
       `trial_slip` is absent. Verify with `npm run build` and `npm run check:e2e` at 375px in light and
       dark (with screenshots checked), plus a check that the page is unchanged when `trial_slip` is absent.
     - Workflow files (`.github/workflows/*`): do not edit; report whether any change is needed and why.
+    - Result (DONE 2026-11-23 on branch `gemini/trial-live`; awaiting Claude audit before merge):
+      - **Step 1 (Cached calibrators)**: `python -m src.trial_slip --refit` wrote pure-numeric JSON
+        `engine/data/processed/trial_calibrators.json` (`season: "2026/27"`, `fitted_at_eat:
+        "2026-11-23T15:05:49+03:00"`, `data_last_match_date: "2026-05-24"`, 9 leagues, 141 eligible
+        league x market pairs across 22 markets; 0 2UP/DNB/team-over pairs). `load_calibrators()`
+        validates season and numeric fields, returning `None` if missing/corrupt/stale; daily runs never
+        refit. Known-answer test verified cached predictions match live `fit_league_calibrators()` to
+        `<= 1e-9` (including against the committed JSON).
+      - **Step 2 (Pipeline hook)**: minimal fail-safe hook in `engine/src/predict.py`
+        (`_run_day_trial_safely`, 20 s `ThreadPoolExecutor` timeout budget with `wait=False`, `try/except`
+        logging one line and returning `None`). Publishes under separate `days[].trial_slip` and
+        `archive/<day>.json` `trial_slip` using the run's Betpawa prices (`odds >= 1.05`). Freezes via
+        separate `engine/data/live/trial_history.json` (same final/first-kickoff freeze pattern as
+        `slip_history.json`, leaving `slip_history.json`, `history`, `health`, `clv`, and `realised`
+        untouched). Acceptance test (`predict.py --no-refresh`, Trial ON vs OFF) proved byte-for-byte
+        identity for `slips` and every other existing key in `predictions.json` and `archive/*.json`,
+        extra runtime strictly `< 20` s, and forced-exception isolation.
+      - **Step 3 (Settlement & pause)**: `settle_trial_slip` / `settle_trial_files` settle Trial legs
+        from `engine/data/live/research/results.csv` matched by `(league, home, away)` and kickoff within
+        1 day, never overwriting verified outcomes on source outage, hooked into both `predict.py` and
+        `settle_results.py`. Verified on real rows (`SERIEA Inter v Fiorentina 2026-10-25`, `JUPILER Genk
+        v Standard 2026-10-25`). `evaluate_trial_pause` reads `trial_history.json` and suppresses Trial
+        when `n >= 30` and one-sided `z < -2.5`.
+      - **Step 4 (Web UI)**: added separate frosted-glass `TrialSlipCard` in `web/src/views/Slips.tsx`
+        (`web/src/types.ts`) below the three tiers on upcoming and past Bets days, labelled `Trial`,
+        `Max stake 1% of balance`, and `Testing new markets. Not proven.`, rendering nothing when
+        `trial_slip` is absent. `npm run build` passed; all 24 Trial & absent-Trial assertions in
+        `web/e2e/app.check.mjs` passed at 375px in light and dark modes (screenshots visually verified).
+        (Pre-existing Windows Transparency Effects `backdrop-filter` check and one transient external
+        ESPN league-news fetch check noted as environment/external.)
+      - **Step 5 (Tests & workflow)**: full engine suite **228 passed, 4 skipped** (0 failed).
+        `.github/workflows/daily-predictions.yml` was NOT edited and needs **no immediate change**
+        because line 120 already stages `web/public/data/predictions.json`, `web/public/data/archive`,
+        and `engine/data/live` (automatically picking up `trial_history.json`). Note for next season
+        (Aug 2027): run `python -m src.trial_slip --refit` once when `current_season` rolls over to
+        `2027/28` (until then, `load_calibrators` safely returns `None` and skips Trial without error).
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -1123,6 +1167,16 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Completed task 28 on branch `gemini/trial-live` (not merged/pushed; awaiting Claude audit):
+  committed pure-numeric cached Trial calibrators (`engine/data/processed/trial_calibrators.json`,
+  `2026/27`, 9 leagues, 141 pairs across 22 markets, `data_last_match_date: 2026-05-24`), wired fail-safe
+  20 s-budgeted Trial hook in `src/predict.py` (separate `days[].trial_slip`, archive `trial_slip`, and
+  `engine/data/live/trial_history.json` freeze), hooked `research/results.csv` settlement in
+  `src/predict.py` and `src/settle_results.py`, wired pause suppression (`n>=30`, `z<-2.5`), and added one
+  separate frosted-glass `Trial` card on the Bets screen (`web/src/types.ts`, `web/src/views/Slips.tsx`,
+  `web/e2e/app.check.mjs`). Full engine suite: 228 passed, 4 skipped; `web` build passed; 24/24 Trial e2e
+  checks passed in light & dark at 375px. Zero edits to `web/public/data`, `engine/data/live`, or
+  `.github/workflows/*`.
 - 2026-11-23: Pre-registered task 28 (live Trial slip wiring: cached JSON calibrators, fail-safe pipeline
   hook with 20 s budget, results.csv settlement, pause guard, and Bets Trial card) in PROJECT.md on
   branch `gemini/trial-live` before writing code.

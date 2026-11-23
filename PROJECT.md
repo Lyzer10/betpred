@@ -1142,6 +1142,30 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
       Steps 1-2; (3) the correction never changes a leg with `F < 0.70` or a non-favourite market; (4)
       unknown outcomes are excluded, never counted as losses; (5) corrected probabilities keep
       win <= win-or-draw and win <= 1Up.
+    - Result (DONE 2026-11-23 on branch `gemini/favourites-study`, `reports/favourites_study.md`; research
+      only, no live changes): **KEEP current method** for all three markets (`win`, `1up`, `win_or_draw`);
+      every market failed Step 1, so Steps 2 and 3 were not run.
+      - **`win` (`F >= 0.70`)**: Primary (`2024/25+`, 5 leagues, `n=501` legs/matches) predicted `77.37%`,
+        actual `78.84%`, gap **`+1.47%`** (95% whole-day CI `[-2.53%, +5.22%]`); Replication (`2019/20-2023/24`,
+        9 leagues, `n=2,096`) predicted `77.89%`, actual `77.48%`, gap **`-0.41%`** (CI `[-2.29%, +1.49%]`).
+      - **`1up` (`F >= 0.70`)**: Primary (`n=448`) predicted `84.89%`, actual `82.59%`, gap **`-2.30%`**
+        (CI `[-6.15%, +1.70%]`; gate-FAIL `n=61` `-6.31%`, gate-PASS `n=387` `-1.67%`); Replication
+        (`n=1,033`, 5 main leagues) predicted `85.56%`, actual `85.58%`, gap **`+0.02%`** (CI `[-2.01%, +2.08%]`).
+      - **`win_or_draw` (`F >= 0.70`)**: Primary (`n=152`, `>=0.80` `n=0` due to Stage-4 `odds >= 1.05`)
+        predicted `89.94%`, actual `90.79%`, gap **`+0.85%`** (CI `[-4.30%, +5.58%]`); Replication
+        (`n=1,997`, 9 leagues) predicted `92.27%`, actual `92.19%`, gap **`-0.09%`** (CI `[-1.25%, +1.06%]`).
+      - **NOT AVAILABLE (never substituted)**: EPL blended replication for `2019/20`, `2020/21` (no stored
+        calibrated/goal-timing/blended legs before `2021/22`) and `2021/22` (no prior season for walk-forward
+        `model_weight`, so EPL replication covers `2022/23-2023/24` only); `1up` replication for `EREDIV`,
+        `JUPILER`, `PRIMEIRA`, `SUPERLIG` (football-data-only leagues lack Understat led-at-any-point data).
+      - **Live archive holdout (descriptive only, never fitted on)**: 277 settled fixtures (`2026-10-24` to
+        `2026-11-22`, 61 unknown outcomes excluded): `F >= 0.70` win `87.50%` vs `78.42%` (`n=48`, CI `[-5.72%, +19.73%]`),
+        1Up `94.29%` vs `85.57%` (`n=35`, CI `[-3.87%, +14.96%]`), win-or-draw `93.75%` vs `92.42%` (`n=48`,
+        CI `[-4.27%, +7.37%]`). The short live hot run is within sampling noise; big favourites are well
+        calibrated out of sample across both backtest periods.
+      - Tests: `tests/test_favourites_study.py` 5/5 passed before real data; full suite in fresh worktree
+        `231 passed, 5 skipped, 1 failed` (the 1 failure is pre-existing `test_trial_slip.py` ON/OFF test
+        missing gitignored `data/raw/understat/` while Understat returns HTML).
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -1149,6 +1173,7 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Big favourites (`F >= 0.70`) calibration & priority (task 29, 2026-11-23) | Primary (`2024/25+`, 5 leagues) / Replication (`2019/20-2023/24`, 9 leagues): `win` `+1.47%` (`[-2.53%,+5.22%]`, `n=501`) / `-0.41%` (`[-2.29%,+1.49%]`, `n=2,096`); `1up` `-2.30%` (`[-6.15%,+1.70%]`, `n=448`) / `+0.02%` (`[-2.01%,+2.08%]`, `n=1,033`); `win_or_draw` `+0.85%` (`[-4.30%,+5.58%]`, `n=152`) / `-0.09%` (`[-1.25%,+1.06%]`, `n=1,997`). All 3 failed Step 1 (Steps 2-3 not run) | KEEP current method (`src/favourites_study.py`); no favourite-longshot miscalibration |
 | Team over 1.5 / over 2.5 goals tendencies (task 26, 2026-11-23) | 16,455 matches (5 leagues, 2017/18+): `over_1.5` gain `-0.00002` (CI `-0.00033`..`+0.00031`), live `-0.00061`, persistence `r=0.004`; `over_2.5` gain `-0.00018` (CI `-0.00039`..`+0.00001`), live `-0.00011`, persistence `r=0.085` | DO NOT USE (`src/team_goals_tendency_study.py`); social-media claims are in-sample |
 | Slip leg quality: p >= 0.70 floor, tighter leg caps, distinct legs (task 25, 2026-11-23) | 31,571 legs / 402 days (5 leagues, 2024/25+): `L` (`p>=0.70`) FAIL (`-0.0860`, CI `-0.3148`..`+0.1406`, all-loss `64.1%` vs `52.3%`, loses 32-42% of tier-days); `F` (caps 3/4/6) formally PASS (`+0.0026`, CI `-0.0000`..`+0.0080`) but only 5/955 Safe slips (0 Medium/Big) differed under uniform 7% margin; `D` FAIL on return (`-0.0257`, CI `-0.1474`..`+0.0922`), lower all-loss `45.2%` | Research only (`src/leg_quality_study.py`); reject `L`; `F` untested on Medium/Big in uniform-margin backtest; no live change |
 | Daily Trial slip design, Betpawa margin check & dry run (task 27, 2026-11-23) | Main-nine margins: O/U 2.5 `+4.01%` (`n=278`), DNB `+5.01%` (`n=246`), 10-min 1X2 `+7.01%` (`n=41`); research-league 1X2 `+3.82%` (`n=45`), O/U 2.5 `+4.74%`, DNB `+5.18%`; 35 single-sided markets unmeasurable. 141 Strong-candidate pairs eligible, 22 markets (DNB, un-replicated Task 10 team overs and, by owner decision 2026-11-23, 2UP excluded in v1). Dry run `2026-11-23` after the 2UP exclusion: 3 legs @ `3.00` (`p=32.78%`, `stake_cap=0.01`) | Research & dry run only (`src/trial_slip.py`, `reports/trial_slip_dryrun.md`); not live; pause rule locked at `n>=30`, `z<-2.5` |
@@ -1213,6 +1238,12 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Completed task 29 (`src/favourites_study.py`, `tests/test_favourites_study.py`,
+  `reports/favourites_study.md`) on branch `gemini/favourites-study` (research only, no live changes).
+  All three favourite markets (`win`, `1up`, `win_or_draw`) failed Step 1 (`F >= 0.70` gaps near zero in
+  primary `2024/25+` and replication `2019/20-2023/24`, all CIs covering 0), so Steps 2 and 3 were not run;
+  locked decision is **KEEP current method** for all three. Synthetic tests 5/5 passed; full worktree suite
+  231 passed, 5 skipped, 1 pre-existing Understat-cache failure in `test_trial_slip.py`.
 - 2026-11-23: Pre-registered task 29 (big favourites calibration study) before any backtest result, after
   the owner asked why big teams (Liverpool, Milan, Como) were not on the slips. Replay of 22 Nov: the
   12:47 EAT final Safe slip was the exact best_slip optimum (45.5%); the best slip with Milan was 46.2%

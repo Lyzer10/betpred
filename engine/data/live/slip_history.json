@@ -4412,12 +4412,12 @@
   {
     "round": "2026-11-23",
     "tier": "safe",
-    "generated_at": "2026-11-23T10:02:12.540080Z",
-    "total_odds": 2.58,
+    "generated_at": "2026-11-23T15:02:54.575827Z",
+    "total_odds": 2.53,
     "win_probability": 0.4264,
     "odds_source": "betpawa",
-    "expected_value": 0.0994,
-    "kelly": 0.063,
+    "expected_value": 0.0808,
+    "kelly": 0.0527,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -4435,8 +4435,8 @@
         "market": "over_1.5",
         "label": "Over 1.5 goals",
         "probability": 0.7892,
-        "estimated_odds": 1.18,
-        "betpawa_odds": 1.27,
+        "estimated_odds": 1.19,
+        "betpawa_odds": 1.28,
         "betpawa_price_id": "1586132967",
         "fair_odds": 1.27,
         "price_warning": false,
@@ -4457,7 +4457,7 @@
         "label": "Away win",
         "probability": 0.5404,
         "estimated_odds": 1.91,
-        "betpawa_odds": 2.03,
+        "betpawa_odds": 1.98,
         "betpawa_price_id": "1586897869",
         "fair_odds": 1.85,
         "price_warning": false,
@@ -4470,105 +4470,17 @@
   {
     "round": "2026-11-23",
     "tier": "medium",
-    "generated_at": "2026-11-23T10:02:12.540080Z",
-    "total_odds": 3.5,
-    "win_probability": 0.2972,
+    "generated_at": "2026-11-23T15:02:54.575827Z",
+    "total_odds": 3.62,
+    "win_probability": 0.2953,
     "odds_source": "betpawa",
-    "expected_value": 0.0403,
-    "kelly": 0.0161,
+    "expected_value": 0.0695,
+    "kelly": 0.0265,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 2,
-        "probability": 0.7636
-      }
-    ],
-    "legs": [
-      {
-        "date": "2026-11-23",
-        "time": "20:00",
-        "kickoff_utc": "2026-11-23T20:00:00Z",
-        "league": {
-          "code": "LALIGA",
-          "name": "La Liga",
-          "country": "Spain"
-        },
-        "home": "Levante",
-        "away": "Elche",
-        "market": "double_12",
-        "label": "Home or away",
-        "probability": 0.7354,
-        "estimated_odds": 1.27,
-        "betpawa_odds": 1.31,
-        "betpawa_price_id": "1587914147",
-        "fair_odds": 1.36,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-23",
-        "time": "19:45",
-        "kickoff_utc": "2026-11-23T19:45:00Z",
-        "league": {
-          "code": "SERIEA",
-          "name": "Serie A",
-          "country": "Italy"
-        },
-        "home": "Monza",
-        "away": "Fiorentina",
-        "market": "double_x2",
-        "label": "Away or draw",
-        "probability": 0.777,
-        "estimated_odds": 1.27,
-        "betpawa_odds": 1.31,
-        "betpawa_price_id": "1586897883",
-        "fair_odds": 1.29,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-23",
-        "time": "17:00",
-        "kickoff_utc": "2026-11-23T17:00:00Z",
-        "league": {
-          "code": "SUPERLIG",
-          "name": "Super Lig",
-          "country": "Turkey"
-        },
-        "home": "Buyuksehyr",
-        "away": "Corum",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.52,
-        "estimated_odds": 1.89,
-        "betpawa_odds": 2.04,
-        "betpawa_price_id": "1593305498",
-        "fair_odds": 1.92,
-        "price_warning": false,
-        "won": null
-      }
-    ],
-    "final": false,
-    "status": "pending"
-  },
-  {
-    "round": "2026-11-23",
-    "tier": "big",
-    "generated_at": "2026-11-23T10:02:12.540080Z",
-    "total_odds": 8.17,
-    "win_probability": 0.1274,
-    "odds_source": "betpawa",
-    "expected_value": 0.0417,
-    "kelly": 0.0058,
-    "price_warning": false,
-    "flexi": [
-      {
-        "min_correct": 3,
-        "probability": 0.5032
-      },
-      {
-        "min_correct": 2,
-        "probability": 0.8635
+        "probability": 0.789
       }
     ],
     "legs": [
@@ -4587,30 +4499,9 @@
         "label": "Home win",
         "probability": 0.4596,
         "estimated_odds": 2.11,
-        "betpawa_odds": 2.34,
+        "betpawa_odds": 2.4,
         "betpawa_price_id": "1586115158",
         "fair_odds": 2.18,
-        "price_warning": false,
-        "won": null
-      },
-      {
-        "date": "2026-11-23",
-        "time": "20:00",
-        "kickoff_utc": "2026-11-23T20:00:00Z",
-        "league": {
-          "code": "LALIGA",
-          "name": "La Liga",
-          "country": "Spain"
-        },
-        "home": "Levante",
-        "away": "Elche",
-        "market": "home_win",
-        "label": "Home win",
-        "probability": 0.4486,
-        "estimated_odds": 2.15,
-        "betpawa_odds": 2.26,
-        "betpawa_price_id": "1587914130",
-        "fair_odds": 2.23,
         "price_warning": false,
         "won": null
       },
@@ -4625,13 +4516,13 @@
         },
         "home": "Monza",
         "away": "Fiorentina",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.794,
-        "estimated_odds": 1.14,
-        "betpawa_odds": 1.18,
-        "betpawa_price_id": "1586919497",
-        "fair_odds": 1.26,
+        "market": "double_x2",
+        "label": "Away or draw",
+        "probability": 0.777,
+        "estimated_odds": 1.27,
+        "betpawa_odds": 1.29,
+        "betpawa_price_id": "1586897883",
+        "fair_odds": 1.29,
         "price_warning": false,
         "won": null
       },
@@ -4646,13 +4537,122 @@
         },
         "home": "Buyuksehyr",
         "away": "Corum",
-        "market": "double_1x",
-        "label": "Home or draw",
-        "probability": 0.7783,
-        "estimated_odds": 1.26,
-        "betpawa_odds": 1.31,
-        "betpawa_price_id": "1593305513",
-        "fair_odds": 1.28,
+        "market": "over_1.5",
+        "label": "Over 1.5 goals",
+        "probability": 0.8268,
+        "estimated_odds": 1.14,
+        "betpawa_odds": 1.17,
+        "betpawa_price_id": "1593306185",
+        "fair_odds": 1.21,
+        "price_warning": false,
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  },
+  {
+    "round": "2026-11-23",
+    "tier": "big",
+    "generated_at": "2026-11-23T15:02:54.575827Z",
+    "total_odds": 8.23,
+    "win_probability": 0.1321,
+    "odds_source": "betpawa",
+    "expected_value": 0.087,
+    "kelly": 0.012,
+    "price_warning": false,
+    "flexi": [
+      {
+        "min_correct": 3,
+        "probability": 0.4853
+      },
+      {
+        "min_correct": 2,
+        "probability": 0.831
+      }
+    ],
+    "legs": [
+      {
+        "date": "2026-11-23",
+        "time": "20:00",
+        "kickoff_utc": "2026-11-23T20:00:00Z",
+        "league": {
+          "code": "EPL",
+          "name": "Premier League",
+          "country": "England"
+        },
+        "home": "Brentford",
+        "away": "Everton",
+        "market": "home_1up",
+        "label": "Home 1Up",
+        "probability": 0.6322,
+        "estimated_odds": 1.53,
+        "betpawa_odds": 1.65,
+        "betpawa_price_id": "1586115176",
+        "fair_odds": 1.58,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-23",
+        "time": "20:00",
+        "kickoff_utc": "2026-11-23T20:00:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Levante",
+        "away": "Elche",
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.5754,
+        "estimated_odds": 1.66,
+        "betpawa_odds": 1.7,
+        "betpawa_price_id": "1587937144",
+        "fair_odds": 1.74,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-23",
+        "time": "19:45",
+        "kickoff_utc": "2026-11-23T19:45:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Monza",
+        "away": "Fiorentina",
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.6981,
+        "estimated_odds": 1.43,
+        "betpawa_odds": 1.46,
+        "betpawa_price_id": "1586897886",
+        "fair_odds": 1.43,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-23",
+        "time": "17:00",
+        "kickoff_utc": "2026-11-23T17:00:00Z",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Buyuksehyr",
+        "away": "Corum",
+        "market": "home_win",
+        "label": "Home win",
+        "probability": 0.52,
+        "estimated_odds": 1.89,
+        "betpawa_odds": 2.01,
+        "betpawa_price_id": "1593305498",
+        "fair_odds": 1.92,
         "price_warning": false,
         "won": null
       }

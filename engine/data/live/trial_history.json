@@ -1,0 +1,110 @@
+[
+  {
+    "round": "2026-11-23",
+    "tier": "trial",
+    "generated_at": "2026-11-23T15:02:54.575827Z",
+    "trial": true,
+    "stake_cap": 0.01,
+    "total_odds": 3.01,
+    "win_probability": 0.3327,
+    "expected_value": 0.0023,
+    "odds_source": "betpawa",
+    "margin": null,
+    "legs": [
+      {
+        "match_id": "EPL|2026-11-23|Brentford|Everton",
+        "date": "2026-11-23",
+        "league": {
+          "code": "EPL",
+          "name": "Premier League",
+          "country": "England"
+        },
+        "home": "Brentford",
+        "away": "Everton",
+        "market": "fh_over_0.5",
+        "label": "1st half over 0.5 goals",
+        "probability": 0.7213,
+        "raw_probability": 0.7193,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.39,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "20:00",
+        "kickoff_utc": "2026-11-23T20:00:00Z",
+        "won": null
+      },
+      {
+        "match_id": "LALIGA|2026-11-23|Levante|Elche",
+        "date": "2026-11-23",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "Levante",
+        "away": "Elche",
+        "market": "sh_over_0.5",
+        "label": "2nd half over 0.5 goals",
+        "probability": 0.8215,
+        "raw_probability": 0.8054,
+        "betpawa_odds": 1.21,
+        "fair_odds": 1.22,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "20:00",
+        "kickoff_utc": "2026-11-23T20:00:00Z",
+        "won": null
+      },
+      {
+        "match_id": "SERIEA|2026-11-23|Monza|Fiorentina",
+        "date": "2026-11-23",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Monza",
+        "away": "Fiorentina",
+        "market": "dc1up_x2",
+        "label": "Away or draw (1Up)",
+        "probability": 0.8281,
+        "raw_probability": 0.7868,
+        "betpawa_odds": 1.21,
+        "fair_odds": 1.21,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:45",
+        "kickoff_utc": "2026-11-23T19:45:00Z",
+        "won": null
+      },
+      {
+        "match_id": "SUPERLIG|2026-11-23|Buyuksehyr|Corum",
+        "date": "2026-11-23",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Buyuksehyr",
+        "away": "Corum",
+        "market": "home_win_either_half",
+        "label": "Home wins either half",
+        "probability": 0.6779,
+        "raw_probability": 0.6411,
+        "betpawa_odds": 1.47,
+        "fair_odds": 1.48,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "17:00",
+        "kickoff_utc": "2026-11-23T17:00:00Z",
+        "won": null
+      }
+    ],
+    "final": false,
+    "status": "pending"
+  }
+]

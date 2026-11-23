@@ -149,6 +149,7 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-23)
+- Task 29 (big favourites study) pre-registered; handed to Gemini (research only), Claude audits.
 - Task 28 (audited by Claude and merged to `main` 2026-11-23; live from the next daily run): Daily Trial slip wired into the
   pipeline and Bets screen with zero impact on Safe/Medium/Big. Pure-numeric cached calibrators committed
   at `engine/data/processed/trial_calibrators.json` (`2026/27`, 9 leagues, 141 eligible pairs across 22
@@ -1096,6 +1097,51 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
         and `engine/data/live` (automatically picking up `trial_history.json`). Note for next season
         (Aug 2027): run `python -m src.trial_slip --refit` once when `current_season` rolls over to
         `2027/28` (until then, `load_calibrators` safely returns `None` and skips Trial without error).
+29. **Big favourites: do they win more often than predicted?** (PRE-REGISTERED 2026-11-23, before any
+    backtest result; research only, `python -m src.favourites_study`, report `engine/reports/favourites_study.md`,
+    tests `engine/tests/test_favourites_study.py`; no live change in this task).
+    - Motivation (owner, 2026-11-23): "big teams" (e.g. Liverpool and Milan on 22 Nov, Como on 21 Nov)
+      won but were not on the slips; owner asks whether their bets deserve priority. Live archive check
+      (descriptive only; the live period is the untouched holdout and must not be used to fit anything),
+      24 Oct - 22 Nov 2026, known outcomes only, favourite = side with higher `*_win` probability:
+      favourites with predicted win `>= 0.70` won `91.6%` of 131 legs vs `85.5%` predicted (win `87.5%` vs
+      `78.4%`, n=48; 1Up `94.3%` vs `85.6%`, n=35; win-or-draw `93.8%` vs `92.4%`, n=48). Not significant
+      on its own (about 48 matches). Literature name: favourite-longshot bias.
+    - Definitions (fixed): per match, favourite side `S` = `home` if `p(home_win) >= p(away_win)` else
+      `away`, using the leg pool's `probability` (the probability the slips use). Favourite strength
+      `F = p(S_win)`. Favourite markets: `S_win`, `S_1up`, and `S`-or-draw (`double_1x` for home, `double_x2`
+      for away). Bands: `F < 0.60`, `0.60-0.70`, `0.70-0.80`, `>= 0.80`; **big favourite = `F >= 0.70`**.
+      Only legs with a known outcome (`won` not null) count; unknown is never counted as lost.
+    - Primary data: `diversity_study.load_legs()` pool (EPL, LALIGA, SERIEA, BUNDES, LIGUE1; seasons
+      2024/25+), but WITHOUT removing gate-FAIL pairs (calibration of every favourite leg is the question;
+      report gate-FAIL legs as a separate row too).
+    - Replication data: 2019/20-2023/24, all 9 live leagues, probabilities produced walk-forward exactly as
+      the live method for that league (EPL blended model; other leagues calibrated bookmaker consensus),
+      each season fitted only on earlier seasons. Reuse the existing walk-forward code of tasks 20/21/27;
+      do not write a new model. If a league or market cannot be reproduced exactly, report it as NOT
+      AVAILABLE; never substitute.
+    - Step 1 metric (per market and band, separately for primary and replication): gap = mean(actual -
+      predicted), with `n` (legs and matches), mean predicted, actual, Wilson 95% CI, and a 95% CI for the
+      gap from 2,000 whole-day bootstrap resamples (seed `20261124`). Also per league for `F >= 0.70`.
+    - Step 2 (only for a market whose big-favourite gap passes Step 1): walk-forward correction. For each
+      test season, fit on earlier seasons only a single logit shift `d` applied to that market's legs with
+      `F >= 0.70` (all other legs unchanged; clip to `(0.001, 0.999)`; keep win <= win-or-draw and
+      win <= 1Up). Metric: log-loss change on the test-season legs (corrected minus current) with whole-day
+      bootstrap 95% CI.
+    - Step 3 (only if Step 2 passes): slip-level check as in task 25. Rebuild Safe/Medium/Big each day with
+      `accumulators.best_slip` (with the live task-24 no-identical-leg rule) using corrected probabilities
+      (`C`) vs current (`A`), same odds. Matched return `C - A` on `(date, tier)` pairs offered by both, 95%
+      whole-day bootstrap CI (seed `20261124`), plus all-loss-day share and offered days.
+    - Decision rule: a market's big-favourite correction is ADOPTED only if ALL hold: (1) Step 1 gap 95% CI
+      lower bound `> 0` in the primary data; (2) replication gap point estimate `> 0` with 95% CI lower bound
+      `> 0`; (3) Step 2 log-loss change 95% CI upper bound `< 0`; (4) Step 3 matched return `C - A >= 0` with
+      95% CI lower bound `>= -0.01` and all-loss-day share `<= A`'s. Otherwise **KEEP the current method**.
+      Even if adopted, the live change is a separate task with its own owner approval.
+    - Known-answer synthetic tests before real data: (1) perfectly calibrated synthetic favourites give a
+      gap CI covering 0 and FAIL; (2) synthetic favourites that win 8 points more than predicted PASS
+      Steps 1-2; (3) the correction never changes a leg with `F < 0.70` or a non-favourite market; (4)
+      unknown outcomes are excluded, never counted as losses; (5) corrected probabilities keep
+      win <= win-or-draw and win <= 1Up.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -1167,6 +1213,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Pre-registered task 29 (big favourites calibration study) before any backtest result, after
+  the owner asked why big teams (Liverpool, Milan, Como) were not on the slips. Replay of 22 Nov: the
+  12:47 EAT final Safe slip was the exact best_slip optimum (45.5%); the best slip with Milan was 46.2%
+  on later prices (near tie). Live check of favourites (descriptive, holdout) in the task text.
 - 2026-11-23: Claude audited and merged task 28. Main slips proven byte-identical with Trial ON vs OFF
   and with a forced Trial crash (test now also asserts main slips were really built, so it cannot pass
   on empty slips). Engine suite 228 passed, 4 skipped; e2e ALL PASSED (188 checks, light and dark,

@@ -4412,12 +4412,12 @@
   {
     "round": "2026-11-23",
     "tier": "safe",
-    "generated_at": "2026-11-23T15:02:54.575827Z",
-    "total_odds": 2.53,
+    "generated_at": "2026-11-23T16:17:50.582849Z",
+    "total_odds": 2.58,
     "win_probability": 0.4264,
     "odds_source": "betpawa",
-    "expected_value": 0.0808,
-    "kelly": 0.0527,
+    "expected_value": 0.1002,
+    "kelly": 0.0634,
     "price_warning": false,
     "flexi": [],
     "legs": [
@@ -4435,8 +4435,8 @@
         "market": "over_1.5",
         "label": "Over 1.5 goals",
         "probability": 0.7892,
-        "estimated_odds": 1.19,
-        "betpawa_odds": 1.28,
+        "estimated_odds": 1.18,
+        "betpawa_odds": 1.29,
         "betpawa_price_id": "1586132967",
         "fair_odds": 1.27,
         "price_warning": false,
@@ -4457,25 +4457,25 @@
         "label": "Away win",
         "probability": 0.5404,
         "estimated_odds": 1.91,
-        "betpawa_odds": 1.98,
+        "betpawa_odds": 2.0,
         "betpawa_price_id": "1586897869",
         "fair_odds": 1.85,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-11-23",
     "tier": "medium",
-    "generated_at": "2026-11-23T15:02:54.575827Z",
-    "total_odds": 3.62,
+    "generated_at": "2026-11-23T16:17:50.582849Z",
+    "total_odds": 3.59,
     "win_probability": 0.2953,
     "odds_source": "betpawa",
-    "expected_value": 0.0695,
-    "kelly": 0.0265,
+    "expected_value": 0.0612,
+    "kelly": 0.0236,
     "price_warning": false,
     "flexi": [
       {
@@ -4520,7 +4520,7 @@
         "label": "Away or draw",
         "probability": 0.777,
         "estimated_odds": 1.27,
-        "betpawa_odds": 1.29,
+        "betpawa_odds": 1.28,
         "betpawa_price_id": "1586897883",
         "fair_odds": 1.29,
         "price_warning": false,
@@ -4548,27 +4548,27 @@
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-11-23",
     "tier": "big",
-    "generated_at": "2026-11-23T15:02:54.575827Z",
-    "total_odds": 8.23,
-    "win_probability": 0.1321,
+    "generated_at": "2026-11-23T16:17:50.582849Z",
+    "total_odds": 8.12,
+    "win_probability": 0.1323,
     "odds_source": "betpawa",
-    "expected_value": 0.087,
-    "kelly": 0.012,
+    "expected_value": 0.0738,
+    "kelly": 0.0104,
     "price_warning": false,
     "flexi": [
       {
         "min_correct": 3,
-        "probability": 0.4853
+        "probability": 0.4859
       },
       {
         "min_correct": 2,
-        "probability": 0.831
+        "probability": 0.8313
       }
     ],
     "legs": [
@@ -4585,7 +4585,7 @@
         "away": "Everton",
         "market": "home_1up",
         "label": "Home 1Up",
-        "probability": 0.6322,
+        "probability": 0.6335,
         "estimated_odds": 1.53,
         "betpawa_odds": 1.65,
         "betpawa_price_id": "1586115176",
@@ -4608,7 +4608,7 @@
         "label": "Over 2.5 goals",
         "probability": 0.5754,
         "estimated_odds": 1.66,
-        "betpawa_odds": 1.7,
+        "betpawa_odds": 1.67,
         "betpawa_price_id": "1587937144",
         "fair_odds": 1.74,
         "price_warning": false,
@@ -4629,7 +4629,7 @@
         "label": "Away 1Up",
         "probability": 0.6981,
         "estimated_odds": 1.43,
-        "betpawa_odds": 1.46,
+        "betpawa_odds": 1.48,
         "betpawa_price_id": "1586897886",
         "fair_odds": 1.43,
         "price_warning": false,
@@ -4650,14 +4650,14 @@
         "label": "Home win",
         "probability": 0.52,
         "estimated_odds": 1.89,
-        "betpawa_odds": 2.01,
+        "betpawa_odds": 1.99,
         "betpawa_price_id": "1593305498",
         "fair_odds": 1.92,
         "price_warning": false,
         "won": null
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   }
 ]

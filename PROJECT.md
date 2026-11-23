@@ -5,7 +5,7 @@ anything in this repository, and must update it in the same commit as any change
 (sections 5, 6, 7 and the change log at the end). If this file and the code disagree, stop and
 fix the disagreement first.
 
-Last updated: 2026-11-07 (Africa/Dar_es_Salaam), by Gemini.
+Last updated: 2026-11-23 (Africa/Dar_es_Salaam), by Gemini.
 
 ---
 
@@ -822,6 +822,115 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
      leagues explicitly (`MAIN_LEAGUES`), because `LEAGUES` grew to nine and only five have a legs table.
    - Live overlap measured 2026-11-22 from the archive (17 slip days): 2 to 4 matches sit in every one of
      the day's slips on most days (e.g. 22 Nov: 8 matches, 4 on 2+ slips).
+25. **Slip leg quality: minimum leg probability and tighter leg caps** (PRE-REGISTERED 2026-11-23, before
+    any result; research only, `python -m src.leg_quality_study`, report `engine/reports/leg_quality_study.md`,
+    tests `engine/tests/test_leg_quality_study.py`).
+    - Motivation (owner observation on 43 settled live slips, 24 Oct - 22 Nov 2026): 30 lost, 29 of those
+      contained a leg with probability < 0.70, and 19 lost on exactly one leg. To reach each tier's minimum
+      odds from 1.05-1.30 legs, `accumulators.best_slip` often adds a weaker leg. Test whether restricting
+      weak legs or tightening leg caps improves return without shrinking calibration.
+    - Pool: `diversity_study.load_legs()` (five main leagues: EPL, LALIGA, SERIEA, BUNDES, LIGUE1; test
+      seasons 2024/25+; gate FAILs excluded; odds >= 1.05), additionally excluding `under_2.5` and `under_3.5`,
+      grouped by calendar day (`date.dt.strftime("%Y-%m-%d")`).
+    - Variants (all per day, tiers selected via `accumulators.best_slip`):
+      - `A` (baseline): current independent `best_slip` per tier (`TIERS`: Safe 2.5-3.5 / 2-4 legs,
+        Medium 3.5-8.0 / 3-6 legs, Big 8.0-12.0 / 4-8 legs).
+      - `L` (leg floor >= 0.70): exclude any leg with `probability < 0.70`; independent `best_slip` per tier;
+        a tier with no valid slip is not offered.
+      - `F` (fewer-legs cap): cap max legs at Safe 3, Medium 4, Big 6 (`Tier("safe", 2.5, 3.5, 2, 3)`,
+        `Tier("medium", 3.5, 8.0, 3, 4)`, `Tier("big", 8.0, 12.0, 4, 6)`); otherwise as `A`.
+      - `D` (distinct legs, now live in `predict.build_slips`): `A` except no identical `match_key + "|" + market`
+        may repeat on a later tier (Safe -> Medium -> Big).
+    - Primary metric: return per unit staked (`won * total_odds - 1`) on matched `(date, tier)` pairs offered
+      by BOTH the challenger variant and `A` (so no variant can win by betting less). For each challenger `V`
+      in `(L, F, D)`, compute `V - A` with a 95% CI from 2,000 whole-day bootstrap resamples (ratio of
+      resampled day sums to resampled day slip counts), fresh RNG seed `20261123` per comparison.
+    - Secondary metrics (reported, not deciding): per-tier predicted vs actual win rate with Wilson 95% CIs;
+      number of slips offered per tier; all-loss-day share (fraction of offered days with >= 1 slip on which
+      every offered slip lost; also report raw all-loss days / offered days / total pool days); difference in
+      offered days vs `A`; how often each tier becomes unavailable under `L` (and `F`, `D`).
+    - Decision rule: adopt a challenger `V` only if its matched return point estimate `V - A >= 0` AND its
+      95% CI lower bound `>= -0.01` AND its all-loss-day share (on offered days) `<= A`'s. If multiple pass,
+      choose the highest point estimate; otherwise **KEEP A**. Research only: no live changes in this task.
+    - Descriptive checks (not deciding): win rate of legs by probability band (`<0.50`, `0.50-0.60`,
+      `0.60-0.70`, `0.70-0.80`, `0.80-0.90`, `>=0.90`) with `n`, mean predicted probability, actual win rate,
+      and Wilson 95% CI in (i) the backtest pool (all eligible legs and legs selected by `A`) and (ii) the
+      live archive (`web/public/data/archive`, read-only: settled slip legs and settled archived slip-market
+      predictions) to compare the live pattern against the backtest.
+    - Known-answer synthetic tests before real data: (1) `L` never selects a leg `< 0.70` and omits tiers
+      without a valid slip; (2) `F` never exceeds the leg cap (Safe 3, Medium 4, Big 6); (3) identical
+      variants yield identical slips and zero difference; (4) `D` never repeats `match_key + "|" + market`.
+    - Result (DONE 2026-11-23, `reports/leg_quality_study.md`; research only, no live changes):
+      - Pool: 31,571 eligible legs across 3,850 matches and 402 calendar days (5 main leagues, 2024/25+,
+        estimated 7% retail-margin odds).
+      - `L` (`p >= 0.70`): **FAIL**. Matched return `L - A = -0.0860` per unit (95% whole-day bootstrap CI
+        `[-0.3148, +0.1406]`, 596 matched slips across 251 days, 585 selections changed). Offered-day
+        all-loss share rose from `52.32%` (`A`) to `64.14%` (`L`), and `L` lost 116 offered days (`-31.6%`
+        of Safe, `-40.9%` of Medium, `-41.9%` of Big days; 151 zero-offer days vs 35 for `A`). Requiring
+        `p >= 0.70` at the same tier odds forces more legs per slip (Safe 3.75 vs 2.21, Medium 4.97 vs 3.06,
+        Big 7.85 vs 4.06), compounding the margin and reducing predicted and actual win rates (Safe actual
+        `32.67%` vs `37.87%`, Medium `25.13%` vs `28.48%`, Big `10.39%` vs `9.43%`).
+      - `F` (Safe <= 3, Medium <= 4, Big <= 6): **FORMALLY PASSES (`ADOPT F`) WITH MAJOR CAVEAT**. Matched
+        return `F - A = +0.0026` (95% CI `[-0.0000, +0.0080]`, 955 matched slips across 367 days);
+        offered-day all-loss share `52.04%` vs `A`'s `52.32%` (191 vs 192 days). However, `A` exceeded `F`'s
+        caps on only **5 of 955 slips** (5 Safe > 3, 0 Medium > 4, 0 Big > 6), changing only 5 selections
+        and 2 payouts (1 Safe slip flipping loss to win), because uniform 7% backtest margin already favours
+        short slips. `F` is effectively untested for Medium/Big in this pool; no live change made.
+      - `D` (distinct legs, live since 2026-11-22 as product decision): **FAIL** on return rule (`D - A =
+        -0.0257`, 95% CI `[-0.1474, +0.0922]`, 955 matched slips, 483 changed), while offered-day all-loss
+        share fell from `52.32%` to `45.23%` (all-pool-days `47.76%` -> `41.29%`, matching task 24).
+      - Descriptive calibration by probability band: live archive (`2026-10-24` to `2026-11-22`, 43 settled
+        slips: 13 won, 30 lost, 29 with a `< 0.70` leg, 19 lost by 1 leg; 172 slip legs) shows 0.60-0.70 at
+        `58.62%` vs `65.34%` predicted (`n=29`, Wilson `40.74%-74.49%`) and 0.70-0.80 at `67.65%` vs `76.23%`
+        (`n=34`, Wilson `50.84%-80.87%`), while `0.80-0.90` won `89.74%` (`n=39`) and `>=0.90` won `97.37%`
+        (`n=38`). Against all 2,648 settled live fixture slip-market predictions (`0.60-0.70`: `65.54%` vs
+        `64.94%`, `n=325`; `0.70-0.80`: `76.58%` vs `74.92%`, `n=538`) and the 31,571-leg backtest pool
+        (`0.60-0.70`: `65.98%` vs `65.45%`, `n=4,636`; `0.70-0.80`: `75.19%` vs `74.60%`, `n=7,234`), all
+        bands are well calibrated; `A`'s selected backtest legs show only mild winner's curse in `0.60-0.70`
+        (`63.43%` vs `65.33%`, `n=711`, Wilson `59.83%-66.89%`).
+26. **Team over 1.5 / over 2.5 goals tendencies** (PRE-REGISTERED 2026-11-23, before any result; research
+    only, `python -m src.team_goals_tendency_study`, report `engine/reports/team_goals_tendency_study.md`,
+    tests `engine/tests/test_team_goals_tendency_study.py`).
+    - Motivation: owner saw social-media claims that specific teams are "profitable" for over 1.5 / over 2.5
+      goals. Test honestly using the walk-forward method of `src/team_tendency_study.py`.
+    - Data: five main leagues (`EPL`, `LALIGA`, `SERIEA`, `BUNDES`, `LIGUE1`) pooled from `matches.parquet`,
+      seasons 2014/15 onwards, dropping rows missing average odds (`avg_odds_home`, `avg_odds_draw`,
+      `avg_odds_away`, `avg_odds_over25`, `avg_odds_under25`) or `home_goals`/`away_goals`.
+    - Markets (decided separately): `over_1.5` (`home_goals + away_goals > 1.5`) and `over_2.5`
+      (`home_goals + away_goals > 2.5`), one row per match. Bookmaker probability `p` = de-margined average
+      odds read through `accumulators.bookmaker_implied(..., league_rho(league))`.
+    - Features (strictly no look-ahead): for each team in each league, mean `(outcome - bookmaker probability)`
+      over its previous 38 league matches (home and away combined, `MIN_HISTORY = 10`, else `0.0`), giving
+      `r_home` (home team's own past residual) and `r_away` (away team's / opponent's past residual) per match.
+    - Primary evaluation: for each season `S` from `2017/18` onwards, fit on seasons `2015/16 .. S-1`
+      baseline `won ~ 1 + logit(p)` vs challenger `won ~ 1 + logit(p) + r_home + r_away`, and score season `S`.
+      Metric: paired per-match log-loss gain `loss(base) - loss(challenger)` (positive = challenger better),
+      95% CI from 2,000 whole-day bootstrap resamples, seed `20261123`.
+    - Secondary evaluation (live-era probabilities, 2024/25+): `accumulator_legs.parquet` across the five
+      leagues using `market_gates.gate_column` (`blended` for EPL, `market` for the other four), filtered to
+      `over_1.5` and `over_2.5`, merged with `(r_home, r_away)` from historical matches; fit on the first 60%
+      of calendar days, score the last 40% with `p = live_p`, same paired log-loss gain and 95% whole-day
+      bootstrap CI (2,000 resamples, seed `20261123`).
+    - Decision per market: **USE** only if the primary 95% CI lower bound `> 0` AND the live-era secondary
+      gain `> 0`; otherwise **DO NOT USE** (report that social-media "profitable team" lists are in-sample
+      selection / noise, without reproducing their figures).
+    - Secondary diagnostics (reported, not deciding): per-league primary gains, logistic coefficients by
+      season and in secondary, and season-to-season persistence correlation `r` of a team's season residual
+      (`>= 30` matches in consecutive seasons).
+    - Known-answer synthetic tests before real data: (1) planted team goals tendency (`effect = 0.5`) yields
+      primary CI lower bound `> 0`; (2) zero tendency (`effect = 0.0`) yields primary CI lower bound `<= 0`;
+      (3) no look-ahead (perturbing a future match outcome leaves all earlier `r_home`/`r_away` unchanged).
+    - Result (DONE 2026-11-23, `reports/team_goals_tendency_study.md`; research only, no live changes):
+      - `over_1.5`: **DO NOT USE**. Primary (`2017/18+`, 16,455 matches, 1,695 days): paired log-loss gain
+        `-0.00002` (95% whole-day CI `-0.00033` to `+0.00031`). Secondary (`2024/25+` live probabilities,
+        1,422 matches, 161 days): gain `-0.00061` (95% CI `-0.00190` to `+0.00065`). Season-to-season
+        persistence `r = 0.004` (886 team-season pairs).
+      - `over_2.5`: **DO NOT USE**. Primary (`2017/18+`, 16,455 matches, 1,695 days): paired log-loss gain
+        `-0.00018` (95% whole-day CI `-0.00039` to `+0.00001`). Secondary (`2024/25+` live probabilities,
+        1,466 matches, 161 days): gain `-0.00011` (95% CI `-0.00089` to `+0.00066`). Season-to-season
+        persistence `r = 0.085` (886 team-season pairs).
+      - Social-media lists of "profitable" over 1.5 / over 2.5 teams are in-sample selection; bookmaker
+        prices already reflect teams' scoring rates, so past residuals do not beat the odds out of sample.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -829,6 +938,8 @@ outcomes for already published picks without changing any study decision below.
 
 | Idea | Result | Decision |
 |---|---|---|
+| Team over 1.5 / over 2.5 goals tendencies (task 26, 2026-11-23) | 16,455 matches (5 leagues, 2017/18+): `over_1.5` gain `-0.00002` (CI `-0.00033`..`+0.00031`), live `-0.00061`, persistence `r=0.004`; `over_2.5` gain `-0.00018` (CI `-0.00039`..`+0.00001`), live `-0.00011`, persistence `r=0.085` | DO NOT USE (`src/team_goals_tendency_study.py`); social-media claims are in-sample |
+| Slip leg quality: p >= 0.70 floor, tighter leg caps, distinct legs (task 25, 2026-11-23) | 31,571 legs / 402 days (5 leagues, 2024/25+): `L` (`p>=0.70`) FAIL (`-0.0860`, CI `-0.3148`..`+0.1406`, all-loss `64.1%` vs `52.3%`, loses 32-42% of tier-days); `F` (caps 3/4/6) formally PASS (`+0.0026`, CI `-0.0000`..`+0.0080`) but only 5/955 Safe slips (0 Medium/Big) differed under uniform 7% margin; `D` FAIL on return (`-0.0257`, CI `-0.1474`..`+0.0922`), lower all-loss `45.2%` | Research only (`src/leg_quality_study.py`); reject `L`; `F` untested on Medium/Big in uniform-margin backtest; no live change |
 | OddsPapi free API as a Betpawa price history (owner found it, 2026-11-08) | Free plan 250 requests/month, history only since Jan 2026, 1 request per match; Betpawa only as `betpawa.cm` (Cameroon). Liverpool v Arsenal 1 Nov: Cameroon 2.74/3.74/2.39, DNB 1.96/1.69 vs our Tanzania log 2.94/2.47, DNB 2.10/1.74; Cameroon DNB first/second half equal full-time DNB (data looks wrong); SportyBet empty | not used for Tanzania prices; several accounts to get round the limit would break their terms. Possible later use: Pinnacle history as a sharp reference |
 | SIMULATED Betpawa-price value check (task 22) | 17/30 research markets have `n >= 50` (`home_2up` med `r = 1.0059`, `away_2up` `0.9980`); 0 markets have SIMULATED 95% CI lower bound `> 0` at both median and p75 `r` | report only; keep logging real prices toward 300 settled legs |
 | Replication of tasks 16 and 17 on 2019/20-2023/24 (task 21) | Task 16: 44/54 PASS both periods; Task 17: 24/25 PASS both periods (`68/79` Strong candidates) | 68 Strong candidates pending >= 300 real Betpawa priced legs |
@@ -890,6 +1001,19 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Completed research tasks 25 (`src/leg_quality_study.py`, `reports/leg_quality_study.md`,
+  `tests/test_leg_quality_study.py`) and 26 (`src/team_goals_tendency_study.py`,
+  `reports/team_goals_tendency_study.md`, `tests/test_team_goals_tendency_study.py`) on branch
+  `gemini/slip-leg-quality`. Task 25: `L` (`p >= 0.70`) FAILED (`-0.0860`, CI `[-0.3148, +0.1406]`,
+  all-loss `64.14%` vs `52.32%`, loses 31.6%-41.9% of tier-days); `F` (caps 3/4/6) formally passed
+  (`+0.0026`, CI `[-0.0000, +0.0080]`, all-loss `52.04%`) but changed only 5 of 955 slips (5 Safe, 0
+  Medium/Big) because uniform 7% backtest margin already favours short slips; `D` matched task 24
+  (`-0.0257`, CI `[-0.1474, +0.0922]`, all-loss `45.23%`). Task 26: **DO NOT USE** for both `over_1.5`
+  (`-0.00002`, CI `[-0.00033, +0.00031]`, live `-0.00061`, `r=0.004`) and `over_2.5` (`-0.00018`, CI
+  `[-0.00039, +0.00001]`, live `-0.00011`, `r=0.085`). Full suite: 214 passed, 4 skipped. No live changes.
+- 2026-11-23: Pre-registered research tasks 25 (slip leg quality: >= 0.70 probability floor, tighter leg
+  caps, distinct-legs comparison) and 26 (team over 1.5 / over 2.5 goals tendencies) in PROJECT.md before
+  computing any results. Research only; no live changes.
 - 2026-11-22: LIVE (owner decision, like task 11): `predict.build_slips` no longer repeats the same
   match + market on a later slip (Safe unchanged; Medium and Big pick from legs not already used).
   Evidence: task 24 (no measurable return cost, all-loss days 47.8% -> 41.3%). Applies to slips not yet

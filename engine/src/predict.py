@@ -971,6 +971,10 @@ def main() -> None:
         trial_shown = _run_day_trial_safely(day, day_legs, betpawa, shown, current_season, now,
                                             final=args.final and day == today)
         if trial_shown is not None:
+            try:   # same verified Betpawa booking code as the main slips; a failure only means no code
+                trial_shown = add_booking_codes({"trial": trial_shown}, now)["trial"]
+            except Exception as error:
+                print(f"Trial booking code unavailable ({error})")
             day_entry["trial_slip"] = trial_shown
         days.append(day_entry)
     if not days:

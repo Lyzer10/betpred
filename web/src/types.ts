@@ -179,6 +179,7 @@ export interface TrialSlip {
   locked?: boolean;
   final?: boolean;
   status?: "won" | "lost" | "pending";
+  booking_code?: string;
 }
 
 export interface DayBets {

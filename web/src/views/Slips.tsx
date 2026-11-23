@@ -411,6 +411,7 @@ function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean
           );
         })}
       </ul>
+      {slip.booking_code && !slip.locked && !past && <BookingCode code={slip.booking_code} />}
     </Card>
   );
 }
@@ -419,7 +420,9 @@ function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean
 
 function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void }) {
   const tiers = (["safe", "medium", "big"] as TierName[]).filter((t) => day.slips[t]);
-  const [tier, setTier] = useState<TierName>(tiers[0] ?? "safe");
+  // Owner 2026-11-23: Trial is the first tab; Safe (proven) stays the one opened by default.
+  const tabs: (TierName | "trial")[] = [...(day.trial_slip ? ["trial" as const] : []), ...tiers];
+  const [tab, setTab] = useState<TierName | "trial">(tiers[0] ?? "safe");
   const balances = Object.fromEntries((Object.keys(BOOKMAKERS) as Bookmaker[])
     .map((b) => [b, summarise(ledger, b, data.results).balance])) as Record<Bookmaker, number>;
   const placedKey = (t: TierName) => ledger.entries.some((e) => e.type === "bet" && e.day === day.date && e.tier === t);
@@ -433,10 +436,20 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
       </div>
     );
   }
+  const tabBar = <Segmented options={tabs.map((t) => ({ id: t, label: t === "trial" ? "Trial" : TIERS[t].title }))} value={tab} onChange={setTab} />;
+  if (tab === "trial" && day.trial_slip) {
+    return (
+      <div className="space-y-3">
+        {tabBar}
+        <TrialSlipCard slip={day.trial_slip} />
+      </div>
+    );
+  }
+  const tier = tab === "trial" ? tiers[0] : tab;
   const record = data.backtest[tier];
   return (
     <div className="space-y-3">
-      <Segmented options={tiers.map((t) => ({ id: t, label: TIERS[t].title }))} value={tier} onChange={setTier} />
+      {tabBar}
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
         placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={staking} fixtures={data.fixtures} onPlace={onPlace} />
       {record && (
@@ -452,7 +465,6 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
           : `¼ Kelly, max ${pct(STAKING.maxTier[tier])} of ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]}`}
         {staking.pilot && <> · Pilot: max {pct(STAKING.pilotCap)} ({settled}/{STAKING.pilotSlips} slips)</>}
       </p>
-      {day.trial_slip && <TrialSlipCard slip={day.trial_slip} />}
     </div>
   );
 }
@@ -463,6 +475,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
   if (!tiers.length && !snapshot.trial_slip) return <Empty>No accumulators were offered this day.</Empty>;
   return (
     <div className="space-y-3">
+      {snapshot.trial_slip && <TrialSlipCard slip={snapshot.trial_slip} past />}
       {tiers.map((t) => {
         const slip = snapshot.slips[t]!;
         const status = slip.status ?? "pending";
@@ -537,7 +550,6 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
           </Card>
         );
       })}
-      {snapshot.trial_slip && <TrialSlipCard slip={snapshot.trial_slip} past />}
     </div>
   );
 }

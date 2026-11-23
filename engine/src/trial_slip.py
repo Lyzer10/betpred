@@ -787,6 +787,8 @@ def build_trial_slip(
                 ko_str = ko.isoformat() + "Z" if hasattr(ko, "isoformat") else str(ko)
                 leg_entry["kickoff_utc"] = ko_str
             leg_entry["won"] = None
+            pid = getattr(row, "betpawa_price_id", None)
+            leg_entry["betpawa_price_id"] = None if pid is None or pd.isna(pid) else str(pid)
         leg_dicts.append(leg_entry)
 
     measured_margins = [leg["margin"] for leg in leg_dicts if leg["margin"] is not None]
@@ -841,12 +843,14 @@ def score_day_trial_legs(
         return pd.DataFrame()
     bp["kickoff_utc"] = pd.to_datetime(bp["kickoff_utc"]).dt.tz_localize(None)
     # Build fast lookup: (league, home, away, market) -> list of (kickoff_utc, odds)
-    bp_lookup: dict[tuple[str, str, str, str], list[tuple[pd.Timestamp, float]]] = {}
+    bp_lookup: dict[tuple[str, str, str, str], list[tuple[pd.Timestamp, float, str | None]]] = {}
     has_league = "league" in bp.columns
     for r in bp.itertuples(index=False):
         lg = str(r.league) if has_league else "EPL"
         key = (lg, str(r.home_team), str(r.away_team), str(r.market))
-        bp_lookup.setdefault(key, []).append((pd.Timestamp(r.kickoff_utc), float(r.betpawa_odds)))
+        pid = getattr(r, "betpawa_price_id", None)  # builds the Betpawa booking code
+        pid = None if pid is None or pd.isna(pid) else str(pid)
+        bp_lookup.setdefault(key, []).append((pd.Timestamp(r.kickoff_utc), float(r.betpawa_odds), pid))
 
     leagues_cal = cached_calibrators["leagues"]
     rows: list[dict[str, Any]] = []
@@ -881,10 +885,10 @@ def score_day_trial_legs(
             candidates = bp_lookup.get((code, home, away, mkt))
             if not candidates:
                 continue
-            matched_odds = None
-            for bp_ko, bp_odds in candidates:
+            matched_odds = matched_pid = None
+            for bp_ko, bp_odds, bp_pid in candidates:
                 if abs(bp_ko - kickoff) <= pd.Timedelta(days=1):
-                    matched_odds = bp_odds
+                    matched_odds, matched_pid = bp_odds, bp_pid
                     break
             if matched_odds is None or matched_odds < MIN_ODDS:
                 continue
@@ -903,6 +907,7 @@ def score_day_trial_legs(
                 "raw_probability": raw_p,
                 "probability": cal_p,
                 "odds": matched_odds,
+                "betpawa_price_id": matched_pid,
             })
     return pd.DataFrame(rows)
 

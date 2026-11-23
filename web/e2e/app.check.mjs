@@ -416,7 +416,7 @@ for (const scheme of ["light", "dark"]) {
   trialPage.on("console", (m) => m.type() === "error" && trialErrors.push(m.text()));
   const trialUpcoming = {
     tier: "trial", trial: true, stake_cap: 0.01, total_odds: 3.45, win_probability: 0.342,
-    odds_source: "betpawa", final: false, locked: false, status: "pending",
+    odds_source: "betpawa", final: false, locked: false, status: "pending", booking_code: "TRIAL42",
     legs: [
       {
         date: predictionsFixture.days[0].date, time: "17:30", kickoff_utc: predictionsFixture.days[0].first_kickoff_utc,
@@ -457,7 +457,17 @@ for (const scheme of ["light", "dark"]) {
   });
   await trialPage.goto(`${BASE}#bets/${predictionsFixture.days[0].date}`);
   const trialCard = trialPage.locator("[data-trial-slip]");
+  // Owner 2026-11-23: Trial is the first tab; Safe still opens by default.
+  await trialPage.getByRole("tab", { name: "Trial", exact: true }).waitFor();
+  const tabNames = await trialPage.getByRole("tab", { name: "Trial", exact: true }).locator("xpath=..").getByRole("tab").allTextContents();
+  check(tabNames[0] === "Trial" && tabNames.slice(1).every((t) => ["Safe", "Medium", "Big"].includes(t)),
+    `[${scheme}] Trial is the first slip tab (${tabNames.join(", ")})`);
+  check(await trialCard.count() === 0
+    && await trialPage.getByRole("tab", { name: "Safe", exact: true }).getAttribute("aria-selected") === "true",
+    `[${scheme}] Safe tab still opens by default`);
+  await trialPage.getByRole("tab", { name: "Trial", exact: true }).click();
   await trialCard.waitFor();
+  check(await trialCard.getByText("TRIAL42").count() === 1, `[${scheme}] Trial card shows its Betpawa booking code`);
   check(await trialCard.getByText("Trial", { exact: true }).count() === 1, `[${scheme}] Trial card shows Trial label`);
   check(await trialCard.getByText(/Max stake 1% of balance/i).count() === 1, `[${scheme}] Trial card shows max stake 1% of balance`);
   check(await trialCard.getByText("Testing new markets. Not proven.").count() === 1, `[${scheme}] Trial card shows unproven notice`);
@@ -472,6 +482,9 @@ for (const scheme of ["light", "dark"]) {
   check(await trialCard.locator("[data-trial-leg][data-leg-status='won']").count() === 2
     && await trialCard.locator("[data-trial-leg][data-leg-status='lost']").count() === 1,
     `[${scheme}] Past Trial card shows per-leg settled statuses`);
+  check(await trialPage.locator("[data-trial-slip], [data-past-slip]").first().getAttribute("data-trial-slip") !== null,
+    `[${scheme}] Past Trial card is listed first`);
+  check(await trialCard.getByText("TRIAL42").count() === 0, `[${scheme}] Past Trial card hides the booking code`);
   check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] Trial past: no horizontal overflow`);
   if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-trial-past.png`, fullPage: true });
   check(trialErrors.length === 0, `[${scheme}] Trial checks: no console errors${trialErrors.length ? `: ${trialErrors.join(" | ")}` : ""}`);

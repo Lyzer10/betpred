@@ -1238,6 +1238,13 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Owner request: Trial is now the first slip tab on upcoming days (Trial · Safe · Medium ·
+  Big; Safe still opens by default) and the first card on past days. The Trial slip gets a verified
+  Betpawa booking code like the main slips: Trial legs carry `betpawa_price_id` from the run's Betpawa
+  prices and `predict.py` passes the Trial slip through `add_booking_codes` (fail-safe; no code on any
+  error; the code is created, loaded back and checked against the exact price ids). Practice run on
+  2026-11-23 data: Betpawa issued and confirmed a 3-leg Trial code. Trial slips frozen before this change
+  have no price ids, so they show no code. Engine 233 passed, 4 skipped; e2e ALL PASSED (198).
 - 2026-11-23: Claude audited task 29 and merged it: scope 4 files, pre-registration unchanged; primary
   `F >= 0.70` results reproduced independently (win n=501 77.37% vs 78.84%, 1Up n=448 84.89% vs 82.59%,
   win-or-draw n=152 89.94% vs 90.79%; all CIs cover 0), so **KEEP current method** stands. Fixed the

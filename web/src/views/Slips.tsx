@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingSettings, newId, settledSlips, summarise } from "../ledger";
 import { STAKING, VALUE_EDGE, edge, legTeam, odds, pct, recommendedStake, timeLabel, tsh, useArchive } from "../lib";
 import { localDay } from "../matchData";
-import type { ArchiveSnapshot, DayBets, Predictions, ScheduledMatch, Slip, SlipLeg, TierName } from "../types";
+import type { ArchiveSnapshot, DayBets, Predictions, ScheduledMatch, Slip, SlipLeg, TierName, TrialLeg, TrialSlip } from "../types";
 import { Flag, TeamBadge } from "../badges";
 import { explainPick } from "../explain";
 import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
@@ -305,6 +305,116 @@ function SlipCard({ tier, slip, day, balances, placed, stakeFactor, staking, fix
   );
 }
 
+// ---- Trial slip card (separate from main tiers; never linked to Money or notifications) ----
+
+function trialLegTeam(market: string): "home" | "away" | null {
+  if (market.startsWith("home_") || market.includes("_home_") || market.endsWith("_home") || market === "dc1up_1x") return "home";
+  if (market.startsWith("away_") || market.includes("_away_") || market.endsWith("_away") || market === "dc1up_x2") return "away";
+  return null;
+}
+
+function TrialLegBadge({ leg }: { leg: TrialLeg }) {
+  const side = trialLegTeam(leg.market);
+  if (side) {
+    const team = leg[side];
+    return (
+      <span className="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={team} size={22} alt={`${team} badge`} />
+      </span>
+    );
+  }
+  return (
+    <span className="relative h-[26px] w-[26px] shrink-0">
+      <span className="absolute right-0 top-[3px] inline-flex rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={leg.away} size={16} alt={`${leg.away} badge`} />
+      </span>
+      <span className="absolute left-0 top-[3px] z-10 inline-flex rounded-full bg-white/90 p-0.5">
+        <TeamBadge team={leg.home} size={16} alt={`${leg.home} badge`} />
+      </span>
+    </span>
+  );
+}
+
+function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean }) {
+  const capPct = `${Math.round((slip.stake_cap || 0.01) * 100)}%`;
+  const status = slip.status ?? (
+    slip.legs.some((l) => l.won === false) ? "lost"
+    : slip.legs.length > 0 && slip.legs.every((l) => l.won === true) ? "won"
+    : "pending"
+  );
+  const showStatus = past || status === "won" || status === "lost";
+
+  return (
+    <Card data-trial-slip className="overflow-hidden">
+      <div className="slip-hero px-5 pb-4 pt-4">
+        <div className="flex items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-surface-2 px-2.5 py-0.5 font-semibold text-ink">Trial</span>
+            <span className="opacity-70">2–4 matches · odds 3.0–5.0</span>
+          </div>
+          {showStatus ? (
+            <PastSlipStatus status={status} />
+          ) : slip.locked ? (
+            <span className="rounded-full bg-surface-2 px-2 py-0.5 font-semibold">Locked · in play</span>
+          ) : slip.final ? (
+            <span className="rounded-full bg-good/15 px-2 py-0.5 font-semibold text-good-ink">✓ Final</span>
+          ) : (
+            <span className="rounded-full bg-surface-2 px-2 py-0.5 font-semibold text-ink-2">Preview</span>
+          )}
+        </div>
+        <div className="mt-3 flex items-end justify-between">
+          <div>
+            <div className="text-4xl font-extrabold tracking-tight">{pct(slip.win_probability)}</div>
+            <div className="mt-1 text-xs opacity-70">chance all {slip.legs.length} win</div>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold">{odds(slip.total_odds)}</div>
+            <div className="mt-1 text-xs opacity-70">Betpawa odds</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-border/60 bg-surface-2/60 px-5 py-2.5 text-xs text-ink-2">
+        <div className="font-semibold text-ink">Testing new markets. Not proven.</div>
+        <div className="mt-0.5 text-ink-3">Max stake {capPct} of balance · separate from main slips</div>
+      </div>
+
+      <ul>
+        {slip.legs.map((leg, i) => {
+          const country = typeof leg.league === "object" && leg.league ? leg.league.country : "";
+          const legStatus = leg.won === true ? "won" : leg.won === false ? "lost" : "pending";
+          return (
+            <li key={i} data-trial-leg data-leg-status={legStatus} className="border-t border-border/60 px-5 py-3.5">
+              <div className="flex items-center gap-3">
+                <TrialLegBadge leg={leg} />
+                <div className="min-w-0 flex-1">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="truncate text-sm font-semibold">{named(leg)}</span>
+                    {(past || leg.won != null) && <StatusPill status={legStatus} />}
+                  </div>
+                  {leg.score ? (
+                    <div className="mt-0.5 truncate text-xs font-semibold text-ink-2">
+                      {leg.home} {leg.score[0]}–{leg.score[1]} {leg.away}
+                    </div>
+                  ) : null}
+                  <div className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-ink-3">
+                    {country && <Flag country={country} width={15} />}
+                    <span className="truncate">
+                      {leg.home} v {leg.away}
+                      {leg.kickoff_utc ? ` · ${timeLabel(leg.kickoff_utc)}` : ""} · {pct(leg.probability)}
+                    </span>
+                  </div>
+                </div>
+                <span className="shrink-0 text-base font-bold">{odds(leg.betpawa_odds)}</span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </Card>
+  );
+}
+
 // ---- Days ------------------------------------------------------------------------
 
 function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predictions; ledger: Ledger; onPlace: (bet: PlacedBet) => void }) {
@@ -316,7 +426,12 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
   const settled = settledSlips(ledger, data.results);
   const staking = { ...(ledger.staking ?? DEFAULT_STAKING), pilot: settled < STAKING.pilotSlips };
   if (!tiers.length) {
-    return <Empty>Not enough matches with prices on this day to build an accumulator.</Empty>;
+    return (
+      <div className="space-y-3">
+        <Empty>Not enough matches with prices on this day to build an accumulator.</Empty>
+        {day.trial_slip && <TrialSlipCard slip={day.trial_slip} />}
+      </div>
+    );
   }
   const record = data.backtest[tier];
   return (
@@ -337,6 +452,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
           : `¼ Kelly, max ${pct(STAKING.maxTier[tier])} of ${BOOKMAKERS[DEFAULT_BOOKMAKER[tier]]}`}
         {staking.pilot && <> · Pilot: max {pct(STAKING.pilotCap)} ({settled}/{STAKING.pilotSlips} slips)</>}
       </p>
+      {day.trial_slip && <TrialSlipCard slip={day.trial_slip} />}
     </div>
   );
 }
@@ -344,7 +460,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
 function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
   const tiers = (["safe", "medium", "big"] as TierName[]).filter((t) => snapshot.slips[t]);
   const [open, setOpen] = useState<Record<TierName, boolean>>({ safe: false, medium: false, big: false });
-  if (!tiers.length) return <Empty>No accumulators were offered this day.</Empty>;
+  if (!tiers.length && !snapshot.trial_slip) return <Empty>No accumulators were offered this day.</Empty>;
   return (
     <div className="space-y-3">
       {tiers.map((t) => {
@@ -421,6 +537,7 @@ function PastDay({ snapshot }: { snapshot: ArchiveSnapshot }) {
           </Card>
         );
       })}
+      {snapshot.trial_slip && <TrialSlipCard slip={snapshot.trial_slip} past />}
     </div>
   );
 }

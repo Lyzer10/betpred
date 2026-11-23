@@ -179,7 +179,8 @@ def test_dry_run_leaves_live_data_and_web_data_untouched(tmp_path, monkeypatch):
     out_report = tmp_path / "trial_slip_dryrun.md"
     result = run_dry_run(output_path=out_report)
     assert out_report.exists()
-    assert len(result["eligible"]["eligible"]) == 150
+    assert len(result["eligible"]["eligible"]) == 141  # 150 minus the 9 passing 2UP pairs (owner, 2026-11-23)
+    assert not any("2up" in e["market"] for e in result["eligible"]["eligible"])
     after = subprocess.check_output(
         ["git", "status", "--porcelain", "web/public/data", "engine/data/live"],
         cwd=repo_root,

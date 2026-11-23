@@ -886,6 +886,11 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
           `+5.18%` (`+4.85%`, `+5.75%`).
         - All 35 other logged markets (no complete complementary set logged) reported as `margin not
           measurable` with exact logged match counts.
+      - **AMENDMENT 2026-11-23 (owner decision, Claude audit):** `home_2up` and `away_2up` are EXCLUDED from
+        Trial v1 until they have 300 settled real-priced legs. Reasons: Betpawa's 2UP price showed near-zero
+        margin (29 matches), the simulated-price check found no edge, and the dry-run 2UP leg's calibrated
+        probability sat 4.5 points above its raw value (winner's-curse risk). Eligible list is now
+        **141 pairs across 22 markets** (the 150/24 figures below are as first reported, before this change).
       - **Eligible list**: **150 TRIAL-ELIGIBLE pairs** across 24 distinct markets (`task16_half` 44,
         `task17_up` 24, `task20_timing` 24, `task20_team_half` 58), all Strong candidates (`PASS` in both
         `2024/25+` and `2019/20-2023/24`) with exact `file:line` references. Excluded in v1: Draw No Bet
@@ -968,6 +973,10 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-23: Claude audit of tasks 25-27 (rules committed before results, only expected files changed, no
+  live files touched, 214 tests pass, dry run reproduced, margin numbers matched an independent check).
+  Owner decision: `home_2up`/`away_2up` excluded from Trial v1 (eligible list 141 pairs, 22 markets).
+  Trial slip is NOT wired into the live pipeline yet: the calibrator refit takes over 10 minutes per run.
 - 2026-11-23: Completed task 27 (`src/trial_slip.py`, `reports/trial_slip_dryrun.md`,
   `tests/test_trial_slip.py`) on branch `gemini/trial-slip`. Margin check on logged Betpawa prices:
   main nine O/U 2.5 `+4.01%` (`n=278`), DNB `+5.01%` (`n=246`), 10-min 1X2 `+7.01%` (`n=41`); research

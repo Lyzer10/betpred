@@ -78,6 +78,7 @@ MARKET_TO_COMPLETE_SET: dict[str, str] = {
 }
 
 EXCLUDED_DNB_MARKETS = frozenset(("dnb_home", "dnb_away"))
+EXCLUDED_2UP_MARKETS = frozenset(("home_2up", "away_2up"))
 
 
 # ---------------------------------------------------------------------------
@@ -321,6 +322,18 @@ def load_eligible_list(reports_dir: Path = REPORTS_DIR) -> dict[str, Any]:
             "family": "task10_team_goals_dnb",
             "reason": reason,
             "source": src,
+        })
+
+    # Owner decision 2026-11-23: 2UP stays out until 300 settled real-priced legs (sharpest price, no margin,
+    # and its Platt lift is the winner's-curse risk the Trial exists to watch).
+    for entry in [e for e in eligible if e["market"] in EXCLUDED_2UP_MARKETS]:
+        eligible.remove(entry)
+        excluded.append({
+            "league": entry["league"],
+            "market": entry["market"],
+            "family": entry["family"],
+            "reason": "excluded in v1 by owner decision 2026-11-23: 2UP needs 300 settled real-priced legs first",
+            "source": f"{entry['original_source']}; {entry['replication_source']}",
         })
 
     eligible_set = {(e["league"], e["market"]) for e in eligible}

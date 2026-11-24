@@ -376,7 +376,7 @@ def test_trial_freeze_after_final_and_after_kickoff(tmp_path):
     assert shown_live is not None and shown_live["total_odds"] == 3.50 and shown_live["locked"] is True
 
 
-def test_settle_trial_slip_from_real_results_csv_and_outage_safety(tmp_path):
+def test_settle_trial_slip_from_real_results_csv_and_outage_safety(tmp_path, monkeypatch):
     """Step 3 test: real rows from engine/data/live/research/results.csv settle legs & outage never resets them."""
     import json
     from src import settle_results, trial_slip
@@ -457,8 +457,13 @@ def test_settle_trial_slip_from_real_results_csv_and_outage_safety(tmp_path):
     (hist_dir / "trial_history.json").write_text(json.dumps([
         {"round": "2026-10-25", **won_slip, "status": "pending", "legs": [{**l, "won": None} for l in won_slip["legs"]]}
     ]), encoding="utf-8")
+    # Offline: record the fast Trial settlement request instead of calling ESPN / writing the real results.csv.
+    from src import research_leagues
+    asked = []
+    monkeypatch.setattr(research_leagues, "settle_research_events", lambda now, only=None, **k: asked.append(only) or 0)
     settle_results.repair(now="2026-10-26T12:00:00Z", data_dir=data_dir, history_path=hist_dir / "slip_history.json",
                           cache=tmp_path / "espn_cache")
+    assert asked and all(asked[0])   # finished unsettled Trial legs asked for their league days
     repaired_arch = json.loads((arch_dir / "2026-10-25.json").read_text(encoding="utf-8"))
     assert repaired_arch["trial_slip"]["status"] == "won"
     assert repaired_arch["slips"] == main_slip_orig

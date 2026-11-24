@@ -21,7 +21,7 @@ const ICON: Record<LegLive, { text: string; label: string; className: string } |
 };
 
 /** A leg's live state: score chip plus ✓ / ✕, or a dot showing whether it is on track right now. */
-export function LiveLeg({ home, away, market }: { home: string; away: string; market: MarketKey }) {
+export function LiveLeg({ home, away, market }: { home: string; away: string; market: MarketKey | string }) {
   const match = useLiveMatch(home, away);
   const state = legLive(market, match);
   if (!match || state === "pending") return null;
@@ -41,14 +41,14 @@ export function LiveLeg({ home, away, market }: { home: string; away: string; ma
 }
 
 /** Live state of a whole slip (Flexi: `need` legs), or null when none of its matches has started. */
-export function useSlipLive(legs: { home: string; away: string; market: MarketKey }[], need?: number) {
+export function useSlipLive(legs: { home: string; away: string; market: MarketKey | string }[], need?: number) {
   const live = useLiveMap();
   const states = legs.map((l) => legLive(l.market, live[liveKey(l.home, l.away)]));
   const status = slipLive(states, need);
   return status === "pending" ? null : { status, won: states.filter((s) => s === "won").length, total: legs.length };
 }
 
-export function SlipLivePill({ legs, need, onDark = false }: { legs: { home: string; away: string; market: MarketKey }[]; need?: number; onDark?: boolean }) {
+export function SlipLivePill({ legs, need, onDark = false }: { legs: { home: string; away: string; market: MarketKey | string }[]; need?: number; onDark?: boolean }) {
   const live = useSlipLive(legs, need);
   if (!live) return null;
   const tone = live.status === "won" ? "bg-good text-white" : live.status === "lost" ? "bg-critical text-white"

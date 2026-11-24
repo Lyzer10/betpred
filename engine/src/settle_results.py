@@ -209,6 +209,11 @@ def repair(now=None, data_dir=None, history_path=None, cache=CACHE, session=None
         write_changed(output_path, output)
     try:
         from . import trial_slip
+        # Finished Trial legs: fetch just their league days from ESPN on every run, not only every 3 hours.
+        targets = trial_slip.pending_trial_targets(history_path.parent / "trial_history.json", now)
+        if targets:
+            from .research_leagues import settle_research_events
+            settle_research_events(now, only=targets)
         trial_slip.settle_trial_files(
             data_dir / "archive",
             history_path=history_path.parent / "trial_history.json",

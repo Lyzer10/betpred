@@ -106,3 +106,20 @@ def test_every_league_country_has_flag_case_in_badges_tsx():
     flag_cases = set(re.findall(r'case\s+"([^"]+)"\s*:', tsx))
     league_countries = {lg.country for lg in LEAGUES.values()}
     assert league_countries <= flag_cases, f"Missing flag cases: {league_countries - flag_cases}"
+
+
+def test_tier_checks_flag_only_the_failing_tier_and_report_return():
+    from src.health import tier_checks
+    safe = [{"tier": "safe", "status": "lost", "win_probability": 0.5, "total_odds": 2.8} for _ in range(25)]
+    medium = [{"tier": "medium", "status": "won" if i % 4 == 0 else "lost", "win_probability": 0.25, "total_odds": 4.0}
+              for i in range(24)]
+    trial = [{"tier": "trial", "status": "lost", "win_probability": 0.33, "total_odds": 3.0},
+             {"tier": "trial", "status": "pending", "win_probability": 0.33, "total_odds": 3.0}]
+    rows = tier_checks(safe + medium + trial)
+    assert rows["safe"]["status"] == "warning" and rows["safe"]["stake_factor"] == 0.5 and rows["safe"]["roi"] == -1.0
+    assert rows["medium"]["status"] == "ok" and rows["medium"]["won"] == 6 and rows["medium"]["roi"] == 0.0
+    assert rows["big"] == {"status": "insufficient", "stake_factor": 1.0, "settled": 0, "won": 0,
+                           "expected": 0.0, "z": None, "roi": None}
+    assert rows["trial"]["settled"] == 1 and rows["trial"]["status"] == "insufficient"
+    # Tier rows never change the global status.
+    assert health_check([], safe, SLIP_MARKETS)["tiers"]["safe"]["status"] == "warning"

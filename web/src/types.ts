@@ -243,7 +243,11 @@ export interface Health {
   checks: { name: string; status: HealthStatus; detail: string }[];
   pairs?: PairCheck[];            // every published prediction; "paused" pairs are kept out of slips
   slip_legs?: PairCheck[];        // only the legs put in slips (shown, no action)
+  /** Task 30: one slips check per tier; a tier's warning halves only that tier (Trial: shown only). */
+  tiers?: Partial<Record<TierName | "trial", TierCheck>>;
 }
+
+export interface TierCheck { status: HealthStatus; stake_factor: number; settled: number; won: number; expected: number; z: number | null; roi: number | null }
 
 export interface ArchiveDay { date: string; fixtures: number; settled: number }
 

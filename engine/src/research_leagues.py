@@ -362,9 +362,14 @@ def _due(now: pd.Timestamp) -> bool:
         return True
 
 
-def settle_research_events(now: pd.Timestamp, session: requests.Session | None = None, force: bool = False) -> int:
-    """Record full-time, half-time and goal-time outcomes from ESPN into results.csv (research only)."""
-    if not force and not _due(now):
+def settle_research_events(now: pd.Timestamp, session: requests.Session | None = None, force: bool = False,
+                           only: set[tuple[str, str]] | None = None) -> int:
+    """Record full-time, half-time and goal-time outcomes from ESPN into results.csv (research only).
+
+    `only`: {(league, 'YYYY-MM-DD')} to fetch just those league days (finished Trial legs, every run);
+    it skips the 3-hour schedule and leaves the schedule's timestamp alone.
+    """
+    if only is None and not force and not _due(now):
         print("Research settlement: skipped (last run < 3 hours ago)")
         return 0
     session = session or requests.Session()
@@ -383,7 +388,9 @@ def settle_research_events(now: pd.Timestamp, session: requests.Session | None =
     for code, slug, teams_of in _settlement_targets():
         recent = now_utc.normalize() - pd.Timedelta(days=RECENT_DAYS)
         start = BACKFILL_START if code not in seen_leagues else max(BACKFILL_START, recent)
-        for day in pd.date_range(start.normalize(), now_utc.normalize(), freq="D"):
+        days = (pd.date_range(start.normalize(), now_utc.normalize(), freq="D") if only is None
+                else sorted(pd.Timestamp(d, tz="UTC") for c, d in only if c == code))
+        for day in days:
             if requests_left <= 0:
                 break
             time.sleep(PAUSE_SECONDS)
@@ -418,7 +425,7 @@ def settle_research_events(now: pd.Timestamp, session: requests.Session | None =
                 rows.append(row)
                 done_ids.add(row["match_id"])
 
-    if requests_left > 0:      # every league reached today: next settlement after SETTLE_EVERY
+    if requests_left > 0 and only is None:      # every league reached today: next settlement after SETTLE_EVERY
         LAST_SETTLEMENT_PATH.write_text(now_utc.isoformat(), encoding="utf-8")
     if unmapped:
         print(f"Research settlement: {len(unmapped)} completed matches skipped, team names not mapped: "

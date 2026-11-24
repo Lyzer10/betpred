@@ -35,7 +35,7 @@ function LegBadge({ leg }: { leg: SlipLeg }) {
 }
 
 /** Today's slips after kick-off: live state until the official result settles them. */
-function PastLiveStatus({ legs }: { legs: SlipLeg[] }) {
+function PastLiveStatus({ legs }: { legs: { home: string; away: string; market: SlipLeg["market"] | string }[] }) {
   const live = useSlipLive(legs);
   if (!live) return <PastSlipStatus status="pending" />;
   if (live.status === "live") return <span data-slip-live="live" className="past-slip-status past-slip-status-pending">● Live · {live.won}/{live.total} won</span>;
@@ -342,7 +342,6 @@ function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean
     : slip.legs.length > 0 && slip.legs.every((l) => l.won === true) ? "won"
     : "pending"
   );
-  const showStatus = past || status === "won" || status === "lost";
 
   return (
     <Card data-trial-slip className="overflow-hidden">
@@ -352,10 +351,10 @@ function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean
             <span className="rounded-full bg-surface-2 px-2.5 py-0.5 font-semibold text-ink">Trial</span>
             <span className="opacity-70">2–4 matches · odds 3.0–5.0</span>
           </div>
-          {showStatus ? (
+          {status !== "pending" ? (
             <PastSlipStatus status={status} />
-          ) : slip.locked ? (
-            <span className="rounded-full bg-surface-2 px-2 py-0.5 font-semibold">Locked · in play</span>
+          ) : past || slip.locked ? (
+            <PastLiveStatus legs={slip.legs} />
           ) : slip.final ? (
             <span className="rounded-full bg-good/15 px-2 py-0.5 font-semibold text-good-ink">✓ Final</span>
           ) : (
@@ -392,6 +391,7 @@ function TrialSlipCard({ slip, past = false }: { slip: TrialSlip; past?: boolean
                     <span className="truncate text-sm font-semibold">{named(leg)}</span>
                     {(past || leg.won != null) && <StatusPill status={legStatus} />}
                   </div>
+                  {leg.won == null && <div className="mt-1 empty:hidden"><LiveLeg home={leg.home} away={leg.away} market={leg.market} /></div>}
                   {leg.score ? (
                     <div className="mt-0.5 truncate text-xs font-semibold text-ink-2">
                       {leg.home} {leg.score[0]}–{leg.score[1]} {leg.away}
@@ -451,7 +451,7 @@ function UpcomingDay({ day, data, ledger, onPlace }: { day: DayBets; data: Predi
     <div className="space-y-3">
       {tabBar}
       <SlipCard key={`${day.date}-${tier}`} tier={tier} slip={day.slips[tier]!} day={day.date} balances={balances}
-        placed={placedKey(tier)} stakeFactor={data.health?.stake_factor ?? 1} staking={staking} fixtures={data.fixtures} onPlace={onPlace} />
+        placed={placedKey(tier)} stakeFactor={Math.min(data.health?.stake_factor ?? 1, data.health?.tiers?.[tier]?.stake_factor ?? 1)} staking={staking} fixtures={data.fixtures} onPlace={onPlace} />
       {record && (
         <Card data-track-record className="grid grid-cols-3 gap-2 px-5 py-3.5">
           <Stat label="Past wins" value={pct(record.win_rate, 1)} sub={`${record.slips} days`} />

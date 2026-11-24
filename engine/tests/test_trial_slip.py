@@ -611,3 +611,36 @@ def test_predict_no_refresh_trial_on_vs_off_byte_identical_and_error_isolation(t
     raw_err, pred_err, _, _ = _run_into("err", disable_trial=False)
     assert "trial_slip" not in pred_err["days"][0]
     assert raw_err == raw_off
+
+
+def test_pending_trial_targets_only_finished_recent_unsettled_legs(tmp_path):
+    import json
+    from src.trial_slip import pending_trial_targets
+    leg = lambda ko, won=None, code="EPL": {"league": {"code": code}, "kickoff_utc": ko, "won": won}
+    history = [{"legs": [leg("2026-11-23T20:00:00Z"),                   # finished, unsettled -> due
+                         leg("2026-11-23T19:45:00Z", won=True, code="SERIEA"),   # already settled
+                         leg("2026-11-23T22:00:00Z", code="LALIGA"),     # kicked off < 110 min ago
+                         leg("2026-11-10T20:00:00Z", code="BUNDES")]}]   # older than 3 days
+    path = tmp_path / "trial_history.json"
+    path.write_text(json.dumps(history), encoding="utf-8")
+    now = pd.Timestamp("2026-11-23 23:00")
+    assert pending_trial_targets(path, now) == {("EPL", "2026-11-23"), ("EPL", "2026-11-22")}
+    assert pending_trial_targets(tmp_path / "missing.json", now) == set()
+
+
+def test_targeted_research_settlement_asks_only_for_those_days(tmp_path, monkeypatch):
+    from src import research_leagues as rl
+    monkeypatch.setattr(rl, "RESEARCH_DIR", tmp_path)
+    monkeypatch.setattr(rl, "RESULTS_PATH", tmp_path / "results.csv")
+    monkeypatch.setattr(rl, "LAST_SETTLEMENT_PATH", tmp_path / "last_settlement.txt")
+    monkeypatch.setattr(rl, "PAUSE_SECONDS", 0)
+    asked = []
+
+    class _Session:
+        def get(self, url, params=None, **kwargs):
+            asked.append((url.rsplit("/", 2)[-2], params.get("dates")))
+            return type("R", (), {"ok": True, "json": lambda self: {"events": []}})()
+
+    rl.settle_research_events(pd.Timestamp("2026-11-23 23:00"), session=_Session(), only={("EPL", "2026-11-23")})
+    assert asked == [("eng.1", "20261123")]
+    assert not (tmp_path / "last_settlement.txt").exists()   # the regular 3-hourly schedule is untouched

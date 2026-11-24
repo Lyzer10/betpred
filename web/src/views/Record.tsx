@@ -41,7 +41,26 @@ export function Record({ data }: { data: Predictions }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-2 text-[11px] text-ink-3">"Under review" halves every stake.</p>
+            {health.tiers && (
+              <ul data-health-tiers className="mt-3 space-y-1.5 border-t border-border/60 pt-3">
+                {(["safe", "medium", "big", "trial"] as const).map((t) => {
+                  const row = health.tiers![t];
+                  if (!row) return null;
+                  return (
+                    <li key={t} data-health-tier={t} className="flex items-start justify-between gap-3 text-xs">
+                      <span className="text-ink-2">
+                        <b className="text-ink">{t === "trial" ? "Trial" : TIERS[t].title} slips</b> · {row.won} won vs {row.expected.toFixed(1)} expected of {row.settled}
+                        {row.roi != null && <> · return {row.roi >= 0 ? "+" : ""}{pct(row.roi)}</>}
+                      </span>
+                      <span className={`shrink-0 font-semibold ${HEALTH_TONE[row.status]}`}>
+                        {row.status === "insufficient" ? `${row.settled}/20` : HEALTH_LABEL[row.status].split(" ").slice(1).join(" ")}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+            <p className="mt-2 text-[11px] text-ink-3">"Under review" halves every stake; a tier under review halves only that tier (Trial: shown only).</p>
           </Card>
         </>
       )}

@@ -149,7 +149,7 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
 ```
 
 ## 5. Current status (2026-11-23)
-- Task 29 (big favourites study) pre-registered; handed to Gemini (research only), Claude audits.
+- Task 29 (big favourites study): done, KEEP current method. Task 30 (health per slip tier): live.
 - Task 28 (audited by Claude and merged to `main` 2026-11-23; live from the next daily run): Daily Trial slip wired into the
   pipeline and Bets screen with zero impact on Safe/Medium/Big. Pure-numeric cached calibrators committed
   at `engine/data/processed/trial_calibrators.json` (`2026/27`, 9 leagues, 141 eligible pairs across 22
@@ -1166,6 +1166,16 @@ backfill. ESPN is a settlement fallback only; no prediction strategy change or n
       - Tests: `tests/test_favourites_study.py` 5/5 passed before real data; full suite in fresh worktree
         `231 passed, 5 skipped, 1 failed` (the 1 failure is pre-existing `test_trial_slip.py` ON/OFF test
         missing gitignored `data/raw/understat/` while Understat returns HTML).
+30. **Health check per slip tier** (PRE-REGISTERED 2026-11-24, owner request "measure health by the
+    betslips it gives too"; before code). Keep the three existing checks and the global status/stake factor
+    unchanged. Add `health.tiers` with one row each for Safe, Medium, Big (`slip_history.json`) and Trial
+    (`trial_history.json`, read-only): last 100 settled slips of that tier, `settled`, `won`, `expected`
+    (sum of predicted win chances), `roi` (1 unit per slip at published odds), and one-sided
+    `z = (won - expected) / sqrt(sum p(1-p))`. Rule (same as the global slips check): fewer than 20 settled =
+    insufficient; `z < -2.5` = warning; `z < -1.5` = watch; else ok. A warning halves the stakes of THAT tier
+    only (`stake_factor 0.5`, combined with the global factor by taking the lower). Trial keeps its own
+    pre-registered pause rule (task 27); its row is shown only and never changes main stakes. Losing money
+    alone never raises an alarm (expected with bookmaker margins); only winning clearly less than predicted.
 
 ## 7. Studies already done (do not redo without a new reason)
 Operational note (4 November): the results fallback is not a modelling study. It fills verified
@@ -1238,6 +1248,16 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-24: Task 30 done: `health.tiers` (Safe/Medium/Big/Trial: won vs expected, return, same z rule,
+  20 settled minimum; a tier warning halves only that tier; Trial shown only) on the Record health card.
+  Today all four tiers are below 20 settled (Safe 8/17 won vs 7.6, +19%; Medium 4/15 vs 5.1, -6%; Big 1/14
+  vs 2.3, -42%; Trial 0/1). Trial results no longer wait for the 3-hourly research settlement:
+  `settle_results` (every 15-minute run) fetches ESPN only for league days with a Trial leg that kicked off
+  110+ minutes ago (last 3 days) via `settle_research_events(only=...)`, same `settle_markets` rules.
+  Trial cards now track live like the main slips (live score, won/lost per leg, live slip status):
+  `liveRules.ts` handles all 22 Trial markets from ESPN goal minutes; `npm run check:live` now also checks
+  1,254 real Trial legs (57 recorded matches) against the official Trial settlement, plus in-play cases.
+  Engine 236 passed, 4 skipped; e2e ALL PASSED (198); live parity ALL PASSED.
 - 2026-11-23: Owner request: Trial is now the first slip tab on upcoming days (Trial · Safe · Medium ·
   Big; Safe still opens by default) and the first card on past days. The Trial slip gets a verified
   Betpawa booking code like the main slips: Trial legs carry `betpawa_price_id` from the run's Betpawa

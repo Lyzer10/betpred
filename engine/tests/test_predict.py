@@ -189,7 +189,7 @@ def test_pipeline_publishes_cleanly_when_there_are_no_fixtures(tmp_path, monkeyp
     monkeypatch.setattr(predict, "backfill_archive", lambda *args: 0)
     monkeypatch.setattr(predict, "live_record", lambda: {"matches": 0})
     monkeypatch.setattr(predict, "clv_report", lambda *args: {})
-    monkeypatch.setattr(predict, "health_check", lambda *args: {"status": "ok"})
+    monkeypatch.setattr(predict, "health_check", lambda *args, **kwargs: {"status": "ok"})
     monkeypatch.setattr(predict, "slip_leg_monitor", lambda *args: [])
     monkeypatch.setattr(predict, "realised_slips", lambda *args: {})
     output_path = tmp_path / "predictions.json"

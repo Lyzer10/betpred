@@ -82,6 +82,23 @@ def _slips(slips: list[dict]) -> dict:
             "detail": f"{observed:.0f} won vs {expected:.1f} expected (z={z:.1f})"}
 
 
+def tier_checks(slips: list[dict]) -> dict:
+    """Task 30: the global slips rule per tier (Safe/Medium/Big/Trial), with the tier's real return."""
+    rows = {}
+    for tier in ("safe", "medium", "big", "trial"):
+        settled = [s for s in slips if s.get("tier") == tier and s.get("status") in ("won", "lost")][-100:]
+        won = [s for s in settled if s["status"] == "won"]
+        profit = sum(s["total_odds"] for s in won) - len(settled)   # 1 unit per slip at published odds
+        observed, expected, z = _hits_z([s["win_probability"] for s in settled], [s["status"] == "won" for s in settled])
+        status = ("insufficient" if len(settled) < MIN_SLIPS
+                  else "warning" if z < -2.5 else "watch" if z < -1.5 else "ok")
+        rows[tier] = {"status": status, "stake_factor": STAKE_FACTOR[status], "settled": len(settled),
+                      "won": len(won), "expected": round(float(expected), 1),
+                      "z": round(float(z), 2) if len(settled) >= MIN_SLIPS else None,
+                      "roi": round(profit / len(settled), 4) if settled else None}
+    return rows
+
+
 PAIR_MIN = 30
 PAUSE_Z, RESUME_Z = -3.0, -2.0
 
@@ -201,13 +218,16 @@ def health_check(
     slip_markets: tuple[str, ...],
     tables: dict[str, list[dict]] | None = None,
     published_fixtures: list[dict] | None = None,
+    trial_slips: list[dict] | None = None,
 ) -> dict:
     """fixtures: settled archived predictions (oldest first); slips: published slips with status."""
     recent = fixtures[-WINDOW_MATCHES:]
     checks = [_accuracy(recent), _calibration(recent, slip_markets), _slips(slips)]
     # Worst check wins; "insufficient" ranks lowest, so it only shows when no check has enough data.
     status = max((c["status"] for c in checks), key=_RANK.get)
-    result = {"status": status, "stake_factor": STAKE_FACTOR[status], "checks": checks}
+    # Tier rows never change the global status: a tier's warning halves only that tier (Trial: shown only).
+    result = {"status": status, "stake_factor": STAKE_FACTOR[status], "checks": checks,
+              "tiers": tier_checks([*slips, *(trial_slips or [])])}
     missing = missing_badge_teams([*(published_fixtures or ()), *fixtures], tables)
     if missing:
         result["missing_badges"] = missing

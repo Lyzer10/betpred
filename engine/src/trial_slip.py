@@ -1187,6 +1187,34 @@ def run_day_trial(
     return displayed_trial_slip(day, candidate, history, now)
 
 
+TRIAL_RESULT_AFTER = pd.Timedelta(minutes=110)   # a match is usually over ~110 min after kick-off
+
+
+def pending_trial_targets(history_path: Path | None = None, now: pd.Timestamp | None = None) -> set[tuple[str, str]]:
+    """(league, ESPN day) pairs holding a Trial leg that should be over but is still unsettled."""
+    path = TRIAL_HISTORY_PATH if history_path is None else history_path
+    now = pd.Timestamp.now(tz="UTC").tz_localize(None) if now is None else now
+    try:
+        history = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    targets: set[tuple[str, str]] = set()
+    for entry in history if isinstance(history, list) else []:
+        for leg in entry.get("legs", []):
+            ko = pd.to_datetime(leg.get("kickoff_utc"), utc=True, errors="coerce")
+            if leg.get("won") is not None or pd.isna(ko):
+                continue
+            ko_naive = ko.tz_localize(None)
+            # Fast path only for the last 3 days; older legs keep the regular 3-hourly settlement.
+            if not (now - pd.Timedelta(days=3) <= ko_naive <= now - TRIAL_RESULT_AFTER):
+                continue
+            league = leg["league"]["code"] if isinstance(leg.get("league"), dict) else str(leg.get("league", ""))
+            # ESPN files a late kick-off under the previous US day, so ask for both days.
+            for day in (ko, ko - pd.Timedelta(days=1)):
+                targets.add((league, day.strftime("%Y-%m-%d")))
+    return targets
+
+
 def settle_trial_files(
     archive_dir: Path,
     history_path: Path | None = None,

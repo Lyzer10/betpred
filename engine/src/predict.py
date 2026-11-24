@@ -1037,7 +1037,12 @@ def main() -> None:
             print(f"Trial archive settlement unavailable ({error})")
     output["live_record"] = live_record()
     output["clv"] = clv_report(history)
-    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS, output["tables"], output["fixtures"]) | {
+    try:   # Trial results for the health card (read only; shown, never changes main stakes)
+        trial_history = json.loads((LIVE_DIR / "trial_history.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        trial_history = []
+    output["health"] = health_check(settled_predictions(), history, SLIP_MARKETS, output["tables"], output["fixtures"],
+                                    trial_slips=trial_history if isinstance(trial_history, list) else []) | {
         "pairs": pairs, "slip_legs": slip_leg_monitor(history)}
     output["realised"] = realised_slips(history)
     print(f"Model health: {output['health']['status']}")

@@ -19,12 +19,12 @@ export function parseEvent(event: any): LiveMatch {
 }
 
 /** A leg's live state, using the same definitions as the official settlement (engine add_actuals). */
-export function legLive(market: MarketKey, m: LiveMatch | undefined): LegLive {
+export function legLive(market: MarketKey | string, m: LiveMatch | undefined): LegLive {
   return applyLegLive(market, m);
 }
 
 /** Whether a still-live leg would win if the match ended now (for the "on track" hint). */
-export function onTrack(market: MarketKey, m: LiveMatch): boolean {
+export function onTrack(market: MarketKey | string, m: LiveMatch): boolean {
   return applyOnTrack(market, m);
 }
 

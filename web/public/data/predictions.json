@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T10:03:25.339501Z",
+  "generated_at": "2026-11-24T15:03:26.852054Z",
   "model": {
     "market_blend_model_weight": null,
     "retail_margin": 0.07,
@@ -36638,6 +36638,44 @@
         "detail": "13 won vs 15.0 expected (z=-0.7)"
       }
     ],
+    "tiers": {
+      "safe": {
+        "status": "insufficient",
+        "stake_factor": 1.0,
+        "settled": 17,
+        "won": 8,
+        "expected": 7.6,
+        "z": null,
+        "roi": 0.1941
+      },
+      "medium": {
+        "status": "insufficient",
+        "stake_factor": 1.0,
+        "settled": 15,
+        "won": 4,
+        "expected": 5.1,
+        "z": null,
+        "roi": -0.0613
+      },
+      "big": {
+        "status": "insufficient",
+        "stake_factor": 1.0,
+        "settled": 14,
+        "won": 1,
+        "expected": 2.3,
+        "z": null,
+        "roi": -0.4243
+      },
+      "trial": {
+        "status": "insufficient",
+        "stake_factor": 1.0,
+        "settled": 1,
+        "won": 0,
+        "expected": 0.3,
+        "z": null,
+        "roi": -1.0
+      }
+    },
     "pairs": [
       {
         "league": "BUNDES",

@@ -32,8 +32,12 @@
         "margin": null,
         "time": "20:00",
         "kickoff_utc": "2026-11-23T20:00:00Z",
-        "won": null,
-        "betpawa_price_id": "1586133156"
+        "won": true,
+        "betpawa_price_id": "1586133156",
+        "score": [
+          4,
+          0
+        ]
       },
       {
         "match_id": "LALIGA|2026-11-23|Levante|Elche",
@@ -56,8 +60,12 @@
         "margin": null,
         "time": "20:00",
         "kickoff_utc": "2026-11-23T20:00:00Z",
-        "won": null,
-        "betpawa_price_id": "1587936931"
+        "won": true,
+        "betpawa_price_id": "1587936931",
+        "score": [
+          1,
+          1
+        ]
       },
       {
         "match_id": "SERIEA|2026-11-23|Monza|Fiorentina",
@@ -80,11 +88,15 @@
         "margin": null,
         "time": "19:45",
         "kickoff_utc": "2026-11-23T19:45:00Z",
-        "won": null,
-        "betpawa_price_id": "1586919787"
+        "won": false,
+        "betpawa_price_id": "1586919787",
+        "score": [
+          3,
+          0
+        ]
       }
     ],
     "final": true,
-    "status": "pending"
+    "status": "lost"
   }
 ]

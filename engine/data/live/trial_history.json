@@ -98,5 +98,117 @@
     ],
     "final": true,
     "status": "lost"
+  },
+  {
+    "round": "2026-11-27",
+    "tier": "trial",
+    "generated_at": "2026-11-26T04:03:06.848674Z",
+    "trial": true,
+    "stake_cap": 0.01,
+    "total_odds": 3.0,
+    "win_probability": 0.3428,
+    "expected_value": 0.0297,
+    "odds_source": "betpawa",
+    "margin": null,
+    "legs": [
+      {
+        "match_id": "SERIEA|2026-11-27|Venezia|Bologna",
+        "date": "2026-11-27",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Venezia",
+        "away": "Bologna",
+        "market": "sh_over_0.5",
+        "label": "2nd half over 0.5 goals",
+        "probability": 0.7799,
+        "raw_probability": 0.7619,
+        "betpawa_odds": 1.28,
+        "fair_odds": 1.28,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:45",
+        "kickoff_utc": "2026-11-27T19:45:00Z",
+        "won": null,
+        "betpawa_price_id": "1592665448"
+      },
+      {
+        "match_id": "BUNDES|2026-11-27|Werder Bremen|M'gladbach",
+        "date": "2026-11-27",
+        "league": {
+          "code": "BUNDES",
+          "name": "Bundesliga",
+          "country": "Germany"
+        },
+        "home": "Werder Bremen",
+        "away": "M'gladbach",
+        "market": "fh_over_0.5",
+        "label": "1st half over 0.5 goals",
+        "probability": 0.7995,
+        "raw_probability": 0.7681,
+        "betpawa_odds": 1.27,
+        "fair_odds": 1.25,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:30",
+        "kickoff_utc": "2026-11-27T19:30:00Z",
+        "won": null,
+        "betpawa_price_id": "1592560854"
+      },
+      {
+        "match_id": "LIGUE1|2026-11-27|Brest|Paris FC",
+        "date": "2026-11-27",
+        "league": {
+          "code": "LIGUE1",
+          "name": "Ligue 1",
+          "country": "France"
+        },
+        "home": "Brest",
+        "away": "Paris FC",
+        "market": "fh_over_0.5",
+        "label": "1st half over 0.5 goals",
+        "probability": 0.7154,
+        "raw_probability": 0.6972,
+        "betpawa_odds": 1.4,
+        "fair_odds": 1.4,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:45",
+        "kickoff_utc": "2026-11-27T19:45:00Z",
+        "won": null,
+        "betpawa_price_id": "1592714708"
+      },
+      {
+        "match_id": "JUPILER|2026-11-27|Oud-Heverlee Leuven|Kortrijk",
+        "date": "2026-11-27",
+        "league": {
+          "code": "JUPILER",
+          "name": "Belgian Pro League",
+          "country": "Belgium"
+        },
+        "home": "Oud-Heverlee Leuven",
+        "away": "Kortrijk",
+        "market": "fh_over_0.5",
+        "label": "1st half over 0.5 goals",
+        "probability": 0.7684,
+        "raw_probability": 0.7335,
+        "betpawa_odds": 1.32,
+        "fair_odds": 1.3,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:45",
+        "kickoff_utc": "2026-11-27T19:45:00Z",
+        "won": null,
+        "betpawa_price_id": "1603772104"
+      }
+    ],
+    "final": false,
+    "status": "pending"
   }
 ]

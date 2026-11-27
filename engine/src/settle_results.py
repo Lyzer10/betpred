@@ -221,6 +221,16 @@ def repair(now=None, data_dir=None, history_path=None, cache=CACHE, session=None
         )
     except Exception as error:
         print(f"Trial results repair unavailable ({error}); keeping existing Trial records")
+    try:   # the simulated account follows the newly settled slips (main and Trial)
+        from .simulation import simulated_account
+        if output_path.exists():
+            trial_path = history_path.parent / "trial_history.json"
+            trial = json.loads(trial_path.read_text(encoding="utf-8")) if trial_path.exists() else []
+            output = json.loads(output_path.read_text(encoding="utf-8"))
+            output["simulation"] = simulated_account(output.get("history", []), trial, now)
+            write_changed(output_path, output)
+    except Exception as error:
+        print(f"Simulated account update unavailable ({error})")
     print(f"Results repair: {changed} archived matches updated; no predictions or selected bets changed")
     return changed
 

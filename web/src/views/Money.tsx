@@ -3,7 +3,7 @@ import { currentPushCode, enablePush, pushSupported } from "../push";
 import { LiveLeg, SlipLivePill, useSlipLive } from "../components/LiveScore";
 import { BOOKMAKERS, type Bookmaker, DEFAULT_STAKING, type Ledger, type PlacedBet, type StakingMode, type Transfer, betStatus, isBet, isTransfer, newId, payout, settledSlips, summarise } from "../ledger";
 import { STAKING, losingStreakChance, odds, pct, tsh } from "../lib";
-import type { Result } from "../types";
+import type { Result, SimTier, Simulation } from "../types";
 import { Card, type DateMarker, DateStrip, Empty, SectionTitle, Segmented, Stat, StatusPill, TIERS } from "../ui";
 
 /** Safe-slip win rate from the backtest (about 37%), used for the risk estimate. */
@@ -309,7 +309,70 @@ function NotificationsCard() {
   );
 }
 
-export function Money({ ledger, results, onChange }: { ledger: Ledger; results: Result[]; onChange: (ledger: Ledger) => void }) {
+const SIM_TIERS: SimTier[] = ["trial", "safe", "medium", "big"];
+const simName = (t: SimTier) => (t === "trial" ? "Trial" : TIERS[t].title);
+
+/** Simulated Betpawa account: every final slip taken at fixed stakes (no real money). */
+function SimulatedAccount({ sim }: { sim: Simulation }) {
+  const [showAll, setShowAll] = useState(false);
+  const slips = sim.slips.slice().reverse();
+  const days = [...new Set(slips.map((s) => s.round))];
+  const shown = showAll ? days : days.slice(0, 3);
+  const fmtDay = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
+  return (
+    <Card className="overflow-hidden" data-simulation>
+      <div className="px-5 py-4">
+        <div className="text-[11px] font-medium text-ink-3">Simulated Betpawa account · not real money</div>
+        <div className="mt-1 text-3xl font-extrabold tracking-tight">{tsh(sim.balance)}</div>
+        <div className="mt-1 text-xs text-ink-2">
+          Started {tsh(sim.start_balance)} on {fmtDay(sim.start)} · profit {signed(sim.profit)}
+          {sim.pending_stake > 0 && <> · {tsh(sim.pending_stake)} in play</>}
+        </div>
+        <div className="mt-1 text-[11px] text-ink-3">
+          Every final slip until {fmtDay(sim.end)}: {SIM_TIERS.map((t) => `${simName(t)} ${tsh(sim.stakes[t])}`).join(" · ")}
+        </div>
+      </div>
+      <ul className="border-t border-border/60">
+        {SIM_TIERS.map((t) => {
+          const r = sim.tiers[t];
+          return (
+            <li key={t} data-sim-tier={t} className="flex items-center justify-between gap-3 border-t border-border/60 px-5 py-2.5 text-xs first:border-t-0">
+              <span className="font-semibold text-ink">{simName(t)}</span>
+              <span className="text-ink-2">{r.slips ? `${r.won}/${r.won + r.lost} won${r.pending ? ` · ${r.pending} pending` : ""} · staked ${tsh(r.staked)}` : "no slips yet"}</span>
+              <span className={`shrink-0 font-semibold ${r.profit > 0 ? "text-good-ink" : r.profit < 0 ? "text-critical-ink" : "text-ink-3"}`}>{signed(r.profit)}</span>
+            </li>
+          );
+        })}
+      </ul>
+      {days.length > 0 && (
+        <div className="border-t border-border/60 px-5 py-3">
+          {shown.map((d) => (
+            <div key={d} className="py-1.5">
+              <div className="text-[11px] font-semibold text-ink-3">{fmtDay(d)}</div>
+              {slips.filter((s) => s.round === d).map((s) => (
+                <div key={s.tier} data-sim-slip className="mt-1 flex items-center justify-between gap-3 text-xs">
+                  <span className="text-ink">{simName(s.tier)} · odds {odds(s.odds)}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="text-ink-3">{s.status === "skipped" ? "not enough balance" : tsh(s.stake)}</span>
+                    {s.status === "skipped" ? null : <StatusPill status={s.status} />}
+                    {s.status === "won" && <span className="font-semibold text-good-ink">+{tsh(s.returned)}</span>}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ))}
+          {days.length > 3 && (
+            <button className="mt-1 text-xs font-semibold text-accent" onClick={() => setShowAll(!showAll)}>
+              {showAll ? "Show fewer days" : `Show all ${days.length} days`}
+            </button>
+          )}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+export function Money({ ledger, results, simulation, onChange }: { ledger: Ledger; results: Result[]; simulation?: Simulation; onChange: (ledger: Ledger) => void }) {
   const accounts = Object.keys(BOOKMAKERS) as Bookmaker[];
   const totals = accounts.map((b) => summarise(ledger, b, results));
   const profit = totals.reduce((a, s) => a + s.profit, 0);
@@ -327,6 +390,13 @@ export function Money({ ledger, results, onChange }: { ledger: Ledger; results: 
 
   return (
     <div>
+      {simulation && (
+        <>
+          <SectionTitle>Simulation</SectionTitle>
+          <SimulatedAccount sim={simulation} />
+          <SectionTitle>Your accounts</SectionTitle>
+        </>
+      )}
       <div className="space-y-3">{accounts.map((b) => <AccountCard key={b} bookmaker={b} ledger={ledger} results={results} onChange={onChange} />)}</div>
 
       <SectionTitle>Staking</SectionTitle>

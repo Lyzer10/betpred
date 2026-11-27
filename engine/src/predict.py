@@ -1045,6 +1045,11 @@ def main() -> None:
                                     trial_slips=trial_history if isinstance(trial_history, list) else []) | {
         "pairs": pairs, "slip_legs": slip_leg_monitor(history)}
     output["realised"] = realised_slips(history)
+    try:   # simulated Betpawa account (owner 2026-11-27); a failure never blocks publishing
+        from .simulation import simulated_account
+        output["simulation"] = simulated_account(history, trial_history if isinstance(trial_history, list) else [], now)
+    except Exception as error:
+        print(f"Simulated account unavailable ({error})")
     print(f"Model health: {output['health']['status']}")
     WEB_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEB_DATA_PATH.write_text(json.dumps(output, indent=2), encoding="utf-8")

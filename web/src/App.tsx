@@ -106,7 +106,7 @@ export default function App() {
         )}
         {data && tab === "matches" && <Matches data={data} schedule={schedule} dates={dates} day={selectedDay} match={match}
           matchTab={matchTab} leagueCode={league} leagueTab={leagueTab} highlight={highlight} markers={markers} onNavigate={go} />}
-        {data && tab === "money" && <Money ledger={ledger} results={data.results} onChange={updateLedger} />}
+        {data && tab === "money" && <Money ledger={ledger} results={data.results} simulation={data.simulation} onChange={updateLedger} />}
         {data && tab === "record" && <Record data={data} />}
       </main>
       </LiveProvider>

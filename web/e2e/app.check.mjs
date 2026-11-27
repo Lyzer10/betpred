@@ -7,7 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:4173/";
 const shots = process.argv[2];
-const browser = await chromium.launch({ channel: "msedge" });
+// E2E_BROWSER=chrome when an Edge update breaks automation (Edge 158, 2026-11-27).
+const browser = await chromium.launch({ channel: process.env.E2E_BROWSER ?? "msedge" });
 const failures = [];
 const check = (ok, message) => { console.log(`${ok ? "PASS" : "FAIL"}  ${message}`); if (!ok) failures.push(message); };
 const VERDICT = /(Bet this|Fair, skip|Don't bet)\s*[+-]\d/;
@@ -444,6 +445,19 @@ for (const scheme of ["light", "dark"]) {
   };
   const predWithTrial = structuredClone(predictionsFixture);
   predWithTrial.days[0].trial_slip = trialUpcoming;
+  predWithTrial.simulation = {
+    start: "2026-11-27", end: "2026-12-31", start_balance: 15000, bookmaker: "betpawa",
+    stakes: { trial: 1000, safe: 2500, medium: 1500, big: 1000 },
+    balance: 16000, staked: 6000, returned: 6500, pending_stake: 1000, profit: 1500,
+    tiers: { trial: { slips: 1, won: 0, lost: 1, pending: 0, staked: 1000, returned: 0, profit: -1000 },
+             safe: { slips: 1, won: 1, lost: 0, pending: 0, staked: 2500, returned: 6500, profit: 4000 },
+             medium: { slips: 1, won: 0, lost: 1, pending: 0, staked: 1500, returned: 0, profit: -1500 },
+             big: { slips: 1, won: 0, lost: 0, pending: 1, staked: 1000, returned: 0, profit: 0 } },
+    slips: [{ round: "2026-11-27", tier: "trial", stake: 1000, odds: 3.1, status: "lost", returned: 0 },
+            { round: "2026-11-27", tier: "safe", stake: 2500, odds: 2.6, status: "won", returned: 6500 },
+            { round: "2026-11-27", tier: "medium", stake: 1500, odds: 4.0, status: "lost", returned: 0 },
+            { round: "2026-11-27", tier: "big", stake: 1000, odds: 9.0, status: "pending", returned: 0 }],
+  };
   await trialPage.route("**/data/predictions.json", (route) => route.fulfill({ body: JSON.stringify(predWithTrial), contentType: "application/json" }));
   await trialPage.route("**/data/schedule.json", (route) => route.fulfill({ path: join(fixtureDir, "schedule.json"), contentType: "application/json" }));
   await trialPage.route("**/data/lineups.json", (route) => route.fulfill({ path: join(fixtureDir, "lineups.json"), contentType: "application/json" }));
@@ -487,6 +501,17 @@ for (const scheme of ["light", "dark"]) {
   check(await trialCard.getByText("TRIAL42").count() === 0, `[${scheme}] Past Trial card hides the booking code`);
   check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] Trial past: no horizontal overflow`);
   if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-trial-past.png`, fullPage: true });
+  // Owner 2026-11-27: simulated Betpawa account on Money.
+  await trialPage.goto(`${BASE}#money`);
+  const sim = trialPage.locator("[data-simulation]");
+  await sim.waitFor();
+  check(await sim.getByText("TSh 16,000", { exact: true }).count() === 1, `[${scheme}] simulated balance shown`);
+  check(await sim.getByText(/Started TSh 15,000/).count() === 1 && await sim.getByText(/profit \+TSh 1,500/).count() === 1,
+    `[${scheme}] simulated start balance and profit shown`);
+  check(await sim.locator("[data-sim-tier]").count() === 4 && await sim.locator("[data-sim-slip]").count() === 4,
+    `[${scheme}] simulated tiers and slips listed`);
+  check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] simulation: no horizontal overflow`);
+  if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-simulation.png`, fullPage: true });
   check(trialErrors.length === 0, `[${scheme}] Trial checks: no console errors${trialErrors.length ? `: ${trialErrors.join(" | ")}` : ""}`);
   await trialPage.close();
 }

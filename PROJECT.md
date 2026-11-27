@@ -1248,6 +1248,16 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-27: Owner request: simulated Betpawa account (`engine/src/simulation.py`, `predictions.json`
+  `simulation`, Money screen "Simulation" card). From 2026-11-27 to 2026-12-31 (until the owner says
+  otherwise) every slip that becomes final, or whose first match kicked off, is "taken" on Betpawa at its
+  published odds with fixed stakes Trial TSh 1,000, Safe 2,500, Medium 1,500, Big 1,000 (Big as a plain
+  Betpawa accumulator, no Flexi), starting balance TSh 15,000. Won = stake x odds back; pending stakes are
+  held; a slip the balance cannot cover is shown as skipped. Recomputed by `predict.py` and by
+  `settle_results` (every 15-minute run), so it follows results. Real Money records are untouched.
+  Tests `tests/test_simulation.py`; e2e simulation checks. `web/e2e/app.check.mjs` accepts
+  `E2E_BROWSER=chrome` (Edge 158 update broke automation today). Engine 238 passed, 4 skipped; e2e ALL
+  PASSED (206, Chrome).
 - 2026-11-24: Task 30 done: `health.tiers` (Safe/Medium/Big/Trial: won vs expected, return, same z rule,
   20 settled minimum; a tier warning halves only that tier; Trial shown only) on the Record health card.
   Today all four tiers are below 20 settled (Safe 8/17 won vs 7.6, +19%; Medium 4/15 vs 5.1, -6%; Big 1/14

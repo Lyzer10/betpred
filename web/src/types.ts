@@ -217,7 +217,7 @@ export interface Simulation {
   start: string; end: string; start_balance: number; stakes: Record<SimTier, number>; bookmaker: "betpawa";
   balance: number; staked: number; returned: number; pending_stake: number; profit: number;
   tiers: Record<SimTier, { slips: number; won: number; lost: number; pending: number; staked: number; returned: number; profit: number }>;
-  slips: { round: string; tier: SimTier; stake: number; odds: number; status: "won" | "lost" | "pending" | "skipped"; returned: number }[];
+  slips: { round: string; tier: SimTier; stake: number; odds: number; status: "won" | "lost" | "pending"; returned: number }[];
 }
 
 export interface LineupPlayer { name: string; number: string | null; position: string | null; formation_place: number | null }

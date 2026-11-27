@@ -30,8 +30,8 @@ def test_only_taken_slips_in_the_window_count_with_fixed_stakes():
                                     "returned": 6500, "profit": 4000}
 
 
-def test_slip_is_skipped_when_the_balance_cannot_cover_it():
-    history = [_slip(f"2026-12-{d:02d}", "safe", "lost", 2.6) for d in range(1, 8)]   # 6 x 2500 = 15000
+def test_balance_keeps_going_below_zero():
+    history = [_slip(f"2026-12-{d:02d}", "safe", "lost", 2.6) for d in range(1, 8)]   # 7 x 2500 = 17500
     sim = simulated_account(history, [], pd.Timestamp("2026-12-31"))
-    assert [s["status"] for s in sim["slips"]] == ["lost"] * 6 + ["skipped"]
-    assert sim["balance"] == 0 and sim["staked"] == 15000
+    assert [s["status"] for s in sim["slips"]] == ["lost"] * 7
+    assert sim["balance"] == -2500 and sim["staked"] == 17500 and sim["profit"] == -17500

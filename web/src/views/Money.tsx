@@ -323,7 +323,7 @@ function SimulatedAccount({ sim }: { sim: Simulation }) {
     <Card className="overflow-hidden" data-simulation>
       <div className="px-5 py-4">
         <div className="text-[11px] font-medium text-ink-3">Simulated Betpawa account · not real money</div>
-        <div className="mt-1 text-3xl font-extrabold tracking-tight">{tsh(sim.balance)}</div>
+        <div className={`mt-1 text-3xl font-extrabold tracking-tight ${sim.balance < 0 ? "text-critical-ink" : ""}`}>{sim.balance < 0 ? `−${tsh(-sim.balance)}` : tsh(sim.balance)}</div>
         <div className="mt-1 text-xs text-ink-2">
           Started {tsh(sim.start_balance)} on {fmtDay(sim.start)} · profit {signed(sim.profit)}
           {sim.pending_stake > 0 && <> · {tsh(sim.pending_stake)} in play</>}
@@ -353,8 +353,8 @@ function SimulatedAccount({ sim }: { sim: Simulation }) {
                 <div key={s.tier} data-sim-slip className="mt-1 flex items-center justify-between gap-3 text-xs">
                   <span className="text-ink">{simName(s.tier)} · odds {odds(s.odds)}</span>
                   <span className="flex items-center gap-2">
-                    <span className="text-ink-3">{s.status === "skipped" ? "not enough balance" : tsh(s.stake)}</span>
-                    {s.status === "skipped" ? null : <StatusPill status={s.status} />}
+                    <span className="text-ink-3">{tsh(s.stake)}</span>
+                    <StatusPill status={s.status} />
                     {s.status === "won" && <span className="font-semibold text-good-ink">+{tsh(s.returned)}</span>}
                   </span>
                 </div>

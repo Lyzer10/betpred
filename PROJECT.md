@@ -1253,7 +1253,8 @@ outcomes for already published picks without changing any study decision below.
   otherwise) every slip that becomes final, or whose first match kicked off, is "taken" on Betpawa at its
   published odds with fixed stakes Trial TSh 1,000, Safe 2,500, Medium 1,500, Big 1,000 (Big as a plain
   Betpawa accumulator, no Flexi), starting balance TSh 15,000. Won = stake x odds back; pending stakes are
-  held; a slip the balance cannot cover is shown as skipped. Recomputed by `predict.py` and by
+  held; every slip is always staked, even when the balance is below zero (owner 2026-11-27: "continue in
+  negative"), so the balance shows the true result. Recomputed by `predict.py` and by
   `settle_results` (every 15-minute run), so it follows results. Real Money records are untouched.
   Tests `tests/test_simulation.py`; e2e simulation checks. `web/e2e/app.check.mjs` accepts
   `E2E_BROWSER=chrome` (Edge 158 update broke automation today). Engine 238 passed, 4 skipped; e2e ALL

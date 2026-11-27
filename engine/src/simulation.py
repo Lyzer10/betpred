@@ -25,16 +25,11 @@ def simulated_account(history: list[dict], trial_history: list[dict], now: pd.Ti
     entries = [e for e in [*history, *trial_history]
                if e.get("tier") in STAKES and START <= str(e.get("round", "")) <= END and _taken(e, now)]
     entries.sort(key=lambda e: (e["round"], TIER_ORDER.index(e["tier"])))
-    # shortcut: winnings count as available from the next slip on (not from their exact settle time);
-    # upgrade if the account ever runs low enough for the order within a day to matter.
+    # Owner 2026-11-27: every slip is always staked, even below zero, so the balance shows the true result.
     balance, slips = float(START_BALANCE), []
     tiers = {t: {"slips": 0, "won": 0, "lost": 0, "pending": 0, "staked": 0, "returned": 0.0} for t in TIER_ORDER}
     for e in entries:
         stake, status = STAKES[e["tier"]], e.get("status", "pending")
-        if balance < stake:
-            slips.append({"round": e["round"], "tier": e["tier"], "stake": 0, "odds": e["total_odds"],
-                          "status": "skipped", "returned": 0})
-            continue
         returned = round(stake * e["total_odds"]) if status == "won" else 0
         balance += returned - stake
         row = tiers[e["tier"]]

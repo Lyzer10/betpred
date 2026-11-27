@@ -512,6 +512,11 @@ for (const scheme of ["light", "dark"]) {
     `[${scheme}] simulated tiers and slips listed`);
   check(await trialPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `[${scheme}] simulation: no horizontal overflow`);
   if (shots) await trialPage.screenshot({ path: `${shots}/${scheme}-simulation.png`, fullPage: true });
+  // Below zero the account keeps betting and shows the minus balance.
+  predWithTrial.simulation = { ...predWithTrial.simulation, balance: -2500, profit: -17500 };
+  await trialPage.reload();
+  await sim.waitFor();
+  check(await sim.getByText("−TSh 2,500", { exact: true }).count() === 1, `[${scheme}] negative simulated balance shown`);
   check(trialErrors.length === 0, `[${scheme}] Trial checks: no console errors${trialErrors.length ? `: ${trialErrors.join(" | ")}` : ""}`);
   await trialPage.close();
 }

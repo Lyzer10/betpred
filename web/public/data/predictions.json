@@ -20408,7 +20408,7 @@
               "betpawa_price_id": "1602596106",
               "fair_odds": 1.69,
               "price_warning": true,
-              "won": null
+              "won": true
             }
           ],
           "final": true,
@@ -20537,7 +20537,7 @@
               "betpawa_price_id": "1602595827",
               "fair_odds": 1.24,
               "price_warning": false,
-              "won": null
+              "won": true
             }
           ],
           "final": true,
@@ -20644,7 +20644,7 @@
               "betpawa_price_id": "1602595658",
               "fair_odds": 2.03,
               "price_warning": true,
-              "won": null
+              "won": true
             }
           ],
           "final": true,
@@ -20760,8 +20760,12 @@
             "margin": null,
             "time": "16:00",
             "kickoff_utc": "2026-11-28T16:00:00Z",
-            "won": null,
-            "betpawa_price_id": "1602595894"
+            "won": true,
+            "betpawa_price_id": "1602595894",
+            "score": [
+              1,
+              2
+            ]
           }
         ],
         "final": true,
@@ -27311,7 +27315,7 @@
           "betpawa_price_id": "1602596106",
           "fair_odds": 1.69,
           "price_warning": true,
-          "won": null
+          "won": true
         }
       ],
       "final": true,
@@ -27441,7 +27445,7 @@
           "betpawa_price_id": "1602595827",
           "fair_odds": 1.24,
           "price_warning": false,
-          "won": null
+          "won": true
         }
       ],
       "final": true,
@@ -27550,7 +27554,7 @@
           "betpawa_price_id": "1602595658",
           "fair_odds": 2.03,
           "price_warning": true,
-          "won": null
+          "won": true
         }
       ],
       "final": true,
@@ -28585,6 +28589,122 @@
         "away_first": true,
         "double_1x": false,
         "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Gaziantep",
+      "away": "Amedspor",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Angers",
+      "away": "Lens",
+      "score": [
+        2,
+        5
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": true,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Torino",
+      "away": "Lazio",
+      "score": [
+        1,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": false,
+        "under_2.5": false,
+        "under_3.5": true,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Cercle Brugge",
+      "away": "Mechelen",
+      "score": [
+        3,
+        1
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": true,
+        "over_3.5": true,
+        "under_2.5": false,
+        "under_3.5": false,
+        "btts_yes": true,
+        "btts_no": false,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
         "double_12": true
       }
     },
@@ -60554,7 +60674,7 @@
     {
       "date": "2026-11-28",
       "fixtures": 33,
-      "settled": 14
+      "settled": 18
     },
     {
       "date": "2026-11-27",

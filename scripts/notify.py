@@ -26,7 +26,9 @@ ARCHIVE = PREDICTIONS.parent / "archive"
 CHECKINS = [
     ("2026-11-16", "weekly check of the new-market leg counts"),
     ("2026-11-28", "team overs / Draw No Bet decision and the closing-odds test"),
-    ("2026-12-05", "new markets real-price test (300 legs)"),
+    # 28 Nov check: team overs 272-288 / 300 legs, Draw No Bet 236 / 300, closing-odds 174 / 200: moved.
+    ("2026-12-01", "team overs test and the closing-odds test (Draw No Bet moves to 5 Dec)"),
+    ("2026-12-05", "new markets and Draw No Bet real-price test (300 legs)"),
 ]
 REMIND_FOR_DAYS = 14
 

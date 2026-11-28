@@ -59,9 +59,14 @@ Secrets (values are NOT here and are never needed in a chat):
    off during the Understat outage. Fixed and live since 03:38 EAT 21 Nov; 81 ESPN results recorded.
    Settled priced legs were still 0 that morning. Re-run `python -m src.research_status` (report in
    `engine/reports/research_status.md`, do not commit it) before the 28 Nov decision.
-2. Sat 28 Nov: first confirm counts are growing and Understat is back; then team overs / Draw No Bet decision, plus closing-line test with fresh Betpawa prices
-   as model input (needs 200 CLV legs; 115 on 8 Nov).
-3. Sat 5 Dec: new markets real-price test (300 legs).
+2. DONE 28 Nov (check-in): counts are growing (0 on 21 Nov -> 139-288 settled priced legs per market);
+   Understat still down (fallback works). No decision possible under the locked rules: team overs
+   272-288 / 300, Draw No Bet 236 / 300, closing-odds 174 / 200 CLV legs. Ligue 2: 0 prices is expected
+   (not on Betpawa). Reminders moved (scripts/notify.py CHECKINS).
+3. Tue 1 Dec: team overs real-price test (300 legs) and the closing-line test with fresh Betpawa prices
+   as model input (200 CLV legs). Re-run `python -m src.research_status` first; if a count is still
+   short, wait (never decide below the threshold).
+4. Sat 5 Dec: new markets and Draw No Bet real-price test (300 legs).
 
 ### Small open items
 - Serie B (I2): "Ascoli Calcio 1898" and "L.R. Vicenza" are missing from `engine/src/research_aliases.json`,

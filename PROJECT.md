@@ -163,7 +163,7 @@ npm run build; npx vite preview --port 4173; npm run check:e2e   # browser check
   replaces the earlier #001339 past-slip colour). Inter font. Date strip: equal-width days, today (or
   the selected day) centred. Explanations cut to one short line. No data or logic changed.
 - Check-in reminders (owner request 2026-11-08): `scripts/notify.py` `CHECKINS` (16 Nov weekly
-  check, 28 Nov team overs / DNB decision and closing-odds test, 5 Dec new-markets real-price test)
+  check, 28 Nov check-in done, 1 Dec team overs and closing-odds test, 5 Dec new markets and DNB test)
   adds one line to the final-slips notification on the first match day on or after each date. The
   final notification also lists each slip's Betpawa booking code. Change dates there when plans move.
   On a check-in date without matches (e.g. an international break) the first run after 07:00
@@ -1248,6 +1248,11 @@ outcomes for already published picks without changing any study decision below.
 - Leftover folder `Desktop\FOOTBALL-main` is an old temporary worktree, safe to delete.
 
 ## Change log
+- 2026-11-28: Check-in. Research counts growing (0 on 21 Nov -> 139-288 settled priced legs per market);
+  Understat still returns an error page (fallback works). Locked thresholds not met, so no decision:
+  team overs (home/away over 0.5/1.5) 272-288 / 300, Draw No Bet 236 / 300, closing-odds test 174 / 200 CLV
+  legs. Reminders moved: 1 Dec team overs + closing-odds test, 5 Dec new markets + Draw No Bet. Ligue 2
+  0 prices is expected (not on Betpawa). No live change.
 - 2026-11-27: Owner request: simulated Betpawa account (`engine/src/simulation.py`, `predictions.json`
   `simulation`, Money screen "Simulation" card). From 2026-11-27 to 2026-12-31 (until the owner says
   otherwise) every slip that becomes final, or whose first match kicked off, is "taken" on Betpawa at its

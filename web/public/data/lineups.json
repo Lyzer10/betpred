@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-28T17:31:16.306175Z",
+ "generated_at": "2026-11-28T17:46:01.241780Z",
  "matches": [
   {
    "league": "EPL",
@@ -565,14 +565,14 @@
       "formation_place": 10
      },
      {
-      "name": "Exequiel Palacios",
-      "number": "25",
+      "name": "Sasa Lukic",
+      "number": "23",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Sasa Lukic",
-      "number": "23",
+      "name": "Exequiel Palacios",
+      "number": "25",
       "position": "RM",
       "formation_place": 8
      },
@@ -1091,46 +1091,46 @@
       "formation_place": 1
      },
      {
-      "name": "Roy Revivo",
-      "number": "3",
-      "position": "D",
-      "formation_place": 3
-     },
-     {
       "name": "Víctor Chust",
       "number": "23",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
      },
      {
       "name": "Federico Redondo",
       "number": "5",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Roy Revivo",
+      "number": "3",
+      "position": "LB",
+      "formation_place": 3
      },
      {
       "name": "Buba Sangaré",
       "number": "2",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Gonzalo Villar",
-      "number": "12",
-      "position": "M",
-      "formation_place": 8
-     },
-     {
-      "name": "Martim Neto",
-      "number": "16",
-      "position": "M",
-      "formation_place": 7
      },
      {
       "name": "Javier Morcillo",
       "number": "47",
-      "position": "M",
+      "position": "CM",
       "formation_place": 4
+     },
+     {
+      "name": "Martim Neto",
+      "number": "16",
+      "position": "LM",
+      "formation_place": 8
+     },
+     {
+      "name": "Gonzalo Villar",
+      "number": "12",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Fer Niño",
@@ -1139,16 +1139,16 @@
       "formation_place": 9
      },
      {
-      "name": "Lucas Cepeda",
-      "number": "21",
-      "position": "F",
-      "formation_place": 10
-     },
-     {
       "name": "Germán Valera",
       "number": "11",
-      "position": "F",
+      "position": "LF",
       "formation_place": 11
+     },
+     {
+      "name": "Lucas Cepeda",
+      "number": "21",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -1236,63 +1236,63 @@
       "formation_place": 1
      },
      {
-      "name": "Alejandro Grimaldo",
-      "number": "22",
-      "position": "D",
-      "formation_place": 3
-     },
-     {
       "name": "Dávid Hancko",
       "number": "17",
-      "position": "D",
+      "position": "CD-L",
       "formation_place": 6
      },
      {
       "name": "Marc Pubill",
       "number": "18",
-      "position": "D",
+      "position": "CD-R",
       "formation_place": 5
+     },
+     {
+      "name": "Alejandro Grimaldo",
+      "number": "22",
+      "position": "LB",
+      "formation_place": 3
      },
      {
       "name": "Marcos Llorente",
       "number": "14",
-      "position": "D",
+      "position": "RB",
       "formation_place": 2
-     },
-     {
-      "name": "Giuliano Simeone",
-      "number": "20",
-      "position": "M",
-      "formation_place": 7
-     },
-     {
-      "name": "Álex Baena",
-      "number": "10",
-      "position": "M",
-      "formation_place": 11
      },
      {
       "name": "Morten Hjulmand",
       "number": "23",
-      "position": "M",
+      "position": "CM-L",
       "formation_place": 8
      },
      {
       "name": "Pablo Barrios",
       "number": "8",
-      "position": "M",
+      "position": "CM-R",
       "formation_place": 4
      },
      {
-      "name": "Julián Álvarez",
-      "number": "19",
-      "position": "F",
-      "formation_place": 9
+      "name": "Álex Baena",
+      "number": "10",
+      "position": "LM",
+      "formation_place": 11
+     },
+     {
+      "name": "Giuliano Simeone",
+      "number": "20",
+      "position": "RM",
+      "formation_place": 7
      },
      {
       "name": "Lee Kang-In",
       "number": "7",
-      "position": "F",
+      "position": "CF-L",
+      "formation_place": 9
+     },
+     {
+      "name": "Julián Álvarez",
+      "number": "19",
+      "position": "CF-R",
       "formation_place": 10
      }
     ],
@@ -1568,14 +1568,14 @@
       "formation_place": 4
      },
      {
-      "name": "Davide Frattesi",
-      "number": "16",
+      "name": "Fisayo Dele-Bashiru",
+      "number": "7",
       "position": "LM",
       "formation_place": 8
      },
      {
-      "name": "Fisayo Dele-Bashiru",
-      "number": "7",
+      "name": "Davide Frattesi",
+      "number": "16",
       "position": "RM",
       "formation_place": 7
      },
@@ -1698,7 +1698,7 @@
    "home": "Stuttgart",
    "away": "Ein Frankfurt",
    "home_lineup": {
-    "formation": "3-4-2-1",
+    "formation": "3-4-1-2",
     "starters": [
      {
       "name": "Dennis Seimen",
@@ -1725,16 +1725,22 @@
       "formation_place": 6
      },
      {
+      "name": "Nikolas Nartey",
+      "number": "28",
+      "position": "CM-L",
+      "formation_place": 8
+     },
+     {
       "name": "Atakan Karazor",
       "number": "16",
-      "position": "CM-L",
+      "position": "CM-R",
       "formation_place": 7
      },
      {
       "name": "Grischa Prömel",
       "number": "21",
-      "position": "CM-R",
-      "formation_place": 8
+      "position": "AM",
+      "formation_place": 9
      },
      {
       "name": "Maximilian Mittelstädt",
@@ -1749,20 +1755,14 @@
       "formation_place": 2
      },
      {
-      "name": "Ermedin Demirovic",
-      "number": "9",
-      "position": "F",
-      "formation_place": 9
-     },
-     {
       "name": "Deniz Undav",
       "number": "26",
       "position": "CF-L",
       "formation_place": 11
      },
      {
-      "name": "Nikolas Nartey",
-      "number": "28",
+      "name": "Ermedin Demirovic",
+      "number": "9",
       "position": "CF-R",
       "formation_place": 10
      }
@@ -1858,14 +1858,14 @@
       "formation_place": 2
      },
      {
-      "name": "Mario Götze",
-      "number": "27",
+      "name": "Raphael Onyedika",
+      "number": "25",
       "position": "CM-L",
       "formation_place": 8
      },
      {
-      "name": "Raphael Onyedika",
-      "number": "25",
+      "name": "Mario Götze",
+      "number": "27",
       "position": "CM-R",
       "formation_place": 4
      },
@@ -3079,14 +3079,14 @@
       "formation_place": 10
      },
      {
-      "name": "Luke Le Roux",
-      "number": "18",
+      "name": "Hannes Van Der Bruggen",
+      "number": "28",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Hannes Van Der Bruggen",
-      "number": "28",
+      "name": "Luke Le Roux",
+      "number": "18",
       "position": "RM",
       "formation_place": 8
      },

@@ -7576,7 +7576,35 @@
      "fair_odds": 1.16,
      "betpawa_odds": 1.11
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     4,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401875531"
+   }
   },
   {
    "league": {
@@ -11183,8 +11211,12 @@
     "margin": null,
     "time": "17:45",
     "kickoff_utc": "2026-11-28T17:45:00Z",
-    "won": null,
-    "betpawa_price_id": "1592869831"
+    "won": true,
+    "betpawa_price_id": "1592869831",
+    "score": [
+     4,
+     0
+    ]
    },
    {
     "match_id": "SUPERLIG|2026-11-28|Gaziantep|Amedspor",

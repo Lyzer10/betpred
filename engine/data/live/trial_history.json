@@ -132,8 +132,12 @@
         "margin": null,
         "time": "19:30",
         "kickoff_utc": "2026-11-27T19:30:00Z",
-        "won": null,
-        "betpawa_price_id": "1592560846"
+        "won": true,
+        "betpawa_price_id": "1592560846",
+        "score": [
+          3,
+          3
+        ]
       },
       {
         "match_id": "JUPILER|2026-11-27|Oud-Heverlee Leuven|Kortrijk",
@@ -156,17 +160,21 @@
         "margin": null,
         "time": "19:45",
         "kickoff_utc": "2026-11-27T19:45:00Z",
-        "won": null,
-        "betpawa_price_id": "1603772104"
+        "won": true,
+        "betpawa_price_id": "1603772104",
+        "score": [
+          2,
+          2
+        ]
       }
     ],
     "final": true,
-    "status": "pending"
+    "status": "won"
   },
   {
     "round": "2026-11-28",
     "tier": "trial",
-    "generated_at": "2026-11-27T16:17:46.781712Z",
+    "generated_at": "2026-11-28T04:03:28.548398Z",
     "trial": true,
     "stake_cap": 0.01,
     "total_odds": 3.02,
@@ -254,12 +262,12 @@
   {
     "round": "2026-11-29",
     "tier": "trial",
-    "generated_at": "2026-11-27T16:17:46.781712Z",
+    "generated_at": "2026-11-28T04:03:28.548398Z",
     "trial": true,
     "stake_cap": 0.01,
-    "total_odds": 3.04,
-    "win_probability": 0.3705,
-    "expected_value": 0.125,
+    "total_odds": 3.02,
+    "win_probability": 0.3865,
+    "expected_value": 0.1685,
     "odds_source": "betpawa",
     "margin": null,
     "legs": [
@@ -277,7 +285,7 @@
         "label": "1st half over 1.5 goals",
         "probability": 0.5674,
         "raw_probability": 0.5021,
-        "betpawa_odds": 1.87,
+        "betpawa_odds": 1.89,
         "fair_odds": 1.76,
         "trial": true,
         "stake_cap": 0.01,
@@ -288,28 +296,28 @@
         "betpawa_price_id": "1592591027"
       },
       {
-        "match_id": "JUPILER|2026-11-29|Antwerp|Anderlecht",
+        "match_id": "JUPILER|2026-11-29|St Truiden|Genk",
         "date": "2026-11-29",
         "league": {
           "code": "JUPILER",
           "name": "Belgian Pro League",
           "country": "Belgium"
         },
-        "home": "Antwerp",
-        "away": "Anderlecht",
+        "home": "St Truiden",
+        "away": "Genk",
         "market": "fh_over_0.5",
         "label": "1st half over 0.5 goals",
-        "probability": 0.7697,
-        "raw_probability": 0.7342,
-        "betpawa_odds": 1.32,
-        "fair_odds": 1.3,
+        "probability": 0.8029,
+        "raw_probability": 0.7531,
+        "betpawa_odds": 1.29,
+        "fair_odds": 1.25,
         "trial": true,
         "stake_cap": 0.01,
         "margin": null,
-        "time": "15:00",
-        "kickoff_utc": "2026-11-29T15:00:00Z",
+        "time": "12:30",
+        "kickoff_utc": "2026-11-29T12:30:00Z",
         "won": null,
-        "betpawa_price_id": "1603772644"
+        "betpawa_price_id": "1603041987"
       },
       {
         "match_id": "JUPILER|2026-11-29|Standard|Club Brugge",
@@ -325,7 +333,7 @@
         "label": "1st half over 0.5 goals",
         "probability": 0.8484,
         "raw_probability": 0.7815,
-        "betpawa_odds": 1.23,
+        "betpawa_odds": 1.24,
         "fair_odds": 1.18,
         "trial": true,
         "stake_cap": 0.01,
@@ -342,7 +350,7 @@
   {
     "round": "2026-11-30",
     "tier": "trial",
-    "generated_at": "2026-11-27T16:17:46.781712Z",
+    "generated_at": "2026-11-28T04:03:28.548398Z",
     "trial": true,
     "stake_cap": 0.01,
     "total_odds": 3.0,

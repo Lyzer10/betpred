@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-28T15:31:34.569205Z",
+ "generated_at": "2026-11-28T15:46:52.177723Z",
  "matches": [
   {
    "league": "EPL",
@@ -822,7 +822,7 @@
    "home": "Malaga",
    "away": "Ath Bilbao",
    "home_lineup": {
-    "formation": "4-4-2",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Alfonso Herrero",
@@ -855,40 +855,40 @@
       "formation_place": 2
      },
      {
+      "name": "Jens Cajuste",
+      "number": "2",
+      "position": "AM",
+      "formation_place": 10
+     },
+     {
       "name": "Daniel Lorenzo",
       "number": "22",
-      "position": "CM-L",
-      "formation_place": 8
+      "position": "LM",
+      "formation_place": 4
      },
      {
       "name": "Izan Merino",
       "number": "23",
-      "position": "CM-R",
-      "formation_place": 4
+      "position": "RM",
+      "formation_place": 8
+     },
+     {
+      "name": "Adrián Niño",
+      "number": "21",
+      "position": "F",
+      "formation_place": 9
      },
      {
       "name": "Joaquín Muñoz",
       "number": "11",
-      "position": "LM",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
       "name": "David Larrubia",
       "number": "10",
-      "position": "RM",
+      "position": "AM-R",
       "formation_place": 7
-     },
-     {
-      "name": "Adrián Niño",
-      "number": "21",
-      "position": "CF-L",
-      "formation_place": 9
-     },
-     {
-      "name": "Jens Cajuste",
-      "number": "2",
-      "position": "CF-R",
-      "formation_place": 10
      }
     ],
     "subs": [
@@ -1991,14 +1991,14 @@
       "formation_place": 8
      },
      {
-      "name": "Eric Martel",
-      "number": "5",
+      "name": "Kaishu Sano",
+      "number": "6",
       "position": "CM-R",
       "formation_place": 7
      },
      {
-      "name": "Kaishu Sano",
-      "number": "6",
+      "name": "Eric Martel",
+      "number": "5",
       "position": "AM",
       "formation_place": 11
      },
@@ -2345,7 +2345,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-2-1",
     "starters": [
      {
       "name": "Loris Karius",
@@ -2378,21 +2378,21 @@
       "formation_place": 2
      },
      {
-      "name": "Kenan Karaman",
-      "number": "19",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
       "name": "Dejan Ljubicic",
       "number": "21",
-      "position": "LM",
+      "position": "CM",
       "formation_place": 4
+     },
+     {
+      "name": "Adil Aouchiche",
+      "number": "24",
+      "position": "CM-L",
+      "formation_place": 7
      },
      {
       "name": "Soufian El-Faouzi",
       "number": "23",
-      "position": "RM",
+      "position": "CM-R",
       "formation_place": 8
      },
      {
@@ -2402,16 +2402,16 @@
       "formation_place": 9
      },
      {
-      "name": "Adil Aouchiche",
-      "number": "24",
-      "position": "AM-L",
+      "name": "Kenan Karaman",
+      "number": "19",
+      "position": "CF-L",
       "formation_place": 11
      },
      {
       "name": "Junior Adamu",
       "number": "20",
-      "position": "AM-R",
-      "formation_place": 7
+      "position": "CF-R",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -2656,22 +2656,22 @@
       "formation_place": 2
      },
      {
+      "name": "Florian Thauvin",
+      "number": "10",
+      "position": "F",
+      "formation_place": 9
+     },
+     {
       "name": "Abdallah Sima",
       "number": "19",
-      "position": "F",
+      "position": "CF-L",
       "formation_place": 11
      },
      {
       "name": "Mezian Soares",
       "number": "38",
-      "position": "CF-L",
-      "formation_place": 10
-     },
-     {
-      "name": "Florian Thauvin",
-      "number": "10",
       "position": "CF-R",
-      "formation_place": 9
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -2916,14 +2916,14 @@
       "formation_place": 10
      },
      {
-      "name": "Noach Shenkman",
-      "number": "23",
+      "name": "Nils Rossen",
+      "number": "17",
       "position": "LM",
       "formation_place": 4
      },
      {
-      "name": "Nils Rossen",
-      "number": "17",
+      "name": "Noach Shenkman",
+      "number": "23",
       "position": "RM",
       "formation_place": 8
      },
@@ -3427,7 +3427,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-2-3-1",
+    "formation": "4-3-3",
     "starters": [
      {
       "name": "Ennio van der Gouw",
@@ -3442,8 +3442,8 @@
       "formation_place": 6
      },
      {
-      "name": "Francisco Petrasso",
-      "number": "23",
+      "name": "Julien Lomboto",
+      "number": "13",
       "position": "CD-R",
       "formation_place": 5
      },
@@ -3454,28 +3454,28 @@
       "formation_place": 3
      },
      {
-      "name": "Julien Lomboto",
-      "number": "13",
+      "name": "Francisco Petrasso",
+      "number": "23",
       "position": "RB",
       "formation_place": 2
      },
      {
-      "name": "Diogo Nascimento",
-      "number": "90",
-      "position": "AM",
-      "formation_place": 10
-     },
-     {
       "name": "Georgios Liavas",
       "number": "54",
-      "position": "LM",
+      "position": "CM",
       "formation_place": 4
+     },
+     {
+      "name": "Diogo Nascimento",
+      "number": "90",
+      "position": "LM",
+      "formation_place": 8
      },
      {
       "name": "Ryan Guilherme",
       "number": "8",
       "position": "RM",
-      "formation_place": 8
+      "formation_place": 7
      },
      {
       "name": "Tamble",
@@ -3484,16 +3484,16 @@
       "formation_place": 9
      },
      {
-      "name": "Roland Galcik",
-      "number": "30",
-      "position": "AM-L",
+      "name": "Diogo Bezerra",
+      "number": "7",
+      "position": "LF",
       "formation_place": 11
      },
      {
-      "name": "Diogo Bezerra",
-      "number": "7",
-      "position": "AM-R",
-      "formation_place": 7
+      "name": "Roland Galcik",
+      "number": "30",
+      "position": "RF",
+      "formation_place": 10
      }
     ],
     "subs": [
@@ -3723,7 +3723,7 @@
     ]
    },
    "away_lineup": {
-    "formation": "4-3-3",
+    "formation": "4-2-3-1",
     "starters": [
      {
       "name": "Lucas Oliveira",
@@ -3732,14 +3732,14 @@
       "formation_place": 1
      },
      {
-      "name": "Ythallo",
-      "number": "19",
+      "name": "Henrique Silva",
+      "number": "3",
       "position": "CD-L",
       "formation_place": 6
      },
      {
-      "name": "Henrique Silva",
-      "number": "3",
+      "name": "Ythallo",
+      "number": "19",
       "position": "CD-R",
       "formation_place": 5
      },
@@ -3756,22 +3756,22 @@
       "formation_place": 2
      },
      {
-      "name": "Daniel Borges",
-      "number": "41",
-      "position": "CM",
-      "formation_place": 4
-     },
-     {
       "name": "João Gonçalves",
       "number": "17",
-      "position": "LM",
-      "formation_place": 8
+      "position": "AM",
+      "formation_place": 10
      },
      {
       "name": "Djé",
       "number": "8",
+      "position": "LM",
+      "formation_place": 4
+     },
+     {
+      "name": "Daniel Borges",
+      "number": "41",
       "position": "RM",
-      "formation_place": 7
+      "formation_place": 8
      },
      {
       "name": "Fernando",
@@ -3780,16 +3780,16 @@
       "formation_place": 9
      },
      {
-      "name": "Vinícius Lopes",
-      "number": "70",
-      "position": "LF",
+      "name": "Brenner",
+      "number": "10",
+      "position": "AM-L",
       "formation_place": 11
      },
      {
-      "name": "Brenner",
-      "number": "10",
-      "position": "RF",
-      "formation_place": 10
+      "name": "Vinícius Lopes",
+      "number": "70",
+      "position": "AM-R",
+      "formation_place": 7
      }
     ],
     "subs": [

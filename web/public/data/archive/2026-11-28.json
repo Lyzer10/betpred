@@ -1746,7 +1746,35 @@
      "fair_odds": 1.36,
      "betpawa_odds": 1.29
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     5,
+     0
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401884721"
+   }
   },
   {
    "league": {
@@ -2056,7 +2084,35 @@
      "fair_odds": 1.2,
      "betpawa_odds": 1.15
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     0,
+     0
+    ],
+    "outcomes": {
+     "home_win": false,
+     "draw": true,
+     "away_win": false,
+     "over_0.5": false,
+     "over_1.5": false,
+     "over_2.5": false,
+     "over_3.5": false,
+     "under_2.5": true,
+     "under_3.5": true,
+     "btts_yes": false,
+     "btts_no": true,
+     "home_1up": false,
+     "away_1up": false,
+     "home_first": false,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": true,
+     "double_12": false
+    },
+    "source": "ESPN",
+    "event_id": "401884722"
+   }
   },
   {
    "league": {
@@ -2366,7 +2422,35 @@
      "fair_odds": 1.29,
      "betpawa_odds": 1.19
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     2,
+     1
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": false,
+     "under_2.5": false,
+     "under_3.5": true,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": true,
+     "home_first": false,
+     "away_first": true,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401884723"
+   }
   },
   {
    "league": {
@@ -2658,7 +2742,35 @@
      "fair_odds": 1.4,
      "betpawa_odds": 1.32
     }
-   ]
+   ],
+   "result": {
+    "score": [
+     8,
+     1
+    ],
+    "outcomes": {
+     "home_win": true,
+     "draw": false,
+     "away_win": false,
+     "over_0.5": true,
+     "over_1.5": true,
+     "over_2.5": true,
+     "over_3.5": true,
+     "under_2.5": false,
+     "under_3.5": false,
+     "btts_yes": true,
+     "btts_no": false,
+     "home_1up": true,
+     "away_1up": false,
+     "home_first": true,
+     "away_first": false,
+     "double_1x": true,
+     "double_x2": false,
+     "double_12": true
+    },
+    "source": "ESPN",
+    "event_id": "401884719"
+   }
   },
   {
    "league": {
@@ -10438,7 +10550,7 @@
      "betpawa_price_id": "1592584521",
      "fair_odds": 1.16,
      "price_warning": false,
-     "won": null
+     "won": false
     },
     {
      "date": "2026-11-28",
@@ -10485,7 +10597,7 @@
    ],
    "final": true,
    "locked": true,
-   "status": "pending"
+   "status": "lost"
   },
   "big": {
    "total_odds": 8.09,
@@ -10651,8 +10763,12 @@
     "margin": null,
     "time": "14:30",
     "kickoff_utc": "2026-11-28T14:30:00Z",
-    "won": null,
-    "betpawa_price_id": "1592585921"
+    "won": false,
+    "betpawa_price_id": "1592585921",
+    "score": [
+     0,
+     0
+    ]
    },
    {
     "match_id": "EREDIV|2026-11-28|PSV Eindhoven|Go Ahead Eagles",
@@ -10705,6 +10821,6 @@
   ],
   "final": true,
   "locked": true,
-  "status": "pending"
+  "status": "lost"
  }
 }

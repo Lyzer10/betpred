@@ -228,8 +228,12 @@
         "margin": null,
         "time": "14:30",
         "kickoff_utc": "2026-11-28T14:30:00Z",
-        "won": null,
-        "betpawa_price_id": "1592585921"
+        "won": false,
+        "betpawa_price_id": "1592585921",
+        "score": [
+          0,
+          0
+        ]
       },
       {
         "match_id": "EREDIV|2026-11-28|PSV Eindhoven|Go Ahead Eagles",
@@ -281,7 +285,7 @@
       }
     ],
     "final": true,
-    "status": "pending"
+    "status": "lost"
   },
   {
     "round": "2026-11-29",

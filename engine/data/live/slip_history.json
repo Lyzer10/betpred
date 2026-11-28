@@ -5288,17 +5288,21 @@
   {
     "round": "2026-11-29",
     "tier": "safe",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
-    "total_odds": 2.5,
-    "win_probability": 0.4503,
+    "generated_at": "2026-11-28T15:03:03.633084Z",
+    "total_odds": 2.51,
+    "win_probability": 0.4494,
     "odds_source": "betpawa",
-    "expected_value": 0.1262,
-    "kelly": 0.0841,
+    "expected_value": 0.1286,
+    "kelly": 0.0851,
     "price_warning": false,
     "flexi": [
       {
+        "min_correct": 3,
+        "probability": 0.8711
+      },
+      {
         "min_correct": 2,
-        "probability": 0.877
+        "probability": 0.9868
       }
     ],
     "legs": [
@@ -5313,13 +5317,13 @@
         },
         "home": "La Coruna",
         "away": "Barcelona",
-        "market": "away_win",
-        "label": "Away win",
-        "probability": 0.8259,
-        "estimated_odds": 1.21,
-        "betpawa_odds": 1.25,
-        "betpawa_price_id": "1593007557",
-        "fair_odds": 1.21,
+        "market": "away_1up",
+        "label": "Away 1Up",
+        "probability": 0.885,
+        "estimated_odds": 1.08,
+        "betpawa_odds": 1.14,
+        "betpawa_price_id": "1593007574",
+        "fair_odds": 1.13,
         "price_warning": false,
         "won": null
       },
@@ -5346,22 +5350,43 @@
       },
       {
         "date": "2026-11-29",
-        "time": "12:30",
-        "kickoff_utc": "2026-11-29T12:30:00Z",
+        "time": "17:00",
+        "kickoff_utc": "2026-11-29T17:00:00Z",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Roma",
+        "away": "Monza",
+        "market": "home_1up",
+        "label": "Home 1Up",
+        "probability": 0.8891,
+        "estimated_odds": 1.08,
+        "betpawa_odds": 1.13,
+        "betpawa_price_id": "1592662596",
+        "fair_odds": 1.12,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-29",
+        "time": "17:30",
+        "kickoff_utc": "2026-11-29T17:30:00Z",
         "league": {
           "code": "JUPILER",
           "name": "Belgian Pro League",
           "country": "Belgium"
         },
-        "home": "St Truiden",
-        "away": "Genk",
+        "home": "Standard",
+        "away": "Club Brugge",
         "market": "over_1.5",
         "label": "Over 1.5 goals",
-        "probability": 0.8529,
-        "estimated_odds": 1.12,
-        "betpawa_odds": 1.17,
-        "betpawa_price_id": "1603041780",
-        "fair_odds": 1.17,
+        "probability": 0.8934,
+        "estimated_odds": 1.08,
+        "betpawa_odds": 1.14,
+        "betpawa_price_id": "1603782639",
+        "fair_odds": 1.12,
         "price_warning": false,
         "won": null
       }
@@ -5372,38 +5397,42 @@
   {
     "round": "2026-11-29",
     "tier": "medium",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
-    "total_odds": 3.56,
-    "win_probability": 0.3215,
+    "generated_at": "2026-11-28T15:03:03.633084Z",
+    "total_odds": 3.55,
+    "win_probability": 0.3222,
     "odds_source": "betpawa",
-    "expected_value": 0.1432,
-    "kelly": 0.056,
+    "expected_value": 0.1429,
+    "kelly": 0.0561,
     "price_warning": false,
     "flexi": [
       {
+        "min_correct": 3,
+        "probability": 0.747
+      },
+      {
         "min_correct": 2,
-        "probability": 0.7742
+        "probability": 0.9531
       }
     ],
     "legs": [
       {
         "date": "2026-11-29",
-        "time": "14:05",
-        "kickoff_utc": "2026-11-29T14:05:00Z",
+        "time": "15:15",
+        "kickoff_utc": "2026-11-29T15:15:00Z",
         "league": {
-          "code": "EPL",
-          "name": "Premier League",
-          "country": "England"
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
         },
-        "home": "Sunderland",
-        "away": "Tottenham",
-        "market": "double_1x",
-        "label": "Home or draw",
-        "probability": 0.5851,
-        "estimated_odds": 1.73,
-        "betpawa_odds": 1.79,
-        "betpawa_price_id": "1591897854",
-        "fair_odds": 1.71,
+        "home": "La Coruna",
+        "away": "Barcelona",
+        "market": "away_win",
+        "label": "Away win",
+        "probability": 0.8259,
+        "estimated_odds": 1.21,
+        "betpawa_odds": 1.24,
+        "betpawa_price_id": "1593007557",
+        "fair_odds": 1.21,
         "price_warning": false,
         "won": null
       },
@@ -5425,6 +5454,27 @@
         "betpawa_odds": 1.37,
         "betpawa_price_id": "1592679331",
         "fair_odds": 1.31,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-29",
+        "time": "17:30",
+        "kickoff_utc": "2026-11-29T17:30:00Z",
+        "league": {
+          "code": "JUPILER",
+          "name": "Belgian Pro League",
+          "country": "Belgium"
+        },
+        "home": "Standard",
+        "away": "Club Brugge",
+        "market": "over_2.5",
+        "label": "Over 2.5 goals",
+        "probability": 0.7101,
+        "estimated_odds": 1.39,
+        "betpawa_odds": 1.44,
+        "betpawa_price_id": "1603782918",
+        "fair_odds": 1.41,
         "price_warning": false,
         "won": null
       },
@@ -5456,21 +5506,21 @@
   {
     "round": "2026-11-29",
     "tier": "big",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
-    "total_odds": 8.05,
-    "win_probability": 0.1535,
+    "generated_at": "2026-11-28T15:03:03.633084Z",
+    "total_odds": 8.01,
+    "win_probability": 0.1518,
     "odds_source": "betpawa",
-    "expected_value": 0.2355,
-    "kelly": 0.0334,
+    "expected_value": 0.2159,
+    "kelly": 0.0308,
     "price_warning": false,
     "flexi": [
       {
-        "min_correct": 3,
-        "probability": 0.635
+        "min_correct": 4,
+        "probability": 0.6294
       },
       {
-        "min_correct": 2,
-        "probability": 0.9328
+        "min_correct": 3,
+        "probability": 0.9284
       }
     ],
     "legs": [
@@ -5487,11 +5537,32 @@
         "away": "Tottenham",
         "market": "home_win",
         "label": "Home win",
-        "probability": 0.2943,
+        "probability": 0.2944,
         "estimated_odds": 3.6,
         "betpawa_odds": 4.0,
         "betpawa_price_id": "1591897842",
         "fair_odds": 3.4,
+        "price_warning": false,
+        "won": null
+      },
+      {
+        "date": "2026-11-29",
+        "time": "15:15",
+        "kickoff_utc": "2026-11-29T15:15:00Z",
+        "league": {
+          "code": "LALIGA",
+          "name": "La Liga",
+          "country": "Spain"
+        },
+        "home": "La Coruna",
+        "away": "Barcelona",
+        "market": "double_x2",
+        "label": "Away or draw",
+        "probability": 0.937,
+        "estimated_odds": 1.03,
+        "betpawa_odds": 1.07,
+        "betpawa_price_id": "1593007571",
+        "fair_odds": 1.07,
         "price_warning": false,
         "won": null
       },
@@ -5518,22 +5589,22 @@
       },
       {
         "date": "2026-11-29",
-        "time": "17:30",
-        "kickoff_utc": "2026-11-29T17:30:00Z",
+        "time": "20:30",
+        "kickoff_utc": "2026-11-29T20:30:00Z",
         "league": {
-          "code": "JUPILER",
-          "name": "Belgian Pro League",
-          "country": "Belgium"
+          "code": "PRIMEIRA",
+          "name": "Primeira Liga",
+          "country": "Portugal"
         },
-        "home": "Standard",
-        "away": "Club Brugge",
-        "market": "over_1.5",
-        "label": "Over 1.5 goals",
-        "probability": 0.8934,
-        "estimated_odds": 1.08,
-        "betpawa_odds": 1.14,
-        "betpawa_price_id": "1603782639",
-        "fair_odds": 1.12,
+        "home": "Porto",
+        "away": "Sp Lisbon",
+        "market": "over_0.5",
+        "label": "Over 0.5 goals",
+        "probability": 0.9431,
+        "estimated_odds": 1.01,
+        "betpawa_odds": 1.06,
+        "betpawa_price_id": "1593287978",
+        "fair_odds": 1.06,
         "price_warning": false,
         "won": null
       },
@@ -5565,7 +5636,7 @@
   {
     "round": "2026-11-30",
     "tier": "safe",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
+    "generated_at": "2026-11-28T15:03:03.633084Z",
     "total_odds": 2.63,
     "win_probability": 0.4311,
     "odds_source": "betpawa",
@@ -5623,12 +5694,12 @@
   {
     "round": "2026-11-30",
     "tier": "medium",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
-    "total_odds": 3.59,
+    "generated_at": "2026-11-28T15:03:03.633084Z",
+    "total_odds": 3.55,
     "win_probability": 0.3131,
     "odds_source": "betpawa",
-    "expected_value": 0.124,
-    "kelly": 0.0479,
+    "expected_value": 0.1121,
+    "kelly": 0.0439,
     "price_warning": false,
     "flexi": [
       {
@@ -5656,7 +5727,7 @@
         "label": "Away win",
         "probability": 0.5659,
         "estimated_odds": 1.83,
-        "betpawa_odds": 1.9,
+        "betpawa_odds": 1.88,
         "betpawa_price_id": "1592662559",
         "fair_odds": 1.77,
         "price_warning": false,
@@ -5732,12 +5803,12 @@
   {
     "round": "2026-11-30",
     "tier": "big",
-    "generated_at": "2026-11-28T12:17:30.997856Z",
-    "total_odds": 8.12,
+    "generated_at": "2026-11-28T15:03:03.633084Z",
+    "total_odds": 8.05,
     "win_probability": 0.1356,
     "odds_source": "betpawa",
-    "expected_value": 0.1008,
-    "kelly": 0.0142,
+    "expected_value": 0.092,
+    "kelly": 0.0131,
     "price_warning": false,
     "flexi": [
       {
@@ -5765,7 +5836,7 @@
         "label": "Away or draw",
         "probability": 0.7975,
         "estimated_odds": 1.24,
-        "betpawa_odds": 1.26,
+        "betpawa_odds": 1.25,
         "betpawa_price_id": "1592662573",
         "fair_odds": 1.25,
         "price_warning": false,

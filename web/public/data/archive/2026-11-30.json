@@ -1,6 +1,6 @@
 {
  "date": "2026-11-30",
- "generated_at": "2026-11-28T12:17:30.997856Z",
+ "generated_at": "2026-11-28T15:03:03.633084Z",
  "fixtures": [
   {
    "league": {
@@ -434,7 +434,7 @@
     "market": "double_x2",
     "label": "Away or draw",
     "probability": 0.7975,
-    "odds": 1.26,
+    "odds": 1.25,
     "odds_source": "betpawa"
    },
    "day": "2026-11-30",
@@ -465,7 +465,7 @@
      "model_probability": 0.2002,
      "market_probability": 0.2434,
      "fair_odds": 4.99,
-     "betpawa_odds": 4.12
+     "betpawa_odds": 4.18
     },
     {
      "market": "draw",
@@ -474,7 +474,7 @@
      "model_probability": 0.2622,
      "market_probability": 0.2473,
      "fair_odds": 3.81,
-     "betpawa_odds": 3.95
+     "betpawa_odds": 3.98
     },
     {
      "market": "away_win",
@@ -483,7 +483,7 @@
      "model_probability": 0.5659,
      "market_probability": 0.5093,
      "fair_odds": 1.77,
-     "betpawa_odds": 1.9
+     "betpawa_odds": 1.88
     },
     {
      "market": "over_0.5",
@@ -510,7 +510,7 @@
      "model_probability": 0.5576,
      "market_probability": 0.5844,
      "fair_odds": 1.79,
-     "betpawa_odds": 1.62
+     "betpawa_odds": 1.61
     },
     {
      "market": "over_3.5",
@@ -519,7 +519,7 @@
      "model_probability": 0.3283,
      "market_probability": 0.3585,
      "fair_odds": 3.05,
-     "betpawa_odds": 2.5
+     "betpawa_odds": 2.46
     },
     {
      "market": "under_2.5",
@@ -528,7 +528,7 @@
      "model_probability": 0.4424,
      "market_probability": 0.4156,
      "fair_odds": 2.26,
-     "betpawa_odds": 2.31
+     "betpawa_odds": 2.34
     },
     {
      "market": "under_3.5",
@@ -537,7 +537,7 @@
      "model_probability": 0.6717,
      "market_probability": 0.6415,
      "fair_odds": 1.49,
-     "betpawa_odds": 1.54
+     "betpawa_odds": 1.56
     },
     {
      "market": "btts_yes",
@@ -546,7 +546,7 @@
      "model_probability": 0.5817,
      "market_probability": 0.593,
      "fair_odds": 1.72,
-     "betpawa_odds": 1.6
+     "betpawa_odds": 1.59
     },
     {
      "market": "btts_no",
@@ -555,7 +555,7 @@
      "model_probability": 0.4183,
      "market_probability": 0.407,
      "fair_odds": 2.39,
-     "betpawa_odds": 2.36
+     "betpawa_odds": 2.38
     },
     {
      "market": "home_1up",
@@ -564,7 +564,7 @@
      "model_probability": 0.4199,
      "market_probability": 0.4421,
      "fair_odds": 2.38,
-     "betpawa_odds": 2.1
+     "betpawa_odds": 2.11
     },
     {
      "market": "away_1up",
@@ -573,7 +573,7 @@
      "model_probability": 0.7127,
      "market_probability": 0.6676,
      "fair_odds": 1.4,
-     "betpawa_odds": 1.44
+     "betpawa_odds": 1.43
     },
     {
      "market": "home_first",
@@ -582,7 +582,7 @@
      "model_probability": 0.3487,
      "market_probability": 0.3766,
      "fair_odds": 2.87,
-     "betpawa_odds": 2.51
+     "betpawa_odds": 2.52
     },
     {
      "market": "away_first",
@@ -591,7 +591,7 @@
      "model_probability": 0.5938,
      "market_probability": 0.5691,
      "fair_odds": 1.68,
-     "betpawa_odds": 1.66
+     "betpawa_odds": 1.65
     },
     {
      "market": "double_1x",
@@ -600,7 +600,7 @@
      "model_probability": 0.4348,
      "market_probability": 0.4907,
      "fair_odds": 2.3,
-     "betpawa_odds": 1.91
+     "betpawa_odds": 1.93
     },
     {
      "market": "double_x2",
@@ -609,7 +609,7 @@
      "model_probability": 0.7975,
      "market_probability": 0.7566,
      "fair_odds": 1.25,
-     "betpawa_odds": 1.26
+     "betpawa_odds": 1.25
     },
     {
      "market": "double_12",
@@ -2232,11 +2232,11 @@
    "status": "pending"
   },
   "medium": {
-   "total_odds": 3.59,
+   "total_odds": 3.55,
    "win_probability": 0.3131,
    "odds_source": "betpawa",
-   "expected_value": 0.124,
-   "kelly": 0.0479,
+   "expected_value": 0.1121,
+   "kelly": 0.0439,
    "price_warning": false,
    "flexi": [
     {
@@ -2264,7 +2264,7 @@
      "label": "Away win",
      "probability": 0.5659,
      "estimated_odds": 1.83,
-     "betpawa_odds": 1.9,
+     "betpawa_odds": 1.88,
      "betpawa_price_id": "1592662559",
      "fair_odds": 1.77,
      "price_warning": false,
@@ -2340,11 +2340,11 @@
    "status": "pending"
   },
   "big": {
-   "total_odds": 8.12,
+   "total_odds": 8.05,
    "win_probability": 0.1356,
    "odds_source": "betpawa",
-   "expected_value": 0.1008,
-   "kelly": 0.0142,
+   "expected_value": 0.092,
+   "kelly": 0.0131,
    "price_warning": false,
    "flexi": [
     {
@@ -2372,7 +2372,7 @@
      "label": "Away or draw",
      "probability": 0.7975,
      "estimated_odds": 1.24,
-     "betpawa_odds": 1.26,
+     "betpawa_odds": 1.25,
      "betpawa_price_id": "1592662573",
      "fair_odds": 1.25,
      "price_warning": false,
@@ -2452,35 +2452,35 @@
   "tier": "trial",
   "trial": true,
   "stake_cap": 0.01,
-  "total_odds": 3.0,
-  "win_probability": 0.3413,
-  "expected_value": 0.0252,
+  "total_odds": 3.02,
+  "win_probability": 0.3406,
+  "expected_value": 0.0275,
   "odds_source": "betpawa",
   "margin": null,
   "legs": [
    {
-    "match_id": "SERIEA|2026-11-30|Lecce|Atalanta",
+    "match_id": "SERIEA|2026-11-30|Cagliari|Milan",
     "date": "2026-11-30",
     "league": {
      "code": "SERIEA",
      "name": "Serie A",
      "country": "Italy"
     },
-    "home": "Lecce",
-    "away": "Atalanta",
-    "market": "dc1up_x2",
-    "label": "Away or draw (1Up)",
-    "probability": 0.8427,
-    "raw_probability": 0.8016,
-    "betpawa_odds": 1.19,
-    "fair_odds": 1.19,
+    "home": "Cagliari",
+    "away": "Milan",
+    "market": "away_sh_over_0.5",
+    "label": "Away 2nd half over 0.5",
+    "probability": 0.6616,
+    "raw_probability": 0.6276,
+    "betpawa_odds": 1.53,
+    "fair_odds": 1.51,
     "trial": true,
     "stake_cap": 0.01,
     "margin": null,
-    "time": "17:30",
-    "kickoff_utc": "2026-11-30T17:30:00Z",
+    "time": "19:45",
+    "kickoff_utc": "2026-11-30T19:45:00Z",
     "won": null,
-    "betpawa_price_id": "1592662569"
+    "betpawa_price_id": "1592667791"
    },
    {
     "match_id": "PRIMEIRA|2026-11-30|Benfica|Famalicao",
@@ -2505,30 +2505,6 @@
     "kickoff_utc": "2026-11-30T20:15:00Z",
     "won": null,
     "betpawa_price_id": "1593291217"
-   },
-   {
-    "match_id": "PRIMEIRA|2026-11-30|Casa Pia|Sp Braga",
-    "date": "2026-11-30",
-    "league": {
-     "code": "PRIMEIRA",
-     "name": "Primeira Liga",
-     "country": "Portugal"
-    },
-    "home": "Casa Pia",
-    "away": "Sp Braga",
-    "market": "away_win_either_half",
-    "label": "Away wins either half",
-    "probability": 0.7868,
-    "raw_probability": 0.7332,
-    "betpawa_odds": 1.28,
-    "fair_odds": 1.27,
-    "trial": true,
-    "stake_cap": 0.01,
-    "margin": null,
-    "time": "20:15",
-    "kickoff_utc": "2026-11-30T20:15:00Z",
-    "won": null,
-    "betpawa_price_id": "1593292028"
    },
    {
     "match_id": "SUPERLIG|2026-11-30|Besiktas|Galatasaray",
@@ -2557,7 +2533,7 @@
   ],
   "locked": false,
   "final": false,
-  "booking_code": "DQ1JJVJ",
+  "booking_code": "PVDH439",
   "status": "pending"
  }
 }

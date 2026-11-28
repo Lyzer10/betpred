@@ -174,15 +174,39 @@
   {
     "round": "2026-11-28",
     "tier": "trial",
-    "generated_at": "2026-11-28T10:02:49.372456Z",
+    "generated_at": "2026-11-28T12:17:30.997856Z",
     "trial": true,
     "stake_cap": 0.01,
-    "total_odds": 3.02,
-    "win_probability": 0.3981,
-    "expected_value": 0.2031,
+    "total_odds": 3.0,
+    "win_probability": 0.4039,
+    "expected_value": 0.2134,
     "odds_source": "betpawa",
     "margin": null,
     "legs": [
+      {
+        "match_id": "SERIEA|2026-11-28|Inter|Genoa",
+        "date": "2026-11-28",
+        "league": {
+          "code": "SERIEA",
+          "name": "Serie A",
+          "country": "Italy"
+        },
+        "home": "Inter",
+        "away": "Genoa",
+        "market": "dc1up_1x",
+        "label": "Home or draw (1Up)",
+        "probability": 0.9422,
+        "raw_probability": 0.9185,
+        "betpawa_odds": 1.07,
+        "fair_odds": 1.06,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "19:45",
+        "kickoff_utc": "2026-11-28T19:45:00Z",
+        "won": null,
+        "betpawa_price_id": "1592662525"
+      },
       {
         "match_id": "BUNDES|2026-11-28|Hamburg|Bayern Munich",
         "date": "2026-11-28",
@@ -197,7 +221,7 @@
         "label": "1st half over 1.5 goals",
         "probability": 0.5695,
         "raw_probability": 0.5037,
-        "betpawa_odds": 2.02,
+        "betpawa_odds": 2.01,
         "fair_odds": 1.76,
         "trial": true,
         "stake_cap": 0.01,
@@ -206,30 +230,6 @@
         "kickoff_utc": "2026-11-28T14:30:00Z",
         "won": null,
         "betpawa_price_id": "1592585921"
-      },
-      {
-        "match_id": "LIGUE1|2026-11-28|Nice|Troyes",
-        "date": "2026-11-28",
-        "league": {
-          "code": "LIGUE1",
-          "name": "Ligue 1",
-          "country": "France"
-        },
-        "home": "Nice",
-        "away": "Troyes",
-        "market": "fh_over_0.5",
-        "label": "1st half over 0.5 goals",
-        "probability": 0.7547,
-        "raw_probability": 0.7313,
-        "betpawa_odds": 1.36,
-        "fair_odds": 1.33,
-        "trial": true,
-        "stake_cap": 0.01,
-        "margin": null,
-        "time": "19:45",
-        "kickoff_utc": "2026-11-28T19:45:00Z",
-        "won": null,
-        "betpawa_price_id": "1592781759"
       },
       {
         "match_id": "EREDIV|2026-11-28|PSV Eindhoven|Go Ahead Eagles",
@@ -254,15 +254,39 @@
         "kickoff_utc": "2026-11-28T17:45:00Z",
         "won": null,
         "betpawa_price_id": "1592869831"
+      },
+      {
+        "match_id": "SUPERLIG|2026-11-28|Gaziantep|Amedspor",
+        "date": "2026-11-28",
+        "league": {
+          "code": "SUPERLIG",
+          "name": "Super Lig",
+          "country": "Turkey"
+        },
+        "home": "Gaziantep",
+        "away": "Amedspor",
+        "market": "sh_over_0.5",
+        "label": "2nd half over 0.5 goals",
+        "probability": 0.8126,
+        "raw_probability": 0.8134,
+        "betpawa_odds": 1.27,
+        "fair_odds": 1.23,
+        "trial": true,
+        "stake_cap": 0.01,
+        "margin": null,
+        "time": "16:00",
+        "kickoff_utc": "2026-11-28T16:00:00Z",
+        "won": null,
+        "betpawa_price_id": "1602595894"
       }
     ],
-    "final": false,
+    "final": true,
     "status": "pending"
   },
   {
     "round": "2026-11-29",
     "tier": "trial",
-    "generated_at": "2026-11-28T10:02:49.372456Z",
+    "generated_at": "2026-11-28T12:17:30.997856Z",
     "trial": true,
     "stake_cap": 0.01,
     "total_odds": 3.02,
@@ -350,7 +374,7 @@
   {
     "round": "2026-11-30",
     "tier": "trial",
-    "generated_at": "2026-11-28T10:02:49.372456Z",
+    "generated_at": "2026-11-28T12:17:30.997856Z",
     "trial": true,
     "stake_cap": 0.01,
     "total_odds": 3.0,

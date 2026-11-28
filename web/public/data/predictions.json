@@ -20387,7 +20387,7 @@
               "betpawa_price_id": "1592871216",
               "fair_odds": 1.06,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-28",
@@ -20516,7 +20516,7 @@
               "betpawa_price_id": "1593304484",
               "fair_odds": 1.39,
               "price_warning": false,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-28",
@@ -20623,7 +20623,7 @@
               "betpawa_price_id": "1593304470",
               "fair_odds": 2.5,
               "price_warning": true,
-              "won": null
+              "won": true
             },
             {
               "date": "2026-11-28",
@@ -27290,7 +27290,7 @@
           "betpawa_price_id": "1592871216",
           "fair_odds": 1.06,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-28",
@@ -27420,7 +27420,7 @@
           "betpawa_price_id": "1593304484",
           "fair_odds": 1.39,
           "price_warning": false,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-28",
@@ -27529,7 +27529,7 @@
           "betpawa_price_id": "1593304470",
           "fair_odds": 2.5,
           "price_warning": true,
-          "won": null
+          "won": true
         },
         {
           "date": "2026-11-28",
@@ -28492,6 +28492,93 @@
         "under_3.5": false,
         "btts_yes": true,
         "btts_no": false,
+        "home_1up": false,
+        "away_1up": true,
+        "home_first": false,
+        "away_first": true,
+        "double_1x": false,
+        "double_x2": true,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Excelsior",
+      "away": "Telstar",
+      "score": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "home_win": true,
+        "draw": false,
+        "away_win": false,
+        "over_0.5": true,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": true,
+        "away_1up": false,
+        "home_first": true,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": false,
+        "double_12": true
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Arouca",
+      "away": "Rio Ave",
+      "score": [
+        0,
+        0
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": true,
+        "away_win": false,
+        "over_0.5": false,
+        "over_1.5": false,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
+        "home_1up": false,
+        "away_1up": false,
+        "home_first": false,
+        "away_first": false,
+        "double_1x": true,
+        "double_x2": true,
+        "double_12": false
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "home": "Moreirense",
+      "away": "Santa Clara",
+      "score": [
+        0,
+        2
+      ],
+      "outcomes": {
+        "home_win": false,
+        "draw": false,
+        "away_win": true,
+        "over_0.5": true,
+        "over_1.5": true,
+        "over_2.5": false,
+        "over_3.5": false,
+        "under_2.5": true,
+        "under_3.5": true,
+        "btts_yes": false,
+        "btts_no": true,
         "home_1up": false,
         "away_1up": true,
         "home_first": false,
@@ -60467,7 +60554,7 @@
     {
       "date": "2026-11-28",
       "fixtures": 33,
-      "settled": 11
+      "settled": 14
     },
     {
       "date": "2026-11-27",
